@@ -1,0 +1,11 @@
+.texbuild
+.build
+
+# OS generated files #
+.DS_Store
+Icon?
+
+# resources #
+*.pdf
+*.docx
+*.pptx

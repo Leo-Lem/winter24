@@ -1,0 +1,6 @@
+[submodule ".devcontainer"]
+	path = .devcontainer
+	url = ../latex-devcontainer
+[submodule ".template"]
+	path = .template
+	url = ../latex-packages
