@@ -1,0 +1,20 @@
+{
+  "folders": [
+    {
+      "path": "./SA"
+    },
+    {
+      "path": "./SbD"
+    },
+    {
+      "path": "./UIST"
+    },
+    {
+      "path": "./Project"
+    },
+    {
+      "path": ".",
+      "name": "workspace"
+    }
+  ]
+}
