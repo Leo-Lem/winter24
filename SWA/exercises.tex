@@ -1,0 +1,244 @@
+\documentclass{article}
+
+\usepackage[]{../.template/xrcise}
+
+\subject{Softwarearchitecture}
+\semester{Winter 2024}
+\author{Leopold Lemmermann}
+
+\begin{document}\createtitle
+
+\sheet[2024]{1st exam}
+% 1 Question: Foundations (30 Points)
+% This section has various tasks to assess your understanding of fundamental concepts, principles and
+% terminology related to requirements engineering and software architecture.
+% 1.1
+% (3 Points) Name one activity in requirements engineering and provide a brief explanation.
+% 1.2
+% You have learned about three types of qualtity scenarios including use-case, growth and exploratory
+% scenarios. Explain each of them by an example: Use-case scenarios, Growth scenarios, Exploratory scenarios.
+
+% 1.3 Give three reasons why software architecture is important. Explain each in one sentence.
+
+% 1.4 Define the term architectural tactic in the context of software architecture. In addition
+% provide an example of an achtitecture tactic and explain how it can be used to address a specific
+% quality attribute in a software system.
+
+% 1.5
+% (3 Points) Which of the following pairs of qualities are typically in conflict with each other (i.e. are
+% trade-offs to each other)? Explain each decision in one sentence.
+% Modularity - Time behavior
+% ⃝ typically in conflict
+% ⃝ typically not in conflict
+% Explanation:
+% Usability - Security
+% ⃝ typically in conflict
+% ⃝ typically not in conflict
+% Explanation:
+% 3
+% 1.6
+% (3 Points) What is the purpose of conformance/compliance checking? In addition, briefly explain
+% strucural and behavioral conformance checking.
+% 1.7
+% (2 Points) Explain the term "lift & shift" in the context of cloud development.
+% 1.8
+% (4 Points) Decide for each of the following statements wether it is true or false. Justify your decision
+% in one sentence.
+% If your system consists of a set of microservices, there is no need for a central architecture document
+% since each service is fre to choose its technologies.
+% ⃝ True
+% ⃝ False
+% Explanation:
+% Celebrating release parties is a sign of great architecture.
+% ⃝ True
+% ⃝ False
+
+
+
+% 2 Question: Reqirements Engineering (15 Points)
+% The GreenHome Energy Management System is an innovative solution designed to empower (1) home-
+% ownerstoharnessandoptimzegreenenergysourceswithintheirresidences, (2)energyserviceproviders
+% to improve service customization, e.g. flexible pricing based on user behavior and offer energy-saving
+% solutions, and (3) renewable energy solution providers to invest in research and development of renew-
+% able energy technologies. To promote sustainability, reduce carbon footprint, and maximize energy
+% efficiency, this comprehensive software system integrates seamlessly with (1) smrt home devices such
+% as smart thermostats, lighting systems, and appliances and (2) renewable energy sources, including
+% solar panels, and energy storage systems.
+% 2.1
+% Solve the following tasks regarding the stakeholder analysis.
+% i. (4 Points) Write the name of each axis after each = sign. In addition, classify three stakeholders
+% derived from the text according to the following matrix.
+% Figure 1: Stakeholder matrix
+% ii. (2 Points) Classify two more stakeholders that are not explicitly mentioned in the text. Add
+% them to the matrix in Figure 1. Show which ones are the two additional stakeholders by drawing
+% a circle around the two names.
+% iii. (3 Points) Briefly explain the reason for your classification for the two additional stakeholders.
+% 5
+% 2.2
+% Consider the following scenario, which is related to the GreenHome Energy Management System
+% requirements:
+% • "The Cost analysis in the GreenHome Energy Management System addresses the need for home-
+% owners to observe their energy-rekated expenses, which involve providing users witha straight-
+% forward breakdown of their energy costs, including expenses associated with renewable energy
+% production."
+% • "The system provides advanced analytics to forecast future energy costs based on usage patterns
+% and external factors."
+% • "It would be cool to have a gamified elemet eithin the Cost calculation. The idea is to award
+% users GreenPoints for implementing energy saving measures, achieving specific sustainability
+% milestones."
+% Regarding the Kano model, solve the following tasks.
+% i. (2 Points) Derive one basic requirement from the given scenario.
+% ii. (2 Points) Derive one performance requirement from the given scenario.
+% iii. (2 Points) Derive one excitement requirement from the given scenario.
+
+
+
+% 3 Question: Architecture Modeling (23 Points)
+% Figure 2 is part of an architectural description of an image hosting application. The application has
+% two keey functionalities: (1) the ability to upload (write) an image to the serer, and (2) the ability to
+% query for an image. Make sure to read and understand Figure 2.
+% Figure 2: Architectural description of an image hosting application
+% The team responsible for the image hosting application project decided to use 4+1, which is a
+% template to structure the documentation of a software architecture. Answer the following questions
+% and help the team to create the documentation of the architecture.
+% 3.1
+% Qestions regarding Figure 2:
+% i. (1 Point) What Architectural Description Language (ADL) is used by the team?
+% ii. (2 Points) What view does the architectural description show accordingto the 4+1 template?
+% Briefly explain why.
+% 7
+% 3.2
+% (10 Points) Process view:
+% Consider the following scenario. "A user calls getImages through the IDownloadImage interface of
+% WebUI component to download images. WebUI calls a method with the same name getImages from
+% the IRequestHandler interface. Furthermore, the RequestHandler component calls the zip method from
+% the ReEncoder component to get a zip package of all images. The ReEncoder component calls the
+% imagesList method of the ImageAccess component. Finally, the ImageAccess component returns a
+% result if it is already cashed. Otherwise, it returns NULL."
+% Specify the intercomponent behavior through a UML sequence diagram for the given scenario.
+% 8
+% 3.3
+% (10 Points)Deployment view:
+% Use the UML notation to specify that (1) the WebUI component is deployed on aFrontEnd server,
+% (2) the RequestHandler, ReEncoder and IMage Acces components are deployed to the Application-
+% Server, (3) the Database and FileStorage components are deployed to the DatabaseServer and File-
+% Server respectively. All the physical servers ar interconnected via LAN.
+
+
+
+% 4 Question: Architecture Evaluation (22 Points)
+% Jitsi Meet is a video-conferencing solution. The main service that Jitsi offers is creating video confer-
+% ences and allowing participants across the Internet to join the conference. Three components are the
+% core of the Jitsi system:
+% • JitsiWeb provides a web-based user interface to access the Jitsi functionality.
+% • JiCofo provides functionality for managing conferences.
+% • VideoBridge is the critical component that is responsible for routing the video stream between
+% multiple participants of a conference.
+% Figure 3 shows how users attend different conferences using the Jitsi system. User1 and User2
+% (depicted with a black box around user icon) joined Conference 1 (depicted with a black box around
+% the text), and User 3 and User 4 joined Conference 2. The JiCofo component communicates with
+% the VideoBridge component through XMPP, which is a communication protocol. Each server can
+% have redundancies to support more conferences simultaneously. It is important to note that when a
+% conference fails, e.g. Conference 1, a new conference has to be created. There is no redundancy and
+% failover for a particular conference.
+% Figure 3: Jitsi video conference system
+% 10
+% 4.1
+% Consider the Architecture Tradeoff Analysis Method (ATAM).
+% i. Provide a scenario for the Performance quality attribute such that the system maintains its
+% performance when the number of users accessing the system increases.
+% a) (1 Point) Source
+% b) (1 Point) Stimulus
+% c) (1 Point) Artifact
+% d) (1 Point) Environment
+% e) (1 Point) Response
+% f) (1 Point) Response measure
+% ii. Provide a scenario for the Modifiablity quality attribute.
+% a) (1 Point) Source
+% b) (1 Point) Stimulus
+% c) (1 Point) Artifact
+% d) (1 Point) Environment
+% e) (1 Point) Response
+% f) (1 Point) Response measure
+% 11
+% 4.2
+% ATradeoff point isasystempropertythataffectsmorethanonequalityattribute. Forexample, adding
+% more bridge servers affects more than one quality attribute in the system. Therefore, the number of
+% bridge servers is a tradeoff point.
+% i. (1 Point) Name at least two quality attributes of the system that the number of bridge servers
+% affects.
+% ii. (2 Points) Explain in one statement how each quality is affected by a change in the number of
+% bridge servers.
+% 4.3
+% The current deployment strategy of Jitsi Meet system is visible in Figure 3. The engineering team
+% deploys JitsiWeb and JiCofo service instances into one physical server. The team argues efficient
+% resource usage is the main reason for their decision.
+% i. (1 Point) Name one drawback for the current deployment strategy.
+% ii. (2 Points) Suggest a new deployment strategy and explain the reason behind your decision.
+% iii. (1 Point) Name one drawback of the new deployment strategy.
+% 12
+% 4.4
+% (3 Points) Performance engineers of the JitsiMeet system claim that their system is efficient in terms
+% of CPU usage. To prove their calim, they experimented on a server machine, which runs all the services
+% needed by Jitsi Meet including the JitsiWeb, JiCofo and VideoBridge.
+% The engineering team’s big challenge was to send enough traffic to put the system under load, ehich
+% requires a considerable number of machines. What would you suggest to the engineering team as an
+% alternative approach for quantitative evaluation of the Jitsi Meet? Briefly explain what your approach
+% is.
+
+\sheet[2024]{2nd exam}
+
+% 1 Foundation (30 P.)
+% 1. What does vertical traceability of requirements mean?
+% 2. Name the layers of cloud computing and explain vendor lock-in.
+% 3. What is a Domain Model? Explain using an example.
+% 4. Consider architectural styles and patterns.
+% a) Name two similarities between architectural styles and patterns.
+% b) Name two differences between architectural styles and patterns.
+% c) How do styles and patterns relate to each other?
+% 5. Give two advantages and two disadvantages of semi-/formal vs. informal architec-
+% ture documentation. (4 P.)
+% 1
+% 2 Requirements Engineering (12 P.)
+% Here was a text given describing the rough proposed functionality of a music streaming
+% service (Melody).
+% 1. Classify four stakeholders according to the following matrix. Write the name of
+% each axis after the = sign. Now there was the empty stakeholder matrix given, the
+% axes named “x =” and “y =”. (5 P.)
+% 2. Briefly explain your classification of two of the stakeholders. (1 P.)
+% 3. Consider the Kano model.
+% a) Describe one basic feature of the system and say, why it is one.
+% b) Describe one performance feature of the system and say, why it is one.
+% c) Describe one excitement feature of the system and say, why it is one.
+% 3 Architecture Modeling (ca. 24 P.)
+% Here was a text given describing the rough functionality of a new IDE (Power IDE ).
+% 1. Which architectural style was used for the system? Give a reason why.
+% 2. Which quality attribute does this style match and why?
+% 3. Single choice question (yes/no): Is there usually a trade-off between the quality
+% attributes modifiability and performance? Explain your answer briefly.
+% 4. Single choice question (yes/no): Is there usually a trade-off between reusability
+% and interoperability? Explain your answer briefly.
+% 5. Use UML to model the presented architecture. (10 P.)
+% 6. (Here a text was given describing a certain starting procedure.) Give a UML
+% sequence diagram for the presented process. (8 P.)
+% 2
+% 4 Evaluation (ca. 24 P.)
+% Here a text and a UML deployment diagram were given describing the rough functional-
+% ity of an online order service (Food2Go) consisting of the three components OrderService,
+% RestaurantService and AccountingService where OrderService had a connection to
+% both of the other services but these had no connection to each other.
+% 1. Consider the Architecture Tradeoff Analysis Method (ATAM).
+% a) Provide a scenario for the Availability quality attribute: Source, Stimulus,
+% Artifact, Environment, Response, Response measure (one text field each).
+% b) Provide a scenario for the Modifiability quality attribute such that deploy-
+% ment has finished after a maximum of one day: Source, Stimulus, Artifact,
+% Environment, Response, Response measure (one text field each).
+% 2. A design alternative (design 2) is to add a cache to OrderService.
+% a) How does this alternative affect availability?
+% b) Describe a scenario in which a client could experience data inconsistency.
+% 3. Another design alternative (design 3) is to add third party messaging service.
+% a) Would that solve the problem of data inconsistency?
+% b) Does design 3 improve availability?
+% c) Name a disadvantage of design 3 compared to design 2.
+
+\end{document}
