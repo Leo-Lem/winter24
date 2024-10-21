@@ -15,149 +15,310 @@
 
 
 \section[2023]{1st exam}
-% First questions were multiple choice
 
-% Function to compute neighbourhood in SOM
-% Meaning of grounded language
-% Ventriloquism Effect
+\begin{exercise}{Multiple Choice}
+  \begin{enumerate}
+    \item How is the neighborhood in a self-organizing map (SOM) is computed.
 
-% Followed by some general questions
+      \begin{itemize}
+        \item The neighborhood is computed as a Gaussian function of the distance between the winning neuron and the other neurons.
+        \item The neighborhood is computed as a linear function of the distance between the winning neuron and the other neurons.
+        \item The neighborhood is computed as a step function of the distance between the winning neuron and the other neurons.
+        \item The neighborhood is computed as a constant function of the distance between the winning neuron and the other neurons.
+      \end{itemize}
 
-% multisensory integration of different strength stimuli (slide example)
-% What is the cocktailparty effect
+    \item What does it mean for a language to be grounded?
 
+      \begin{itemize}
+        \item The language is based on the ground truth.
+        \item The language is based on the physical world.
+        \item The language is based on the ground state.
+        \item The language is based on the ground floor.
+      \end{itemize}
 
-% Spiking neural networks
+    \item What is the ventriloquism effect?
 
-% label leaky and integrate+fire models
-% Similarity angle, calculate for a weight and input vector
-% Compute output from perceptron (similar to slide example)
-% Visual
+      \begin{itemize}
+        \item The ventriloquism effect is the illusion that a sound is coming from a different location than the actual source.
+        \item The ventriloquism effect is the illusion that a sound is coming from the same location as the actual source.
+        \item The ventriloquism effect is the illusion that a sound is coming from a different location than the actual source.
+        \item The ventriloquism effect is the illusion that a sound is coming from the same location as the actual source.
+      \end{itemize}
+  \end{enumerate}
 
-% what do the different layers on CNN learn (not every single layer but a brief overview)
-% Compute filtering in CNN layer (5x5 matrix with 3x3 filter, stride=1, no padding)
-% Draw orientation and firing rate diagram from slides
-% Audio
+  \begin{solution}
+    \begin{enumerate}
+      \item The neighborhood is computed as a Gaussian function of the distance between the winning neuron and the other neurons.
+      \item The language is based on the physical world.
+      \item The ventriloquism effect is the illusion that a sound is coming from a different location than the actual source.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
 
-% ITD and ILD: explain and what to use for which frequencies
-% Behavior
+\begin{exercise}{General}
+  \begin{enumerate}
+    \item Explain the multisensory integration of different strength stimuli.
+    \item What is the cocktail party effect?
+  \end{enumerate}
 
-% braitenberg vehicles
-% Advantage of behavior based
+  \begin{solution}
+    \begin{enumerate}
+      \item Multisensory integration is the process by which information from different sensory modalities is combined to form a unified percept. This process can enhance the detection and discrimination of stimuli and improve the accuracy and reliability of sensory processing.
+      \item The cocktail party effect is the ability to focus on a single conversation in a noisy environment. This phenomenon allows individuals to selectively attend to one speaker while ignoring other competing sounds.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
 
+\begin{exercise}{Spiking Neural Networks}
+  \begin{enumerate}
+    \item Explain the difference between the leaky integrate-and-fire model and the integrate-and-fire model.
+    \item Calculate the similarity angle between a weight vector $\mathbf{w} = [1, 2, 3]$ and an input vector $\mathbf{x} = [4, 5, 6]$.
+    \item Compute the output of a perceptron with weights $\mathbf{w} = [1, 2, 3]$ and input $\mathbf{x} = [4, 5, 6]$.
+  \end{enumerate}
 
-% Evolutionary Computing
+  \begin{solution}
+    \begin{enumerate}
+      \item The leaky integrate-and-fire model is an extension of the integrate-and-fire model that includes a leaky term. This term allows the membrane potential of the neuron to decay over time, which can help to model more realistic neuron behavior.
+      \item The similarity angle between two vectors $\mathbf{a}$ and $\mathbf{b}$ is given by
+      \[
+        \cos(\theta) = \frac{\mathbf{a} \cdot \mathbf{b}}{\|\mathbf{a}\| \|\mathbf{b}\|}.
+      \]
+      For $\mathbf{w} = [1, 2, 3]$ and $\mathbf{x} = [4, 5, 6]$, we have
+      \[
+        \cos(\theta) = \frac{1 \cdot 4 + 2 \cdot 5 + 3 \cdot 6}{\sqrt{1^2 + 2^2 + 3^2} \sqrt{4^2 + 5^2 + 6^2}} = \frac{32}{\sqrt{14} \sqrt{77}}.
+      \]
+      \item The output of a perceptron is given by
+      \[
+        y = \begin{cases}
+          1 & \text{if } \mathbf{w} \cdot \mathbf{x} + b > 0, \\
+          0 & \text{otherwise}.
+        \end{cases}
+      \]
+      For $\mathbf{w} = [1, 2, 3]$, $\mathbf{x} = [4, 5, 6]$, and $b = 0$, we have
+      \[
+        y = \begin{cases}
+          1 & \text{if } 1 \cdot 4 + 2 \cdot 5 + 3 \cdot 6 > 0, \\
+          0 & \text{otherwise}.
+        \end{cases}
+      \]
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
 
-% Cycle Graph also arrow labels
-% Example: find the shortest distance between cities only visit each city once
-% Recombination and Mutation algorithm for example
-% Optimisation strategies for this algorithm
+\begin{exercise}{Visual Processing}
+  \begin{enumerate}
+    \item What do the different layers in a convolutional neural network (CNN) learn?
+    \item Compute the filtering in a CNN layer with a $5 \times 5$ matrix and a $3 \times 3$ filter, stride $1$, and no padding.
+    \item Draw a diagram of the orientation and firing rate of a simple cell for a line of different orientations.
+  \end{enumerate}
 
+  \begin{solution}
+    \begin{enumerate}
+      \item The different layers in a CNN learn different features of the input data. The first layers typically learn low-level features like edges and textures, while later layers learn higher-level features like shapes and objects.
+      \item The filtering in a CNN layer with a $5 \times 5$ matrix and a $3 \times 3$ filter, stride $1$, and no padding can be computed by sliding the filter over the input matrix and computing the dot product at each position. The resulting output will be a $3 \times 3$ matrix.
+      \item The orientation and firing rate of a simple cell for a line of different orientations can be visualized in a diagram with the orientation on the $x$-axis and the firing rate on the $y$-axis.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Audio Processing}
+  \begin{enumerate}
+    \item Explain interaural time difference (ITD) and interaural level difference (ILD) and which one is used for high and low frequencies.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Interaural time difference (ITD) is the difference in time it takes for a sound to reach each ear, while interaural level difference (ILD) is the difference in intensity of a sound at each ear. ITD is used for low frequencies, while ILD is used for high frequencies.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Behavior}
+  \begin{enumerate}
+    \item Explain a Braitenberg vehicle with an example and name the behavior of your example vehicle.
+    \item Complete the flow chart of the functional decomposition of the classical approach for a robot controller: sensors
+    \item Explain the advantage of a behavior-based approach to robotics.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item A Braitenberg vehicle is a simple robot that exhibits complex behavior through the direct coupling of sensors to actuators. An example of a Braitenberg vehicle is a light-seeking robot that moves towards a light source. The behavior of this example vehicle is phototaxis.
+      \item The flow chart of the functional decomposition of the classical approach for a robot controller is: sensors $\rightarrow$ perception $\rightarrow$ cognition $\rightarrow$ planning $\rightarrow$ control $\rightarrow$ actuators.
+      \item The advantage of a behavior-based approach to robotics is that it allows for the development of complex behaviors through the combination of simple behaviors. This approach is more robust and adaptable to changing environments than traditional control architectures.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Evolutionary Computing}
+  \begin{enumerate}
+    \item Draw a cycle graph with arrow labels.
+    \item Given an example of finding the shortest distance between cities by only visiting each city once.
+    \item Describe a recombination and mutation algorithm for the example you provided.
+    \item Explain optimization strategies for this algorithm.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item A cycle graph with arrow labels is a graph where each node is connected to the next node in a cycle, and the arrows indicate the direction of the cycle.
+      \item An example of finding the shortest distance between cities by only visiting each city once is the traveling salesman problem.
+      \item A recombination and mutation algorithm for the traveling salesman problem could involve recombining the order of cities in two different solutions and mutating the order of cities in a single solution.
+      \item Optimization strategies for this algorithm could include using a genetic algorithm to evolve a population of solutions, using local search to improve the quality of solutions, and using elitism to preserve the best solutions.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
 
 
 \section[2022]{1st exam}
-% Nr.1) Multiple choice: (one or multiple correct, you only get points if all ticks are completely correct, the last possibility of four was always "none of the above")
 
-% a)
+\begin{exercise}{Multiple Choice}
+  \begin{enumerate}
+    \item In which models is backpropagation used for learning?
 
-% ...
+      \begin{itemize}
+        \item Multilayer perceptron (MLP)
+        \item Convolutional neural network (CNN)
+        \item Self-organizing map (SOM)
+        \item None of the above
+      \end{itemize}
 
-% b) In which Models is Backpropagation used for learning?
+    \item What does "embodied" mean for language?
 
-% MLP
+      \begin{itemize}
+        \item Language is based on the physical world.
+        \item Language is based on the ground truth.
+        \item Language is based on the ground state.
+        \item Language is based on the ground floor.
+      \end{itemize}
 
-% Convolutional Neural Network
+    \item What are the two streams and their tasks in human vision?
 
-% SOM
+      \begin{itemize}
+        \item Dorsal stream for spatial vision and ventral stream for object recognition
+        \item Ventral stream for spatial vision and dorsal stream for object recognition
+        \item Dorsal stream for object recognition and ventral stream for spatial vision
+        \item Ventral stream for object recognition and dorsal stream for spatial vision
+      \end{itemize}
+  \end{enumerate}
 
-% None of the above
+  \begin{solution}
+    \begin{enumerate}
+      \item Multilayer perceptron (MLP)
+      \item Language is based on the physical world.
+      \item Dorsal stream for spatial vision and ventral stream for object recognition
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
 
-% c) what does "embodied" means for language?
+\begin{exercise}{Attention}
+  \begin{enumerate}
+    \item Name and explain three ways to measure the attention of a human.
+    \item Describe two models to measure or visualize human attention.
+    \item Name advantages and disadvantages of the two models you proposed.
+  \end{enumerate}
 
-% ...
+  \begin{solution}
+    \begin{enumerate}
+      \item Three ways to measure the attention of a human are eye tracking, reaction time, and brain imaging.
+      \item Two models to measure or visualize human attention are the spotlight model and the zoom lens model.
+      \item The spotlight model has the advantage of being simple and intuitive, but it has the disadvantage of oversimplifying the attentional process. The zoom lens model has the advantage of being more flexible and dynamic, but it has the disadvantage of being more complex and difficult to interpret.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
 
-% d)
+\begin{exercise}{Vision}
+  \begin{enumerate}
+    \item Name the two streams and their task that are present in human vision.
+    \item Explain rods and cones.
+    \item Explain the similarity between a convolutional neural network with convolution and max pooling layers and the visual cortex.
+    \item Visualize the firing rate of a simple cell for a line of different orientation in a diagram with the orientation on the $x$-axis and the firing rate on the $y$-axis.
+    \item Given a $5 \times 5$ matrix and a $3 \times 3$ filter, compute the convolution (no padding, stride $1$).
+  \end{enumerate}
 
-% ...
+  \begin{solution}
+    \begin{enumerate}
+      \item The two streams present in human vision are the dorsal stream for spatial vision and the ventral stream for object recognition.
+      \item Rods and cones are photoreceptor cells in the retina that are responsible for detecting light. Rods are sensitive to low light levels and are responsible for night vision, while cones are sensitive to color and are responsible for daylight vision.
+      \item A convolutional neural network with convolution and max pooling layers is similar to the visual cortex in that both systems use hierarchical processing to extract features from the input data.
+      \item The firing rate of a simple cell for a line of different orientations can be visualized in a diagram with the orientation on the $x$-axis and the firing rate on the $y$-axis.
+      \item Given a $5 \times 5$ matrix and a $3 \times 3$ filter, the convolution (no padding, stride $1$) can be computed by sliding the filter over the input matrix and computing the dot product at each position. The resulting output will be a $3 \times 3$ matrix.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
 
-% e)
+\begin{exercise}{Sound Localization}
+  \begin{enumerate}
+    \item Compute the cross-correlation steps on two signals until the maximum cross-correlation value is reached.
+    \item Name and explain the two cues used to perform sound localization. Which one works best for high/low frequencies?
+  \end{enumerate}
 
-% ...
+  \begin{solution}
+    \begin{enumerate}
+      \item The cross-correlation steps on two signals can be computed by sliding one signal over the other and computing the dot product at each position until the maximum cross-correlation value is reached.
+      \item The two cues used to perform sound localization are interaural time difference (ITD) and interaural level difference (ILD). ITD works best for low frequencies, while ILD works best for high frequencies.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
 
+\begin{exercise}{Behavior}
+  \begin{enumerate}
+    \item Explain a Braitenberg vehicle with an example and name the behavior of your example vehicle.
+    \item Complete the flow chart of the functional decomposition of the classical approach for a robot controller: sensors $\rightarrow$ blank $\rightarrow$ blank $\rightarrow$ blank $\rightarrow$ blank $\rightarrow$ actuators.
+  \end{enumerate}
 
+  \begin{solution}
+    \begin{enumerate}
+      \item A Braitenberg vehicle is a simple robot that exhibits complex behavior through the direct coupling of sensors to actuators. An example of a Braitenberg vehicle is a light-seeking robot that moves towards a light source. The behavior of this example vehicle is phototaxis.
+      \item The flow chart of the functional decomposition of the classical approach for a robot controller is: sensors $\rightarrow$ perception $\rightarrow$ cognition $\rightarrow$ planning $\rightarrow$ control $\rightarrow$ actuators.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
 
-% Nr.2) Attention
+\begin{exercise}{Continual Learning}
+  \begin{enumerate}
+    \item Explain the stability-plasticity dilemma.
+    \item Explain catastrophic forgetting and a model where this effect could arise.
+    \item Name and describe two strategies of continual learning.
+  \end{enumerate}
 
-% 2.1) Name and explain three ways to measure the attention of a human.
+  \begin{solution}
+    \begin{enumerate}
+      \item The stability-plasticity dilemma is the trade-off between the ability of a neural network to learn new information (plasticity) and the ability of the network to retain previously learned information (stability).
+      \item Catastrophic forgetting is the phenomenon where a neural network forgets previously learned information when learning new information. This effect could arise in a model where the network is trained on a sequence of tasks without preserving the knowledge learned on previous tasks.
+      \item Two strategies of continual learning are rehearsal, where the network is periodically trained on previously learned tasks, and regularization, where the network is penalized for changing its weights too much.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
 
-% 2.2) Describe two models to measure or visualize human attention.
+\begin{exercise}{Language Processing}
+  \begin{enumerate}
+    \item Name the two streams important in language processing and their tasks.
+    \item Describe CBOW (Continuous Bag-of-word) and Skip-gram.
+    \item Describe the difference between the earlier Wernicke's model and the later Pulvermüller's model.
+  \end{enumerate}
 
-% 2.3) Name advantages and disadvantages of the two models you proposed.
+  \begin{solution}
+    \begin{enumerate}
+      \item The two streams important in language processing are the dorsal stream for speech perception and the ventral stream for speech production.
+      \item CBOW (Continuous Bag-of-word) and Skip-gram are two models used for word embedding in natural language processing. CBOW predicts a target word from its context, while Skip-gram predicts the context words from a target word.
+      \item The difference between the earlier Wernicke's model and the later Pulvermüller's model is that Wernicke's model is based on a sequential processing model of language, while Pulvermüller's model is based on a distributed processing model of language.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
 
+\begin{exercise}{Computational Neural Networks}
+  \begin{enumerate}
+    \item Explain three steps of the backpropagation algorithm and explain the termination criteria.
+    \item Name and shortly describe the three fundamental ANN learning paradigms.
+    \item Explain how the learning rate parameter could be chosen.
+  \end{enumerate}
 
-
-% Nr.3) Vision
-
-% 3.1) Name the two streams and their task that are present in the human vision.
-
-% 3.2) Explain rods and cones
-
-% 3.3) Explain the similarity between a convolutional neural network with convolution and max pooling layers and the visual cortex (not sure if visual cortex or some other brain area)
-
-% 3.4) Visualize the firing rate of a simple cell for a line of different orientation in a diagram with the orientation on the x-axis and the firing rate on the y-axis
-
-% 3.5) Given a 5x5 matrix and a 3x3 filter compute the convolution (no padding, stride = 1)
-
-
-
-% Nr.4) Sound Localization
-
-% 4.1) compute crosscorrelation steps on two signals until maximum crosscorrelation value is reached
-
-% 4.2) name and explain the two cues used to perform sound localization. Which one works best for high/low frequencies?
-
-% ...
-
-
-
-% Nr.5) Behaviour
-
-% 5.1) Explain a Braitenberg Vehicle with an example and name the behaviour of your example vehicle.
-
-% 5.2) Flow chart of functional decomposition of the classical approach for a robot controller was given with steps left blank: (sensors => blank => blank => blank => blank => actuators)
-
-% ...
-
-
-
-% Nr.6) Continual Learning
-
-% 6.1) Explain the stability-plasticity dilemma
-
-% 6.2) Explain catastrophic forgetting and a model where this effect could arise
-
-% 6.3) Name and describe two strategies of continual learning
-
-
-
-% Nr.7) Language processing
-
-% 7.1) Name the two streams important in language processing and their tasks
-
-% 7.2) Describe CBOW (Continuous Bag-of-word) and Skip-gram
-
-% 7.3) Describe difference between the earlier Wernickes model and the later Pulvermüllers model (question gave a few more details which I don't remember anymore)
-
-
-
-
-
-% Nr.8) Computational Neural Networks
-
-% 8.1) Explain 3 steps of Backpropagation algorithm and explain termination criteria
-
-% 8.2) Name and shortly describe the three fundamental ANN Learning Paradigms
-
-% 8.3) Explain how the learning rate parameter could be chosen
+  \begin{solution}
+    \begin{enumerate}
+      \item Three steps of the backpropagation algorithm are forward propagation, backward propagation, and weight update. The termination criteria for backpropagation is typically based on the convergence of the loss function.
+      \item The three fundamental ANN learning paradigms are supervised learning, unsupervised learning, and reinforcement learning. Supervised learning involves learning from labeled data, unsupervised learning involves learning from unlabeled data, and reinforcement learning involves learning from rewards and punishments.
+      \item The learning rate parameter could be chosen using a grid search or random search over a range of values, or by using adaptive learning rate methods like AdaGrad or Adam.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
 
 \end{document}
