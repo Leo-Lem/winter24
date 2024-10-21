@@ -21,39 +21,77 @@
 
 
 \section[2020]{1st exam}
-% 1. Broadcast
-% • Wer wird geschützt und welches Schutzziel wird verfolgt?
-% • Nenne zwei Anwendungsbeispiele (abgesehen von Zeitung/TV/Radio)
-% • Professorin möchte über eine Zeitschrift auf Feedback von Studierenden Antworten und die Identität dieser
-% schützen. Anweisungen ähnlich wie: Neben dem Feedback soll eine Zufallszahl zwischen 0 und 100 angegeben
-% werden. Antworten werden im Bezug auf dieses Pseudonym gegeben. Welche der beiden Arten der impliziten
-% Adressierung wurde hier genutzt? Was sind mögliche Probleme in Bezug auf speziell diese Auswahl an
-% Pseudonymen?
-% • Der Professorin gefällt nicht, dass die Antworten auf das Feedback von jedem gelesen werden können (und
-% nicht nur von der entsprechenden Person). Wir könnte das Problem gelöst werden? Schreibe einen Text mit
-% Anweisungen an die Studierenden und Begründe die Notwendigkeit der einzelnen Komponenten.
-% 2. IPv6-Präfixe
-% Zur Einleitung wurden Präfix-Sharing, -Hopping und -Boquets beschrieben
-% • Warum genügt es nicht verschiedene Adressen unter einem Präfix zu verwenden?
-% • Was sind die Schwächen von Präfix-Sharing bei einem gleich bleibendem Präfix und einer kleinen Nutzergruppe?
-% • Was sind die Schwächen von Präfix-Boquets, wenn unterschiedliche Präfixe für verschiedene Ziele aber nicht
-% pro Verbindung genutzt werden?
-% • Was ist das Problem beim Präfix-Hopping, wenn sich während einer bestehenden Verbindung die IP-Adresse
-% ändert?
-% • Wie kann man dieses Problem beim Präfix-Hopping lösen?
-% • Wie kann man Benutzer abgesehen von der Adressierung tracken? Nenne 3 Beispiele.
-% 3. Mixe
-% • Angreifermodell angeben
-% • Wie kann ein Mix-Netz von einem starken Angreifer (z.B. Geheimdienst) angegriﬀen werden? Nenne 2
-% Beispiele.
-% • Es wird ein Mix-Netz angeboten von nur einem Betreiber, welcher damit wirbt, dass 20 Mixe hinter einander
-% verwendet werden und für höhere Performance nur 10 Teilnehmer pro Mix zugeordnet werden. Bewerte die
-% Sicherheit des vorgestellten Produkts mit Begründung.
-% 4. DC-Netze
-% Gegeben waren 4 lokale Summen (A, B, C, D), ein Schlüsselgraph kAB , kBC , kCD und der Schlüssel kBC . Wir sind
-% Teilnehmer B und haben eine Leernachricht gesendet.
-% • Berechne die gesendete Nachricht N . Skizziere deinen Rechenweg.
-% • Grenze ein wer die Nachricht gesendet haben kann. Skizziere deinen Rechenweg.
-% • Was muss passieren, damit B weniger Aussagen treﬀen kann?
+\begin{exercise}{Broadcast}
+  \begin{enumerate}
+    \item Who is protected and what protection goal is pursued?
+    \item Name two examples of applications (apart from newspaper/TV/radio).
+    \item A professor wants to receive feedback from students via a magazine and protect their identity. Instructions similar to: In addition to the feedback, a random number between 0 and 100 should be given. Answers are given in relation to this pseudonym. Which of the two types of implicit addressing was used here? What are possible problems with regard to this selection of pseudonyms?
+    \item The professor does not like that the answers to the feedback can be read by everyone (and not only by the corresponding person). How could the problem be solved? Write a text with instructions to the students and justify the necessity of the individual components.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item The students are protected and the protection goal is to keep their identity secret.
+      \item Two examples of applications are:
+      \item The professor used the implicit addressing by pseudonyms. Possible problems with this selection of pseudonyms are that the pseudonyms are not unique and that the students could be identified by the professor.
+      \item The problem could be solved by encrypting the feedback and only allowing the professor to decrypt it. The students should also use a secure connection to send the feedback.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{IPv6 prefixes}
+  \begin{enumerate}
+    \item Why is it not sufficient to use different addresses under one prefix?
+    \item What are the weaknesses of prefix sharing with a constant prefix and a small user group?
+    \item What are the weaknesses of prefix bouquets if different prefixes are used for different goals but not per connection?
+    \item What is the problem with prefix hopping if the IP address changes during an existing connection?
+    \item How can this problem be solved with prefix hopping?
+    \item How can users be tracked apart from addressing? Name 3 examples.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item It is not sufficient to use different addresses under one prefix because the addresses could be linked to the same user.
+      \item The weaknesses of prefix sharing with a constant prefix and a small user group are that the users can be identified by the prefix and that the users can be tracked by the prefix.
+      \item The weaknesses of prefix bouquets are that the users can be identified by the prefix and that the users can be tracked by the prefix.
+      \item The problem with prefix hopping is that the connection is interrupted when the IP address changes.
+      \item This problem can be solved by using a VPN connection that keeps the IP address constant.
+      \item Users can be tracked apart from addressing by using cookies, browser fingerprinting, and tracking pixels.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Mixes}
+  \begin{enumerate}
+    \item Specify the attacker model.
+    \item How can a mix-net be attacked by a strong attacker (e.g. intelligence service)? Name 2 examples.
+    \item A mix-net is offered by only one operator, who advertises that 20 mixes are used in a row and only 10 participants per mix are assigned for higher performance. Evaluate the security of the presented product with justification.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item The attacker model is a strong attacker (e.g. intelligence service).
+      \item A mix-net can be attacked by a strong attacker by using traffic analysis and by using a Sybil attack.
+      \item The security of the presented product is low because the operator can see all the traffic and the participants can be identified by the operator.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{DC networks}
+  Given were 4 local sums (A, B, C, D), a key graph kAB, kBC, kCD, and the key kBC. We are participant B and have sent an empty message.
+  \begin{enumerate}
+    \item Calculate the sent message N. Sketch your calculation.
+    \item Limit who can have sent the message. Sketch your calculation.
+    \item What needs to happen for B to make fewer statements?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item The sent message N is the sum of the local sums A, B, C, and D. Sketch your calculation.
+      \item The message can only be sent by participants A and C. Sketch your calculation.
+      \item For B to make fewer statements, the key kBC must be changed.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
 
 \end{document}
