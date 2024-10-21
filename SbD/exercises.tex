@@ -21,128 +21,115 @@
 
 
 \section[2023]{2nd exam}
-% Aufgabe 1
-% Betrachten Sie die die Betriebsarten für Blockchiffren ECB, CBC und CTR.
 
-% a) Bei welchen Arten braucht man eine invertierbare Verschlüsselungsfunktion, bei welchen nicht? Begründen Sie?
+\begin{exercise}{Betriebsarten}
+  Betrachten Sie die Betriebsarten für Blockchiffren ECB, CBC und CTR.
 
-% b) Bei welchen Arten lässt sich die Verschlüsselung parallelisieren?
+  \begin{enumerate}
+    \item Bei welchen Arten braucht man eine invertierbare Verschlüsselungsfunktion, bei welchen nicht? Begründen Sie.
+    \item Bei welchen Arten lässt sich die Verschlüsselung parallelisieren?
+    \item Im zweiten Block gibt es ein Bit mit einem additiven Fehler. Was kann noch entschlüsselt werden?
+    \item Ein Bit fehlt im zweiten Block (nicht bekannt, wo das Bit fehlt). Was kann noch entschlüsselt werden?
+    \item Ein ganzer Block fehlt. Was kann noch entschlüsselt werden?
+    \item Zwei verschiedene Klartexte wurden mit CTR mit dem gleichen IV verschlüsselt. Zeigen Sie, dass ein Angreifer den zweiten Klartext entschlüsseln kann, wenn dieser den ersten Klartext und die beiden Schlüsseltexte hat.
+  \end{enumerate}
 
-% c) Im zweiten Block gibt es ein Bit mit einem additiven Fehler. Was kann noch entschlüsselt werden?
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
 
-% d) Ein Bit fehlt im zweiten Block (nicht bekannt, wo das Bit fehlt). Was kann noch entschlüsselt werden?
+\begin{exercise}{Elliptische Kurven}
+  \begin{enumerate}
+    \item Auf welcher mathematischen Schwierigkeit basiert der ECC?
+    \item Berechnen Sie die Punkte auf der folgenden elliptischen Kurve: $a = 6$, $b = 1$, $p = 11$ (allgemeine Formel war gegeben).
+    \item Nennen Sie zwei Vorteile, die ECC gegenüber sicherheitsmäßig vergleichbaren Verfahren hat.
+  \end{enumerate}
 
-% e) Ein ganzer Block fehlt. Was kann noch entschlüsselt werden?
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
 
-% f) Zwei verschiedene Klartexte wurden mit CTR mit dem gleichen IV verschlüsselt. Zeigen Sie, dass ein Angreifer den zweiten Klartext entschlüsseln kann wenn dieser den ersten Klartext und die beiden Schlüsseltexte hat.
+\begin{exercise}{Zertifikate}
+  Das Zertifigierungsmodell ist transitiv anzunehmen.
 
+  \begin{enumerate}
+    \item Erklären und grenzen Sie die Begriffe Signatur und Zertifikat voneinander ab.
+    \item N7 möchte N3 eine Nachricht schicken. Welchen CAs muss N7 vertrauen?
+    \item N7 möchte zusätzlich N5 eine Nachricht schicken. Welchen CAs muss N7 vertrauen, so dass die Anzahl an CAs minimal ist?
+    \item CA2 fällt aus. Wie können wir die Kommunikation aus b) trotzdem realisieren (Was \& Wie)? Was können wir für N1 tun?
+    \item Trust on First Use: Keine CAs, Schlüssel wird bei erster Kommunikation an Kommunikationspartner geschickt, sobald und bei späteren Kommunikationen überprüft. Wenn Kommunikation und es gibt schon anderen Schlüssel, deny. Nennen und erklären Sie zwei Vorteile und zwei Nachteile.
+  \end{enumerate}
 
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
 
-% Aufgabe 2 ECC
-%  a) Auf welcher mathematischen Schwierigkeit basiert der ECC?
+\begin{exercise}{GSM}
+  Zur Erreichung von Forward Secrecy erzeugt Alice auf ihrem Server mit dem RSA-Verfahren einen privaten Schlüssel $d$ sowie den dazu passenden öffentlichen Schlüssel $c$, den sie persönlich an ihre Nutzerinnen und Nutzer verteilt. Zusätzlich erzeugt der Server von Alice bei jedem Verbindungsaufbau ein neues kurzlebiges (engl. ephemeral) RSA-Schlüsselpaar, das aus einem öffentlichen Schlüssel $c_e$ und einem geheimen Schlüssel $d_e$ besteht. Der Server signiert mit dem privaten Schlüssel $d$ den neuen öffentlichen Schlüssel $c_e$ und sendet diesen zusammen mit der Signatur über die aufgebaute Verbindung an die Kundin. Die Kundin prüft anschließend die Signatur mithilfe des zuvor von Alice erhaltenen öffentlichen Schlüssels $c$. Ist die Signatur korrekt, nutzt die Kundin $c_e$, um einen neuen, zufällig generierten symmetrischen AES-Schlüssel $k$ zu verschlüsseln. Die weitere Kommunikation in dieser Verbindung wird symmetrisch mit $k$ verschlüsselt. Nach Verbindungsende löscht Alices Server $d_e$, $c_e$ und $k$.
 
-%  b) Berrechne die Punkte auf der folgenden Eliptischen Kurve: a = 6, b=1, p=11 (allgemeine Formel war gegeben)
+  \begin{enumerate}
+    \item Welche Verbindungen könnten von einem sehr starken Angreifer wie einem Nachrichtendienst noch entschlüsselt werden, wenn dieser Zugriff auf den Server bekommt? Begründen Sie Ihre Antwort.
+    \item Skizzieren Sie einen Angriff, der möglich wäre, wenn die Kundin die Signatur nicht prüft. Erläutern Sie die einzelnen nötigen Schritte.
+    \item Alice ist das Verfahren zu langsam. Sie nimmt nun folgende Änderung vor: Statt jedes Mal bei der Erzeugung von $c_e$ und $d_e$ neue Primzahlen $p$ und $q$ für den Modulus $N_e$ zu generieren, verwendet sie immer die gleichen Primzahlen. Nun wählt sie lediglich den öffentlichen Exponenten $c_e$ neu und berechnet einen dazugehörigen geheimen Exponenten $d_e$. Warum ist dies keine gute Idee? Zeigen Sie, wie sich dieses geänderte Verfahren angreifen lässt, um aufgezeichnete Verbindungen zu entschlüsseln.
+  \end{enumerate}
 
-%  c) Nennen Sie zwei Vorteile die ECC hat, gegenüber sicherheitsmäßig vergleichbaren Verfahren
-
-
-
-% Aufgabe 3
-% Das Zertifizierungsmodell war transitiv anzunehmen.
-
-
-
-% a) Die Begriffe Signatur und Zertifikat erklären und voneinander abgrenzen
-
-% b) N7 möchte N3 Nachricht schicken, welchen CAs muss N7 vertrauen?
-
-% c) N7 möchte zusätzlich N5 schicken, welchen CAs muss N7 vertrauen, wähle so, dass die Zahl and CAs minimal ist.
-
-% d) CA2 fällt aus, wie können wir die Kommunikation aus b) trotzdem realisieren (Was & Wie). Was können wir für N1 tun?
-
-% e) Trust on First Use: Keine CAs, Schlüssel wird bei erster Kommunikation an Kommunikationspartner geschickt, sobald und bei späteren Kommunikationen überprüft. Wenn Kommunikation und es gibt schon anderen Schlüssel, deny. 2 Vorteile, 2 Nachteile nenne und erklären.
-
-
-
-% Aufgabe 4
-% (Aufgabe war sehr ähnlich zu einer Übungsaufgabe)
-
-% Zur Erreichung von Forward Secrecy erzeugt Alice auf ihrem Server mit dem RSA-Verfahren einen privaten Schlüssel d sowie den dazu passenden öffentlichen Schlüssel c, den sie persönlich an ihre Nutzerinnen und Nutzer verteilt. Zusätzlich erzeugt der Server von Alice bei jedem Verbindungsaufbau ein neues kurzlebiges (engl. ephemeral) RSA-Schlüsselpaar, das aus einem öffentlichen Schlüssel ce und einem geheimen Schlüssel de besteht. Der Server signiert mit dem privaten Schlüssel d den neuen öffentlichen Schlüssel ce und sendet diesen zusammen mit der Signatur über die aufgebaute Verbindung an die Kundin. Die Kundin prüft anschließend die Signatur mithilfe des zuvor von Alice erhaltenen öffentlichen Schlüssels c.
-
-% Ist die Signatur korrekt, nutzt die Kundin ce, um einen neuen, zufällig generierten symmetrischen AES-Schlüssel k zu verschlüsseln. Die weitere Kommunikation in dieser Verbindung wird symmetrisch mit k verschlüsselt. Nach Verbindungsende löscht Alices Server de, ce und k.
-
-
-
-% a) Welche Verbindungen könnten von einem sehr starken Angreifer wie einem Nachrichtendienst noch entschlüsselt werden, wenn Zugriff auf den Server bekommt? Begründen Sie Ihre Antwort.
-
-% b) Skizzieren Sie einen Angriff, der möglich wäre, wenn die Kundin die Signatur nicht prüft. Erläutern SIe die einzelnen nötigen Schritte.
-
-% c) Alice ist das Verfahren zu langsam. Sie nimmt nun folgende Änderung vor: Statt jedes mal bei der Erzeugung von ce und de neue Primzahlen p und q für den Modulus Ne zu generieren, verwendet sie immer die gleichen Primzahlen. Nun wählt sie lediglich den öffentlichen Exponenten ce neu und berechnet einen dazugehörigen geheimen Exponenten de. Warum ist dies keine gute Idee? Zeigen Sie, wie sich dieses geänderte Verfahren angreifen lässt, um aufgezeichnete Verbindungen zu entschlüsseln.
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
 
 
 
 \section[2022]{1st exam}
-% Aufgabe 1 - Klassische Chiffren (11 Punkte)
 
-% (3 Punkte) Erläutern Sie zwei Ursachen, die dafür sorgen, dass fast alle kryptographischen Algorithmen mit der Zeit nicht mehr Standard sind.
+\begin{exercise}{Kryptographie}
+ \begin{enumerate}
+  \item Erläutern Sie zwei Ursachen, die dafür sorgen, dass fast alle kryptographischen Algorithmen mit der Zeit nicht mehr Standard sind.
+  \item Sie möchten einen Text so verschlüsseln, dass er auch in 98 Jahren nicht ohne Kenntnis des von Ihnen versteckten Schlüssels entschlüsselt werden kann. Welches Verfahren wählen Sie dazu? Begründen Sie Ihre Entscheidung. Warum wird das Verfahren heutzutage nicht überall benutzt?
+  \item Gegeben eine Chiffre, welche Buchstaben A-N mit Buchstaben N-Z vertauscht. Und gleichzeitig muss die Länge der Nachricht immer gleich sein. Bewerten Sie die Sicherheit der Chiffre und die beiden Eigenschaften (Polyalphabetische Verschlüsselung nur mit Vertauschen und die gleiche Länge der Nachricht).
+ \end{enumerate}
 
-% (3 Punkte) Sie möchten einen Text so verschlüsseln, dass er auch in 98 Jahren nicht ohne Kenntnis des von Ihnen versteckten Schlüssels entschlüsselt werden kann. Welches Verfahren wählen Sie dazu? Begründen Sie Ihre Entscheidung. Warum wird das Verfahren heutzutage nicht überall benutzt?
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
 
-% (5 Punkte) Gegeben wurde eine Chiffre, welche Buchstaben A-N mit Buchstaben N-Z vertauscht. Und gleichzeitig muss die Länge der Nachricht immer gleich sein. Bewerten Sie die Sicherheit der Chiffre und die beiden Eigenschaften (Polyalphabetische Verschlüsselung nur mit Vertauschen und die gleiche Länge der Nachricht).
+\begin{exercise}{Elliptische Kurven}
+  \begin{enumerate}
+    \item Berechnen Sie für die folgenden Parameter alle Punkte auf der Kurve: $a = 2$, $b = 3$, $p = 7$.
+    \item Elgamal mit elliptischen Kurven wurde vorgestellt. Zeigen Sie, warum dieses Verfahren mit beliebigen Parametern funktioniert.
+    \item Vergleichen Sie den Elgamal aus der Vorlesung mit dem gegebenen. Auf welchem Prinzip beruht die Sicherheit? Denken Sie, dass er sicherer ist? Warum?
+  \end{enumerate}
 
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
 
-% Aufgabe 2 - Elliptische Kurven (13 Punkte)
+\begin{exercise}{Zertifikate}
+  \begin{enumerate}
+    \item Es wurden 3 verschiedene Möglichkeiten gegeben, einen Schlüssel von verschiedenen Schlüsselpartnern (S, V, C, T) zu kombinieren. Alle Teilschlüssel werden aneinander gehängt l/4. 3 der Teilschlüssel wird aneinander gehängt und der letzte Teilnehmer bestimmt die Reihenfolge. Alle Schlüssel werden XOR berechnet. Bewerten Sie die Sicherheit der Verfahren.
+    \item Gegeben ist ein Zertifikatsbaum mit 5 Teilnehmern. $E \rightarrow D$, $E \rightarrow B$, $E \rightarrow A$, $E \rightarrow C$, $C \rightarrow B$, $A \rightarrow B$, $G \rightarrow \emptyset$. Betrachten Sie die Zertifizierungsrelation. $G$ möchte jetzt zusätzlich eine verschlüsselte Nachricht an $B$ senden. Welcher Zertifizierungsstelle bzw. welchen Zertifizierungsstellen muss $G$ mindestens vertrauen, um das Zertifikat von $B$ prüfen zu können?
+    \item Wählen Sie Ihre Lösung so, dass die Anzahl an Zertifizierungsstellen, denen $N4$ (explizit) vertrauen muss, minimal ist.
+    \item In der Zertifizierungsrelation aus Teilaufgabe c) wird die Zertifizierungsstelle $C$ kompromittiert und fällt deshalb aus. $G$ möchte eine verschlüsselte Nachricht an $C$ senden. Welche Maßnahme ermöglicht es $G$, das Zertifikat von $B$ trotz des Ausfalls von $CA4$ zu überprüfen?
+  \end{enumerate}
 
-% (8 Punkte) Berechnen Sie für die folgenden Parameter alle Punkte auf der Kurve: a = 2, b = 3, p = 7
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
 
-% (2 Punkte) Elgamal mit elliptischen Kurven wurde vorgestellt. Zeigen Sie, warum dieses Verfahren mit beliebigen Parametern funktioniert.
+\begin{exercise}{GSM}
+  \begin{enumerate}
+    \item Sagen Sie zu folgenden Abkürzungen welche Funktion sie im GSM erfüllen: $Ki$, $IMSI$, $RAND$, $SRES$, $LAI$, $MSISDN$, $Kc$.
+    \item Welche dieser Abkürzungen ist auch noch im UMTS enthalten bzw. mit ähnlicher Funktion aber anderen Namen?
+  \end{enumerate}
 
-% (3 Punkte) Vergleichen Sie den Elgamal aus der VL mit dem gegebenen. Auf welchem Prinzip beruht die Sicherheit? Denken Sie, dass er sicherer ist? Warum?
-
-
-
-% Aufgabe 3 - Public Key Infrastructure (8 Punkte)
-
-% (3 Punkte) Es wurden 3 verschiedene Möglichkeiten gegeben, einen Schlüssel von verschiedenen Schlüsselpartner (S, V, C, T) zu kombinieren.
-
-% Alle Teilschlüssel werden aneinander gehängt l/4.
-
-% 3 der Teilschlüssel wird aneinander gehängt und der letzte Teilnehmer bestimmt die Reihenfolge.
-
-% Alle Schlüssel werden XOR berechnet.
-
-% Bewerten Sie die Sicherheit der Verfahren.
-
-% (2 Punkte) Gegeben ist ein Zertifikatsbaum mit 5 Teilnehmern.
-
-% E-> D
-
-% E-> B
-
-% E-> A
-
-% E-> C
-
-% C-> B
-
-% A-> B
-
-% G -> Null
-
-% Betrachten Sie die Zertifizierung Relation. G möchte jetzt zusätzlich eine verschlüsselte Nachricht an B senden. Welcher Zertifizierungsstelle bzw. welchen Zertifizierungsstellen muss G mindestens vertrauen, um das Zertifikat von B prüfen zu können?
-
-% (1 Punkt) Wählen Sie Ihre Lösung so, dass die Anzahl an Zertifizierungsstellen, denen N4 (explizit) vertrauen muss, minimal ist.
-
-% (2 Punkte) In der Zertifizierung Relation aus Teilaufgabe c) wird die Zertifizierungsstelle C kompromittiert und fällt deshalb aus. G möchte eine verschlüsselte Nachricht an C senden. Welche Maßnahme ermöglicht es G, das Zertifikat von B trotz des Ausfalls von CA4 zu überprüfen?
-
-
-
-% Aufgabe 4 - GSM (8 Punkte)
-
-% (7 Punkte) Sagen Sie zu folgenden Abkürzungen welche Funktion sie im GSM erfüllen:
-
-% Ki, IMSI, RAND, SRES, LAI, MSISDN, Kc
-
-% (1 Punkt) Welche dieser Abkürzungen ist auch noch im UMTS enthalten bzw. mit ähnlicher Funktion aber anderen Namen?
-
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
 \end{document}
