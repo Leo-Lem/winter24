@@ -1,0 +1,51 @@
+\documentclass{article}
+
+\usepackage[]{../.template/summary}
+
+\subject{Security by Design}
+\semester{Winter 2024}
+\author{Leopold Lemmermann}
+
+\usepackage{pdfpages}
+
+\begin{document}\createtitle
+
+\includepdf[pages=1-10, nup=2x5]{slides.pdf}
+
+\section{Kryptographie}
+
+\subsection{Angriffsarten}
+\begin{enumerate}
+  \item \textbf{Ciphertext Only}: Angreifer kennt nur den Ciphertext
+  \item \textbf{Known Plaintext}: Angreifer kennt Ciphertext und Plaintext
+  \item \textbf{Chosen Plaintext} (adaptiv v. nicht-adaptiv): Angreifer kann Plaintext wählen und erhält den Ciphertext (nicht-adaptiv: alle Plaintexte müssen vorher gewählt werden)
+\end{enumerate}
+
+\subsection{Brechen (stark zu schwach)}
+\begin{enumerate}
+  \item \textbf{Vollständiges Brechen}: Schlüssel gefunden
+  \item \textbf{Universelles Brechen}: Äquivalenter Schlüssel gefunden
+  \item \textbf{Selektives Brechen}: Bestimmte Nachricht entschlüsselt
+  \item \textbf{Existenzielles Brechen}: Irgendeine Nachricht entschlüsselt
+\end{enumerate}
+
+\subsection{Klassische Chiffren}
+\begin{itemize}
+  \item \textbf{Transposition}: Veränderung der Reihenfolge
+  \item \textbf{Subsitution}: Ersetzen von Zeichen
+  \item \textbf{Produkt}: Kombination von Transposition und Substitution
+\end{itemize}
+
+\begin{enumerate}
+  \item \textbf{Skytala}: Transposition mit Zylinderdurchmesser als Schlüssel
+  \item \textbf{Polybios}: Substitution mit 5x5-Quadrat
+  \item \textbf{Caesar}: Substitution mit Verschiebung
+  \item \textbf{Vigenére}: Substitution mit Schlüsselwort
+  \item \textbf{Beaufort}: involutorischer Vigenére (gleiche Verschlüsselung und Entschlüsselung)
+  \item \textbf{Vernam} (one-time pad): Substitution mit zufälligem Schlüssel mit Klartextlänge
+\end{enumerate}
+
+\subsection{Moderne Kryptographie}
+
+
+\end{document}
