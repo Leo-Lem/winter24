@@ -10,127 +10,191 @@
 
 \section{Catalogue}
 
-% Aufgabe 3.5 Informationsgewinn aufgrund von Kontextinformationen
-% Unmittelbar vor der Durchführung eines militärischen Kampfeinsatzes steigt die Anzahl der Essenslieferungen
-% (Pizza, Burger, Croques, Sushi etc.), die an die Adresse des Verteidigungsministeriums geliefert werden,
-% massiv an. Diskutieren Sie, ob das System durch einen passiven oder einen aktiven Angreifer verwundbar ist
-% und welche Schutzziele dadurch bedroht werden. Für welche Angriffsart bzw. Angriffsarten ist das System
-% anfällig? Was wären mögliche Gegenmaßnahmen?
+\setcounter{subsection}{34}
+\begin{exercise}{Informationsgewinn aufgrund von Kontextinformationen}
+  Unmittelbar vor der Durchführung eines militärischen Kampfeinsatzes steigt die Anzahl der Essenslieferungen (Pizza, Burger, Croques, Sushi etc.), die an die Adresse des Verteidigungsministeriums geliefert werden, massiv an. Diskutieren Sie, ob das System durch einen passiven oder einen aktiven Angreifer verwundbar ist und welche Schutzziele dadurch bedroht werden. Für welche Angriffsart bzw. Angriffsarten ist das System anfällig? Was wären mögliche Gegenmaßnahmen?
 
-% Aufgabe 3.6 Angriff über WLAN-Namen
-% Viele öffentliche WLAN-Access-Points (APs) teilen allen Stationen (Clients) in Reichweite ihren WLAN-Namen
-% (SSID) mit. Der Nutzer einer Station wählt aus der Liste aller Stationen anhand der SSID das Netz, mit dem
-% er sich verbinden will. Damit der Nutzer diese Auswahl nicht jedes Mal wieder treffen muss, verbinden sich
-% die Stationen automatisch mit Access Points, mit denen sie bereits verbunden waren. Hierzu wird eine Liste
-% der bereits bekannten SSIDs auf der Station aufbewahrt. Stehen an einem Ort mehrere APs mit derselben
-% SSID zur Auswahl, verbindet sich eine Station i. d. R. mit dem AP mit der größten Signalstärke.
-% a) Diskutieren Sie, ob das System durch einen passiven oder einen aktiven Angreifer verwundbar ist.
-% b) Welche Schutzziele werden dadurch bedroht?
-% c) Was wären mögliche Gegenmaßnahmen?
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
 
-% Aufgabe 16.8 Verschlüsselte PIN-Übermittlung
-% Der Nutzer eines Laptops soll sich gegenüber einem Server im Heimnetz durch eine PIN authentisieren. Um
-% die vom Nutzer am Laptop eingegebene PIN nicht mitlesen zu können, wird sie vor der Übermittlung mit dem
-% öffentlichen RSA-Schlüssel des Servers deterministisch verschlüsselt.
-% a) Analysieren Sie die (Un)-Sicherheit eines solchen Protokolls gegenüber einem Angreifer auf der Kom-
-% munikationsstrecke.
-% b) Welche Schutzmaßnahmen können Nutzer und Server umsetzen, um die Sicherheit des Protokolls zu
-% erhöhen?
+\begin{exercise}{Angriff über WLAN-Namen}
+  Viele öffentliche WLAN-Access-Points (APs) teilen allen Stationen (Clients) in Reichweite ihren WLAN-Namen (SSID) mit. Der Nutzer einer Station wählt aus der Liste aller Stationen anhand der SSID das Netz, mit dem er sich verbinden will. Damit der Nutzer diese Auswahl nicht jedes Mal wieder treffen muss, verbinden sich die Stationen automatisch mit Access Points, mit denen sie bereits verbunden waren. Hierzu wird eine Liste der bereits bekannten SSIDs auf der Station aufbewahrt. Stehen an einem Ort mehrere APs mit derselben SSID zur Auswahl, verbindet sich eine Station i. d. R. mit dem AP mit der größten Signalstärke.
+  \begin{enumerate}
+    \item Diskutieren Sie, ob das System durch einen passiven oder einen aktiven Angreifer verwundbar ist.
+    \item Welche Schutzziele werden dadurch bedroht?
+    \item Was wären mögliche Gegenmaßnahmen?
+  \end{enumerate}
 
-% Aufgabe 18.9 Datenschutzgerechte Pseudonyme
-% Es ist denkbar, dass eine Zertifizierungsstelle Z den Public Key als Pseudonym einer ihr bekannten Person
-% P zertifiziert. Allerdings kann die Zertifizierungsstelle dann nicht nur im Streitfall das Pseudonym aufdecken,
-% sondern auch vollständig nachvollziehen, welche Geschäfte P gemacht hat (bzw. welche Signaturen P ge-
-% leistet hat), da sie den Public Key mit der Identität von P verketten kann.
-% Denken Sie sich eine Variante aus, bei der eine einzige Zertifizierungsstelle hierzu nicht mehr in der Lage ist,
-% im Streitfall aber trotzdem eine Aufdeckung des Pseudonyms möglich ist.
+  \begin{solution}
+    \begin{enumerate}
+      \item The system is vulnerable to a passive attacker.
+      \item The protection goals that are threatened are confidentiality and integrity.
+      \item Possible countermeasures are to use a VPN connection and to disable automatic connection to unknown networks.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
 
-% Aufgabe 22.21 Speicherung des Aufenthaltsortes
-% a) Welchen Zweck erfüllt die Speicherung des Aufenthaltsortes im GSM? Warum werden beim WLAN
-% keine Aufenthaltsorte gespeichert?
-% b) Warum werden im GSM zur Speicherung des Aufenthaltsortes zwei getrennte Datenbanken (HLR, VLR)
-% verwendet?
-% c) Bitte diskutieren Sie den erreichbaren Schutz des Aufenthaltsortes gegenüber Insider-Angriffen (z.B.
-% durch Mitarbeiter des Netzbetreibers) und Outsidern.
-% d) Inwieweit trägt die TMSI zum Schutz des Aufenthaltsortes bei?
+\setcounter{subsection}{167}
+\begin{exercise}{Verschlüsselte PIN-Übermittlung}
+  Der Nutzer eines Laptops soll sich gegenüber einem Server im Heimnetz durch eine PIN authentisieren. Um die vom Nutzer am Laptop eingegebene PIN nicht mitlesen zu können, wird sie vor der Übermittlung mit dem öffentlichen RSA-Schlüssel des Servers deterministisch verschlüsselt.
+  \begin{enumerate}
+    \item Analysieren Sie die (Un-)Sicherheit eines solchen Protokolls gegenüber einem Angreifer auf der Kommunikationsstrecke.
+    \item Welche Schutzmaßnahmen können Nutzer und Server umsetzen, um die Sicherheit des Protokolls zu erhöhen?
+  \end{enumerate}
 
-% Aufgabe 22.24 Kritik an GSM
-% Trotz der vorhandenen Sicherheitsfunktionen bietet GSM nur beschränkte Sicherheit hinsichtlich Vertraulich-
-% keit. Warum?
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
 
-% Aufgabe 22.30 Broadcast
-% Durch Verteilung (Broadcast) von Verbindungswünschen im gesamten Versorgungsgebiet eines Kommunika-
-% tionsnetzes (z.B. Mobilfunknetzes) kann auf das Speichern von Aufenthaltsdaten sowie Routinginformation
-% verzichtet werden.
-% a) Erläutern Sie den Unterschied von offenen impliziten und verdeckten impliziten Adressen.
-% b) Könnte man auch die explizite Adressierung verwenden, um einem mobilen Teilnehmer eine nicht not-
-% wendigerweise vertrauliche Nachricht (z.B. eine SMS) zu senden, ohne ihn lokalisieren zu können?
-% Begründen Sie Ihre Antwort.
-% c) Ist bei der variablen impliziten Adressierung ein Satellit zur Verteilung einsetzbar? Begründung!
+\setcounter{subsection}{188}
+\begin{exercise}{Datenschutzgerechte Pseudonyme}
+  Es ist denkbar, dass eine Zertifizierungsstelle Z den Public Key als Pseudonym einer ihr bekannten Person P zertifiziert. Allerdings kann die Zertifizierungsstelle dann nicht nur im Streitfall das Pseudonym aufdecken, sondern auch vollständig nachvollziehen, welche Geschäfte P gemacht hat (bzw. welche Signaturen P geleistet hat), da sie den Public Key mit der Identität von P verketten kann.
 
-% Aufgabe 22.31 Kollisionsabstand offener impliziter Adressen
-% Die Länge einer impliziten Adresse sei 32 Bit. Es sollen 100.000 Teilnehmer versorgt werden. Jedem Teilneh-
-% mer sind zu jedem Zeitpunkt 50 Adressen zugeordnet. Angenommen, jeder Teilnehmer erhält im Durchschnitt
-% 1 Nachricht pro Stunde.
-% a) Wie groß ist der Kollisionsabstand, d.h. wie lange dauert es im Mittel, bis ein ganz bestimmter Teilneh-
-% mer einen Fehlalarm (Nachricht eigentlich für einen anderen Teilnehmer bestimmt) erhält?
-% b) Der mittlere Kollisionsabstand soll mindestens 3 Jahre betragen. Wie lang muss die offene implizite
-% Adresse mindestens sein?
+  Denken Sie sich eine Variante aus, bei der eine einzige Zertifizierungsstelle hierzu nicht mehr in der Lage ist, im Streitfall aber trotzdem eine Aufdeckung des Pseudonyms möglich ist.
 
-% Aufgabe 23.2 Blind-Messsage-Service
-% a) Welche Schutzziele erfüllt der Blind-Message-Service?
-% b) Warum müssen beim Blind-Message-Service die Anfragevektoren und die Server-Antworten verschlüs-
-% selt übertragen werden?
-% c) Warum genügt beim modifizierten Blind-Message-Service die Verschlüsselung der Anfragevektoren?
-% d) Welche Verfahren können Sie alternativ zum Blind-Message-Service einsetzen, wenn Bandbreite keine
-% Rolle spielt?
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
 
-% Aufgabe 23.6 Modifikation von Chaumschen Mixen
-% Chaumsche Mixe nutzen eine Datenbank, in der alle eingehenden Nachrichten gespeichert werden.
-% a) Bitte erläutern Sie den Angriff, der durch die Datenbank verhindert wird.
-% b) Unter welcher Bedingung kann die Datenbank gelöscht werden?
-% c) Wie lässt sich das Verfahren umbauen, sodass Sie unter Beibehaltung des Angreifermodells die Spei-
-% chereffizienz steigern können?
-% Aufgabe 23.7 DC-Netz
-% a) Der (entartete) Schlüsselgraph eines DC-Netzes für die Teilnehmer A, B, C und D sei (A–B–C–D). B
-% greift nun A, C und D an. Beschreiben Sie den erreichbaren Schutz für A, C und D. Wie sind Sie bei
-% Ihrer Analyse vorgegangen?
+\setcounter{subsection}{2220}
+\begin{exercise}{Speicherung des Aufenthaltsortes}
+  \begin{enumerate}
+    \item Welchen Zweck erfüllt die Speicherung des Aufenthaltsortes im GSM? Warum werden beim WLAN keine Aufenthaltsorte gespeichert?
+    \item Warum werden im GSM zur Speicherung des Aufenthaltsortes zwei getrennte Datenbanken (HLR, VLR) verwendet?
+    \item Bitte diskutieren Sie den erreichbaren Schutz des Aufenthaltsortes gegenüber Insider-Angriffen (z.B. durch Mitarbeiter des Netzbetreibers) und Outsidern.
+    \item Inwieweit trägt die TMSI zum Schutz des Aufenthaltsortes bei?
+  \end{enumerate}
 
-% Aufgabe 23.9 Überwachung im Internet
-% a) Erläutern Sie eine mögliche Vorgehensweise, mit der ein starker Angreifer (z.B. ein Nachrichtendienst)
-% die IP-Adressen der Nutzer herausfinden kann, die eine bestimmte Webseite über ein mixbasiertes
-% Anonymisierungssystem (z.B. Tor) abrufen.
-% b) Erläutern Sie eine mögliche Vorgehensweise, mit der ein starker Angreifer (z.B. ein Nachrichtendienst)
-% ermitteln kann, welche Webseiten ein bestimmter Nutzer über ein mixbasiertes Anonymisierungssystem
-% abgerufen hat. Hinweis: Beschreiben Sie eine andere Vorgehensweise als in Teilaufgabe a), auch wenn
-% Ihre für Teilaufgabe a) gewählte Vorgehensweise für Teilaufgabe b) geeignet ist.
-% c) Erläutern Sie drei Techniken, mit denen ein Webserver einen Nutzer bei seinem zweiten (späteren)
-% Besuch wiedererkennen kann.
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
 
-% Aufgabe 23.11 Tagging-Angriff auf anonyme Mixe und Kanäle
-% a) Was ist ein Tagging-Angriff auf anonyme Kanäle?
-% b) Wie verhindert man den Tagging-Angriff auf anonyme Kanäle?
+\setcounter{subsection}{2223}
+\begin{exercise}{Kritik an GSM}
+  Trotz der vorhandenen Sicherheitsfunktionen bietet GSM nur beschränkte Sicherheit hinsichtlich Vertraulichkeit. Warum?
 
-% Aufgabe 23.12 Tracking auf der Anwendungsschicht
-% a) Nennen Sie zwei Schutzziele, die beim Tracking auf der Anwendungsebene gebrochen werden.
-% b) Was unterscheidet Tracking auf der Anwendungsebene von Tracking auf der Netzebene?
-% c) Nennen Sie drei grundsätzliche Mechanismen, mit denen man Tracking auf der Anwendungsebene ver-
-% hindern bzw. erschweren kann. Erläutern Sie für jeden Mechanismus, wie das Tracking erschwert wird
-% und vor welchem Angreifer, und nennen Sie jeweils ein konkretes Beispiel, bei dem der Mechanismus
-% umgesetzt wird.
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
 
-% Aufgabe 23.13 Strafverfolgung
-% Die Polizei hat sich Zugriff auf einen Webserver verschafft, der zur unbefugten Verbreitung von urheber-
-% rechtlich geschütztem Material verwendet wird. Anhand des dort aufgezeichneten Access-Log sollen nun die
-% Nutzer des Servers ausfindig gemacht werden. Bei der Ermittlung von Tatverdächtigen stößt man schnell auf
-% Probleme: Die Zugriffe, die von der IP-Adresse A ausgingen, stammen von einem Kleinbetrieb, in dem es
-% fünf Nutzer gibt. Der Inhaber des Anschlusses stellt der Polizei ein Protokoll des DSL-Routers zur Verfügung,
-% in dem die Aktivitäten der einzelnen internen Nutzer anhand ihrer IP-Adressen aufgezeichnet wurden. Mes-
-% sungen ergeben, dass die Latenz des Kommunikationsnetzes zwischen DSL-Router und Server maximal 0,5
-% Sekunden beträgt. Auf Basis der verfügbaren Daten (Access-Log, IP-Adresse A, Protokoll des DSL-Routers
-% und Latenz) soll nun die interne IP-Adresse ermittelt werden, von der die Zugriffe ausgingen.
-% Bitte erläutern Sie Ihr Vorgehen im Detail. Unter welcher Begrifflichkeit lassen sich derartige Angriffe zusam-
-% menfassen?
+\setcounter{subsection}{2229}
+\begin{exercise}{Broadcast}
+  Durch Verteilung (Broadcast) von Verbindungswünschen im gesamten Versorgungsgebiet eines Kommunikationsnetzes (z.B. Mobilfunknetzes) kann auf das Speichern von Aufenthaltsdaten sowie Routinginformation verzichtet werden.
+  \begin{enumerate}
+    \item Erläutern Sie den Unterschied von offenen impliziten und verdeckten impliziten Adressen.
+    \item Könnte man auch die explizite Adressierung verwenden, um einem mobilen Teilnehmer eine nicht notwendigerweise vertrauliche Nachricht (z.B. eine SMS) zu senden, ohne ihn lokalisieren zu können? Begründen Sie Ihre Antwort.
+    \item Ist bei der variablen impliziten Adressierung ein Satellit zur Verteilung einsetzbar? Begründung!
+  \end{enumerate}
+
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Kollisionsabstand offener impliziter Adressen}
+  Die Länge einer impliziten Adresse sei 32 Bit. Es sollen 100.000 Teilnehmer versorgt werden. Jedem Teilnehmer sind zu jedem Zeitpunkt 50 Adressen zugeordnet. Angenommen, jeder Teilnehmer erhält im Durchschnitt 1 Nachricht pro Stunde.
+  \begin{enumerate}
+    \item Wie groß ist der Kollisionsabstand, d.h. wie lange dauert es im Mittel, bis ein ganz bestimmter Teilnehmer einen Fehlalarm (Nachricht eigentlich für einen anderen Teilnehmer bestimmt) erhält?
+    \item Der mittlere Kollisionsabstand soll mindestens 3 Jahre betragen. Wie lang muss die offene implizite Adresse mindestens sein?
+  \end{enumerate}
+
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
+
+\setcounter{subsection}{231}
+\begin{exercise}{Blind-Messsage-Service}
+  \begin{enumerate}
+    \item Welche Schutzziele erfüllt der Blind-Message-Service?
+    \item Warum müssen beim Blind-Message-Service die Anfragevektoren und die Server-Antworten verschlüsselt übertragen werden?
+    \item Warum genügt beim modifizierten Blind-Message-Service die Verschlüsselung der Anfragevektoren?
+    \item Welche Verfahren können Sie alternativ zum Blind-Message-Service einsetzen, wenn Bandbreite keine Rolle spielt?
+  \end{enumerate}
+
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
+
+\setcounter{subsection}{235}
+\begin{exercise}{Modifikation von Chaum'schen Mixen}
+  Chaum'sche Mixe nutzen eine Datenbank, in der alle eingehenden Nachrichten gespeichert werden.
+  \begin{enumerate}
+    \item Bitte erläutern Sie den Angriff, der durch die Datenbank verhindert wird.
+    \item Unter welcher Bedingung kann die Datenbank gelöscht werden?
+    \item Wie lässt sich das Verfahren umbauen, sodass Sie unter Beibehaltung des Angreifermodells die Speichereffizienz steigern können?
+  \end{enumerate}
+
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{DC-Netz}
+  \begin{enumerate}
+    \item Der (entartete) Schlüsselgraph eines DC-Netzes für die Teilnehmer A, B, C und D sei (A-B-C-D). B greift nun A, C und D an. Beschreiben Sie den erreichbaren Schutz für A, C und D. Wie sind Sie bei Ihrer Analyse vorgegangen?
+  \end{enumerate}
+
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
+
+\setcounter{subsection}{238}
+\begin{exercise}{Überwachung im Internet}
+  \begin{enumerate}
+    \item Erläutern Sie eine mögliche Vorgehensweise, mit der ein starker Angreifer (z.B. ein Nachrichtendienst) die IP-Adressen der Nutzer herausfinden kann, die eine bestimmte Webseite über ein mixbasiertes Anonymisierungssystem (z.B. Tor) abrufen.
+    \item Erläutern Sie eine mögliche Vorgehensweise, mit der ein starker Angreifer (z.B. ein Nachrichtendienst) ermitteln kann, welche Webseiten ein bestimmter Nutzer über ein mixbasiertes Anonymisierungssystem abgerufen hat. Hinweis: Beschreiben Sie eine andere Vorgehensweise als in Teilaufgabe a), auch wenn Ihre für Teilaufgabe a) gewählte Vorgehensweise für Teilaufgabe b) geeignet ist.
+    \item Erläutern Sie drei Techniken, mit denen ein Webserver einen Nutzer bei seinem zweiten (späteren) Besuch wiedererkennen kann.
+  \end{enumerate}
+
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
+
+\setcounter{subsection}{2310}
+\begin{exercise}{Tagging-Angriff auf anonyme Mixe und Kanäle}
+  \begin{enumerate}
+    \item Was ist ein Tagging-Angriff auf anonyme Kanäle?
+    \item Wie verhindert man den Tagging-Angriff auf anonyme Kanäle?
+  \end{enumerate}
+
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Tracking auf der Anwendungsschicht}
+  \begin{enumerate}
+    \item Nennen Sie zwei Schutzziele, die beim Tracking auf der Anwendungsebene gebrochen werden.
+    \item Was unterscheidet Tracking auf der Anwendungsebene von Tracking auf der Netzebene?
+    \item Nennen Sie drei grundsätzliche Mechanismen, mit denen man Tracking auf der Anwendungsebene verhindern bzw. erschweren kann. Erläutern Sie für jeden Mechanismus, wie das Tracking erschwert wird und vor welchem Angreifer, und nennen Sie jeweils ein konkretes Beispiel, bei dem der Mechanismus umgesetzt wird.
+  \end{enumerate}
+
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Strafverfolgung}
+  Die Polizei hat sich Zugriff auf einen Webserver verschafft, der zur unbefugten Verbreitung von urheberrechtlich geschütztem Material verwendet wird. Anhand des dort aufgezeichneten Access-Log sollen nun die Nutzer des Servers ausfindig gemacht werden. Bei der Ermittlung von Tatverdächtigen stößt man schnell auf Probleme: Die Zugriffe, die von der IP-Adresse A ausgingen, stammen von einem Kleinbetrieb, in dem es fünf Nutzer gibt. Der Inhaber des Anschlusses stellt der Polizei ein Protokoll des DSL-Routers zur Verfügung, in dem die Aktivitäten der einzelnen internen Nutzer anhand ihrer IP-Adressen aufgezeichnet wurden. Messungen ergeben, dass die Latenz des Kommunikationsnetzes zwischen DSL-Router und Server maximal 0,5 Sekunden beträgt. Auf Basis der verfügbaren Daten (Access-Log, IP-Adresse A, Protokoll des DSL-Routers und Latenz) soll nun die interne IP-Adresse ermittelt werden, von der die Zugriffe ausgingen.
+
+  Bitte erläutern Sie Ihr Vorgehen im Detail. Unter welcher Begrifflichkeit lassen sich derartige Angriffe zusammenfassen?
+
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
+
+
 
 \section[2024]{Mock exam}
 
