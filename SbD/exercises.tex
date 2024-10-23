@@ -8,9 +8,353 @@
 
 \begin{document}\createtitle
 
+\section{Assignments}
+% Aufgabe 1.1 Skytala
+% Bei der Skytala handelt es sich um eine Transpositionschiffre, bei der ursprünglich ein Zylinder mit einem
+% Papierstreifen umwickelt wurde. Die Ver- und Entschlüsselung kann aber auch mithilfe einer Matrix dargestellt
+% werden.
+% a) Verschlüsseln Sie den folgenden Klartext mit einer Skytala, die durch eine Matrix mit sieben Zeilen und
+% neun Spalten beschrieben werden kann:
+% G L U E C K L I C H _ I S T _ D E R _ D E R _ D E N _ D I N G E N _ A U F _ D E N _ G R U N D _ G E H E N _ K O N N T E
+% b) Was ist der geheim zu haltende symmetrische Schlüssel der Skytala aus Teilaufgabe a) und wie hängt
+% dieser mit der ursprünglichen Variante mit Zylinder und Papierstreifen zusammen?
+% c) Erläutern Sie kurz zwei sinnvolle Ansätze zur Kryptanalyse, d. h. Ansätze zum Brechen einer Skytala.
+
+% Aufgabe 1.2 Spalten-Transpositionen
+% Bei der Skytala wird ein Zylinder mit einem Papierstreifen umwickelt, beschrieben und wieder abgewickelt.
+% a) Eine Verbesserung dieser Spalten-Transposition ergibt sich, wenn zusätzlich auch die Spalten in ihrer
+% Reihenfolge vertauscht werden (was beim Papierstreifen natürlich nicht gelingt, wohl aber im Rechner).
+% Um welchen Faktor vergrößert sich dadurch der Schlüsselraum bei s Spalten?
+% b) Schreiben Sie eine Skytala mit 4 Zeilen und 3 Spalten (ohne Spaltenvertauschung) in Zyklenschreib-
+% weise.
+
+% Aufgabe 2.1 Unsicherheit der Vigènere-Chiffre
+% Ein klassisches Verschlüsselungsverfahren ist die Vigenère-Chiffre. Sie arbeitet typischerweise auf einem Al-
+% phabet aus den Großbuchstaben A-Z für den Klartext, den Schlüssel und den Schlüsseltext. Zudem kann
+% ein Zeichen zur Worttrennung hinzugenommen werden. Für diese Aufgabe wird dazu der Unterstrich _ ver-
+% wendet. Ein Schlüsseltextzeichen ergibt sich aus dem um das jeweilige Zeichen des Schlüssels verschobene
+% Klartextzeichen. Diese Verschiebung kann durch das sogenannte Vigenère-Tableau in Abbildung 1 dargestellt
+% werden.
+% A B C D E F G H I J K L M N O P Q R S T U V W X Y Z _
+% A A B C D E F G H I J K L M N O P Q R S T U V W X Y Z _
+% B B C D E F G H I J K L M N O P Q R S T U V W X Y Z _ A
+% C C D E F G H I J K L M N O P Q R S T U V W X Y Z _ A B
+% D D E F G H I J K L M N O P Q R S T U V W X Y Z _ A B C
+% E E F G H I J K L M N O P Q R S T U V W X Y Z _ A B C D
+% F F G H I J K L M N O P Q R S T U V W X Y Z _ A B C D E
+% G G H I J K L M N O P Q R S T U V W X Y Z _ A B C D E F
+% H H I J K L M N O P Q R S T U V W X Y Z _ A B C D E F G
+% I I J K L M N O P Q R S T U V W X Y Z _ A B C D E F G H
+% J J K L M N O P Q R S T U V W X Y Z _ A B C D E F G H I
+% K K L M N O P Q R S T U V W X Y Z _ A B C D E F G H I J
+% L L M N O P Q R S T U V W X Y Z _ A B C D E F G H I J K
+% M M N O P Q R S T U V W X Y Z _ A B C D E F G H I J K L
+% N N O P Q R S T U V W X Y Z _ A B C D E F G H I J K L M
+% O O P Q R S T U V W X Y Z _ A B C D E F G H I J K L M N
+% P P Q R S T U V W X Y Z _ A B C D E F G H I J K L M N O
+% Q Q R S T U V W X Y Z _ A B C D E F G H I J K L M N O P
+% R R S T U V W X Y Z _ A B C D E F G H I J K L M N O P Q
+% S S T U V W X Y Z _ A B C D E F G H I J K L M N O P Q R
+% T T U V W X Y Z _ A B C D E F G H I J K L M N O P Q R S
+% U U V W X Y Z _ A B C D E F G H I J K L M N O P Q R S T
+% V V W X Y Z _ A B C D E F G H I J K L M N O P Q R S T U
+% W W X Y Z _ A B C D E F G H I J K L M N O P Q R S T U V
+% X X Y Z _ A B C D E F G H I J K L M N O P Q R S T U V W
+% Y Y Z _ A B C D E F G H I J K L M N O P Q R S T U V W X
+% Z Z _ A B C D E F G H I J K L M N O P Q R S T U V W X Y
+% _ _ A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+% Abbildung 1: Vigenère-Tableau
+% a) Verschlüsseln Sie den nachfolgenden Klartext mit dem Schlüssel PRUEFUNG unter Verwendung einer
+% Vigenère-Chiffre:
+% G L U E C K L I C H _ I S T _ D E R _ D E R _ D E N _ D I N G E N _ A U F _ D E N _ G R U N D _ G E H E N _ K O N N T E
+% b) Erläutern Sie kurz zwei sinnvolle Ansätze zur Kryptanalyse, d. h. zum Brechen einer Vigenère-Chiffre.
+% c) Eine Verbesserung der Vigenère-Chiffre ergibt sich durch die Verlängerung des Schlüssels. Um wel-
+% chen Faktor vergrößert sich dadurch der Schlüsselraum bei einem Alphabet mit 27 Elementen (A-Z und
+% Unterstrich als Worttrennung) und einer Verlängerung um s Zeichen?
+% d) Wie müsste die Vigenère-Chiffre verändert werden, um informationstheoretische Sicherheit im Bezug
+% auf die Vertraulichkeit zu liefern? Begründen Sie, warum diese Veränderung zielführend ist.
+
+% Aufgabe 2.2 Zufallszahlen bei der Schlüsselgenerierung
+% Warum sind bei der Schlüsselgenerierung (echte) Zufallszahlen nötig? Weshalb eignet sich die XOR-
+% Verknüpfung, wenn zur Erhöhung der Sicherheit mehrere Zufallszahlen zu einer einzelnen Zufallszahl ver-
+% knüpft werden, etwa bei der Schlüsselgenerierung?
+
+% Aufgabe 2.3 Falsche Verwendung des One-Time-Pads
+% Ihnen sind eine Reihe verschlüsselter deutscher Substantive in die Hände gefallen. Sie gehen davon aus,
+% dass fahrlässigerweise alle Wörter mit demselben One-Time-Pad verschlüsselt wurden. Versuchen Sie, den
+% Schlüssel zu ermitteln, indem Sie einen geeigneten Angriff implementieren. Die Schlüsseltexte (der 6 Sub-
+% stantive) in Dezimalschreibweise lauten:
+% 09 00 04 10
+% 10 20 28 09
+% 10 16 02 02
+% 10 20 05 08
+% 26 26 03 00
+% 28 16 03 17
+% Hinweis: Das Passwort und die Substantive sind ASCII-codiert (Alphabet = {A, B, C, . . . , Z})
+
+% Aufgabe 2.4 Grundlagen der Kryptographie
+% a) Erläutern Sie zwei Ursachen, die dafür sorgen, dass fast alle kryptographischen Algorithmen mit der
+% Zeit durch andere ersetzt werden müssen.
+% b) Sie möchten einen Text so verschlüsseln, dass er auch in 99 Jahren nicht ohne Kenntnis des von Ihnen
+% versteckten Schlüssels entschlüsselt werden kann. Welches Verfahren wählen Sie dazu? Begründen
+% Sie Ihre Entscheidung. Warum wird das Verfahren heutzutage nicht überall benutzt?
+% c) In der Vorlesung wurden verschiedene klassische Chiffren behandelt, darunter Substitutionschiffren
+% wie die Caesar-Chiffre (Verschiebechiffre), das Schema von Polybios, das Vigenère-Verfahren und die
+% Vernman-Chiffre. Zudem wurden Transpositionschiffren wie die Skytala betrachtet.
+% Ihnen liegt ein Schlüsseltext vor, der mit einer dieser Chiffren erzeugt wurde. Ihnen ist bekannt, dass es
+% sich um die Verschlüsselung eines deutschen Textes handelt. Wie können Sie – ohne Rechnerunter-
+% stützung – vorgehen, um einzugrenzen, welche Chiffre verwendet wurde? Erläutern Sie die jeweiligen
+% Ansätze.
+
+
+
 \section{Catalogue}
 
-% TODO
+% Aufgabe 4.7 Spoofing
+% a) Inwiefern kann ein DNS-Spoofing-Angriff für einen Distributed Denial of Service (DDoS)-Angriff ausgenutzt werden? Erklären Sie anschaulich.
+% b) Welchen Angriff kann man in der nachfolgenden Ausgabe erkennen? Begründen Sie.
+% ?(192.168.1.7) at 00:1f:88:13:fe:f1 [ether] on eth0
+% ?(192.168.1.4) at 00:1f:88:13:fe:f1 [ether] on eth0
+% ?(192.168.1.1) at 00:1f:88:13:fe:f1 [ether] on eth0
+% ?(192.168.1.3) at 00:1f:88:13:fe:f1 [ether] on eth0
+% ?(192.168.1.2) at 00:1f:88:13:fe:f1 [ether] on eth0
+% c) Warum funktioniert ARP-Spoofing nur in einem lokalen Netz?
+% d) Sie vermuten, Opfer eines ARP-Spoofing-Angriffs zu sein. Was können Sie an Ihrem Rechner überprüfen, um einen solchen Angriff erkennen zu können?
+
+% Aufgabe 4.8 Kommunikationsmanipulation
+% Eve und Bob sind befreundet und wohnen im selben Haushalt. Ihre Computer sind an denselben Switch
+% angeschlossen und über diesen mit dem Internet verbunden. Eve hat bald Geburtstag und vermutet, dass Bob
+% ein Geschenk für Sie bei einem Onlineshop bestellen wird, der keine Verbindungsverschlüsselung einsetzt.
+% Einerseits ist sie sehr neugierig und möchte gern so früh wie möglich erfahren, was sie geschenkt bekommt.
+% Andererseits befürchtet sie, dass Bob ihr einen Stoffteddy schenken möchte, den sie nicht haben will. Sie
+% möchte daher Bobs Kommunikation abhören und, wenn nötig, seine Bestellung manipulieren können.
+% a) Nennen und erläutern Sie eine Angriffsart, mit der Eve den gesamten Netzverkehr von Bob abhören
+% und manipulieren kann.
+% b) Wie kann Bob sich vor dem in Teilaufgabe a) beschriebenen Angriff schützen?
+
+% Aufgabe 10.5 Indeterministische Verschlüsselung
+% a) Was bedeutet indeterministische Verschlüsselung?
+% b) Wie realisieren Sie die indeterministische Verschlüsselung bei einem asymmetrischen Konzelations-
+% system?
+% c) Was ändert sich gegenüber b) bei einem symmetrischen Konzelationssystem?
+% d) Sie sollen eine indeterministische Verschlüsselung realisieren. Zur Auswahl stehen die Algorithmen
+% RSA und ElGamal. Wie würden Sie bei beiden Algorithmen vorgehen?
+% e) Beim Einsatz asymmetrischer Verschlüsselung sollte eine Nachricht vor der Verschlüsselung noch um
+% (Pseudo-)Zufallszahlen ergänzt werden (indeterministische Verschlüsselung). Welcher Angriff kann da-
+% durch verhindert werden?
+
+% Aufgabe 10.6 Informationstheoretische Sicherheit
+% Das One-Time-Pad (Vernam-Chiffre) ist ein sehr einfaches, aber informationstheoretisch sicheres symme-
+% trisches Verschlüsselungsverfahren: Die Klartextbits xi werden einzeln XOR-verknüpft mit einer zufälligen
+% Schlüsselfolge ki gleicher Länge, die nur ein einziges Mal verwendet werden darf (Schlüsseltext si = xi ⊕ki
+% mit i= 1,2,...).
+% a) Was erfährt der Angreifer, der den Schlüsseltext abfängt, über den Klartext?
+% b) Wie würden Sie die Sicherheit des Verfahrens beweisen?
+% c) Warum darf die Schlüsselfolge nicht mehrmals verwendet werden? Überlegen Sie sich, was passieren
+% würde, wenn der Angreifer zwei Schlüsseltexte s1 und s2 (oder gar noch weitere) abfangen würde, die
+% unter dem gleichen Schlüssel k= k1 = k2 verschlüsselt wurden. Annahme: Es handelt sich um sinnvolle
+% Klartexte.
+% Es existiert auch ein informationstheoretisch sicheres (symmetrisches) Verfahren zur Authentifikation.
+% d) Welche Eigenschaft muss ein informationstheoretisch sicheres Authentifikationssystem besitzen?
+% e) Entwerfen Sie ein solches System und erläutern Sie dessen Funktionsweise sowie dessen Schutz
+% vor einem Angreifer und damit dessen informationstheoretische Sicherheit. Legen Sie eine bitweise
+% Authentisierung (ein MAC-Bit pro Klartextbit) zugrunde.
+% f) Kann es informationstheoretisch sichere asymmetrische Verfahren zur Verschlüsselung bzw. Authenti-
+% fikation geben? Begründen Sie Ihre Antwort.
+
+% Aufgabe 11.3 Unsicherheit der klassischen Verschiebechiffre
+% Ein klassisches Verschlüsselungsverfahren ist die Verschiebechiffre (Vigenère-Chiffre). Sie arbeitet typischer-
+% weise auf einem Alphabet aus den Großbuchstaben A-Z für den Klartext, den Schlüssel und den Schlüssel-
+% text. Zudem kann ein Zeichen zur Worttrennung hinzugenommen werden. Für diese Aufgabe wird dazu der
+% Unterstrich _ verwendet. Ein Schlüsseltextzeichen ergibt sich aus dem um das Schlüsselzeichen verschobene
+% Klartextzeichen. Dieses sogenannte Vigenère-Tableau ist in Abbildung 1 dargestellt.
+% a) Verschlüsseln Sie den nachfolgenden Klartext mit dem Schlüsselwort PRUEFUNG unter Verwendung
+% einer Vigenère-Chiffre:
+% GLUECKLICH_IST_DER_DER_DEN_DINGEN_AUF_DEN_GRUND_GEHEN_KONNTE
+% b) Erläutern Sie kurz zwei sinnvolle Ansätze zur Kryptanalyse, d. h. zum Brechen einer Vigenère-Chiffre.
+% c) Eine Verbesserung der Vigenère-Chiffre ergibt sich durch die Verlängerung des Schlüsselwortes. Um
+% welchen Faktor vergrößert sich dadurch der Schlüsselraum bei einem Alphabet mit 27 Elementen (A-Z
+% und Unterstrich als Worttrennung) und einer Verlängerung um sZeichen?
+% d) Wie müsste die Vigenère-Chiffre verändert werden, um informationstheoretische Sicherheit im Bezug
+% auf die Vertraulichkeit zu liefern? Begründen Sie, warum dieser Veränderung zielführend ist.
+% 23
+% A B C D E F G H I J K L M N O P Q R S T U V W X Y Z _
+% A A B C D E F G H I J K L M N O P Q R S T U V W X Y Z _
+% B B C D E F G H I J K L M N O P Q R S T U V W X Y Z _ A
+% C C D E F G H I J K L M N O P Q R S T U V W X Y Z _ A B
+% D D E F G H I J K L M N O P Q R S T U V W X Y Z _ A B C
+% E E F G H I J K L M N O P Q R S T U V W X Y Z _ A B C D
+% F F G H I J K L M N O P Q R S T U V W X Y Z _ A B C D E
+% G G H I J K L M N O P Q R S T U V W X Y Z _ A B C D E F
+% H H I J K L M N O P Q R S T U V W X Y Z _ A B C D E F G
+% I I J K L M N O P Q R S T U V W X Y Z _ A B C D E F G H
+% J J K L M N O P Q R S T U V W X Y Z _ A B C D E F G H I
+% K K L M N O P Q R S T U V W X Y Z _ A B C D E F G H I J
+% L L M N O P Q R S T U V W X Y Z _ A B C D E F G H I J K
+% M M N O P Q R S T U V W X Y Z _ A B C D E F G H I J K L
+% N N O P Q R S T U V W X Y Z _ A B C D E F G H I J K L M
+% O O P Q R S T U V W X Y Z _ A B C D E F G H I J K L M N
+% P P Q R S T U V W X Y Z _ A B C D E F G H I J K L M N O
+% Q Q R S T U V W X Y Z _ A B C D E F G H I J K L M N O P
+% R R S T U V W X Y Z _ A B C D E F G H I J K L M N O P Q
+% S S T U V W X Y Z _ A B C D E F G H I J K L M N O P Q R
+% T T U V W X Y Z _ A B C D E F G H I J K L M N O P Q R S
+% U U V W X Y Z _ A B C D E F G H I J K L M N O P Q R S T
+% V V W X Y Z _ A B C D E F G H I J K L M N O P Q R S T U
+% W W X Y Z _ A B C D E F G H I J K L M N O P Q R S T U V
+% X X Y Z _ A B C D E F G H I J K L M N O P Q R S T U V W
+% Y Y Z _ A B C D E F G H I J K L M N O P Q R S T U V W X
+% Z Z _ A B C D E F G H I J K L M N O P Q R S T U V W X Y
+% _ _ A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+% Abbildung 1: Vigenère-Tableau
+
+% Aufgabe 11.4 Klassische Chiffren und Gütekriterien
+% a) Verschlüsseln Sie den Klartext PRUEFUNGSSPASS_OHNE_KOMPROMISSE mit der Skytala und dem Schlüs-
+% sel k= 4 (4 Zeilen, 8 Spalten). Verschlüsseln Sie den Klartext STUDIUMSFREUDE mit der Caesar-Chiffre
+% und dem Schlüssel k= 3.
+% b) Die sogenannte Häufigkeitsanalyse kann als Angriff auf klassische Chiffren verwendet werden. Dabei
+% werden die Buchstabenhäufigkeiten eines Chiffretextes gezählt und mit den normalerweise vorkom-
+% menden Buchstabenhäufigkeiten von Klartexten verglichen. Damit können Rückschlüsse von den Chif-
+% fretextbuchstaben auf die Klartextbuchstaben gezogen werden. Für welche der beiden in Teilaufgabe a)
+% angesprochenen klassischen Chiffren ist dieser Angriff besonders schwerwiegend und kann zum direk-
+% ten Brechen einer Chiffre führen? Begründen Sie Ihre Antwort.
+% c) Sie kommen auf die Idee, beide Chiffren miteinander zu kombinieren, um eine größere Sicherheit zu
+% erreichen. Begründen Sie für die Variante, dass zuerst die Caesar-Chiffre auf den Klartext und dann
+% die Skytala auf den resultierenden Caesar-Chiffretext angewandt wird, ob diese Überlegung tatsächlich
+% stimmt. Ändert sich an Ihrer Überlegung etwas, wenn erst die Skytala und dann die Caesar-Chiffre
+% angewandt wird?
+% d) Nennen und erläutern Sie die Gütekriterien, die moderne symmetrische Chiffren erfüllen müssen, um
+% vor derartig einfachen Angriffen wie der Häufigkeitsanalyse zu schützen.
+
+% Aufgabe 12.6 Hashfunktionen und Signaturen
+% a) Handelt es sich bei der Identitätsfunktion H(x) = xum eine kryptographische Hashfunktion? Begründen
+% Sie.
+% b) Ist die Kollisionsfreiheit eine relevante Eigenschaft kryptographischer Hashfunktionen? Begründen Sie.
+% c) In der Praxis wird die digitale Signatur einer Nachricht mmeist durch Signieren des (kryptographischen)
+% Hashwertes der Nachricht H(m) und nicht der Nachricht selbst gebildet: Sigk(H(m)). Warum kann ein
+% Empfänger sich in diesem Fall auf die Authentizität der Nachricht verlassen? Welche Vorteile bringt
+% das Signieren des Hashwertes einer Nachricht mit sich? Betrachten Sie hierfür auch den Fall, dass
+% klassische RSA-Signaturen ohne Padding zum direkten Signieren von kurzen Nachrichten eingesetzt
+% würden.
+% 25
+% d) Eine Entwicklerin möchte eine von ihr entwickelte Software zur Verfügung stellen. Um den Datenverkehr
+% auf ihrem eigenen Server zu reduzieren, stellt sie das Softwarepaket über ein kommerzielles Content
+% Delivery Network (CDN) bereit. Sie möchte jedoch verhindern, dass ein böswilliger CDN-Betreiber die
+% von ihr bereitgestellte Software durch eine mit einer Hintertür versehene Version ersetzt. Entwerfen Sie
+% ein geeignetes Verfahren unter Nutzung von kryptographischen Hashfunktionen, das es Nutzenden er-
+% laubt, die Integrität des Softwarepakets zu überprüfen. Sie können annehmen, dass der CDN-Betreiber
+% keinen Zugriff auf den Server der Entwicklerin besitzt.
+% • Wie geht die Entwicklerin beim Veröffentlichen einer neuen Software-Version vor?
+% • Wie können Nutzer die Integrität überprüfen?
+% • Welche Eigenschaft einer kryptographischen Hashfunktion ist für die Sicherheit des Verfahrens
+% entscheidend? Begründen Sie.
+
+% Aufgabe 15.1 Das Feistel-Prinzip
+% a) Die nebenstehende Abbildung zeigt eine Runde der Feistel-
+% Verschlüsselung. Berechnen Sie zwei Runden der Verschlüsse-
+% lung und Entschlüsselung mit dem Feistel-Prinzip und den fol-
+% genden Werten:
+% • Klartext: 0011 0100
+% • Funktion F: binäres UND
+% • Rundenschlüssel K1: 1110
+% • Rundenschlüssel K2: 0001
+% Welche Eigenschaften sollte die Einwegfunktion F aufweisen, um
+% mit ihrer Hilfe eine sichere Feistel-Chiffre zu erzeugen?
+% Zeigen Sie, dass auch bei bei einer konstanten Einwegfunktion F
+% sowohl die Ver- als auch die Entschlüsselung funktioniert.
+% d) Benötigen Sie die Umkehrfunktion F−1 von F, damit die Ent-
+% schlüsselung klappt? Begründen Sie Ihre Antwort.
+
+% Aufgabe 16.3 RSA: Eigenschaften und Sicherheit
+% Für die Erzeugung eines RSA-Schlüsselpaares wurde von Alice der Modulus n= p·q= 7·17= 119 gewählt.
+% a) Was muss für den öffentlichen Verschlüsselungsexponenten c, der gemeinsam mit dem Modulus n
+% veröffentlicht wird, gelten, damit dieser als Teil des RSA-Schlüssels verwendet werden kann?
+% 34
+% b) Warum kann eine mit RSA zu verschlüsselnde Nachricht m nicht gleichzeitig einen Faktor p und q
+% enthalten?
+% c) Alice wählt den öffentlichen Verschlüsselungsexponenten c= 5. Berechnen Sie den zugehörigen ge-
+% heimen Entschlüsselungsexponenten dmithilfe des erweiterten euklidischen Algorithmus.
+% d) Bei naiver Anwendung des RSA-Verfahrens wird eine Nachricht m, für die 1 <m<ngelten muss, ohne
+% Veränderung mit dem öffentlichen Verschlüsselungsexponenten cpotenziert und modulo nreduziert.
+% Problematisch ist hierbei der multiplikative Homomorphismus des RSA-Verfahrens. Erläutern Sie kurz
+% diese Eigenschaft anhand zweier Nachrichten m1 und m2.
+% Hinweis: Zeichnen Sie ggf. ein passendes Diagramm. Sie müssen keine Berechnung durchführen!
+% e) Wie könnte die Angreiferin Eve die Eigenschaft des multiplikativen Homomorphismus ausnutzen, um an
+% die Klartextnachricht einer abgefangenen verschlüsselten Nachricht s, die an Alice adressiert war, zu
+% gelangen? Zeigen Sie das Vorgehen anhand der abgefangenen verschlüsselten Nachricht s= 101, der
+% eigens von Eve gewählten Zufallszahl r= 22 sowie dem multiplikativen Inversen der Zufallszahl r−1 =
+% 92 mod 119. Verwenden Sie auf Empfängerseite (Alice) den gegebenen RSA-Modulus, den öffentlichen
+% Verschlüsselungsexponenten c= 11 und den geheimen Entschlüsselungsexponenten d= 35, der nur
+% Alice, aber nicht Eve bekannt ist.
+% f) Nennen Sie ein Anwendungsbeispiel, bei dem der multiplikative Homomorphismus des RSA-Verfahrens
+% „ausgenutzt“ bzw. gewollt angewendet wird.
+
+% Aufgabe 16.10 Würfeln mit RSA
+% Bob möchte Alice über das Internet das Ergebnis eines Würfelwurfs senden. Bob verschlüsselt das Ergebnis
+% vor der Übertragung mit dem deterministischen RSA-Verfahren. Alice hat bereits ein RSA-Schlüsselpaar er-
+% zeugt und dabei die folgenden Parameter verwendet: pA = 5, qA = 11, eA = 3, dA = 27. Bob hat ebenfalls
+% ein RSA-Schlüsselpaar erzeugt und dabei folgende Parameter verwendet: pB = 17, qB = 5, eB = 3, dB = 43.
+% Die öffentlichen Schlüssel haben die beiden bereits über einen sicheren Kanal ausgetauscht.
+% a) Bob hat gewürfelt und möchte das Ergebnis nun an Alice senden. Er überträgt dazu cB = 9. Zeigen Sie,
+% dass eine passive Angreiferin (Eve), die lediglich die öffentlichen Schlüssel und cB kennt, mittels eines
+% Chosen-Plaintext-Angriffs Bobs Wurfergebnis mB ermitteln kann. Welche Zahl hat Bob gewürfelt?
+% b) Wie kann sich Bob vor diesem Angriff schützen?
+
+% Aufgabe 16.11 Forward Secrecy mit RSA
+% Zur Erreichung von Forward Secrecy erzeugt Alice auf ihrem Server mit dem RSA-Verfahren einen geheimen
+% Schlüssel dsowie den dazu passenden öffentlichen Schlüssel c, den sie persönlich an ihre Kunden verteilt.
+% Zusätzlich erzeugt Alices Server bei jedem Verbindungsaufbau ein neues kurzlebiges (engl. ephemeral) RSA-
+% Schlüsselpaar, bestehend aus einem öffentlichen Schlüssel ce und einem geheimen Schlüssel de. Im Ver-
+% gleich zum bisherigen Verfahren verteilt Alice ce nicht mehr persönlich. Stattdessen signiert ihr Server mit
+% ihrem ursprünglichen privaten Schlüssel dden neuen öffentlichen Schlüssel ce und schickt diesen zusam-
+% men mit der Signatur über die aufgebaute Verbindung an den Kunden. Der Kunde prüft anschließend die
+% Signatur mithilfe des ursprünglichen von Alice erhaltenen öffentlichen Schlüssels cund verwendet bei korrek-
+% ter Signatur ce zum Verschlüsseln des zufällig generierten symmetrischen Schlüssels k. Das Verschlüsseln
+% der Nachrichten mit kerfolgt mit AES. Nach Verbindungsende löscht Alices Server de, ce und k.
+% a) Welche Verbindungen könnte ein sehr starker Angreifer (etwa ein Nachrichtendienst) noch entschlüs-
+% seln, wenn er an dgelangt? Begründen Sie kurz ihre Antwort.
+% b) Skizzieren Sie einen Angriff, der möglich wäre, wenn der Kunde die Signatur nicht prüft.
+% 37
+% c) Alice ist noch nicht ganz zufrieden mit dem neuen Verfahren: Es ist ihr zu langsam. Sie nimmt nun
+% folgende Änderung vor: Statt jedes mal bei der Erzeugung von ce und de neue Primzahlen pund qfür
+% den Modulus Ne zu generieren, verwendet sie immer die gleichen Primzahlen. Nun wählt sie lediglich
+% den öffentlichen Exponenten aus ce neu und berechnet einen dazugehörigen geheimen Exponenten
+% de. Warum ist dies keine gute Idee? Zeigen Sie, wie sich dieses geänderte Verfahren angreifen lässt,
+% um aufgezeichnete Verbindungen zu entschlüsseln.
+
+% Aufgabe 16.16 Elliptische Kurven: EC-ElGamal
+% Das ElGamal-Kryptosystem lässt sich auch auf elliptische Kurven übertragen. Dabei werden die Rechen-
+% operationen mittels Punkten auf einer elliptischen Kurve vorgenommen. Betrachten Sie für die folgenden
+% Teilaufgaben die elliptische Kurve E(GF(p)) mit der Form y2 ≡x3 + x+ 6 (mod 11).
+% a) Passen Sie die Operationen des ElGamal-Kryptosystems zur Schlüsselgenerierung, zur Entschlüsse-
+% lung sowie zur Verschlüsselung an, sodass diese auf der Basis elliptischer Kurven operieren.
+% b) Generieren Sie mithilfe Ihres Verfahrens aus Teilaufgabe a) ein geeignetes Schlüsselpaar auf der oben
+% angegebenen elliptischen Kurve. Berechnen Sie dann die Verschlüsselung cder Nachricht m= (5,2).
+% c) Berechnen Sie die Entschlüsselung des Schlüsseltextes caus der vorherigen Teilaufgabe b) mit dem
+% dort generierten geheimen Schlüssel.
+% d) Zeigen sie anschaulich, auf welcher Annahme die Sicherheit des Verfahrens beruht. Welcher Ausdruck
+% müsste berechnet werden, damit Angreifende Schlüsseltexte ohne Kenntnis des geheimen Schlüssels
+% leicht entschlüsseln könnten?
+
+% Aufgabe 22.9 Verbindungsverschlüsselung in GSM
+% Welche Kommunikationsabschnitte sind in GSM verschlüsselt? Welche Kommunikationsabschnitte sind un-
+% verschlüsselt?
+
+% Aufgabe 22.27 Bluetooth-Authentifikation
+% Bei Bluetooth wird auf Basis der Funktion E22 die Authentifikation durchgeführt. Was sind die In- und Outputs
+% der Authentifikation?
+
+% Aufgabe 22.29 Mehrfachnutzung des IV in einem WEP-verschlüsselten WLAN
+% a) Der in WEP verwendete Initialisierungsvektor (IV) ist 24 Bit groß und steht in einem Paket P am Paketan-
+% fang vor dem Schlüsseltext. Wie viele Pakete können maximal erzeugt werden, wenn kein IV mehrfach
+% verwendet werden soll? Wie sind die IVs von einem Teilnehmer des WLANs zu erzeugen, sodass eine
+% Kollision möglichst spät auftritt? Welches Problem gibt es bei diesem Verfahren, wenn mehrere Teilneh-
+% mer kommunizieren?
+% b) Nehmen Sie an, Sie haben die Pakete P1 und P2 empfangen:
+% P1: 00010 00111 11111 11110 11001 01001 00101 ...
+% P2: 00010 00111 11111 11110 11000 10011 00010 ...
+% Die ersten 10 Klartextbits des ersten Paketes P1 lauten 10010 01100. Bestimmen Sie die ersten 10
+% Klartextbits des zweiten Paketes P2.
 
 
 
