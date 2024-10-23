@@ -1,6 +1,6 @@
 \documentclass{article}
 
-\usepackage[]{../.template/summary}
+\usepackage{../.template/summary}
 
 \subject{Security by Design}
 \semester{Winter 2024}
@@ -10,11 +10,9 @@
 
 \begin{document}\createtitle
 
-\includepdf[pages=1-10, nup=2x5]{slides.pdf}
-
 \section{Kryptographie}
 
-\subsection{Angriffsarten}
+\subsection{Angriffsarten (schwer zu leicht)}
 \begin{enumerate}
   \item \textbf{Ciphertext Only}: Angreifer kennt nur den Ciphertext
   \item \textbf{Known Plaintext}: Angreifer kennt Ciphertext und Plaintext
@@ -28,6 +26,8 @@
   \item \textbf{Selektives Brechen}: Bestimmte Nachricht entschlüsselt
   \item \textbf{Existenzielles Brechen}: Irgendeine Nachricht entschlüsselt
 \end{enumerate}
+
+\includepdf[pages={14-16}, nup=1x3]{slides.pdf}
 
 \subsection{Klassische Chiffren}
 \begin{itemize}
@@ -44,8 +44,10 @@
   \item \textbf{Beaufort}: involutorischer Vigenére (gleiche Verschlüsselung und Entschlüsselung)
   \item \textbf{Vernam} (one-time pad): Substitution mit zufälligem Schlüssel mit Klartextlänge
 \end{enumerate}
+\includepdf[pages={18-32,35,37-41}, nup=3x7]{slides.pdf}
 
 \subsection{Moderne Kryptographie}
+
 
 
 \end{document}
