@@ -1,31 +1,29 @@
-\documentclass[14pt]{beamer}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Meta informations:
-\newcommand{\trauthor}{Horst Hansen}
-\newcommand{\trtype}{} %{Proseminar} %{Seminar} %{Workshop}
-\newcommand{\trcourse}{Knowledge Processing with Neural Networks}
-\newcommand{\trtitle}{Neural Networks for Artificial Agents}
-\newcommand{\trmatrikelnummer}{6543210}
-\newcommand{\tremail}{hansen@informatik.uni-hamburg.de}
+\documentclass[10pt]{beamer}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Metainformation
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\trauthor}{Leopold Lemmermann}
+\newcommand{\trtype}{Seminar}
+\newcommand{\trcourse}{Bio-inspired Artificial Intelligence}
+\newcommand{\trtitle}{Image Captioning}
+\newcommand{\trmatrikelnummer}{7724741}
+\newcommand{\tremail}{leopold.lemmermann@studium.uni-hamburg.de}
 \newcommand{\trinstitute}{Dept. Informatik -- Knowledge Technology, WTM}
 \newcommand{\trwebsiteordate}{{http://www.informatik.uni-hamburg.de/WTM/}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Languages:
 
-% Falls die Ausarbeitung in Deutsch erfolgt:
-% \usepackage[german]{babel}
-% \usepackage[T1]{fontenc}
-% \usepackage[latin1]{inputenc}
-% \usepackage[latin9]{inputenc}
-% \selectlanguage{german}
 
-% If the thesis is written in English:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Languages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[english]{babel}
 \selectlanguage{english}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Bind packages:
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bind packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{beamerthemesplit}
 \usetheme{Boadilla}
 %\usetheme{Copenhagen}
@@ -94,9 +92,12 @@
 \date{}
 \logo{}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Configurationen:
-%\hypersetup{pdfpagemode=FullScreen}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Configuration
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\hypersetup{pdfpagemode=FullScreen}
 
 \hyphenation{whe-ther} 									% Manually use: "\-" in a word: Staats\-ver\-trag
 
@@ -104,8 +105,11 @@
 \DeclareGraphicsExtensions{.pdf,.svg,.jpg,.png,.eps} % first try pdf, then eps, png and jpg
 \graphicspath{{./src/}} 								% Path to a folder where all pictures are located
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Costom Definitions:
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Custom definitions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \setbeamertemplate{title page}
 {
   \vbox{}
@@ -164,10 +168,12 @@
 \renewcommand{\large}{\fontsize{15.8pt}{15.8pt}\selectfont}
 \renewcommand{\Large}{\fontsize{19.0pt}{19.0pt}\selectfont}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Additional 'theorem' and 'definition' blocks:
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Additional 'theorem' and 'definition' blocks
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newtheorem{axiom}{Axiom}[section]
-%\newtheorem{axiom}{Fakt}[section]			% Wenn in Deutsch geschrieben wird.
 %Usage:%\begin{axiom}[optional description]%Main part%\end{fakt}
 
 %Additional types of axioms:
@@ -175,15 +181,13 @@
 
 %Additional types of definitions:
 \theoremstyle{remark}
-%\newtheorem{remark}[section]{Bemerkung} % Wenn in Deutsch geschrieben wird.
 \newtheorem{remark}[section]{Remark}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Provides TODOs within the margin:
-\newcommand{\TODO}[1]{\marginpar{\emph{\small{{\bf TODO: } #1}}}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Abbreviations and mathematical symbols
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\modd}{\text{ mod }}
 \newcommand{\RS}{\mathbb{R}}
 \newcommand{\NS}{\mathbb{N}}
@@ -194,8 +198,11 @@
 \newcommand{\erdos}{Erd\H{o}s}
 \newcommand{\renyi}{-R\'{e}nyi}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Display of TOCs:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \AtBeginSection[]
 {
 	\setcounter{tocdepth}{2}
@@ -206,28 +213,31 @@
 	}
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Document:
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 \renewcommand{\arraystretch}{1.2}
 
-\begin{frame}[plain] % plain => kein Rahmen
+\begin{frame}[plain]
   \titlepage
 \end{frame}
-%\setcounter{framenumber}{0}
 
 \frame{
 	\frametitle{Outline}
 	\tableofcontents
 }
 
-%%%%%%%%%%%%%%
-% Your Content
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Content
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Motivation and Question}
 
 \frame[t]{
-  \frametitle{Motivation}
+  \frametitle{Motivation \& Related Work}
   \begin{itemize}
   	\item Add your motivation here
 		\begin{itemize}
@@ -239,8 +249,6 @@
 		\item Use references \textsuperscript{[Author, 2010]}
 	\end{itemize}
 }
-
-\section{Basics and Definition}
 
 \section{Approach}
 
@@ -269,21 +277,13 @@
   \end{itemize}
 }
 
-%%%%%%%%%%%%%%
-
 \frame[c]{
-  \frametitle{The End}
-\begin{center}
-  Thank you for your attention.\\[1ex]
-  Any question?\\[5ex]
-\end{center}
+  \frametitle{Thanks for your attention! Any questions?}
+
   \footnotesize
-  Literature:
-	\begin{itemize}
-		\item Author , Author , Author, and Author. Name of the conference paper. \emph{In: Proceedings of the Conference Name}, 2008
-		\item Author, Author, and Author. Name of the Article. \emph{Name of the Journal}, 42:111-133, 2010
-		\item Author, and Author. \emph{Name of the Book}. Publisher, 2009
-	\end{itemize}
+	\nocite{*}
+	\bibliography{bib}
+	\bibliographystyle{plain}
 }
 
 \end{document}
