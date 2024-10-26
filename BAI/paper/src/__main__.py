@@ -1,10 +1,10 @@
 from torch import cuda
 from torchvision import transforms as T
 
-from models import ImageCaption
+from .models import ImageCaption
 
 model = ImageCaption(
-    "data/micro_flickr",
+    "flickr8k",
     batch_size=4,
     num_workers=2,
     embed_size=300,

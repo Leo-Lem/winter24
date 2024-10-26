@@ -2,7 +2,7 @@ from torch import zeros, device, cuda, cat, Tensor, tensor
 from torch.nn import Module, Embedding, LSTMCell, Linear, Dropout
 from typing import Tuple
 
-from data import Vocabulary
+from ..data import Vocabulary
 from .attention import Attention
 
 

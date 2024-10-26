@@ -1,4 +1,3 @@
-from data.vocabulary import Vocabulary
 import os
 from torch.nn.utils.rnn import pad_sequence
 from torch.utils.data import DataLoader, Dataset
@@ -6,6 +5,8 @@ from PIL import Image
 from pandas import read_csv
 from torch import tensor, Tensor, cat
 from torchvision.transforms import Compose
+
+from .vocabulary import Vocabulary
 
 
 class FlickrDataset(Dataset):

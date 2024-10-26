@@ -1,14 +1,16 @@
 from collections import Counter
-from spacy import load
+from importlib import import_module
+from spacy import Language
+from spacy.cli import download
 
 
 class Vocabulary:
     """ Vocabulary object to store the mapping between words and indices. """
 
-    def __init__(self, threshold: int, sentences: list[str] = [], spacy_model: str = "en_core_web_sm"):
+    def __init__(self, threshold: int, sentences: list[str] = [], spacy_model_name: str = "en_core_web_sm"):
         self.threshold = threshold
         self.id_to_token = {0: "<PAD>", 1: "<SOS>", 2: "<EOS>", 3: "<UNK>"}
-        self.spacy_model = load(spacy_model)
+        self.spacy_model = self._download_and_init_nlp(spacy_model_name)
 
         self._learn(sentences)
 
@@ -38,3 +40,17 @@ class Vocabulary:
         """ Tokenize the text using spacy model. """
         return [token.text.lower()
                 for token in self.spacy_model.tokenizer(text)]
+
+    def _download_and_init_nlp(self, model_name: str) -> Language:
+        """Load a spaCy model, download it if it has not been installed yet.
+        :param model_name: the model name, e.g., en_core_web_sm
+        :param kwargs: options passed to the spaCy loader, such as component exclusion
+        :return: an initialized spaCy Language
+        """
+        try:
+            model_module = import_module(model_name)
+        except ModuleNotFoundError:
+            download(model_name)
+            model_module = import_module(model_name)
+
+        return model_module.load()

@@ -5,7 +5,7 @@ from torch.optim import Adam
 from matplotlib import pyplot as plt
 from typing import Tuple
 
-from data import FlickrDataset
+from ..data import FlickrDataset
 from .encoder import ImageEncoder
 from .decoder import CaptionDecoder
 
