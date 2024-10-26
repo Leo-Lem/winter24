@@ -5,8 +5,8 @@ from models import ImageCaption
 
 model = ImageCaption(
     "data/micro_flickr",
-    batch_size=6,
-    num_workers=4,
+    batch_size=4,
+    num_workers=2,
     embed_size=300,
     attention_dim=256,
     encoder_dim=2048,

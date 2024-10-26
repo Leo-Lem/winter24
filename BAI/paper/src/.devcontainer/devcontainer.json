@@ -3,7 +3,7 @@
 	"build": {
 		"dockerfile": "Dockerfile",
 		"args": {
-			"PACKAGES": "ipykernel nltk matplotlib pandas spacy wordcloud pytorch torchvision"
+			"PACKAGES": "ipykernel nltk matplotlib pandas spacy wordcloud torch torchvision"
 		}
 	},
 	"customizations": {
