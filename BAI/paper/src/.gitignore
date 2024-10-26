@@ -1,2 +1,3 @@
 __pycache__
-flickr8k/
+flickr8k/*
+__assembled__.py
