@@ -24,8 +24,8 @@
 % Bind packages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{acronym}                    % Acronyms
-\usepackage{algorithmic}								% Algorithms and Pseudocode
-\usepackage{algorithm}									% Algorithms and Pseudocode
+\usepackage{algorithmic}                % Algorithms and Pseudocode
+\usepackage{algorithm}                  % Algorithms and Pseudocode
 \usepackage{amsfonts}                   % AMS Math Packet (Fonts)
 \usepackage{amsmath}                    % AMS Math Packet
 \usepackage{amssymb}                    % Additional mathematical symbols
@@ -33,27 +33,27 @@
 \usepackage{booktabs}                   % Nicer tables
 % \usepackage[font=small,labelfont=bf]{caption} % Numbered captions for figures
 \usepackage{color}                      % Enables defining of colors via \definecolor
-\definecolor{uhhRed}{RGB}{254,0,0}		  % Official Uni Hamburg Red
+\definecolor{uhhRed}{RGB}{254,0,0}      % Official Uni Hamburg Red
 \definecolor{uhhGrey}{RGB}{122,122,120} % Official Uni Hamburg Grey
 \usepackage{fancybox}                   % Gleichungen einrahmen
-\usepackage{fancyhdr}										% Packet for nicer headers
+\usepackage{fancyhdr}                   % Packet for nicer headers
 
-%\usepackage[outer=3.35cm]{geometry} 	  % Type area (size, margins...) !!!Release version
-%\usepackage[outer=2.5cm]{geometry} 		% Type area (size, margins...) !!!Print version
-%\usepackage{geometry} 									% Type area (size, margins...) !!!Proofread version
-\usepackage[outer=3.15cm]{geometry} 	  % Type area (size, margins...) !!!Draft version
+%\usepackage[outer=3.35cm]{geometry}    % Type area (size, margins...) !!!Release version
+%\usepackage[outer=2.5cm]{geometry}     % Type area (size, margins...) !!!Print version
+%\usepackage{geometry}                  % Type area (size, margins...) !!!Proofread version
+\usepackage[outer=3.15cm]{geometry}     % Type area (size, margins...) !!!Draft version
 \geometry{a4paper,body={5.8in,9in}}
 
 \usepackage{graphicx}                   % Inclusion of graphics
 %\usepackage{latexsym}                  % Special symbols
-\usepackage{longtable}									% Allow tables over several parges
+\usepackage{longtable}                  % Allow tables over several pages
 \usepackage{listings}                   % Nicer source code listings
-\usepackage{multicol}										% Content of a table over several columns
-\usepackage{multirow}										% Content of a table over several rows
-\usepackage{rotating}										% Alows to rotate text and objects
+\usepackage{multicol}                   % Content of a table over several columns
+\usepackage{multirow}                   % Content of a table over several rows
+\usepackage{rotating}                   % Alows to rotate text and objects
 \usepackage[hang]{subfigure}            % Allows to use multiple (partial) figures in a fig
-%\usepackage[font=footnotesize,labelfont=rm]{subfig}	% Pictures in a floating environment
-\usepackage{tabularx}										% Tables with fixed width but variable rows
+%\usepackage[font=footnotesize,labelfont=rm]{subfig}  % Pictures in a floating environment
+\usepackage{tabularx}                   % Tables with fixed width but variable rows
 \usepackage{url,xspace,boxedminipage}   % Accurate display of URLs
 
 
@@ -61,21 +61,21 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Configuration
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\hyphenation{whe-ther} 									% Manually use: "\-" in a word: Staats\-ver\-trag
+\hyphenation{whe-ther}                  % Manually use: "\-" in a word: Staats\-ver\-trag
 
 %\lstloadlanguages{C}                   % Set the default language for listings
 \DeclareGraphicsExtensions{.pdf,.svg,.jpg,.png,.eps} % first try pdf, then eps, png and jpg
-\graphicspath{{./src/}} 								% Path to a folder where all pictures are located
-\pagestyle{fancy} 											% Use nicer header and footer
+\graphicspath{{./src/}}                 % Path to a folder where all pictures are located
+\pagestyle{fancy}                       % Use nicer header and footer
 
 % Redefine the environments for floating objects:
 \setcounter{topnumber}{3}
 \setcounter{bottomnumber}{2}
 \setcounter{totalnumber}{4}
-\renewcommand{\topfraction}{0.9} 			  %Standard: 0.7
-\renewcommand{\bottomfraction}{0.5}		  %Standard: 0.3
-\renewcommand{\textfraction}{0.1}		  	%Standard: 0.2
-\renewcommand{\floatpagefraction}{0.8} 	%Standard: 0.5
+\renewcommand{\topfraction}{0.9}        %Standard: 0.7
+\renewcommand{\bottomfraction}{0.5}     %Standard: 0.3
+\renewcommand{\textfraction}{0.1}       %Standard: 0.2
+\renewcommand{\floatpagefraction}{0.8}  %Standard: 0.5
 
 % Tables with a nicer padding:
 \renewcommand{\arraystretch}{1.2}
@@ -140,7 +140,7 @@
 \thispagestyle{empty}
 
 \begin{abstract}
-  This paper is about image captioning. We discuss the current state of the art and give an overview of the most important methods. We also present some of our own results.
+ This paper is about image captioning. We discuss the current state of the art and overview the most important methods. We also present some of our results.
 \end{abstract}
 
 \tableofcontents
@@ -155,27 +155,31 @@
 \section{Introduction}
 \label{sec:introduction}
 
-Image captioning is the task of generating a textual description of an image. It is a challenging problem that requires understanding of both the visual and the textual domain. In recent years, deep learning has revolutionized the field of image captioning.
+Image captioning involves generating textual descriptions of given images. It is a difficult problem because it combines the visual and textual domains. In recent years, deep learning has revolutionized the field of image captioning.
 
-In this paper, we present an overview of the most important methods in image captioning. We also present some of our own results.
+This paper presents an overview of the most essential methods in image captioning and some of our results.
 
-Comparable, if more detailed, papers include %TODO: Add references to related work.
+Image captioning is a complex and interdisciplinary task bridging computer vision (CV) and natural language processing (NLP). The objective is to generate natural, descriptive sentences for images, which involves detecting and interpreting visual elements and their relationships within scenes. Recent advancements leverage deep learning, particularly Convolutional Neural Networks (CNNs) for feature extraction and Recurrent Neural Networks (RNNs), especially Long Short-Term Memory (LSTM) networks, for sequential language generation. For instance, models such as "Show and Tell" \cite{Vinyals:2015} and "Show, Attend, and Tell" \cite{Xu} utilize CNN-RNN architectures, with the latter integrating attention mechanisms to enhance focus on specific image regions, thereby improving caption relevance and accuracy.
+
+Image captioning models are typically evaluated using metrics like BLEU, METEOR, and CIDEr, which assess linguistic similarity to human references. While these metrics are widely accepted, considering the quality of image captions remains challenging due to the subjective nature of language generation. Additionally, methods like Reinforcement Learning (RL) have been explored to optimize these models directly on evaluation metrics, addressing issues such as exposure bias by aligning training and inference methods more closely \cite{Rennie}.
+
+Recent innovations in diverse decoding strategies, like Diverse Beam Search, aim to overcome the tendency of beam search to produce near-duplicate captions by enhancing variability without sacrificing quality. Diverse Beam Search ensures that generated captions capture a broader range of plausible descriptions, reflecting the inherent ambiguity in image captioning tasks \cite{Vijayakumar}.
 
 \section{Methods}
 \label{sec:methods}
 
-Accuracy of image captioning is commonly measured using BLEU or CIDEr scores. BLEU is a precision-based metric that compares n-grams in the generated caption to those in the reference captions. CIDEr is a recall-based metric that compares the generated caption to the reference captions using cosine similarity.
+The accuracy of image captioning is commonly measured using BLEU or CIDEr scores. BLEU is a precision-based metric that compares n-grams in the generated caption to those in the reference captions. CIDEr is a recall-based metric that compares the generated caption to the reference captions using cosine similarity.
 
-We put our main focus on the flickr8k dataset. It consists of 8,000 images, each with five reference captions. Other commonly used datasets are flickr30k and MS COCO, but due to their size and our limited resources, we decided to focus on flickr8k.
+We focused on the flickr8k dataset, which consists of 8,000 images, each with five reference captions. Other commonly used datasets are flickr30k and MS COCO, but due to their size and limited resources, we decided to focus on flickr8k.
 
-Usually, to achieve image captioning an encoder-decoder architecture is used. The encoder is a convolutional neural network (CNN) that extracts features from the image. The decoder is a recurrent neural network (RNN) that generates the caption word by word.
+Usually, an encoder-decoder architecture is used to achieve image captioning. The encoder is a convolutional neural network (CNN) that extracts features from the image. The decoder is a recurrent neural network (RNN) that generates the caption word by word.
 
-We experiment with different architectures, such as VGG16, ResNet, and InceptionV3 as encoders, and LSTM and GRU as decoders. We also experiment with different attention mechanisms, such as soft attention and hard attention.
+We experiment with different architectures, such as VGG16, ResNet, and InceptionV3 as encoders and LSTM and GRU as decoders. We also experiment with varying attention mechanisms, such as soft and hard attention.
 
 \section{Approach}
 \label{sec:approach}
 
-We follow the state-of-the-art approach to image captioning. We preprocess the images using the encoder and tokenize the captions. We then train the model on the training set and evaluate it on the validation set. We use beam search to generate the captions.
+We follow the state-of-the-art approach to image captioning. We preprocess the images using the encoder and tokenize the captions. We then train the model on the training set and evaluate it on the validation set. We generate the captions using beam search.
 
 \section{Results}
 \label{sec:results}
