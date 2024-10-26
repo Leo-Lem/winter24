@@ -1,6 +1,11 @@
 {
 	"name": "Data Science",
-	"dockerFile": "Dockerfile",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"args": {
+			"PACKAGES": "ipykernel nltk matplotlib pandas spacy wordcloud pytorch torchvision"
+		}
+	},
 	"customizations": {
 		"vscode": {
 			"extensions": [
