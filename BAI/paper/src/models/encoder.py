@@ -14,14 +14,14 @@ class ImageEncoder(Module):
 
         for param in resnet.parameters():
             param.requires_grad_(False)
-
         modules = list(resnet.children())[:-2]
+
         self.model = Sequential(*modules)
 
-    def forward(self, images: Tensor) -> Tensor:
-        """ Extract feature vectors from input images. """
+    def forward(self, image: Tensor) -> Tensor:
+        """ Extract feature vector from input image. """
         # (batch_size,2048,7,7)
-        features: Tensor = self.model(images)
+        features: Tensor = self.model(image)
 
         # (batch_size,7,7,2048)
         features = features.permute(0, 2, 3, 1)

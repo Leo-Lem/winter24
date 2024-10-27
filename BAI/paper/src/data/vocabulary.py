@@ -7,10 +7,18 @@ from spacy.cli import download
 class Vocabulary:
     """ Vocabulary object to store the mapping between words and indices. """
 
-    def __init__(self, threshold: int, sentences: list[str] = [], spacy_model_name: str = "en_core_web_sm"):
-        self.threshold = threshold
+    def __init__(self, sentences: list[str], threshold: int, spacy_model_name: str = "en_core_web_sm"):
+        """ Initialize the vocabulary and learn the words from the sentences.
+
+        Args:
+            threshold: The minimum frequency for a word to be included in the vocabulary.
+            sentences: A list of sentences to learn the vocabulary from.
+            spacy_model_name: The name of the spaCy model to use for tokenization.
+        """
+
         self.id_to_token = {0: "<PAD>", 1: "<SOS>", 2: "<EOS>", 3: "<UNK>"}
-        self.spacy_model = self._download_and_init_nlp(spacy_model_name)
+        self.threshold = threshold
+        self.spacy_model = self._download_and_init(spacy_model_name)
 
         self._learn(sentences)
 
@@ -41,11 +49,11 @@ class Vocabulary:
         return [token.text.lower()
                 for token in self.spacy_model.tokenizer(text)]
 
-    def _download_and_init_nlp(self, model_name: str) -> Language:
-        """Load a spaCy model, download it if it has not been installed yet.
-        :param model_name: the model name, e.g., en_core_web_sm
-        :param kwargs: options passed to the spaCy loader, such as component exclusion
-        :return: an initialized spaCy Language
+    def _download_and_init(self, model_name: str) -> Language:
+        """ Load a spaCy model, download it if it has not been installed yet.
+
+        Args:
+            model_name: The name of the spaCy model to load.
         """
         try:
             model_module = import_module(model_name)

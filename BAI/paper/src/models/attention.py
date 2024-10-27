@@ -1,13 +1,15 @@
 from torch.nn import Module, Linear
 from torch import Tensor, tanh
-from typing import Tuple
 from torch.nn.functional import softmax
 
 
 class Attention(Module):
     """ Calculate the attention weights (Bahdanau). """
 
-    def __init__(self, encoder_dim: int, decoder_dim: int, attention_dim: int):
+    def __init__(self,
+                 encoder_dim: int,
+                 decoder_dim: int,
+                 attention_dim: int):
         super(Attention, self).__init__()
 
         self.attention_dim = attention_dim
@@ -15,7 +17,7 @@ class Attention(Module):
         self.EncoderToAttention = Linear(encoder_dim, attention_dim)
         self.AttentionScore = Linear(attention_dim, 1)
 
-    def forward(self, features: Tensor, hidden: Tensor) -> Tuple[Tensor, Tensor]:
+    def forward(self, features: Tensor, hidden: Tensor) -> tuple[Tensor, Tensor]:
         # (batch_size,num_layers,attention_dim)
         encoded_features: Tensor = self.EncoderToAttention(features)
         # (batch_size,attention_dim)
