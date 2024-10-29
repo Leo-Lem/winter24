@@ -1,8 +1,9 @@
 from torch import cuda, device
 from torchvision import transforms as T
 
-from data import LoadedFlickrDataset, Visualiser
+from data import LoadedFlickrDataset
 from models import ImageCaption, ImageEncoder, CaptionDecoder
+from eval import Visualiser
 
 DIR = "/content/drive/MyDrive"
 # DIR = "."

@@ -20,5 +20,6 @@ cat $DIR/__main__.py >> $FILE
 sed -i 's/from \..* import .*//g' $FILE
 sed -i 's/from data import .*//g' $FILE
 sed -i 's/from models import .*//g' $FILE
+sed -i 's/from eval import .*//g' $FILE
 
 printf "Assembled python files to $FILE\n"
