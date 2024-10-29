@@ -1,97 +1,83 @@
-from torch import zeros, cat, Tensor, tensor
-from torch.nn import Module, Embedding, LSTMCell, Linear, Dropout
-
+from torch import Tensor, tensor
+from torch.nn import Module, Embedding, GRUCell, Linear
 from data import Vocabulary
-from .attention import Attention
 
 
-class CaptionDecoder(Module):
-    """ An RNN-based language model that generates image captions. """
+class SimpleCaptionDecoder(Module):
+    """A simplified GRU-based language model for generating image captions."""
 
-    def __init__(self,
-                 vocab_size: int,
-                 embed_size: int,
-                 attention_dim: int,
-                 encoder_dim: int,
-                 decoder_dim: int,
-                 drop_probability: float = 0.3):
-        super(CaptionDecoder, self).__init__()
+    def __init__(self, vocab: Vocabulary, embed_size: int = 256, decoder_dim: int = 512):
+        """
+        Args:
+            vocab (Vocabulary): Vocabulary instance for token-to-id mappings.
+            encoder_dim (int): Dimension of the encoder output features.
+            embed_size (int): Size of the word embedding vectors (default: 256).
+            decoder_dim (int): Dimension of the GRU hidden state (default: 512).
+        """
+        super().__init__()
 
-        self.vocab_size = vocab_size
+        self.vocab = vocab
+        self.vocab_size = len(vocab)
+        self.embed_size = embed_size
+        self.decoder_dim = decoder_dim
 
-        self.embedding_layer = Embedding(vocab_size, embed_size)
-        self.attention_layer = Attention(
-            encoder_dim, decoder_dim, attention_dim)
-        self.init_cell = Linear(encoder_dim, decoder_dim)
-        self.init_hidden = Linear(encoder_dim, decoder_dim)
-        self.lstm_layer = LSTMCell(
-            embed_size+encoder_dim, decoder_dim, bias=True)
-        self.output_layer = Linear(decoder_dim, vocab_size)
-        self.drop_layer = Dropout(drop_probability)
+        # Layers for embedding, GRU, and output projection
+        self.embedding_layer = Embedding(self.vocab_size, self.embed_size)
+        self.gru_cell = GRUCell(self.embed_size, self.decoder_dim)
+        self.output_layer = Linear(self.decoder_dim, self.vocab_size)
 
-    def forward(self, features: Tensor, captions: Tensor) -> tuple[Tensor, Tensor]:
-        # (batch_size, decoder_dim)
-        hidden, cell = self._init_lstm_layer(features)
+    def forward(self, features: Tensor, max_len: int = 20) -> list[str]:
+        """
+        Generate captions for a batch of image features using greedy decoding.
 
-        length = len(captions[0])-1
-        batch_size = captions.size(0)
-        num_features = features.size(1)
-        preds = zeros(batch_size, length, self.vocab_size)
-        alphas = zeros(batch_size, length, num_features)
+        Args:
+            features (Tensor): Encoded image features of shape (batch_size, encoder_dim).
+            max_len (int): Maximum length for generated captions (default: 20).
 
-        embeddings = self.embedding_layer(captions)
-
-        for i in range(length):
-            alpha, context = self.attention_layer(features, hidden)
-            lstm_input = cat((embeddings[:, i], context), dim=1)
-            hidden, cell = self.lstm_layer(lstm_input, (hidden, cell))
-
-            output = self.output_layer(self.drop_layer(hidden))
-
-            preds[:, i] = output
-            alphas[:, i] = alpha
-
-        return preds, alphas
-
-    def generate_caption(self, features: Tensor, vocab: Vocabulary, max_len: int = 20) -> tuple[str, list]:
-        """ Generate captions for given image features using greedy search. """
-        # (batch_size, decoder_dim)
-        hidden, cell = self._init_lstm_layer(features)
-
+        Returns:
+            list[str]: List of generated captions for each image in the batch.
+        """
         batch_size = features.size(0)
 
-        word = tensor(vocab.token_to_id['<SOS>']).view(1, -1)
-        embeddings = self.embedding_layer(word)
+        # Initialize the hidden state by averaging features across spatial dimensions
+        hidden = features.mean(dim=1)  # (batch_size, decoder_dim)
 
-        alphas, captions = [], []
+        # Initialize word embeddings with the <SOS> token for each image in the batch
+        start_token = tensor(
+            self.vocab.token_to_id['<SOS>']).repeat(batch_size)
+        embeddings = self.embedding_layer(
+            start_token)  # (batch_size, embed_size)
+
+        captions = [[] for _ in range(batch_size)]
+        complete = [False] * batch_size  # Track completion of each caption
+
         for _ in range(max_len):
-            alpha, context = self.attention_layer(features, hidden)
+            # Forward pass through GRU cell
+            # (batch_size, decoder_dim)
+            hidden = self.gru_cell(embeddings, hidden)
 
-            alphas.append(alpha)
+            # Compute output logits for vocabulary prediction
+            output = self.output_layer(hidden)  # (batch_size, vocab_size)
+            # Select word with highest probability for each sample
+            predicted_ids = output.argmax(dim=1)
 
-            lstm_input = cat((embeddings[:, 0], context), dim=1)
-            hidden, cell = self.lstm_layer(lstm_input, (hidden, cell))
-            output: Tensor = self.output_layer(
-                self.drop_layer(hidden)).view(batch_size, -1)
+            # Append predicted words to captions, and check for <EOS> to mark caption completion
+            for i in range(batch_size):
+                if not complete[i]:  # Only add if caption isn't complete
+                    word_id = predicted_ids[i].item()
+                    if self.vocab.id_to_token[word_id] == "<EOS>":
+                        complete[i] = True
+                    else:
+                        captions[i].append(word_id)
 
-            # Select the word with the highest score
-            predicted_word = output.argmax(dim=1).item()
-
-            # Stop appending words when <EOS> is predicted
-            if vocab.id_to_token[predicted_word] == "<EOS>":
+            # If all captions are complete, break out of the loop
+            if all(complete):
                 break
 
-            captions.append(predicted_word)
+            # Prepare embeddings for the next time step
+            embeddings = self.embedding_layer(predicted_ids)
 
-            # Use the predicted word as the next input
-            embeddings = self.embedding_layer(
-                tensor([predicted_word]).unsqueeze(0))
-
-        # Convert indices to words and return the caption without <EOS>
-        caption_text = [vocab.id_to_token[idx] for idx in captions]
-        return caption_text, alphas
-
-    def _init_lstm_layer(self, encoded: Tensor) -> tuple[Tensor, Tensor]:
-        """ Initialize the hidden and cell states of the LSTM. """
-        mean_encoded = encoded.mean(dim=1)
-        return self.init_hidden(mean_encoded), self.init_cell(mean_encoded)
+        # Convert word IDs to tokens and join them into sentences
+        caption_texts = [" ".join([self.vocab.id_to_token[idx]
+                                  for idx in caption]) for caption in captions]
+        return caption_texts

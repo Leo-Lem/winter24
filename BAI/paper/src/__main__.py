@@ -2,7 +2,7 @@ from torch import cuda, device
 from torchvision import transforms as T
 
 from data import LoadedFlickrDataset
-from models import ImageCaption, ImageEncoder, CaptionDecoder
+from models import ImageCaption, ResnetImageEncoder, CaptionDecoder
 from eval import Visualiser
 
 DIR = "/content/drive/MyDrive"
@@ -23,7 +23,7 @@ dataset = LoadedFlickrDataset(
 )
 
 # --- Model ---
-encoder = ImageEncoder(
+encoder = ResnetImageEncoder(
 ).to(DEVICE)
 decoder = CaptionDecoder(
     embed_size=300,
@@ -50,3 +50,11 @@ visualiser = Visualiser()
 test_image = f"{DIR}/image.jpg"
 prediction = model.predict(test_image, transforms)
 visualiser.display_image(prediction[1], prediction[0])
+
+# def _loaders(self, batch_size: int, num_workers: int) -> tuple[FlickrDataloader, FlickrDataloader]:
+#         batch_size = batch_size if batch_size else self.batch_size
+#         num_workers = num_workers if num_workers else self.num_workers
+
+#         training, validation = self.dataset.split(train_size=.8)
+#         return (FlickrDataloader(training, batch_size=batch_size, num_workers=num_workers),
+#                 FlickrDataloader(validation, batch_size=batch_size, num_workers=num_workers))

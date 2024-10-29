@@ -14,9 +14,7 @@ class FlickrDataset(Dataset):
     def __init__(self,
                  image_path: str,
                  images: list[str],
-                 captions: list[str],
-                 vocabulary: Vocabulary,
-                 image_transform: Compose):
+                 captions: list[str]):
         """
         Args:
             image_path (str): Path to the folder containing the images.
@@ -28,32 +26,15 @@ class FlickrDataset(Dataset):
         self.image_path = image_path
         self.images = images
         self.captions = captions
-        self.vocabulary = vocabulary
-        self.image_transform = image_transform
 
     def __len__(self) -> int: return len(self.captions)
 
-    def __getitem__(self, index: int) -> tuple[Tensor, Tensor]:
-        return self.get_image_tensor(index), self.get_caption(index)
-
-    def get_image_tensor(self, index: int) -> Tensor:
-        """ Get the image tensor for the given index. """
-        return self.get_image_tensor_at_path(os.path.join(self.image_path, "Images", self.images[index]))
-
-    def get_image_tensor_at_path(self, image_path: str) -> Tensor:
-        """ Get the image tensor for the given path. """
-        image = Image.open(image_path).convert("RGB")
-        if self.image_transform:
-            image = self.image_transform(image)
-        return image
-
-    def get_caption(self, index: int) -> str:
-        """ Get the encoded caption for the given index. """
-        raw = self.captions[index]
-        encoded = [self.vocabulary.token_to_id["<SOS>"]] + \
-            self.vocabulary.numericalize(raw) + \
-            [self.vocabulary.token_to_id["<EOS>"]]
-        return tensor(encoded)
+    def __getitem__(self, index: int) -> tuple[Image.Image, str]:
+        return (
+            Image.open(os.path.join(self.image_path,
+                       "Images", self.images[index])),
+            f"<SOS> {self.captions[index]} <EOS>"
+        )
 
     def split(self, train_size: float = 0.8) -> tuple["FlickrDataset", "FlickrDataset"]:
         """ Split the dataset into a training and validation set."""
@@ -61,14 +42,10 @@ class FlickrDataset(Dataset):
         subsets = random_split(self, [train_size, 1 - train_size])
         return (FlickrDataset(self.image_path,
                               [self.images[i] for i in subsets[0].indices],
-                              [self.captions[i] for i in subsets[0].indices],
-                              self.vocabulary,
-                              self.image_transform),
+                              [self.captions[i] for i in subsets[0].indices]),
                 FlickrDataset(self.image_path,
                               [self.images[i] for i in subsets[1].indices],
-                              [self.captions[i] for i in subsets[1].indices],
-                              self.vocabulary,
-                              self.image_transform))
+                              [self.captions[i] for i in subsets[1].indices]))
 
 
 class LoadedFlickrDataset(FlickrDataset):
@@ -77,9 +54,7 @@ class LoadedFlickrDataset(FlickrDataset):
     def __init__(self,
                  path: str,
                  captions_file: str = "captions.csv",
-                 num_captions: int = None,
-                 image_transform: Compose = None,
-                 vocabulary_threshold: int = 5):
+                 num_captions: int = None):
         """
         Args:
             path (str): Path to the dataset folder.
@@ -92,12 +67,9 @@ class LoadedFlickrDataset(FlickrDataset):
                                         nrows=num_captions)
         captions = images_with_captions["caption"].tolist()
         images = images_with_captions["image"].tolist()
-        vocab = Vocabulary(captions, threshold=vocabulary_threshold)
 
         super().__init__(
             image_path=path,
             images=images,
-            captions=captions,
-            vocabulary=vocab,
-            image_transform=image_transform
+            captions=captions
         )
