@@ -37,7 +37,7 @@ def train(model: ImageCaption,
 
     checkpoint = model.load_checkpoint()
 
-    print("[Training] Started.")
+    print("[Training] Starting...")
     for epoch in range(checkpoint, epochs):
         print(f"[Epoch {epoch + 1}/{epochs}]")
         epoch_loss = 0
@@ -83,5 +83,5 @@ def train(model: ImageCaption,
 
         model.save_checkpoint(epoch + 1)
 
-    print("[Training] Completed.")
+    print("[Training] Training completed.")
     return model

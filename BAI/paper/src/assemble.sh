@@ -14,6 +14,7 @@ cat $DIR/data/vocabulary.py >> $FILE
 cat $DIR/data/flickrdataset.py >> $FILE
 cat $DIR/data/*.py >> $FILE
 cat $DIR/models/*.py >> $FILE
+cat $DIR/eval/*.py >> $FILE
 cat $DIR/__main__.py >> $FILE
 
 # remove all relative imports

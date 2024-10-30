@@ -33,12 +33,19 @@ class Vocabulary:
         self.spacy_model = self._download_and_init(spacy_model_name)
 
         freq = Counter()
-        for sentence in sentences:
-            for token in self._tokenize(sentence):
+
+        print("[Vocabulary] Learning...")
+        for index, sentence in enumerate(sentences):
+            for token in self.tokenize(sentence):
                 freq[token] += 1
 
                 if token not in self.index_to_token.values():
                     self.index_to_token[len(self.index_to_token)] = token
+
+            if index % 1000 == 0:
+                print(
+                    f"\t[Learn] sentence {index + 1}/{len(sentences)}.")
+        print("[Vocabulary] Learning completed.")
 
     def __len__(self) -> int: return len(self.index_to_token)
 
@@ -50,13 +57,13 @@ class Vocabulary:
         """ Convert the text to numerical form using the vocabulary. """
         return [self.token_to_index[token]
                 if token in self.token_to_index else self.token_to_index["<UNK>"]
-                for token in self._tokenize(text)]
+                for token in self.tokenize(text)]
 
     def denumericalize(self, indices: list[int]) -> str:
         """ Convert the indices to text using the vocabulary. """
         return " ".join([self.index_to_token[index] for index in indices])
 
-    def _tokenize(self, text: str) -> list[str]:
+    def tokenize(self, text: str) -> list[str]:
         """ Tokenize the text using spacy model. """
         return [token.text.lower()
                 for token in self.spacy_model.tokenizer(text)]
