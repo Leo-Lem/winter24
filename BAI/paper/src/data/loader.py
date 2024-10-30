@@ -5,12 +5,11 @@ from torch.utils.data import DataLoader, Dataset
 from .vocabulary import Vocabulary
 
 
-def loader(dataset: Dataset, batch_size: int = 5) -> DataLoader:
+def loader(dataset: Dataset, batch_size: int = 5, num_workers: int = 2, pin_memory: bool = False) -> DataLoader:
     class CollateAndPadBatch:
         """ Collate and pad batch of images and captions. """
 
         def __call__(self, batch: list[tuple[Tensor, Tensor]]) -> tuple[Tensor, Tensor]:
-
             images = [item[0].unsqueeze(0) for item in batch]
             images = cat(images, dim=0)
 
@@ -21,4 +20,4 @@ def loader(dataset: Dataset, batch_size: int = 5) -> DataLoader:
 
             return images, captions
 
-    return DataLoader(dataset, batch_size=batch_size, num_workers=2, shuffle=True, collate_fn=CollateAndPadBatch())
+    return DataLoader(dataset, batch_size=batch_size, num_workers=num_workers, shuffle=True, pin_memory=pin_memory, collate_fn=CollateAndPadBatch())

@@ -1,57 +1,89 @@
 import os
-from torch.utils.data import Dataset, random_split
-from PIL import Image
-from pandas import read_csv
-from torch import Tensor
-from collections import Counter
+from torch import tensor, Tensor
+from torch.utils.data import Dataset
 from torchvision.transforms import Compose, Resize, ToTensor, Normalize
+from PIL import Image
+import pickle
+from multiprocessing import Pool
+from tqdm import tqdm
+import pandas as pd
 
 from .vocabulary import Vocabulary
 
 
 class FlickrDataset(Dataset):
-    """ Flickr dataset for image captioning. """
-
     def __init__(self,
                  path: str,
                  images_folder: str = "Images",
                  captions_file: str = "captions.csv",
                  num_captions: int = None,
-                 image_transform: Compose = Compose([
-                     Resize((224, 224)),
-                     ToTensor(),
-                     Normalize(mean=[0.485, 0.456, 0.406],
-                               std=[0.229, 0.224, 0.225])
-                 ]),
+                 image_transform: Compose = None,
+                 data_file: str = "data.pkl",
                  vocabulary_threshold: int = 5):
-        """
-        Args:
-            path (str): Path to the dataset folder.
-            captions_file (str): Name of the file containing the captions.
-            num_images (int): Number of captions to load.
-        """
         self.image_path = os.path.join(path, images_folder)
-        images_with_captions = read_csv(
-            os.path.join(path, captions_file), nrows=num_captions)
-        self.captions = images_with_captions["caption"].tolist()
-        self.images = images_with_captions["image"].tolist()
-        self.image_transform = image_transform
-        self.vocabulary = Vocabulary(
-            self.captions, threshold=vocabulary_threshold)
+        self.captions_file = os.path.join(path, captions_file)
+        self.data_path = os.path.join(path, data_file)
 
-    def __len__(self) -> int: return len(self.captions)
+        self.image_transform = image_transform or Compose([
+            Resize((224, 224)),
+            ToTensor(),
+            Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+        ])
 
-    def __getitem__(self, index: int) -> tuple[Tensor, Tensor]:
-        image = self.image_to_tensor(
-            Image.open(os.path.join(self.image_path, self.images[index])))
-        caption = self.caption_to_tensor(self.captions[index])
-        return image, caption
+        if os.path.exists(self.data_path) and num_captions is None:
+            print("[Dataset] Loading preprocessed data...")
+            with open(self.data_path, 'rb') as f:
+                data = pickle.load(f)
+                self.images, self.captions, self.vocabulary = \
+                    data['images'], data['captions'], data['vocabulary']
+        else:
+            print("[Dataset] Preprocessing and storing data...")
+            self.images, self.captions, self.vocabulary = \
+                self._process_and_save(num_captions, vocabulary_threshold)
 
-    def image_to_tensor(self, image: Image.Image) -> Tensor:
+        print(
+            f"[Dataset] {len(self.images)} images and {len(self.captions)} captions are ready.")
+
+    def _process_and_save(self, num_captions, vocabulary_threshold):
+        # Load captions with pandas
+        data = pd.read_csv(self.captions_file, nrows=num_captions)
+        images, captions = [], []
+
+        # Initialize vocabulary and batch tokenize captions
+        raw_captions = data['caption'].tolist()
+        vocabulary = Vocabulary(raw_captions, threshold=vocabulary_threshold)
+
+        # Tokenize and numericalize captions in batch
+        captions = [tensor(vocabulary.numericalize(caption)) for caption in
+                    tqdm(raw_captions, desc="Tokenizing Captions")]
+
+        # Use multiprocessing to process images in parallel
+        with Pool() as pool:
+            image_paths = [os.path.join(self.image_path, img_name)
+                           for img_name in data['image']]
+            images = list(tqdm(pool.imap(self.process_image, image_paths), total=len(
+                image_paths), desc="Processing Images"))
+
+        # Save processed data including the vocabulary and numericalized captions
+        with open(self.data_path, 'wb') as f:
+            pickle.dump({'images': images, 'captions': captions,
+                        'vocabulary': vocabulary}, f)
+
+        return images, captions, vocabulary
+
+    def process_image(self, image_path):
+        """Load and transform an image."""
+        image = Image.open(image_path)
         return self.image_transform(image)
 
-    def caption_to_tensor(self, caption: str) -> Tensor:
-        return Tensor([self.vocabulary.sos_index, *self.vocabulary.numericalize(caption), self.vocabulary.eos_index])
+    def __len__(self):
+        return len(self.captions)
+
+    def __getitem__(self, index):
+        return self.images[index], self.captions[index]
 
     def tensor_to_caption(self, tensor: Tensor) -> str:
         return self.vocabulary.denumericalize(tensor.tolist()[1:-1])
+
+    def image_to_tensor(self, image: Image) -> Tensor:
+        return self.image_transform(image)

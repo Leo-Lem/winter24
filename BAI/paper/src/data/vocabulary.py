@@ -2,6 +2,7 @@ from collections import Counter
 from importlib import import_module
 from spacy import Language
 from spacy.cli import download
+from tqdm import tqdm
 
 
 class Vocabulary:
@@ -24,7 +25,6 @@ class Vocabulary:
             sentences: A list of sentences to learn the vocabulary from.
             spacy_model_name: The name of the spaCy model to use for tokenization.
         """
-
         self.index_to_token = {self.pad_index: self.pad_token,
                                self.sos_index: self.sos_token,
                                self.eos_index: self.eos_token,
@@ -34,20 +34,16 @@ class Vocabulary:
 
         freq = Counter()
 
-        print("[Vocabulary] Learning...")
-        for index, sentence in enumerate(sentences):
+        # Use tqdm to provide a progress bar for vocabulary creation
+        for sentence in tqdm(sentences, desc="Building Vocabulary"):
             for token in self.tokenize(sentence):
                 freq[token] += 1
 
                 if token not in self.index_to_token.values():
                     self.index_to_token[len(self.index_to_token)] = token
 
-            if index % 1000 == 0:
-                print(
-                    f"\t[Learn] sentence {index + 1}/{len(sentences)}.")
-        print("[Vocabulary] Learning completed.")
-
-    def __len__(self) -> int: return len(self.index_to_token)
+    def __len__(self) -> int:
+        return len(self.index_to_token)
 
     @property
     def token_to_index(self) -> dict[str, int]:
@@ -56,17 +52,16 @@ class Vocabulary:
     def numericalize(self, text: str) -> list[int]:
         """ Convert the text to numerical form using the vocabulary. """
         return [self.token_to_index[token]
-                if token in self.token_to_index else self.token_to_index["<UNK>"]
+                if token in self.token_to_index else self.token_to_index[self.unk_token]
                 for token in self.tokenize(text)]
 
     def denumericalize(self, indices: list[int]) -> str:
-        """ Convert the indices to text using the vocabulary. """
+        """ Convert the indices back to text using the vocabulary. """
         return " ".join([self.index_to_token[index] for index in indices])
 
     def tokenize(self, text: str) -> list[str]:
         """ Tokenize the text using spacy model. """
-        return [token.text.lower()
-                for token in self.spacy_model.tokenizer(text)]
+        return [token.text.lower() for token in self.spacy_model.tokenizer(text)]
 
     def _download_and_init(self, model_name: str) -> Language:
         """ Load a spaCy model, download it if it has not been installed yet.

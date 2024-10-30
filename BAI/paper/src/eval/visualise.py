@@ -13,9 +13,6 @@ def visualise(image: Image, caption: str):
     """
     assert image.mode == "RGB", "Image should be in RGB format."
 
-    # Set figure size for better visualization
-    rcParams["figure.figsize"] = (8, 6)
-
     plt.imshow(image)
     plt.title(caption, wrap=True)
     plt.axis("off")

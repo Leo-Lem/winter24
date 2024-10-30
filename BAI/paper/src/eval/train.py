@@ -2,6 +2,7 @@ from torch import device, Tensor
 from torch.optim import Adam, Optimizer
 from torch.nn import CrossEntropyLoss
 from torch.utils.data import DataLoader
+from tqdm import tqdm
 
 from models import ImageCaption
 from data import Vocabulary
@@ -37,51 +38,32 @@ def train(model: ImageCaption,
 
     checkpoint = model.load_checkpoint()
 
-    print("[Training] Starting...")
     for epoch in range(checkpoint, epochs):
         print(f"[Epoch {epoch + 1}/{epochs}]")
         epoch_loss = 0
 
-        for batch, (images, captions) in enumerate(data):
-            assert images.size(0) == captions.size(0), \
-                f"Batch size mismatch: {images.size(0)} != {captions.size(0)}"
+        # Progress bar for each batch
+        with tqdm(total=len(data), desc=f"Training Epoch {epoch + 1}/{epochs}", unit="batch") as pbar:
+            for images, captions in data:
+                images, captions = images.to(device), captions.to(device)
+                optimizer.zero_grad()
 
-            images: Tensor = images.to(device)
-            captions: Tensor = captions.to(device)
-            optimizer.zero_grad()
+                # Forward pass
+                outputs = model(images, max_len=captions.size(1))
+                loss = criterion(
+                    outputs.view(-1, outputs.size(-1)), captions.view(-1))
 
-            # Forward pass
-            outputs: Tensor = model(images, max_len=captions.size(1))
+                # Backward pass and optimization
+                loss.backward()
+                optimizer.step()
 
-            assert outputs.size(0) == captions.size(0) and outputs.size(1) == captions.size(1), \
-                f"Output shape mismatch: {outputs.size()} != {captions.size()}"
-
-            # Skip <SOS> token in targets, align outputs and targets, flatten for loss
-            targets = captions[:, 1:].reshape(-1).long()
-            outputs = outputs[:, :-1].reshape(-1, outputs.size(-1)).float()
-
-            assert outputs.requires_grad, "Outputs must require gradients."
-
-            assert outputs.size(0) == targets.size(0), \
-                f"Batch size mismatch: {outputs.size(0)} != {targets.size(0)}"
-
-            # Compute loss
-            assert outputs.dim() == 2 and targets.dim() == 1, \
-                "Output and target shapes are not compatible with CrossEntropyLoss"
-            loss: Tensor = criterion(outputs, targets)
-            epoch_loss += loss.item()
-
-            # Backward and optimize
-            loss.backward()
-            optimizer.step()
-
-            print(
-                f"\t[Epoch {epoch + 1}/{epochs}] Batch {batch + 1}/{len(data)} - Loss: {loss.item():.4f}")
+                epoch_loss += loss.item()
+                pbar.set_postfix({"Batch Loss": loss.item()})
+                pbar.update(1)
 
         print(
             f"[Epoch {epoch + 1}] Average Loss: {epoch_loss / len(data):.4f}")
 
         model.save_checkpoint(epoch + 1)
 
-    print("[Training] Training completed.")
     return model
