@@ -1,3 +1,3 @@
 from .image_caption import ImageCaption
 from .encoder import ResnetImageEncoder
-from .decoder import CaptionDecoder
+from .decoder import GRUCaptionDecoder

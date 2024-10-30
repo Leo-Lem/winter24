@@ -1,59 +1,87 @@
+from torch import device, Tensor
+from torch.optim import Adam, Optimizer
+from torch.nn import CrossEntropyLoss
+from torch.utils.data import DataLoader
+
+from models import ImageCaption
+from data import Vocabulary
 
 
-#         self.optimizer = Adam(self.parameters(), lr=learning_rate)
-#         self.criterion = loss_fn if loss_fn else CrossEntropyLoss(
-#             ignore_index=dataset.vocabulary.token_to_id["<PAD>"])
-# def trainModel(self,
-#                 epochs: int = 5,
-#                 batch_size: int = None,
-#                 num_workers: int = None,
-#                 resume: bool = False,
-#                 device: str = "cpu"):
-#         """" Train the model for a given number of epochs.
-#         Args:
-#             batch_size: The number of samples in each batch (defaults to the model's batch size).
-#             num_workers: The number of subprocesses to use for data loading (defaults to the model's num_workers).
-#             epochs: The number of times to iterate over the training dataset.
-#             resume: Whether to resume training from the last checkpoint.
-#         """
+def train(model: ImageCaption,
+          data: DataLoader,
+          epochs: int = 5,
+          device: device = device("cpu"),
+          optimizer: Optimizer = None,
+          criterion: CrossEntropyLoss = None):
+    """
+    Train the ImageCaption model.
 
-#         start_epoch = self._load() if resume else 0
-#         if start_epoch == epochs:
-#             print("[Training] Model already trained.")
-#             return
-#         elif start_epoch > epochs:
-#             raise ValueError(
-#                 f"Model has already been trained for {start_epoch} epochs.")
-#         elif start_epoch > 0:
-#             print(f"[Training] Resuming from epoch {start_epoch}.")
+    Args:
+        model (ImageCaption): The caption generation model to train.
+        data (DataLoader): Dataloader providing the training data.
+        epochs (int): Number of epochs to train for (default: 5).
+        device (device): Device to use for training (default: CPU).
+        optimizer (Optimizer): Optimizer for training (default: Adam).
+        criterion (CrossEntropyLoss): Loss function (default: CrossEntropyLoss).
 
-#         loader = self._training_loader(batch_size, num_workers)
+    Returns:
+        ImageCaption: The trained model with the latest checkpoint.
+    """
+    model.to(device)
+    model.train()
 
-#         self.train()
-#         for epoch in range(start_epoch, epochs):
-#             for idx, (images, captions) in enumerate(loader):
-#                 print(
-#                     f"[Training | Epoch {epoch+1}/{epochs}] Batch {idx+1}/{len(loader)}")
+    optimizer = Adam(model.parameters(),
+                     lr=1e-3) if optimizer is None else optimizer
+    criterion = CrossEntropyLoss(ignore_index=Vocabulary.pad_index).to(
+        device) if criterion is None else criterion
 
-#                 images = images.to(device)
-#                 captions = captions.to(device)
+    checkpoint = model.load_checkpoint()
 
-#                 # Zero the gradients.
-#                 self.optimizer.zero_grad()
+    print("[Training] Started.")
+    for epoch in range(checkpoint, epochs):
+        print(f"[Epoch {epoch + 1}/{epochs}]")
+        epoch_loss = 0
 
-#                 # Feed forward
-#                 outputs, _ = self(images, captions)
+        for batch, (images, captions) in enumerate(data):
+            assert images.size(0) == captions.size(0), \
+                f"Batch size mismatch: {images.size(0)} != {captions.size(0)}"
 
-#                 # Calculate the batch loss.
-#                 targets = captions[:, 1:]
-#                 loss = self.criterion(
-#                     outputs.to(device).view(-1, len(loader.dataset.vocabulary)), targets.reshape(-1))
+            images: Tensor = images.to(device)
+            captions: Tensor = captions.to(device)
+            optimizer.zero_grad()
 
-#                 # Backward pass.
-#                 loss.backward()
+            # Forward pass
+            outputs: Tensor = model(images, max_len=captions.size(1))
 
-#                 # Update the parameters in the optimizer.
-#                 self.optimizer.step()
+            assert outputs.size(0) == captions.size(0) and outputs.size(1) == captions.size(1), \
+                f"Output shape mismatch: {outputs.size()} != {captions.size()}"
 
-#             self._save(epoch+1)
-#             print(f"\n[Training | Epoch {epoch+1}/{epochs}] Loss: {loss}\n")
+            # Skip <SOS> token in targets, align outputs and targets, flatten for loss
+            targets = captions[:, 1:].reshape(-1).long()
+            outputs = outputs[:, :-1].reshape(-1, outputs.size(-1)).float()
+
+            assert outputs.requires_grad, "Outputs must require gradients."
+
+            assert outputs.size(0) == targets.size(0), \
+                f"Batch size mismatch: {outputs.size(0)} != {targets.size(0)}"
+
+            # Compute loss
+            assert outputs.dim() == 2 and targets.dim() == 1, \
+                "Output and target shapes are not compatible with CrossEntropyLoss"
+            loss: Tensor = criterion(outputs, targets)
+            epoch_loss += loss.item()
+
+            # Backward and optimize
+            loss.backward()
+            optimizer.step()
+
+            print(
+                f"\t[Epoch {epoch + 1}/{epochs}] Batch {batch + 1}/{len(data)} - Loss: {loss.item():.4f}")
+
+        print(
+            f"[Epoch {epoch + 1}] Average Loss: {epoch_loss / len(data):.4f}")
+
+        model.save_checkpoint(epoch + 1)
+
+    print("[Training] Completed.")
+    return model

@@ -7,6 +7,15 @@ from spacy.cli import download
 class Vocabulary:
     """ Vocabulary object to store the mapping between words and indices. """
 
+    pad_token = "<PAD>"
+    sos_token = "<SOS>"
+    eos_token = "<EOS>"
+    unk_token = "<UNK>"
+    pad_index = 0
+    sos_index = 1
+    eos_index = 2
+    unk_index = 3
+
     def __init__(self, sentences: list[str], threshold: int, spacy_model_name: str = "en_core_web_sm"):
         """ Initialize the vocabulary and learn the words from the sentences.
 
@@ -16,33 +25,36 @@ class Vocabulary:
             spacy_model_name: The name of the spaCy model to use for tokenization.
         """
 
-        self.id_to_token = {0: "<PAD>", 1: "<SOS>", 2: "<EOS>", 3: "<UNK>"}
+        self.index_to_token = {self.pad_index: self.pad_token,
+                               self.sos_index: self.sos_token,
+                               self.eos_index: self.eos_token,
+                               self.unk_index: self.unk_token}
         self.threshold = threshold
         self.spacy_model = self._download_and_init(spacy_model_name)
 
-        self._learn(sentences)
-
-    def __len__(self) -> int: return len(self.id_to_token)
-
-    @property
-    def token_to_id(self) -> dict[str, int]:
-        return {v: k for k, v in self.id_to_token.items()}
-
-    def numericalize(self, text: str) -> list[int]:
-        """ For each token in the text, return the index in the vocabulary. """
-        token_to_id = self.token_to_id
-        return [token_to_id[token] if token in token_to_id else token_to_id["<UNK>"]
-                for token in self._tokenize(text)]
-
-    def _learn(self, sentences: list[str]):
-        """ Build the vocabulary from the sentences. """
         freq = Counter()
         for sentence in sentences:
             for token in self._tokenize(sentence):
                 freq[token] += 1
 
-                if token not in self.id_to_token.values():
-                    self.id_to_token[len(self.id_to_token)] = token
+                if token not in self.index_to_token.values():
+                    self.index_to_token[len(self.index_to_token)] = token
+
+    def __len__(self) -> int: return len(self.index_to_token)
+
+    @property
+    def token_to_index(self) -> dict[str, int]:
+        return {v: k for k, v in self.index_to_token.items()}
+
+    def numericalize(self, text: str) -> list[int]:
+        """ Convert the text to numerical form using the vocabulary. """
+        return [self.token_to_index[token]
+                if token in self.token_to_index else self.token_to_index["<UNK>"]
+                for token in self._tokenize(text)]
+
+    def denumericalize(self, indices: list[int]) -> str:
+        """ Convert the indices to text using the vocabulary. """
+        return " ".join([self.index_to_token[index] for index in indices])
 
     def _tokenize(self, text: str) -> list[str]:
         """ Tokenize the text using spacy model. """

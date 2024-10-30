@@ -6,7 +6,7 @@ class CheckpointModule(Module):
     """ A module that can save and load checkpoints. """
 
     def __init__(self, path: str):
-        super(self).__init__()
+        super().__init__()
         self.path = path
 
     def save_checkpoint(self, checkpoint: int):

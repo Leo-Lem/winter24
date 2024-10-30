@@ -1,52 +1,52 @@
-from torch.nn import Module
-from nltk.translate import bleu_score
+from nltk.translate.bleu_score import corpus_bleu
+from torch import no_grad, device, Tensor
+from torch.utils.data import DataLoader
+from typing import Callable
 
-from data import FlickrDataset
+from models import ImageCaption
 
 
-def evaluate(model: Module, data: FlickrDataset):
+def evaluate(model: ImageCaption,
+             data: DataLoader,
+             decode_caption: Callable[[Tensor], str],
+             device: device = device("cpu")) -> float:
+    """
+    Evaluate the ImageCaption model on the provided dataset using BLEU score.
+
+    Args:
+        model (ImageCaption): The image captioning model to evaluate.
+        dataloader (DataLoader): DataLoader providing images and reference captions.
+        device (torch.device): Device to run evaluation on (default: CPU).
+
+    Returns:
+        float: The BLEU score for the evaluated dataset.
+    """
+    model.eval()
+    model.to(device)
+
     references = []
     candidates = []
-    for i in range(len(data)):
-        reference = data[i][1]
-        candidate = model.predict(data[i][0])
-        references.append(reference)
-        candidates.append(candidate)
-    return bleu_score.corpus_bleu(references, candidates)
 
-# def validateModel(self,
-#                       batch_size: int = None,
-#                       num_workers: int = None,
-#                       device: str = "cpu") -> float:
-#         """ Validate the model on the validation dataset.
-#         Args:
-#             batch_size: The number of samples in each batch (defaults to the model's batch size).
-#             num_workers: The number of subprocesses to use for data loading (defaults to the model's num_workers).
-#         Returns:
-#             The average loss on the validation dataset.
-#         """
+    with no_grad():
+        for batch, (images, captions) in enumerate(data):
+            images: Tensor = images.to(device)
+            predictions: Tensor = model(images)
 
-#         loader = self._validation_loader(
-#             batch_size=batch_size, num_workers=num_workers)
+            # Prepare reference and candidate sentences for BLEU scoring
+            for i in range(len(predictions)):
+                # Reference: Each reference caption split into tokens (wrapped for BLEU compatibility)
+                reference_caption = [decode_caption(captions[i])]
+                references.append(reference_caption)
 
-#         total_loss = 0
+                # Candidate: Predicted caption as a token list
+                candidate_caption = decode_caption(predictions[i])
+                candidates.append(candidate_caption)
 
-#         self.eval()
-#         for idx, (images, captions) in enumerate(loader):
-#             print(f"[Validation] Batch {idx+1}/{len(loader)}")
+            # Calculate batch-level BLEU score for tracking
+            batch_bleu = corpus_bleu(references, candidates)
+            print(
+                f"[Evaluation] Batch {batch + 1}/{len(data)} - BLEU Score: {batch_bleu:.4f}")
 
-#             images = images.to(device)
-#             captions = captions.to(device)
-
-#             with no_grad():
-#                 outputs, _ = self(images, captions)
-
-#             targets = captions[:, 1:]
-#             loss: CrossEntropyLoss = self.criterion(
-#                 outputs.to(device).view(-1, len(loader.dataset.vocabulary)), targets.reshape(-1))
-
-#             total_loss += loss.item()
-
-#         loss = total_loss / len(loader)
-#         print(f"\n[Validation] Loss: {loss}")
-#         return loss
+    bleu = corpus_bleu(references, candidates)
+    print(f"[Evaluation] Final BLEU Score: {bleu:.4f}")
+    return bleu

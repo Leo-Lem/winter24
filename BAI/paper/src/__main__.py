@@ -1,60 +1,48 @@
-from torch import cuda, device
-from torchvision import transforms as T
+from torch import cuda, device, no_grad
+from torch.utils.data import random_split
+from PIL import Image
 
-from data import LoadedFlickrDataset
-from models import ImageCaption, ResnetImageEncoder, CaptionDecoder
-from eval import Visualiser
+from data import FlickrDataset, Vocabulary, loader
+from models import ImageCaption, ResnetImageEncoder, GRUCaptionDecoder
+from eval import train, evaluate, visualise
 
-DIR = "/content/drive/MyDrive"
-# DIR = "."
+# DIR = "/content/drive/MyDrive"
+DIR = "."
 DEVICE = device("cuda" if cuda.is_available() else "cpu")
 
-# --- Dataset ---
-transforms = T.Compose([
-    T.Resize(226),
-    T.RandomCrop(224),
-    T.ToTensor(),
-    T.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
-])
-dataset = LoadedFlickrDataset(
-    f"{DIR}/flickr8k",
-    num_captions=None,
-    image_transform=transforms
-)
+# --- Data ---
+dataset = FlickrDataset(path=f"{DIR}/flickr8k",
+                        num_captions=100)
+vocabulary = Vocabulary(dataset.captions,
+                        threshold=5)
+train_dataset, eval_dataset = random_split(dataset, [.8, .2])
+
 
 # --- Model ---
-encoder = ResnetImageEncoder(
-).to(DEVICE)
-decoder = CaptionDecoder(
-    embed_size=300,
-    vocab_size=len(dataset.vocabulary),
-    attention_dim=256,
-    encoder_dim=2048,
-    decoder_dim=512
-).to(DEVICE)
-model = ImageCaption(
-    dataset=dataset,
-    encoder=encoder,
-    decoder=decoder,
-    batch_size=5,
-    num_workers=2,
-    learning_rate=3e-4
-).to(DEVICE)
+encoder = ResnetImageEncoder()
+decoder = GRUCaptionDecoder(vocabulary_size=len(vocabulary))
+model = ImageCaption(encoder=encoder, decoder=decoder)
 
-model.trainModel(epochs=2, resume=True, device=DEVICE)
-model.validateModel(device=DEVICE)
+
+# --- Training ---
+
+train(model,
+      data=loader(train_dataset),
+      epochs=10,
+      device=DEVICE)
+
+
+# --- Evaluation ---
+evaluate(model,
+         data=loader(eval_dataset),
+         decode_caption=dataset.tensor_to_caption,
+         device=DEVICE)
+
 
 # --- Inference ---
-visualiser = Visualiser()
-
-test_image = f"{DIR}/image.jpg"
-prediction = model.predict(test_image, transforms)
-visualiser.display_image(prediction[1], prediction[0])
-
-# def _loaders(self, batch_size: int, num_workers: int) -> tuple[FlickrDataloader, FlickrDataloader]:
-#         batch_size = batch_size if batch_size else self.batch_size
-#         num_workers = num_workers if num_workers else self.num_workers
-
-#         training, validation = self.dataset.split(train_size=.8)
-#         return (FlickrDataloader(training, batch_size=batch_size, num_workers=num_workers),
-#                 FlickrDataloader(validation, batch_size=batch_size, num_workers=num_workers))
+with no_grad():
+    model.eval()
+    image = dataset.image_to_tensor(
+        Image.open(f"{DIR}/image.jpg").convert("RGB")).unsqueeze(0).to(DEVICE)
+    caption = dataset.tensor_to_caption(model(image))
+visualise(image, caption)

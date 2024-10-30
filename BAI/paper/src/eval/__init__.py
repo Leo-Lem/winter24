@@ -1,3 +1,3 @@
-from train import train
-from evaluate import evaluate
-from visualiser import Visualiser
+from .train import train
+from .evaluate import evaluate
+from .visualise import visualise

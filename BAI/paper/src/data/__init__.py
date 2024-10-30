@@ -1,3 +1,3 @@
-from .flickrdataset import FlickrDataset, LoadedFlickrDataset
+from .flickrdataset import FlickrDataset
 from .vocabulary import Vocabulary
-from .flickrdataloader import FlickrDataloader
+from .loader import loader
