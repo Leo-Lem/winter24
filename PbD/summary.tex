@@ -11,14 +11,75 @@
 \begin{document}\createtitle
 
 \part{Privacy Enhancing Technology}
-% \includepdf[pages={?}, nup=?]{slides.pdf}
 
+\section{Confidentiality of Metadata}
+Goal of privacy.
+- Anonymity: Protection of the identity of the sender or receiver of a message.
+- Unobservability: Protection of the communication relation itself.
+
+
+\section{Attacker model}
+- Outsider: eavesdropping on communcation lines, traffic analysis
+- Insider: network operators, malicious staff, government
+can:
+- passively observe all communication links
+- actively send messages
+- flood or block messages
+- operate (all but one) anonymity services
+- operate server
+cannot:
+- break cryptographic systems
+- attack user's personal machine
+- have unlimited time or resources
+
+
+\section{Tracking on OSI Application Layer}
+Application:
+- filtering mechanisms: cookies, active contents
+- e2e encryption
+- hiding: pseudonyms, credentials
+
+Pseudonyms
+- Passive Trustee: trusted third party (TTP) that certifies pseudonyms
+- Active Trustee: TTP is involved in communication
+
+\section{Tracking on OSI Network Layer}
+- Broadcast with implicit addressing: all recipients receive all messages, local filtering -> protects recipient
+- Dummy Traffic: send meaningless messages -> protects sender
+- Proxies: forward messages -> protects sender, but proxy can track
+- DC network: broadcast, dummy and cryptography -> protects sender
+- Blind-message service: unobservable access to replicated databases -> protects database client
+- Mix network: cascaded (independent) proxies, dummy traffic, cryptography -> protects communication relation
+- Steganography: hidden messages in other messages -> protects content
+
+\section{Traffic Analysis}
+Attacks
+- Timing: correlation of messages
+- Volume: correlation of message sizes
+- Flooding: fill up anonymous group batch to separate certain message
+- Intersection: correlation of messages in different groups
+
+
+
+% \includepdf[pages={14-29}, nup=3x3]{slides.pdf}
 \section{IPv6 traffic pseudonymisation}
 
+
+
+
+% \includepdf[pages={?}, nup=?]{slides.pdf}
 \section{In Practice}
 
+
+
+
+% \includepdf[pages={?}, nup=?]{slides.pdf}
 \section{Censorship Resistance}
 
+
+
+
+% \includepdf[pages={?}, nup=?]{slides.pdf}
 \section{Criminal Misuse and Data Retention}
 
 
