@@ -10,19 +10,19 @@
 
 \begin{document}\createtitle
 
-\section{Kryptographie}
+\part{Kryptographie}
 
 
 \includepdf[pages={14-16}, nup=1x3]{slides.pdf}
-\subsection{Grundlagen}
-\subsubsection{Angriffsarten (schwer zu leicht)}
+\section{Grundlagen}
+\subsection{Angriffsarten (schwer zu leicht)}
 \begin{enumerate}
   \item \textbf{Ciphertext Only}: Angreifer kennt nur den Ciphertext
   \item \textbf{Known Plaintext}: Angreifer kennt Ciphertext und Plaintext
   \item \textbf{Chosen Plaintext} (adaptiv v. nicht-adaptiv): Angreifer kann Plaintext wählen und erhält den Ciphertext (nicht-adaptiv: alle Plaintexte müssen vorher gewählt werden)
 \end{enumerate}
 
-\subsubsection{Brechen (stark zu schwach)}
+\subsection{Brechen (stark zu schwach)}
 \begin{enumerate}
   \item \textbf{Vollständiges Brechen}: Schlüssel gefunden
   \item \textbf{Universelles Brechen}: Äquivalenter Schlüssel gefunden
@@ -33,7 +33,7 @@
 
 
 \includepdf[pages={18-32,35,37-41}, nup=3x7]{slides.pdf}
-\subsection{Klassische Chiffren}
+\section{Klassische Chiffren}
 \begin{itemize}
   \item \textbf{Transposition}: Veränderung der Reihenfolge
   \item \textbf{Subsitution}: Ersetzen von Zeichen
@@ -50,8 +50,9 @@
 \end{enumerate}
 
 
+\section{Moderne Kryptographie}
 \includepdf[pages={44-108}, nup=4x9]{slides.pdf}
-\subsection{Moderene Kryptographie I: Symmetrische Systeme}
+\subsection{Symmetrische Systeme}
 \begin{enumerate}
   \item \textbf{One-Time-Pad (mod 2)}: Vernam-Chiffre mit zufälligem Schlüssel
   \item \textbf{Symmetrische Authentifikationscodes}: Erweiterung des One-Time-Pad mit Message Authentication Code (MAC)
@@ -116,7 +117,7 @@
 
 
 \includepdf[pages={44, 109-142}, nup=4x9]{slides.pdf}
-\subsection{Moderne Kryptographie II: Asymmetrische Systeme}
+\subsection{Asymmetrische Systeme}
 \begin{enumerate}
   \item \textbf{Diffie-Hellman-Key-Exchange}: Schlüsselaustausch über unsicheren Kanal; Sicherheit durch diskretes Logarithmusproblem, anfällig für Man-in-the-Middle-Angriffe.
   \item \textbf{ElGamal Kryptosystem}: Asymmetrische Verschlüsselung und Signatur; Diffie-Hellman-basiert, stärkere Sicherheit, aber höhere Schlüsselanforderungen.
@@ -175,19 +176,19 @@
 
 
 
-\section{Public Key Infrastructure}
+\part{Public Key Infrastructure}
 \includepdf[pages={1}, nup=3x7]{slides.pdf}
 
 
 
 
-\section{Attacks and Defenses}
+\part{Attacks and Defenses}
 \includepdf[pages={1}, nup=3x7]{slides.pdf}
 
 
 
 
-\section{Mobile Security}
+\part{Mobile Security}
 \includepdf[pages={1}, nup=3x7]{slides.pdf}
 
 
