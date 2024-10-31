@@ -4,7 +4,6 @@ from torch.utils.data import Dataset
 from torchvision.transforms import Compose, Resize, ToTensor, Normalize
 from PIL import Image
 import pickle
-from multiprocessing import Pool
 from tqdm import tqdm
 import pandas as pd
 
@@ -45,7 +44,6 @@ class FlickrDataset(Dataset):
             f"[Dataset] {len(self.images)} images and {len(self.captions)} captions are ready.")
 
     def _process_and_save(self, num_captions, vocabulary_threshold):
-        # Load captions with pandas
         data = pd.read_csv(self.captions_file, nrows=num_captions)
         images, captions = [], []
 
@@ -58,16 +56,16 @@ class FlickrDataset(Dataset):
                     tqdm(raw_captions, desc="Tokenizing Captions")]
 
         # Use multiprocessing to process images in parallel
-        with Pool() as pool:
-            image_paths = [os.path.join(self.image_path, img_name)
-                           for img_name in data['image']]
-            images = list(tqdm(pool.imap(self.process_image, image_paths), total=len(
-                image_paths), desc="Processing Images"))
+        image_paths = [os.path.join(self.image_path, img_name)
+                       for img_name in data['image']]
+        images = list(tqdm(map(self.process_image, image_paths),
+                           total=len(image_paths), desc="Processing Images"))
 
         # Save processed data including the vocabulary and numericalized captions
         with open(self.data_path, 'wb') as f:
-            pickle.dump({'images': images, 'captions': captions,
-                        'vocabulary': vocabulary}, f)
+            pickle.dump({'images': images,
+                         'captions': captions,
+                         'vocabulary': vocabulary}, f)
 
         return images, captions, vocabulary
 

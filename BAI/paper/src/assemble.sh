@@ -6,10 +6,6 @@ if [ -f $FILE ]; then
     rm $FILE
 fi
 
-for dep in $(cat $DIR/requirements.txt); do
-    echo "!pip install $dep" >> $FILE
-done
-
 cat $DIR/data/vocabulary.py >> $FILE
 cat $DIR/data/flickrdataset.py >> $FILE
 cat $DIR/data/*.py >> $FILE
