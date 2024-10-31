@@ -16,8 +16,6 @@ class CheckpointModule(Module):
             "state": self.state_dict()
         }, self.path)
 
-        print(f"[Save] To {self.path} at checkpoint {checkpoint}.")
-
     def load_checkpoint(self) -> int:
         """ Load the model from the last checkpoint. """
         try:
@@ -29,9 +27,6 @@ class CheckpointModule(Module):
 
             self.load_state_dict(model_dict)
 
-            print(
-                f"[Load] From {self.path} at checkpoint {checkpoint['checkpoint']}.")
-
             return checkpoint['checkpoint']
         except FileNotFoundError:
-            return 0
+            return 1

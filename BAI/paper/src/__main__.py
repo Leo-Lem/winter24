@@ -1,16 +1,15 @@
-from torch import cuda, device, no_grad
-from torch.utils.data import random_split
-from PIL import Image
+from torch import cuda, device
+from torch.utils.data import random_split, DataLoader
 
-from data import FlickrDataset, loader
+from data import FlickrDataset
 from models import ImageCaption, ResnetImageEncoder, GRUCaptionDecoder
-from eval import train, evaluate, visualise
+from eval import train, evaluate
 
 # DIR = "/content/drive/MyDrive"
 DIR = "."
 CAPTION_LIMIT = None
 DEVICE = device("cuda" if cuda.is_available() else "cpu")
-BATCH_SIZE = 800 if cuda.is_available() else 5
+BATCH_SIZE = 800 if cuda.is_available() else 400
 NUM_WORKERS = 2 if cuda.is_available() else 0
 PIN_MEMORY = cuda.is_available()
 
@@ -28,28 +27,20 @@ model = ImageCaption(encoder=encoder, decoder=decoder)
 # --- Training ---
 
 train(model,
-      data=loader(train_dataset,
-                  batch_size=BATCH_SIZE,
-                  num_workers=NUM_WORKERS,
-                  pin_memory=PIN_MEMORY),
+      data=DataLoader(train_dataset,
+                      batch_size=BATCH_SIZE,
+                      num_workers=NUM_WORKERS,
+                      shuffle=True,
+                      pin_memory=PIN_MEMORY),
       epochs=5,
       device=DEVICE)
 
-
 # --- Evaluation ---
 evaluate(model,
-         data=loader(eval_dataset,
-                     batch_size=BATCH_SIZE,
-                     num_workers=NUM_WORKERS,
-                     pin_memory=PIN_MEMORY),
+         data=DataLoader(eval_dataset,
+                         batch_size=BATCH_SIZE,
+                         num_workers=NUM_WORKERS,
+                         shuffle=True,
+                         pin_memory=PIN_MEMORY),
          dataset=dataset,
          device=DEVICE)
-
-
-# --- Inference ---
-with no_grad():
-    model.eval()
-    image = Image.open(f"{DIR}/flickr8k/image.jpg").convert("RGB")
-    caption = dataset.tensor_to_caption(model(
-        dataset.image_to_tensor(image).unsqueeze(0).to(DEVICE)))
-visualise(image, caption)
