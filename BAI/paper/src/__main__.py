@@ -7,16 +7,15 @@ from models import ImageCaption, ResnetImageEncoder, GRUCaptionDecoder
 from eval import train, evaluate, visualise
 
 # DIR = "/content/drive/MyDrive"
-# CAPTION_LIMIT = None
 DIR = "."
-CAPTION_LIMIT = 1000
+CAPTION_LIMIT = None
 DEVICE = device("cuda" if cuda.is_available() else "cpu")
 BATCH_SIZE = 800 if cuda.is_available() else 5
 NUM_WORKERS = 2 if cuda.is_available() else 0
 PIN_MEMORY = cuda.is_available()
 
 # --- Data ---
-dataset = FlickrDataset(path=f"{DIR}/flickr8k", num_captions=CAPTION_LIMIT)
+dataset = FlickrDataset(path=f"{DIR}/flickr8k", caption_limit=CAPTION_LIMIT)
 train_dataset, eval_dataset = random_split(dataset, [.8, .2])
 
 
@@ -50,7 +49,7 @@ evaluate(model,
 # --- Inference ---
 with no_grad():
     model.eval()
-    image = Image.open(f"{DIR}/image.jpg").convert("RGB")
+    image = Image.open(f"{DIR}/flickr8k/image.jpg").convert("RGB")
     caption = dataset.tensor_to_caption(model(
         dataset.image_to_tensor(image).unsqueeze(0).to(DEVICE)))
 visualise(image, caption)

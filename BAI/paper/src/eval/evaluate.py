@@ -1,6 +1,6 @@
-from nltk.translate.bleu_score import corpus_bleu
 from torch import no_grad, device, Tensor
 from torch.utils.data import DataLoader
+from nltk.translate.bleu_score import corpus_bleu
 from tqdm import tqdm
 
 from models import ImageCaption
@@ -22,28 +22,21 @@ def evaluate(model: ImageCaption,
     Returns:
         float: The BLEU score for the evaluated dataset.
     """
-    model.eval()
-    model.to(device)
+    model.to(device).eval()
 
     references, candidates = [], []
-
     with no_grad():
-        # Progress bar for evaluation batches
-        with tqdm(total=len(data), desc="Evaluating", unit="batch") as pbar:
-            for images, captions in data:
-                images = images.to(device)
-                predictions = model(images)
+        bleu = 0.0
+        for images, captions in tqdm(data, desc="Evaluation", unit="batch", postfix={"BLEU": bleu}):
+            images: Tensor = images.to(device)
+            predictions: Tensor = model(images)
 
-                # Prepare reference and candidate sentences for BLEU scoring
-                for index, prediction in enumerate(predictions):
-                    references.append([dataset.vocabulary.tokenize(
-                        dataset.tensor_to_caption(captions[index]))])
-                    candidates.append(dataset.vocabulary.tokenize(
-                        dataset.tensor_to_caption(prediction.argmax(dim=1))))
+            for index, prediction in enumerate(predictions):
+                references.append([dataset.vocabulary.tokenize(
+                    dataset.tensor_to_caption(captions[index]))])
+                candidates.append(dataset.vocabulary.tokenize(
+                    dataset.tensor_to_caption(prediction.argmax(dim=1))))
 
-                pbar.update(1)
+            bleu = corpus_bleu(references, candidates)
 
-    # Calculate final BLEU score
-    bleu = corpus_bleu(references, candidates)
-    print(f"[Evaluation] Final BLEU Score: {bleu:.4f}")
     return bleu

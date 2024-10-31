@@ -7,78 +7,91 @@ import pickle
 from tqdm import tqdm
 import pandas as pd
 
+
 from .vocabulary import Vocabulary
 
 
 class FlickrDataset(Dataset):
     def __init__(self,
                  path: str,
+                 caption_limit: int = None,
                  images_folder: str = "Images",
                  captions_file: str = "captions.csv",
-                 num_captions: int = None,
                  image_transform: Compose = None,
-                 data_file: str = "data.pkl",
+                 data_file: str = "compressed_data.pkl",
                  vocabulary_threshold: int = 5):
         self.image_path = os.path.join(path, images_folder)
         self.captions_file = os.path.join(path, captions_file)
         self.data_path = os.path.join(path, data_file)
-
+        self.caption_limit = caption_limit
         self.image_transform = image_transform or Compose([
             Resize((224, 224)),
             ToTensor(),
             Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
         ])
 
-        if os.path.exists(self.data_path) and num_captions is None:
-            print("[Dataset] Loading preprocessed data...")
-            with open(self.data_path, 'rb') as f:
-                data = pickle.load(f)
-                self.images, self.captions, self.vocabulary = \
-                    data['images'], data['captions'], data['vocabulary']
+        if os.path.exists(self.data_path) and caption_limit is None:
+            print("Loading preprocessed data...")
+            self.images, \
+                self.captions, \
+                self.vocabulary, \
+                self.caption_to_image_index = self._load()
         else:
-            print("[Dataset] Preprocessing and storing data...")
-            self.images, self.captions, self.vocabulary = \
-                self._process_and_save(num_captions, vocabulary_threshold)
+            self.images, \
+                self.captions, \
+                self.vocabulary, \
+                self.caption_to_image_index = self._process(
+                    vocabulary_threshold)
+            print("Saving preprocessed data...")
+            self._save(self.images,
+                       self.captions,
+                       self.vocabulary,
+                       self.caption_to_image_index)
 
-        print(
-            f"[Dataset] {len(self.images)} images and {len(self.captions)} captions are ready.")
-
-    def _process_and_save(self, num_captions, vocabulary_threshold):
-        data = pd.read_csv(self.captions_file, nrows=num_captions)
-        images, captions = [], []
-
-        # Initialize vocabulary and batch tokenize captions
-        raw_captions = data['caption'].tolist()
-        vocabulary = Vocabulary(raw_captions, threshold=vocabulary_threshold)
-
-        # Tokenize and numericalize captions in batch
-        captions = [tensor(vocabulary.numericalize(caption)) for caption in
-                    tqdm(raw_captions, desc="Tokenizing Captions")]
-
-        # Use multiprocessing to process images in parallel
-        image_paths = [os.path.join(self.image_path, img_name)
-                       for img_name in data['image']]
-        images = list(tqdm(map(self.process_image, image_paths),
-                           total=len(image_paths), desc="Processing Images"))
-
-        # Save processed data including the vocabulary and numericalized captions
+    def _save(self,
+              images: list[Tensor],
+              captions: list[Tensor],
+              vocabulary: Vocabulary,
+              caption_to_image_index: dict[int, int]):
         with open(self.data_path, 'wb') as f:
-            pickle.dump({'images': images,
-                         'captions': captions,
-                         'vocabulary': vocabulary}, f)
+            pickle.dump({
+                'images': images,
+                'captions': captions,
+                'vocabulary': vocabulary,
+                'caption_to_image_index': caption_to_image_index
+            }, f)
 
-        return images, captions, vocabulary
+    def _load(self) -> tuple[list[Tensor], list[Tensor], Vocabulary, dict[int, int]]:
+        with open(self.data_path, 'rb') as f:
+            data = pickle.load(f)
+            return data['images'], data['captions'], data['vocabulary'], data['caption_to_image_index']
 
-    def process_image(self, image_path):
-        """Load and transform an image."""
-        image = Image.open(image_path)
-        return self.image_transform(image)
+    def _process(self, vocabulary_threshold: int) -> tuple[list[Tensor], list[Tensor], Vocabulary, dict[int, int]]:
+        data = pd.read_csv(self.captions_file, nrows=self.caption_limit)
 
-    def __len__(self):
-        return len(self.captions)
+        captions = data['caption'].tolist()
+        vocabulary = Vocabulary(captions, threshold=vocabulary_threshold)
 
-    def __getitem__(self, index):
-        return self.images[index], self.captions[index]
+        images = data['image'].tolist()
+        unique_images: list = data['image'].unique().tolist()
+        image_tensors = []
+        for img_name in tqdm(unique_images, desc="Preprocessing Images", unit="images"):
+            image_path = os.path.join(self.image_path, img_name)
+            image = Image.open(image_path).convert('RGB')
+            image_tensors.append(self.image_transform(image))
+
+        caption_tensors = []
+        caption_to_image_index = {}
+        for index, caption in enumerate(tqdm(captions, desc="Tokenizing Captions", unit="captions")):
+            caption_tensors.append(tensor(vocabulary.numericalize(caption)))
+            caption_to_image_index[index] = unique_images.index(images[index])
+
+        return image_tensors, caption_tensors, vocabulary, caption_to_image_index
+
+    def __len__(self): return len(self.captions)
+
+    def __getitem__(self, index: int) -> tuple[Tensor, Tensor]:
+        return tensor(self.captions[index]), tensor(self.images[self.caption_to_image_index[index]])
 
     def tensor_to_caption(self, tensor: Tensor) -> str:
         return self.vocabulary.denumericalize(tensor.tolist()[1:-1])

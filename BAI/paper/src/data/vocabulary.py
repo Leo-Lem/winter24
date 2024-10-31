@@ -35,7 +35,7 @@ class Vocabulary:
         freq = Counter()
 
         # Use tqdm to provide a progress bar for vocabulary creation
-        for sentence in tqdm(sentences, desc="Building Vocabulary"):
+        for sentence in tqdm(sentences, desc="Building Vocabulary", unit="sentences"):
             for token in self.tokenize(sentence):
                 freq[token] += 1
 

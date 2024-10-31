@@ -2,7 +2,7 @@ from torch import device, Tensor
 from torch.optim import Adam, Optimizer
 from torch.nn import CrossEntropyLoss
 from torch.utils.data import DataLoader
-from tqdm import tqdm
+from tqdm import tqdm, trange
 
 from models import ImageCaption
 from data import Vocabulary
@@ -28,42 +28,29 @@ def train(model: ImageCaption,
     Returns:
         ImageCaption: The trained model with the latest checkpoint.
     """
-    model.to(device)
-    model.train()
+    model.to(device).train()
 
     optimizer = Adam(model.parameters(),
                      lr=1e-3) if optimizer is None else optimizer
-    criterion = CrossEntropyLoss(ignore_index=Vocabulary.pad_index).to(
-        device) if criterion is None else criterion
+    criterion = CrossEntropyLoss(ignore_index=Vocabulary.pad_index
+                                 ) if criterion is None else criterion
 
-    checkpoint = model.load_checkpoint()
+    epoch_loss = 0.0
+    for epoch in trange(model.load_checkpoint(), epochs, desc="Training", unit="epoch", postfix={"Loss": 0.0}):
+        batch_loss = 0.0
+        for images, captions in tqdm(data, desc=f"Epoch", unit="batch", postfix={"Loss": batch_loss}):
+            optimizer.zero_grad()
 
-    for epoch in range(checkpoint, epochs):
-        print(f"[Epoch {epoch + 1}/{epochs}]")
-        epoch_loss = 0
+            images: Tensor = images.to(device)
+            captions: Tensor = captions.to(device)
 
-        # Progress bar for each batch
-        with tqdm(total=len(data), desc=f"Training Epoch {epoch + 1}/{epochs}", unit="batch") as pbar:
-            for images, captions in data:
-                images, captions = images.to(device), captions.to(device)
-                optimizer.zero_grad()
+            outputs: Tensor = model(images, max_len=captions.size(1))
+            loss: Tensor = criterion(
+                outputs.view(-1, outputs.size(-1)), captions.view(-1))
 
-                # Forward pass
-                outputs = model(images, max_len=captions.size(1))
-                loss = criterion(
-                    outputs.view(-1, outputs.size(-1)), captions.view(-1))
+            loss.backward()
+            batch_loss = loss.item()
+            epoch_loss += batch_loss
 
-                # Backward pass and optimization
-                loss.backward()
-                optimizer.step()
-
-                epoch_loss += loss.item()
-                pbar.set_postfix({"Batch Loss": loss.item()})
-                pbar.update(1)
-
-        print(
-            f"[Epoch {epoch + 1}] Average Loss: {epoch_loss / len(data):.4f}")
-
-        model.save_checkpoint(epoch + 1)
-
-    return model
+            optimizer.step()
+        model.save_checkpoint(epoch)
