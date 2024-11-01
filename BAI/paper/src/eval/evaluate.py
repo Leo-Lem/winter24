@@ -27,7 +27,7 @@ def evaluate(model: ImageCaption,
     references, candidates = [], []
     with no_grad():
         bleu = 0.0
-        for images, captions in tqdm(data, desc="Evaluation", unit="batch", postfix={"BLEU": bleu}):
+        for images, captions in tqdm(data, desc="Evaluation", unit="batch"):
             images: Tensor = images.to(device)
             predictions: Tensor = model(images)
 

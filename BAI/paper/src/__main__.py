@@ -36,11 +36,13 @@ train(model,
       device=DEVICE)
 
 # --- Evaluation ---
-evaluate(model,
-         data=DataLoader(eval_dataset,
-                         batch_size=BATCH_SIZE,
-                         num_workers=NUM_WORKERS,
-                         shuffle=True,
-                         pin_memory=PIN_MEMORY),
-         dataset=dataset,
-         device=DEVICE)
+bleu = evaluate(model,
+                data=DataLoader(eval_dataset,
+                                batch_size=BATCH_SIZE,
+                                num_workers=NUM_WORKERS,
+                                shuffle=True,
+                                pin_memory=PIN_MEMORY),
+                dataset=dataset,
+                device=DEVICE)
+
+print(f"BLEU score: {bleu}")

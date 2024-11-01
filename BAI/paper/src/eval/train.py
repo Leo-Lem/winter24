@@ -36,7 +36,7 @@ def train(model: ImageCaption,
                                  ) if criterion is None else criterion
 
     epoch_loss = 0.0
-    for epoch in trange(model.load_checkpoint(), epochs, desc="Training", unit="epoch"):
+    for epoch in trange(model.load_checkpoint()+1, epochs, desc="Training", unit="epoch"):
         batch_loss = 0.0
         for images, captions in tqdm(data, desc=f"Epoch", unit="batch"):
             optimizer.zero_grad()
