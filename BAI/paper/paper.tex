@@ -139,8 +139,12 @@
 
 \thispagestyle{empty}
 
+\begin{center}
+    \includegraphics[width=0.2\textwidth]{src/wtmicon.pdf}
+\end{center}
+
 \begin{abstract}
- This paper is about image captioning. We discuss the current state of the art and overview the most important methods. We also present some of our results.
+ This paper is about image captioning. We discuss the current state of the art and overview the most important methods. We present our results of experiments with different encoder and decoder models. We use the flickr8k dataset and evaluate the models using the BLEU score. We discuss the results and give an outlook on future work.
 \end{abstract}
 
 \tableofcontents
@@ -165,21 +169,68 @@ Image captioning models are typically evaluated using metrics like BLEU, METEOR,
 
 Recent innovations in diverse decoding strategies, like Diverse Beam Search, aim to overcome the tendency of beam search to produce near-duplicate captions by enhancing variability without sacrificing quality. Diverse Beam Search ensures that generated captions capture a broader range of plausible descriptions, reflecting the inherent ambiguity in image captioning tasks \cite{Vijayakumar}.
 
+
+
 \section{Methods}
 \label{sec:methods}
 
-The accuracy of image captioning is commonly measured using BLEU or CIDEr scores. BLEU is a precision-based metric that compares n-grams in the generated caption to those in the reference captions. CIDEr is a recall-based metric that compares the generated caption to the reference captions using cosine similarity. For simplicity, we are only using the BLEU score in our experiments.
+We present the dataset, the encoder-decoder architecture, the encoder models, the decoder models, and the evaluation metrics.
 
-We focused on the flickr8k dataset, which consists of 8,000 images, each with five reference captions. Other commonly used datasets are flickr30k and MS COCO, but due to their size and limited resources, we decided to focus on flickr8k.
+\subsection{Dataset}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{src/flickr8k.png}
+    \caption{Example images and captions from the flickr8k dataset.}
+    \label{fig:flickr8k}
+\end{figure}
+We focused on the flickr8k dataset, which consists of 8,000 images, each with five reference captions. The images are diverse and contain a wide range of objects and scenes. This dataset is commonly used for image captioning research due to its quality and limited size. The captions are relatively short and straightforward, making them easier to generate.
+\par Other commonly used datasets are flickr30k and MS COCO, but these datasets are larger and cannot be processed due to our limited computational resources.
 
+\subsection{Encoder-Decoder Architecture}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{src/encoder-decoder.png}
+    \caption{A Survey on Various Deep Learning Models for Automatic Image Captioning \cite{gaurav}}
+    \label{fig:encoder-decoder}
+\end{figure}
 Usually, an encoder-decoder architecture is used to achieve image captioning. The encoder is a convolutional neural network (CNN) that extracts features from the image. The decoder is a recurrent neural network (RNN) that generates the caption word by word.
 
-We experiment with different architectures. For encoding images to features we use ResNet-50 and VGG-16. For decoding captions from features, we use GRU, LSTM and an LSTM with Bahdanau attention.
+\subsection{Encoder Models}
+We experimented with two different models for encoding images: ResNet-50 and VGG-16.
+\par ResNet-50 is a deep residual network that is widely used for image classification. It has 50 layers and uses skip connections to avoid the vanishing gradient problem. It was introduced in \cite{he}.
+\par VGG-16 is a deep convolutional neural network that was developed by the Visual Geometry Group at the University of Oxford. It has 16 layers and is known for its simplicity and effectiveness. It was introduced in \cite{simonyan}.
+
+\subsection{Decoder Models}
+We experimented with two different models for decoding captions: GRU and LSTM.
+\par Gated Recurrent Units (GRUs) are a type of RNN that is similar to LSTMs but has fewer parameters. They are easier to train and faster to compute. They were introduced in \cite{cho}.
+\par Long Short-Term Memory (LSTM) networks are a type of RNN that is designed to avoid the vanishing gradient problem. They have a cell state that can store information over long sequences. They were introduced in \cite{hochreiter}.
+
+\subsection{Evaluation Metrics}
+The accuracy of image captioning is commonly measured using BLEU or CIDEr scores.
+\par BLEU is a precision-based metric that compares n-grams in the generated caption to those in the reference captions. It ranges from 0 to 1, with higher values indicating better performance. It was introduced in \cite{papineni}.
+\par CIDEr is a recall-based metric that compares the generated caption to the reference captions using cosine similarity. It ranges from 0 to 1, with higher values indicating better performance. It was introduced in \cite{vedantam}.
+\par For simplicity, we are only using the BLEU score in our experiments.
+
+
 
 \section{Approach}
 \label{sec:approach}
 
-We preprocess the images by resizing them to 224x224 pixels and normalizing the pixel values. We use the pre-trained ResNet-50 and VGG-16 models to extract features from the images. The features are then fed into the decoder to generate captions.
+Our approach begins with data preprocessing, followed by model training and evaluation.
+
+\subsection{Data Preprocessing}
+\par We preprocess the images by resizing them to 224x224 pixels and normalizing the pixel values and encoding them to tensors of the dimension (224, 224, 3).
+\par We create a vocabulary of words and map each word to an index.
+\par We preprocess the captions by tokenizing them, converting them to lowercase, and padding them to a fixed length. Then we encode them using the vocabulary and convert them to one-dimensional tensors with a specified max\_length.
+
+\subsection{Model Training}
+
+\subsection{Model Evaluation}
+
+
+\section{Results}
+
+
 
 \section{Results}
 \label{sec:results}
