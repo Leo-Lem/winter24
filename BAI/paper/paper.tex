@@ -168,18 +168,18 @@ Recent innovations in diverse decoding strategies, like Diverse Beam Search, aim
 \section{Methods}
 \label{sec:methods}
 
-The accuracy of image captioning is commonly measured using BLEU or CIDEr scores. BLEU is a precision-based metric that compares n-grams in the generated caption to those in the reference captions. CIDEr is a recall-based metric that compares the generated caption to the reference captions using cosine similarity.
+The accuracy of image captioning is commonly measured using BLEU or CIDEr scores. BLEU is a precision-based metric that compares n-grams in the generated caption to those in the reference captions. CIDEr is a recall-based metric that compares the generated caption to the reference captions using cosine similarity. For simplicity, we are only using the BLEU score in our experiments.
 
 We focused on the flickr8k dataset, which consists of 8,000 images, each with five reference captions. Other commonly used datasets are flickr30k and MS COCO, but due to their size and limited resources, we decided to focus on flickr8k.
 
 Usually, an encoder-decoder architecture is used to achieve image captioning. The encoder is a convolutional neural network (CNN) that extracts features from the image. The decoder is a recurrent neural network (RNN) that generates the caption word by word.
 
-We experiment with different architectures, such as VGG16, ResNet, and InceptionV3 as encoders and LSTM and GRU as decoders. We also experiment with varying attention mechanisms, such as soft and hard attention.
+We experiment with different architectures. For encoding images to features we use ResNet-50 and VGG-16. For decoding captions from features, we use GRU, LSTM and an LSTM with Bahdanau attention.
 
 \section{Approach}
 \label{sec:approach}
 
-We follow the state-of-the-art approach to image captioning. We preprocess the images using the encoder and tokenize the captions. We then train the model on the training set and evaluate it on the validation set. We generate the captions using beam search.
+We preprocess the images by resizing them to 224x224 pixels and normalizing the pixel values. We use the pre-trained ResNet-50 and VGG-16 models to extract features from the images. The features are then fed into the decoder to generate captions.
 
 \section{Results}
 \label{sec:results}
