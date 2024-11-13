@@ -130,7 +130,7 @@
 
 	  \vfill
 	  \begin{beamercolorbox}[ht=8ex,center]{}
-		  \includegraphics[width=0.20\paperwidth]{wtmIcon.pdf}
+		  \includegraphics[width=0.20\paperwidth]{res/wtmIcon.pdf}
 	  \end{beamercolorbox}%
     \begin{beamercolorbox}[sep=8pt,center,colsep=-4bp,rounded=true,shadow=true]{institute}
       \usebeamerfont{institute}\trwebsiteordate
@@ -203,15 +203,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Display of TOCs:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\AtBeginSection[]
-{
-	\setcounter{tocdepth}{2}
-	\frame
-	{
-	  \frametitle{Outline}
-		\tableofcontents[currentsection]
-	}
-}
+% \AtBeginSection[]
+% {
+% 	\setcounter{tocdepth}{2}
+% 	\frame
+% 	{
+% 	  \frametitle{Outline}
+% 		\tableofcontents[currentsection]
+% 	}
+% }
 
 
 
@@ -225,65 +225,60 @@
   \titlepage
 \end{frame}
 
-\frame{
-	\frametitle{Outline}
-	\tableofcontents
-}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Content
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Motivation and Question}
-
-\frame[t]{
-  \frametitle{Motivation \& Related Work}
-  \begin{itemize}
-  	\item Add your motivation here
-		\begin{itemize}
-			\item Maybe  with some details
-			\begin{itemize}
-				\item but not too much
-			\end{itemize}
-		\end{itemize}
-		\item Use references \textsuperscript{[Author, 2010]}
+\begin{frame}
+	\begin{itemize}
+			\item \textbf{Image Captioning}: Generating textual descriptions for images \cite{vinyals:2015}.
+			\item \textbf{Challenges}: Complex problem combining computer vision (CV) and natural language processing (NLP) \cite{xu}.
+			\item \textbf{Advancements}: Deep learning models using CNNs for feature extraction and RNNs for language generation \cite{he, simonyan}.
 	\end{itemize}
-}
+\end{frame}
+
+\section{Methods}
+\begin{frame}{Methods}
+	\begin{itemize}
+			\item \textbf{Dataset:} Flickr8k, with 8,000 images and five captions per image \cite{vinyals:2015}.
+			\item \textbf{Architecture:} Encoder-Decoder architecture:
+					\begin{itemize}
+							\item Encoder: CNN-based (ResNet-50, VGG-16) \cite{he, simonyan}.
+							\item Decoder: RNN-based (GRU, LSTM) \cite{hochreiter}.
+					\end{itemize}
+			\item \textbf{Evaluation Metrics:} BLEU score for performance \cite{papineni}, with CIDEr as an alternative \cite{vedantam}.
+	\end{itemize}
+\end{frame}
 
 \section{Approach}
+\begin{frame}{Approach}
+	\begin{itemize}
+			\item \textbf{Data Preprocessing:} Resize images, normalize, and tokenize captions \cite{vinyals:2015}.
+			\item \textbf{Model Training:} Train decoder using Adam optimizer and monitor BLEU score for validation \cite{papineni}.
+			\item \textbf{Model Evaluation:} Evaluate BLEU score after each epoch for overfitting assessment \cite{rennie}.
+	\end{itemize}
+\end{frame}
 
 \section{Results}
+\begin{frame}{Results}
+	\begin{itemize}
+			\item BLEU scores for encoder-decoder combinations (ResNet-GRU, VGG-GRU, ResNet-LSTM, VGG-LSTM) \cite{he, simonyan}.
+				\item \textbf{Best Performance:} VGG encoder with LSTM decoder, highest BLEU score in the first epoch \cite{vinyals:2015}.
+				\item Observation of \textbf{Overfitting}: Decrease in BLEU scores over epochs \cite{rennie}.
+	\end{itemize}
+\end{frame}
 
 \section{Conclusion}
+\begin{frame}{Conclusion}
+	\begin{itemize}
+			\item \textbf{Summary:} VGG-LSTM model achieved the best BLEU score and stability across epochs \cite{vinyals:2016}.
+			\item \textbf{Future Work:} Explore other architectures (e.g., transformers), datasets (e.g., Flickr30k, MS COCO), and metrics (e.g., CIDEr) \cite{vedantam}.
+	\end{itemize}
+\end{frame}
 
-\frame[t]
-{
-  \frametitle{Conclusion}
-
-  Novelty and contribution of this work:
-  \begin{itemize}
-	  \item Sum up the approach
-		\item Sum op the results
-		\item ...
-		\item Show that it solves the question
-  \end{itemize}
-
-\mbox{ }
-
-	Open Questions:
-  \begin{itemize}
-  	\item Something
-	  \item ... is always missing
-  \end{itemize}
-}
-
-\frame[c]{
-  \frametitle{Thanks for your attention! Any questions?}
-
-  \footnotesize
-	\nocite{*}
+\begin{frame}[allowframebreaks]
+	\bibliographystyle{apalike}
 	\bibliography{bib}
-	\bibliographystyle{plain}
-}
+\end{frame}
 
 \end{document}
