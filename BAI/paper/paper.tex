@@ -132,7 +132,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Cover
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title{\trtitle\\[0.3cm]{\normalsize\trtype}}
+\title{\trtitle\\[0.2cm]{\normalsize\trtype}}
 \author{\trauthor}
 \date{\trdate}
 \maketitle
@@ -154,14 +154,12 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Content (Outline_Lemmermann_Leopold_TITLE)
+% Content
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 \label{sec:introduction}
 
 Image captioning involves generating textual descriptions of given images. It is a complex problem because it combines the visual and textual domains. In recent years, deep learning has revolutionized the field of image captioning.
-
-\subsection{Related Work}
 
 Image captioning is a complex and interdisciplinary task bridging computer vision (CV) and natural language processing (NLP). Generating natural, descriptive sentences for images involves detecting and interpreting visual elements and their relationships within depicted scenes. Recent advancements leverage deep learning, particularly Convolutional Neural Networks (CNNs) for feature extraction and Recurrent Neural Networks (RNNs) for sequential language generation. For instance, models such as "Show and Tell" \cite{Vinyals:2015} and "Show, Attend, and Tell" \cite{Xu} utilize CNN-RNN architectures, with the latter integrating attention mechanisms to enhance focus on specific image regions, thereby improving caption relevance and accuracy.
 
@@ -169,16 +167,14 @@ Additionally, methods like Reinforcement Learning (RL) have been explored to opt
 
 Another approach has dealt with the tendency of beam search to produce near-duplicate captions. Diverse Beam Search ensures that generated captions capture a broader range of plausible descriptions, reflecting the inherent ambiguity in image captioning tasks \cite{Vijayakumar}.
 
-\subsection{This Paper}
-
 We begin by discussing the most critical methods in image captioning. We then present the results of our experiments with different encoder and decoder models. We use the flickr8k dataset and evaluate the models using the BLEU score. We discuss the results and give an outlook on future work.
 
 
-\newpage
+
 \section{Methods}
 \label{sec:methods}
 
-In image captioning tasks, a model takes an image as input and generates a caption as output. The model consists of two parts: an encoder that extracts features from the image and a decoder that generates the caption. We discuss the dataset, encoder-decoder architecture, encoder models, decoder models, and evaluation metrics.
+In image captioning tasks, a model takes an image as input and generates a caption as output. The model consists of an encoder that extracts features from the image and a decoder that generates the caption. We discuss the dataset, encoder-decoder architecture, encoder models, decoder models, and evaluation metrics.
 
 \subsection{Dataset}
 \begin{figure}[H]
@@ -187,13 +183,13 @@ In image captioning tasks, a model takes an image as input and generates a capti
     \caption{Example images and captions from the flickr8k dataset.}
     \label{fig:flickr8k}
 \end{figure}
-We focused on the flickr8k dataset, a pivotal resource in the field of image captioning. Comprising 8.000 diverse images, each with five reference captions, this dataset is renowned for its quality and is a common choice for image captioning research due to its manageable size.
+We focused on the flickr8k dataset, a pivotal resource in image captioning. Comprising 8.000 diverse images, each with five reference captions, this dataset is renowned for its quality and is a common choice for image captioning research due to its manageable size.
 \par Other commonly used datasets are flickr30k and MS COCO, but these datasets are more extensive and cannot be processed due to our limited computational resources.
 
 \subsection{Encoder-Decoder Architecture}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{res/encoder-decoder.png}
+    \includegraphics[width=.5\textwidth]{res/encoder-decoder.png}
     \caption{A Survey on Various Deep Learning Models for Automatic Image Captioning \cite{gaurav}}
     \label{fig:encoder-decoder}
 \end{figure}
@@ -218,7 +214,6 @@ The accuracy of image captioning is commonly measured using BLEU or CIDEr scores
 
 
 
-\newpage
 \section{Approach}
 \label{sec:approach}
 
@@ -237,11 +232,10 @@ Evaluation happens after each training epoch. This approach enables us to monito
 
 
 
-\newpage
 \section{Results}
 \label{sec:results}
 
-We present the results of our experiments with different encoder and decoder models.
+We present the results of our experiments with different encoder and decoder models. \ref{fig:results} shows the BLEU scores of the models on the test set over the epochs. The detailed BLEU score results are shown in \ref{tab:results}.
 
 \begin{figure}[H]
     \centering
@@ -250,15 +244,40 @@ We present the results of our experiments with different encoder and decoder mod
     \label{fig:results}
 \end{figure}
 
-% TODO: add results
-The results show that the ResNet-50 encoder and LSTM decoder achieve the best performance with a BLEU score 0.75. The VGG-16 encoder and LSTM decoder achieve a BLEU score of 0.72. The ResNet-50 encoder and GRU decoder achieve a BLEU score of 0.70. The VGG-16 encoder and GRU decoder achieve a BLEU score of 0.68.
+\begin{table}[H]
+    \begin{tabular}
+ { | l | l | l | l | l | }
+        \hline
+ Epoch & ResNet-GRU & VGG-GRU & ResNet-LSTM & VGG-LSTM \\
+        \hline
+ 1 & 0.0074 & 0.0025 & 0.0035 & 0.0157 \\
+ 2 & 0.0028 & 0.0024 & 0.0050 & 0.0056 \\
+ 3 & 0.0024 & 0.0037 & 0.0045 & 0.0055 \\
+ 4 & 0.0036 & 0.0030 & 0.0034 & 0.0052 \\
+ 5 & 0.0038 & 0.0025 & 0.0035 & 0.0062 \\
+ 6 & 0.0056 & 0.0026 & 0.0037 & 0.0069 \\
+ 7 & 0.0058 & 0.0028 & 0.0038 & 0.0060 \\
+ 8 & 0.0069 & 0.0031 & 0.0037 & 0.0058 \\
+ 9 & 0.0045 & 0.0034 & 0.0030 & 0.0058 \\
+ 10 & 0.0037 & 0.0029 & 0.0034 & 0.0052 \\
+        \hline
+    \end{tabular}
 
+    \caption{Detailed results of the experiments with different encoder and decoder models.}
+    \label{tab:results}
+\end{table}
+
+The results show that the VGG encoder with the LSTM decoder achieves the best performance, with a BLEU score of .157 in the first epoch. Other combinations, like the VGG-GRU or the ResNet-LSTM, are significantly worse, with respective BLEU scores of .0025 and .0035 in the first epoch. The ResNet-GRU model performs slightly better, with a BLEU score of .0074 in the first epoch.
+
+For most models, their BLEU score peaks in the first few epochs and then decreases. The VGG-LSTM model is the most stable over the epochs and somewhat contradicts this hypothesis. However, the other models show a similar decrease over the epochs. These findings suggest overfitting to the training data.
+
+Given the mixed nature of the results, it is challenging to draw definitive conclusions. The VGG encoder paired with the LSTM decoder is the most effective combination available., achieving the highest BLEU score in the first epoch. Nevertheless, further experiments are needed to confirm this result.
 
 
 \section{Conclusion}
 \label{sec:conclusion}
 
-In this paper, we discuss the current state of the art in image captioning and present our experiments with different encoder and decoder models. We use the flickr8k dataset and evaluate the models using the BLEU score. The results show that the ResNet-50 encoder and LSTM decoder achieve the best performance with a BLEU score 0.75.
+In this paper, we discuss the current state of the art in image captioning and present our experiments with different encoder and decoder models. We use the flickr8k dataset and evaluate the models using the BLEU score.
 
 In the future, further experiments could be conducted with
 \begin{enumerate}
@@ -274,7 +293,6 @@ In the future, further experiments could be conducted with
 \newpage
 \thispagestyle{empty}
 
-\nocite{*}
 \bibliographystyle{apalike}
 \bibliography{bib}
 
