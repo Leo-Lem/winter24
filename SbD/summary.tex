@@ -128,12 +128,11 @@
 
 \subsubsection{Mathematische Grundlagen}
 \begin{itemize}
-  \item \textbf{Modulo}: $a \mod b = a - b \cdot \lfloor \frac{a}{b} \rfloor$
-  \item \textbf{Erweiterter Euklidischer Algorithmus}: $ggT(a, b) = a \cdot x + b \cdot y$
-  \item \textbf{Euler-Phi-Funktion}: $\varphi(n) = |\{a \in \mathbb{N} \mid 1 \leq a < n, ggT(a, n) = 1\}|$
+  \item \textbf{Erweiterter Euklidischer Algorithmus}: Berechnung des ggT und inversen Elemente in Restklassenringen.
+  \item \textbf{Euler-Phi-Funktion}: $\varphi(n)$ gibt die Anzahl der zu $n$ teilerfremden Zahlen kleiner als $n$ an.
   \item \textbf{Primitive Wurzel}: $g$ ist primitive Wurzel modulo $p$, wenn $g^i \mod p \neq 1$ für $i < p-1$
-  \item \textbf{Diskreter Logarithmus}: $a = g^x \mod p \Rightarrow x = \log_g a \mod p$
-  \item \textbf{Faktorisierungsannahme}: $n = p \cdot q \Rightarrow p, q \in \mathbb{P}$
+  \item \textbf{Diskreter Logarithmus}: Exponent in der Primitiven Wurzel
+  \item \textbf{Faktorisierungsannahme}: Primfaktoren sind nicht leicht zu berechnen (auch nicht nachgewiesen schwer)
 \end{itemize}
 
 \subsubsection{Diffie-Hellman-Key-Exchange}
@@ -179,18 +178,35 @@
 \part{Public Key Infrastructure}
 \includepdf[pages={146-148}, nup=3x7]{slides.pdf}
 
+\section{Zertifikate}
 
+\subsection{Zertifizierungsmodelle}
+\begin{enumerate}
+  \item \textbf{Web of Trust}: Benutzer zertifizieren andere Benutzer (zB. PGP, GnuPG)
+  \item \textbf{Hierarchisches Modell}: Zertifizierungsstellen zertifizieren Benutzer (zB. TLS, S/MIME)
+\end{enumerate}
+
+\subsecton{X.509}
+
+Zertifizierungsstandard, zB. genutzt bei TLS und S/MIME.
+
+TLS-Handshake: Client sendet ClientHello, Server sendet ServerHello, Server-Zertifikat, ServerKeyExchange, ServerHelloDone, ClientKeyExchange, ChangeCipherSpec, Finished, ServerChangeCipherSpec, Finished
+\includepdf[pages={149-205}, nup=3x7]{slides.pdf}
 
 
 
 \part{Attacks and Defenses}
-\includepdf[pages={1}, nup=3x7]{slides.pdf}
+
+\section{Sniffing}
+
+\section{Spoofing}
+
+\section{Denial of Service}
 
 
 
 
 \part{Mobile Security}
-\includepdf[pages={1}, nup=3x7]{slides.pdf}
 
 
 \end{document}
