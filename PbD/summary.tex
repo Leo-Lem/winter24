@@ -11,80 +11,337 @@
 \begin{document}\createtitle
 
 \part{Privacy Enhancing Technology}
+\includepdf[pages={23-24, 27-39, 41-57, 59-124}, nup=4x9]{slides.pdf}
+\section{In Theory}
 
-\section{Confidentiality of Metadata}
-Goal of privacy.
-- Anonymity: Protection of the identity of the sender or receiver of a message.
-- Unobservability: Protection of the communication relation itself.
+\subsection{Privacy Goals and Protection Models}
+\begin{itemize}
+    \item \textbf{Confidentiality:} Prevent unauthorized access to sensitive information.
+    \item \textbf{Integrity:} Protect against unauthorized modification of information.
+    \item \textbf{Availability:} Ensure authorized access to information when needed.
+\end{itemize}
+
+\subsection{Confidentiality Mechanisms}
+\begin{itemize}
+    \item \textbf{Encryption:}
+    \begin{itemize}
+        \item Symmetric (e.g., AES): Uses a shared key for both encryption and decryption.
+        \item Asymmetric (e.g., RSA, ECC): Employs public-private key pairs for secure communication.
+    \end{itemize}
+    \item \textbf{Anonymization:}
+    \begin{itemize}
+        \item Techniques such as k-anonymity, differential privacy, and pseudonymization to obscure user data.
+    \end{itemize}
+    \item \textbf{Decentralized Networks:}
+    \begin{itemize}
+        \item Leverage architectures like DC networks (Dining Cryptographers) and mix networks to ensure anonymity in communication.
+    \end{itemize}
+\end{itemize}
+
+\subsection{DC Networks (Dining Cryptographers)}
+\begin{itemize}
+    \item \textbf{Principle:}
+    \begin{itemize}
+        \item Participants (cryptographers) communicate in such a way that a message's sender remains anonymous unless they choose to reveal themselves.
+        \item Each pair of participants shares a secret bit, and all participants cooperate to hide the identity of the message sender.
+    \end{itemize}
+    \item \textbf{Use Cases:}
+    \begin{itemize}
+        \item Anonymous broadcasting, electronic voting.
+    \end{itemize}
+    \item \textbf{Advantages:}
+    \begin{itemize}
+        \item Provable anonymity.
+    \end{itemize}
+    \item \textbf{Limitations:}
+    \begin{itemize}
+        \item Scalability issues due to increasing communication overhead with more participants.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Blind Messaging Services}
+\begin{itemize}
+    \item \textbf{Principle:}
+    \begin{itemize}
+        \item Users send messages through a series of anonymizing layers, where each layer hides specific metadata (e.g., sender's IP address).
+        \item Common implementations include Tor (The Onion Router), which routes traffic through multiple relays to anonymize users.
+    \end{itemize}
+    \item \textbf{Use Cases:}
+    \begin{itemize}
+        \item Anonymous browsing, secure whistleblowing, and bypassing censorship.
+    \end{itemize}
+    \item \textbf{Advantages:}
+    \begin{itemize}
+        \item Scalable and widely adopted.
+        \item Resilient against traffic analysis.
+    \end{itemize}
+    \item \textbf{Limitations:}
+    \begin{itemize}
+        \item Vulnerable to global adversaries monitoring the entire network.
+        \item Latency introduced due to multi-hop routing.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Mix Networks}
+\begin{itemize}
+    \item \textbf{Principle:}
+    \begin{itemize}
+        \item Messages are shuffled and encrypted at each node (mix) in a network, ensuring unlinkability between sender and recipient.
+        \item Each mix node reorders, decrypts, and forwards messages in batches.
+    \end{itemize}
+    \item \textbf{Use Cases:}
+    \begin{itemize}
+        \item Email anonymization (e.g., Mixminion, Mixmaster), anonymous payments.
+    \end{itemize}
+    \item \textbf{Advantages:}
+    \begin{itemize}
+        \item Strong resistance to traffic analysis.
+        \item Can provide anonymity for both sender and recipient.
+    \end{itemize}
+    \item \textbf{Limitations:}
+    \begin{itemize}
+        \item Increased latency due to batching and processing.
+        \item Vulnerable to active attacks if a mix node is compromised.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Integrity Mechanisms}
+\begin{itemize}
+    \item \textbf{Hash Functions:}
+    \begin{itemize}
+        \item Fixed-size digest for verifying data integrity (e.g., SHA-256).
+    \end{itemize}
+    \item \textbf{Digital Signatures:}
+    \begin{itemize}
+        \item Combines hashing with asymmetric encryption for authenticity and non-repudiation.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Availability Mechanisms}
+\begin{itemize}
+    \item \textbf{Redundancy:}
+    \begin{itemize}
+        \item Use of backup servers and data replication.
+    \end{itemize}
+    \item \textbf{Load Balancing:}
+    \begin{itemize}
+        \item Distributes network traffic to prevent overload.
+    \end{itemize}
+    \item \textbf{DDoS Mitigation:}
+    \begin{itemize}
+        \item Techniques like rate limiting and anomaly detection to block malicious traffic.
+    \end{itemize}
+\end{itemize}
 
 
-\section{Attacker model}
-- Outsider: eavesdropping on communcation lines, traffic analysis
-- Insider: network operators, malicious staff, government
-can:
-- passively observe all communication links
-- actively send messages
-- flood or block messages
-- operate (all but one) anonymity services
-- operate server
-cannot:
-- break cryptographic systems
-- attack user's personal machine
-- have unlimited time or resources
 
-
-\section{Tracking on OSI Application Layer}
-Application:
-- filtering mechanisms: cookies, active contents
-- e2e encryption
-- hiding: pseudonyms, credentials
-
-Pseudonyms
-- Passive Trustee: trusted third party (TTP) that certifies pseudonyms
-- Active Trustee: TTP is involved in communication
-
-\section{Tracking on OSI Network Layer}
-- Broadcast with implicit addressing: all recipients receive all messages, local filtering -> protects recipient
-- Dummy Traffic: send meaningless messages -> protects sender
-- Proxies: forward messages -> protects sender, but proxy can track
-- DC network: broadcast, dummy and cryptography -> protects sender
-- Blind-message service: unobservable access to replicated databases -> protects database client
-- Mix network: cascaded (independent) proxies, dummy traffic, cryptography -> protects communication relation
-- Steganography: hidden messages in other messages -> protects content
-
-\section{Traffic Analysis}
-Attacks
-- Timing: correlation of messages
-- Volume: correlation of message sizes
-- Flooding: fill up anonymous group batch to separate certain message
-- Intersection: correlation of messages in different groups
-
-
-
-% \includepdf[pages={14-29}, nup=3x3]{slides.pdf}
-\section{IPv6 traffic pseudonymisation}
-
-
-
-
-% \includepdf[pages={?}, nup=?]{slides.pdf}
+\includepdf[pages={126-161}, nup=4x9]{slides.pdf}
 \section{In Practice}
 
+\subsection{Privacy Enhancing Technologies (PETs)}
+\begin{itemize}
+    \item \textbf{Objective:} Protect user anonymity and prevent unauthorized tracking in real-world applications.
+    \item \textbf{Examples of PETs:}
+    \begin{itemize}
+        \item \textbf{Anonymity Networks:} Tor, I2P for secure and anonymous communication.
+        \item \textbf{Encryption:} End-to-end encryption in messaging apps (e.g., Signal, WhatsApp).
+        \item \textbf{Pseudonymization:} Use of alternate identifiers to reduce linkage to real identities.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Traffic Pseudonymization}
+\begin{itemize}
+    \item \textbf{IPv6 Privacy Extensions:} Randomize IPv6 addresses to prevent tracking over time.
+    \item \textbf{Pseudonym Rotation:} Periodically change pseudonyms to reduce linkability between user actions.
+    \item \textbf{Limitations:}
+    \begin{itemize}
+        \item Limited effectiveness in preventing advanced traffic analysis.
+        \item Increased complexity in managing pseudonyms.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Anonymity Networks in Practice}
+\begin{itemize}
+    \item \textbf{Tor:}
+    \begin{itemize}
+        \item Relays user traffic through multiple nodes to obscure origin and destination.
+        \item Vulnerable to global adversaries and end-node monitoring.
+    \end{itemize}
+    \item \textbf{I2P:}
+    \begin{itemize}
+        \item Optimized for anonymous communication within the network.
+        \item Use cases: Peer-to-peer file sharing, messaging, and hosting services.
+    \end{itemize}
+    \item \textbf{Mix Networks:}
+    \begin{itemize}
+        \item Provide stronger anonymity by shuffling and re-encrypting messages at each node.
+        \item Used in email anonymization and anonymous transactions.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Censorship Resistance}
+\begin{itemize}
+    \item \textbf{Goals:} Ensure access to information and communication in censored environments.
+    \item \textbf{Techniques:}
+    \begin{itemize}
+        \item Decentralized networks (e.g., Freenet, IPFS).
+        \item Bridge nodes in Tor to bypass censorship firewalls.
+        \item Steganography to disguise traffic as normal communication.
+    \end{itemize}
+    \item \textbf{Challenges:}
+    \begin{itemize}
+        \item Sophisticated censorship tools (e.g., deep packet inspection).
+        \item Balancing usability with security under surveillance.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Criminal Misuse and Data Retention}
+\begin{itemize}
+    \item \textbf{Misuse of Anonymity:}
+    \begin{itemize}
+        \item Use of anonymity networks for illicit activities (e.g., illegal marketplaces, malware distribution).
+        \item Challenges for law enforcement in tracking activities without violating privacy.
+    \end{itemize}
+    \item \textbf{Data Retention Policies:}
+    \begin{itemize}
+        \item Mandated storage of communication metadata for investigative purposes.
+        \item Conflict with privacy-focused systems and anonymization techniques.
+    \end{itemize}
+    \item \textbf{Legal Balance:}
+    \begin{itemize}
+        \item Protecting civil liberties while enabling effective law enforcement.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Traffic Analysis and Fingerprinting}
+\begin{itemize}
+    \item \textbf{Techniques:}
+    \begin{itemize}
+        \item Identifying patterns in encrypted traffic (e.g., packet size, timing).
+        \item Inferring user behavior or accessed resources from metadata.
+    \end{itemize}
+    \item \textbf{Defenses:}
+    \begin{itemize}
+        \item Padding and random delays to obscure traffic patterns.
+        \item Use of obfuscation proxies to disguise protocol characteristics.
+    \end{itemize}
+    \item \textbf{Limitations:}
+    \begin{itemize}
+        \item Increased latency and overhead.
+        \item Limited effectiveness against global adversaries.
+    \end{itemize}
+\end{itemize}
 
 
 
-% \includepdf[pages={?}, nup=?]{slides.pdf}
-\section{Censorship Resistance}
-
-
-
-
-% \includepdf[pages={?}, nup=?]{slides.pdf}
-\section{Criminal Misuse and Data Retention}
-
-
-
+\includepdf[pages={161-219}, nup=4x9]{slides.pdf}
 \part{Location Privacy}
+\section{Location Privacy \& Mobile Networks}
 
+\subsection{Overview}
+\begin{itemize}
+    \item \textbf{Objective:} Protect users' location information from being tracked or monitored by adversaries or unauthorized entities.
+    \item \textbf{Challenges:}
+    \begin{itemize}
+        \item Increasing reliance on location-based services.
+        \item Potential abuse by service providers, adversaries, or malicious third parties.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Systematic Protection Methods}
+\begin{enumerate}
+    \item \textbf{Broadcasting:} Randomized transmission of location data.
+    \item \textbf{Group Pseudonyms:} Shared identifiers among a group of users to obscure individual location.
+    \item \textbf{Temporal Pseudonyms:} Changing pseudonyms periodically to reduce traceability.
+    \item \textbf{Mixing Networks:} Use of cascaded nodes to anonymize the source and destination of location data.
+\end{enumerate}
+
+\subsection{Broadcasting Techniques}
+\begin{itemize}
+    \item \textbf{Implicit Addressing:}
+    \begin{itemize}
+        \item Targets devices indirectly by transmitting generalized location updates.
+        \item Performance: Reduces bandwidth usage but may decrease precision.
+    \end{itemize}
+    \item \textbf{Variable Broadcasts:}
+    \begin{itemize}
+        \item Adapts broadcast size dynamically to obscure exact location.
+        \item Useful in areas with sparse populations.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Group and Temporal Pseudonyms}
+\begin{itemize}
+    \item \textbf{Group Pseudonyms:}
+    \begin{itemize}
+        \item Users within a region share a pseudonym to make identification harder.
+        \item Reduces linkability across updates.
+    \end{itemize}
+    \item \textbf{Temporal Pseudonyms:}
+    \begin{itemize}
+        \item Pseudonyms change over time to prevent long-term tracking.
+        \item Requires synchronization with network systems for functionality.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Mobile Communication-Mixing}
+\begin{itemize}
+    \item \textbf{Centralized Approach:}
+    \begin{itemize}
+        \item A trusted third party manages pseudonym and location updates.
+        \item High scalability but susceptible to single points of failure.
+    \end{itemize}
+    \item \textbf{Decentralized Approach:}
+    \begin{itemize}
+        \item Users and mix cascades collaborate to anonymize location updates.
+        \item Improves privacy but increases coordination complexity.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Anonymity Techniques in Mobile Networks}
+\begin{itemize}
+    \item \textbf{Mix Networks:}
+    \begin{itemize}
+        \item Obscure the link between senders and receivers using layered encryption.
+        \item Suitable for large-scale deployments but introduces latency.
+    \end{itemize}
+    \item \textbf{Blind Signatures:}
+    \begin{itemize}
+        \item Allows authentication without revealing identities.
+        \item Useful in anonymous mutual authentication protocols.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Mobile Internet Protocol (IP)}
+\begin{itemize}
+    \item \textbf{Location Hiding:}
+    \begin{itemize}
+        \item Use of proxies or agents to hide the user's exact location.
+        \item Common in applications with stringent privacy requirements.
+    \end{itemize}
+    \item \textbf{Challenges:}
+    \begin{itemize}
+        \item Higher latency due to intermediate nodes.
+        \item Trade-off between performance and privacy.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Performance Analysis of Privacy Methods}
+\begin{itemize}
+    \item \textbf{Trust Levels:}
+    \begin{itemize}
+        \item Varying levels of trust required in centralized vs. decentralized systems.
+        \item Broadcast and mixing networks minimize reliance on trusted third parties.
+    \end{itemize}
+    \item \textbf{Efficiency Loss:}
+    \begin{itemize}
+        \item Privacy-preserving methods incur bandwidth and processing overhead (1-10\%).
+    \end{itemize}
+    \item \textbf{Protection Metrics:}
+    \begin{itemize}
+        \item Degree of protection against tracking and profiling varies by method.
+        \item Methods like mobile communication-mixing outperform traditional GSM in anonymity.
+    \end{itemize}
+\end{itemize}
 
 \end{document}
