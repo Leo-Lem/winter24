@@ -15,7 +15,16 @@
   Unmittelbar vor der Durchführung eines militärischen Kampfeinsatzes steigt die Anzahl der Essenslieferungen (Pizza, Burger, Croques, Sushi etc.), die an die Adresse des Verteidigungsministeriums geliefert werden, massiv an. Diskutieren Sie, ob das System durch einen passiven oder einen aktiven Angreifer verwundbar ist und welche Schutzziele dadurch bedroht werden. Für welche Angriffsart bzw. Angriffsarten ist das System anfällig? Was wären mögliche Gegenmaßnahmen?
 
   \begin{solution}
-    % TODO
+    \begin{itemize}
+      \item **Angriffstypen:** Das System ist sowohl für passive Angreifer (durch Beobachtung des Lieferverkehrs) als auch für aktive Angreifer (Manipulation von Bestellungen) anfällig.
+      \item **Bedrohte Schutzziele:** Vertraulichkeit (Erkenntnisse über geplante Operationen) und Integrität (Manipulation der Bestellungen).
+      \item **Mögliche Gegenmaßnahmen:**
+        \begin{itemize}
+          \item Tarnmaßnahmen wie Bestellungen an Dritte.
+          \item Einsatz von Intermediären zur Verschleierung des Bestellvorgangs.
+          \item Reduzierung der Transparenz durch diversifizierte Bestellziele.
+        \end{itemize}
+    \end{itemize}
   \end{solution}
 \end{exercise}
 
@@ -29,9 +38,14 @@
 
   \begin{solution}
     \begin{enumerate}
-      \item The system is vulnerable to a passive attacker.
-      \item The protection goals that are threatened are confidentiality and integrity.
-      \item Possible countermeasures are to use a VPN connection and to disable automatic connection to unknown networks.
+      \item **Angriffsmöglichkeiten:** Das System ist sowohl durch passive Angreifer (Abhören von SSIDs) als auch durch aktive Angreifer (Erstellen von Rogue-APs mit gleicher SSID) verwundbar.
+      \item **Bedrohte Schutzziele:** Vertraulichkeit (Tracking von Verbindungen), Integrität (Man-in-the-Middle-Angriffe).
+      \item **Gegenmaßnahmen:**
+        \begin{itemize}
+          \item Deaktivierung der automatischen Verbindung zu bekannten Netzwerken.
+          \item Nutzung von WPA3 oder VPN.
+          \item Vermeidung öffentlicher WLANs.
+        \end{itemize}
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -45,7 +59,10 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+      \item **Sicherheitsanalyse:** Deterministische Verschlüsselung ermöglicht Replay-Angriffe und das Erraten von PINs durch brute force.
+      \item **Schutzmaßnahmen:** Nutzung eines hybriden Verschlüsselungsverfahrens mit zufälligen Nonces und Transport Layer Security (TLS).
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
@@ -56,7 +73,7 @@
   Denken Sie sich eine Variante aus, bei der eine einzige Zertifizierungsstelle hierzu nicht mehr in der Lage ist, im Streitfall aber trotzdem eine Aufdeckung des Pseudonyms möglich ist.
 
   \begin{solution}
-    % TODO
+    Eine mögliche Lösung ist die Nutzung von Threshold-Signaturen, bei denen mehrere Zertifizierungsstellen gemeinsam einen Pseudonym-Schlüssel erzeugen, ohne dass eine einzelne Stelle die Identität zurückverfolgen kann. Im Streitfall können die Stellen gemeinsam das Pseudonym aufdecken.
   \end{solution}
 \end{exercise}
 
@@ -70,7 +87,12 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+      \item **Speicherung im GSM:** Ermöglicht effiziente Anrufzustellung. WLAN benötigt dies nicht, da es keine zentrale Infrastruktur nutzt.
+      \item **Datenbanken:** HLR speichert permanent, VLR nur temporär für lokale Effizienz.
+      \item **Schutz:** Insider greifen durch Zugriffsprotokolle erschwert an; Outsider durch Verschlüsselung.
+      \item **TMSI:** Maskiert IMSI, um Aufenthaltsorte besser zu schützen.
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
@@ -79,7 +101,7 @@
   Trotz der vorhandenen Sicherheitsfunktionen bietet GSM nur beschränkte Sicherheit hinsichtlich Vertraulichkeit. Warum?
 
   \begin{solution}
-    % TODO
+    GSM bietet nur beschränkte Sicherheit, da die Verschlüsselung nicht Ende-zu-Ende erfolgt, schwache Verschlüsselungsalgorithmen (z.B. A5/1) verwendet werden und Signalisierungsdaten nicht immer geschützt sind.
   \end{solution}
 \end{exercise}
 
@@ -93,7 +115,11 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+      \item Offene implizite Adressen sind für jeden sichtbar, verdeckte implizite Adressen verwenden Pseudonyme, um die Identität zu schützen.
+      \item Explizite Adressierung kann verwendet werden, um Nachrichten zu senden, ohne Teilnehmer direkt zu lokalisieren, aber dies erfordert zusätzliche Mechanismen zur Wahrung der Anonymität.
+      \item Ein Satellit kann für variable implizite Adressierung genutzt werden, jedoch sind Bandbreiten- und Latenzanforderungen zu berücksichtigen.
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
@@ -105,7 +131,10 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+      \item Der Kollisionsabstand beträgt im Durchschnitt $2^{32} / (100.000 \cdot 50)$ Stunden.
+      \item Um einen mittleren Kollisionsabstand von mindestens 3 Jahren zu erreichen, muss die Adresslänge auf mindestens 48 Bit erhöht werden.
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
@@ -119,7 +148,12 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+      \item Der Blind-Message-Service erfüllt die Schutzziele Vertraulichkeit und Anonymität.
+      \item Verschlüsselte Übertragungen verhindern, dass ein Angreifer Inhalte oder Muster erkennt.
+      \item Die Verschlüsselung der Anfragevektoren genügt, da nur der Inhalt der Anfragen sensibel ist.
+      \item Alternativen sind Onion-Routing und Broadcast-Kommunikation, die jedoch mehr Bandbreite benötigen.
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
@@ -133,7 +167,11 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+      \item Die Datenbank verhindert Replay-Angriffe, bei denen Nachrichten mehrfach gesendet werden.
+      \item Die Datenbank kann gelöscht werden, sobald alle Nachrichten erfolgreich weitergeleitet wurden.
+      \item Eine mögliche Modifikation ist die Nutzung von Hashes zur Überprüfung statt vollständiger Speicherung, wodurch der Speicherbedarf reduziert wird.
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
@@ -143,7 +181,7 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    Wenn Teilnehmer B A, C und D angreift, bleibt die Anonymität für A, C und D teilweise erhalten. Die Analyse basiert auf der Struktur des Schlüsselgraphs und der Isolation kompromittierter Knoten.
   \end{solution}
 \end{exercise}
 
@@ -156,7 +194,11 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+      \item Ein starker Angreifer kann Timing-Analyse und Traffic-Korrelation verwenden, um IP-Adressen von Nutzern zu identifizieren.
+      \item Ein anderer Ansatz ist die Analyse von Metadaten, wie HTTP-Headern oder spezifischen Anfragecharakteristiken.
+      \item Webserver können Nutzer durch Cookies, Browser-Fingerprinting und IP-Adressen wiedererkennen.
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
@@ -168,7 +210,10 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+      \item Beim Tagging-Angriff fügt der Angreifer eine markante Änderung in den Datenverkehr ein, um Nutzer zu identifizieren.
+      \item Der Angriff wird durch strikte Prüfung der Datenintegrität und Verschlüsselung verhindert.
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
@@ -180,7 +225,16 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+      \item Bedrohte Schutzziele sind Vertraulichkeit und Anonymität.
+      \item Tracking auf Anwendungsebene nutzt Browserdaten, während Netzebenen-Tracking auf IP-Daten basiert.
+      \item Gegenmaßnahmen:
+        \begin{itemize}
+          \item Blockieren von Cookies (z.B. durch Browser-Einstellungen).
+          \item Nutzung von VPNs zur Verschleierung der IP.
+          \item Einsatz von Privacy-Plugins (z.B. uBlock Origin).
+        \end{itemize}
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
@@ -190,7 +244,7 @@
   Bitte erläutern Sie Ihr Vorgehen im Detail. Unter welcher Begrifflichkeit lassen sich derartige Angriffe zusammenfassen?
 
   \begin{solution}
-    % TODO
+    Das Vorgehen besteht in der Analyse der Zeitstempel von Access-Logs und Router-Daten, um Verbindungen herzustellen. Diese Art von Angriff wird als Timing-Korrelation bezeichnet.
   \end{solution}
 \end{exercise}
 
@@ -199,7 +253,13 @@
 \setcounter{section}{2023}
 \section{Mock exam}
 
-% TODO
+% \begin{exercise}{}
+%  % TODO
+%
+%   \begin{solution}
+%     % TODO
+%   \end{solution}
+% \end{exercise}
 
 
 
