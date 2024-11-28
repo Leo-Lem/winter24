@@ -23,7 +23,36 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+        \item Verschlüsselung mit Skytala: Teilen Sie den Klartext in eine Matrix mit 7 Zeilen und 9 Spalten:
+          \[
+          \texttt{GLUECKLICH IST DER DER DEN DINGEN AUF DEN GRUND GEHEN KONNTE}
+          \]
+          Die Matrix:
+          \[
+          \begin{array}{ccccccccc}
+          G & L & U & E & C & K & L & I & C \\
+          H & \_ & I & S & T & \_ & D & E & R \\
+          \_ & D & E & R & \_ & D & E & N & \_ \\
+          D & I & N & G & E & N & \_ & A & U \\
+          F & D & E & N & \_ & G & R & U & N \\
+          D & G & E & H & E & N & \_ & K & O \\
+          N & T & T & E & \_ & & & & \\
+          \end{array}
+          \]
+          Der Schlüsseltext wird spaltenweise abgelesen: 
+          \[
+          \texttt{GH\_DDFNLDIRIGTNSEEECEDEINNEK\_CRNUENNUH\_U\_GNGRDKIKAUOE}
+          \]
+  
+        \item Der geheime Schlüssel ist die Größe der Matrix: \( 7 \times 9 \) (Zeilen $\times$ Spalten). Beim ursprünglichen Zylinder entspricht dies dem Umfang des Zylinders.
+  
+        \item Kryptanalyse:
+        \begin{itemize}
+            \item Häufigkeitsanalyse: Anhand von Buchstabenhäufigkeiten und Mustererkennung können Transpositionsmuster aufgedeckt werden.
+            \item Brute-Force: Alle möglichen Spalten- und Zeilenkombinationen ausprobieren, um den Klartext zu rekonstruieren.
+        \end{itemize}
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
@@ -35,65 +64,41 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+        \item Bei Spaltenvertauschung gibt es \( s! \) mögliche Permutationen für \( s \) Spalten. Der Schlüsselraum vergrößert sich somit um den Faktor \( s! \) im Vergleich zur ursprünglichen Methode ohne Spaltenvertauschung.
+  
+        \item Klartext in eine \( 4 \times 3 \)-Matrix:
+          \[
+          \texttt{ABCDEFGHIKLMN}
+          \]
+          In die Matrix eingetragen:
+          \[
+          \begin{array}{ccc}
+          A & B & C \\
+          D & E & F \\
+          G & H & I \\
+          K & L & M \\
+          \end{array}
+          \]
+          Zyklisches Schreiben ergibt:
+          \[
+          \texttt{ADGKBELHCFIM}
+          \]
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
 \setcounter{subsection}{20}
-\begin{exercise}{Vigenère-Chiffre}
-  Ein klassisches Verschlüsselungsverfahren ist die Vigenère-Chiffre. Sie arbeitet typischerweise auf einem Alphabet aus den Großbuchstaben A-Z für den Klartext, den Schlüssel und den Schlüsseltext. Zudem kann ein Zeichen zur Worttrennung hinzugenommen werden. Für diese Aufgabe wird dazu der Unterstrich \texttt{\_} verwendet. Ein Schlüsseltextzeichen ergibt sich aus dem um das jeweilige Zeichen des Schlüssels verschobene Klartextzeichen. Diese Verschiebung kann durch das sogenannte Vigenère-Tableau in Abbildung 1 dargestellt werden.
-
-  % TODO: add table
-  % A B C D E F G H I J K L M N O P Q R S T U V W X Y Z _
-  % A A B C D E F G H I J K L M N O P Q R S T U V W X Y Z _
-  % B B C D E F G H I J K L M N O P Q R S T U V W X Y Z _ A
-  % C C D E F G H I J K L M N O P Q R S T U V W X Y Z _ A B
-  % D D E F G H I J K L M N O P Q R S T U V W X Y Z _ A B C
-  % E E F G H I J K L M N O P Q R S T U V W X Y Z _ A B C D
-  % F F G H I J K L M N O P Q R S T U V W X Y Z _ A B C D E
-  % G G H I J K L M N O P Q R S T U V W X Y Z _ A B C D E F
-  % H H I J K L M N O P Q R S T U V W X Y Z _ A B C D E F G
-  % I I J K L M N O P Q R S T U V W X Y Z _ A B C D E F G H
-  % J J K L M N O P Q R S T U V W X Y Z _ A B C D E F G H I
-  % K K L M N O P Q R S T U V W X Y Z _ A B C D E F G H I J
-  % L L M N O P Q R S T U V W X Y Z _ A B C D E F G H I J K
-  % M M N O P Q R S T U V W X Y Z _ A B C D E F G H I J K L
-  % N N O P Q R S T U V W X Y Z _ A B C D E F G H I J K L M
-  % O O P Q R S T U V W X Y Z _ A B C D E F G H I J K L M N
-  % P P Q R S T U V W X Y Z _ A B C D E F G H I J K L M N O
-  % Q Q R S T U V W X Y Z _ A B C D E F G H I J K L M N O P
-  % R R S T U V W X Y Z _ A B C D E F G H I J K L M N O P Q
-  % S S T U V W X Y Z _ A B C D E F G H I J K L M N O P Q R
-  % T T U V W X Y Z _ A B C D E F G H I J K L M N O P Q R S
-  % U U V W X Y Z _ A B C D E F G H I J K L M N O P Q R S T
-  % V V W X Y Z _ A B C D E F G H I J K L M N O P Q R S T U
-  % W W X Y Z _ A B C D E F G H I J K L M N O P Q R S T U V
-  % X X Y Z _ A B C D E F G H I J K L M N O P Q R S T U V W
-  % Y Y Z _ A B C D E F G H I J K L M N O P Q R S T U V W X
-  % Z Z _ A B C D E F G H I J K L M N O P Q R S T U V W X Y
-  % _ _ A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
-  % Abbildung 1: Vigenère-Tableau
-
-  \begin{enumerate}
-      \item Verschlüsseln Sie den nachfolgenden Klartext mit dem Schlüssel \texttt{PRUEFUNG} unter Verwendung einer Vigenère-Chiffre:
-      \begin{center}
-          \texttt{GLUECKLICH\_IST\_DER\_DER\_DEN\_DINGEN\_AUF\_DEN\_GRUND\_GEHEN\_KONNTE}
-      \end{center}
-      \item Erläutern Sie kurz zwei sinnvolle Ansätze zur Kryptanalyse, d. h. zum Brechen einer Vigenère-Chiffre.
-      \item Eine Verbesserung der Vigenère-Chiffre ergibt sich durch die Verlängerung des Schlüssels. Um welchen Faktor vergrößert sich dadurch der Schlüsselraum bei einem Alphabet mit 27 Elementen (A-Z und Unterstrich als Worttrennung) und einer Verlängerung um $s$ Zeichen?
-      \item Wie müsste die Vigenère-Chiffre verändert werden, um informationstheoretische Sicherheit im Bezug auf die Vertraulichkeit zu liefern? Begründen Sie, warum diese Veränderung zielführend ist.
-  \end{enumerate}
-
-  \begin{solution}
-    % TODO
-  \end{solution}
-\end{exercise}
+\begin{exercise}{Vigenère-Chiffre \ref{ex:vigenere}}\end{exercise}
 
 \begin{exercise}{Zufallszahlen bei der Schlüsselgenerierung}
   Warum sind bei der Schlüsselgenerierung (echte) Zufallszahlen nötig? Weshalb eignet sich die XOR-Verknüpfung, wenn zur Erhöhung der Sicherheit mehrere Zufallszahlen zu einer einzelnen Zufallszahl verknüpft werden, etwa bei der Schlüsselgenerierung?
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+        \item Echte Zufallszahlen sind notwendig, um sicherzustellen, dass Schlüssel nicht vorhersagbar sind. Ein nicht zufälliger Schlüssel kann durch statistische oder deterministische Methoden berechnet werden.
+        \item Die XOR-Verknüpfung sichert, dass ein kombinierter Schlüssel nur dann vorhersagbar ist, wenn alle zufälligen Werte vollständig bekannt sind. Dadurch wird ein höherer Grad an Sicherheit erzielt.
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
@@ -112,7 +117,19 @@
   Hinweis: Das Passwort und die Substantive sind ASCII-codiert (Alphabet = \{A, B, C, ..., Z\}).
 
   \begin{solution}
-    % TODO
+    Durch die Wiederverwendung des One-Time-Pads \( k \) für mehrere Nachrichten \( m_1, m_2 \) entsteht folgende Gleichung:
+    \[
+    c_1 \oplus c_2 = (m_1 \oplus k) \oplus (m_2 \oplus k) = m_1 \oplus m_2
+    \]
+    Dies ergibt die XOR-Verknüpfung der Klartexte \( m_1 \oplus m_2 \), die durch Analyse entschlüsselt werden kann. Beispielsweise:
+    \[
+    c_1 = \texttt{09 00 04 10}, \quad c_2 = \texttt{10 20 28 09}
+    \]
+    XOR:
+    \[
+    c_1 \oplus c_2 = \texttt{19 20 2C 19}
+    \]
+    Häufigkeitsanalysen und bekannte Wörter im Klartext ermöglichen die vollständige Entschlüsselung.
   \end{solution}
 \end{exercise}
 
@@ -124,45 +141,282 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+        \item Ursachen für Algorithmuswechsel:
+        \begin{itemize}
+            \item **Technologischer Fortschritt**: Schnellere Computer machen bestimmte Algorithmen unsicher.
+            \item **Neue Angriffsmethoden**: Entdeckte Schwachstellen führen zur Ablösung alter Verfahren.
+        \end{itemize}
+  
+        \item Das **One-Time-Pad** bietet langfristige Sicherheit, da es informationstheoretisch sicher ist. Es wird nicht überall genutzt, da Schlüssel so lang wie der Klartext sein müssen und sicher verteilt werden müssen.
+  
+        \item Bestimmung der Chiffre:
+        \begin{itemize}
+            \item **Häufigkeitsanalyse**: Substitutionschiffren wie Caesar zeigen typische Muster.
+            \item **Permutationsanalyse**: Transpositionen hinterlassen Permutationsmuster.
+        \end{itemize}
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
-% \setcounter{subsection}{30}
-% \begin{exercise}{}
+\setcounter{subsection}{30}
+\begin{exercise}{Informationstheoretische Sicherheit \ref{ex:otp}}\end{exercise}
 
-%   \begin{solution}
-%     % TODO
-%   \end{solution}
-% \end{exercise}
+\begin{exercise}{Feistel-Prinzip \ref{ex:feistel}}\end{exercise}
 
-% \setcounter{subsection}{40}
-% \begin{exercise}{}
+\begin{exercise}{Meet-in-the-Middle-Angriff auf 2-DES}
+  Um der geringen Schlüssellänge von 56 Bit des DES-Algorithmus zu begegnen, wurde vorgeschlagen, den
+  Algorithmus mehrfach hintereinander mit verschiedenen Schlüsseln anzuwenden. Eine schlechte Lösung ist
+  jedoch die lediglich zweifache Hintereinanderanwendung 2-DES.
+  \begin{enumerate}
+    \item Vergleichen Sie die Schlüssellänge des 2-DES-Algorithmus mit der tatsächlich erreichten Sicherheit.
+    \item Sie haben folgendes Klartext/Schlüsseltext-Paar \( (m, c) \) einer 2-DES-Verschlüsselung \( E_{k_2}(E_{k_1}(m)) = c \)
+    erlangt: 
+    \[
+        m = \texttt{c183 50b5 52b8 f8b1}, \quad c = \texttt{42e0 4462 099e e8ca}.
+    \]
+    Ermitteln Sie \( k_1 \) und \( k_2 \), indem Sie einen Meet-in-the-Middle-Angriff durchführen. Benutzen Sie dafür die unten dargestellte Tabelle 1 ausgewählter DES-Funktionswerte. In der Tabelle können für einen gegebenen Klartext \( x \) bzw. einen Schlüsseltext \( y \) und einen Schlüssel \( k \) die Werte der Verschlüsselungsfunktion \( E \) bzw. Entschlüsselungsfunktion \( D \) des DES-Algorithmus nachgeschlagen werden. In welchen Zeilen haben Sie die DES-Funktionswerte, die zum Erfolg beim Meet-in-the-Middle Angriff führen, nachgeschlagen?
+    Hinweis: Beachten Sie das Beispiel zum Ablesen der Tabelle.
 
-%   \begin{solution}
-%     % TODO
-%   \end{solution}
-% \end{exercise}
+    \input{res/des.tbl}
 
-% \setcounter{subsection}{50}
-% \begin{exercise}{}
+    \item Wie viele Einträge enthält eine vollständige Tabelle, die bei einem Meet-in-the-Middle-Angriff auf den 2-DES-Algorithmus erstellt wird, mindestens? Welche Art von Berechnungen werden dort festgehalten?
+  \end{enumerate}
 
-%   \begin{solution}
-%     % TODO
-%   \end{solution}
-% \end{exercise}
+  \begin{solution}
+    \begin{enumerate}
+        \item 2-DES bietet nur \( 2^{56} \) statt \( 2^{112} \) effektiver Sicherheit, da ein Meet-in-the-Middle-Angriff \( E_{k_1}(m) = D_{k_2}(c) \) nutzt.
+        \item Analyse aus Tabelle 1:
+        \[
+        k_1 = \texttt{e6f4 a450 4898 d7}, \quad k_2 = \texttt{97a4 3741 8086 0b}
+        \]
+        \item Eine vollständige Tabelle umfasst \( 2^{56} \) Einträge, wobei \( E_k(m) \) oder \( D_k(c) \) für alle \( k \) berechnet werden.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
 
-% \setcounter{subsection}{60}
-% \begin{exercise}{}
+\begin{exercise}{Triple-DES}
+  Beim Triple-DES-Algorithmus (3-DES) handelt es sich um die dreifache Hintereinanderausführung des DES-
+  Algorithmus. Dabei wird mit zwei 56 Bit langen Schlüsseln \( k_1 \) und \( k_2 \) gearbeitet und beim Verschlüsseln
+  entweder \( E(k_1) \to D(k_2) \to E(k_1) \) (EDE-Modus) oder \( E(k_1) \to E(k_2) \to E(k_1) \) (EEE-Modus) ausgeführt.
+  \begin{enumerate}
+    \item Warum wird dem EDE-Modus meist der Vorzug vor dem EEE-Modus gegeben?
+    \item Berechnen Sie die theoretische und die effektive Schlüssellänge des Triple-DES-Algorithmus unter ei-
+    nem Known-Plaintext-Angriff mit drei 56 Bit langen Schlüsseln, d.h. \( E(k_1) \to E(k_2) \to E(k_3) \).
+  \end{enumerate}
 
-%   \begin{solution}
-%     % TODO
-%   \end{solution}
-% \end{exercise}
+  \begin{solution}
+    \begin{enumerate}
+        \item Der EDE-Modus (Encrypt-Decrypt-Encrypt) schützt gegen Meet-in-the-Middle-Angriffe, da die Verschlüsselung durch Entschlüsselung unterbrochen wird.
+        \item Die effektive Schlüssellänge beträgt:
+        \[
+        \text{Theoretisch: } 3 \times 56 = 168 \text{ Bit}, \quad \text{Effektiv: } 112 \text{ Bit (wegen Angriffen).}
+        \]
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+
+\setcounter{subsection}{40}
+\begin{exercise}{Unsicherheit des Electronic-Codebook-Modus}
+  Eine einfache, jedoch unsichere Technik zum Betrieb einer Blockchiffre ist der Electronic-Codebook-Modus
+  (ECB-Modus). Dabei wird jeder Klartextblock unabhängig von den anderen Blöcken chiffriert.
+  \begin{enumerate}
+    \item Inwiefern stellt dies ein Sicherheitsproblem dar?
+    \item Veranschaulichen Sie das Problem, indem Sie ein Programm entwickeln, welches eine einfache Bitmap-
+    Grafik einliest, den Bildinhalt mit dem AES-Verfahren im ECB-Modus verschlüsselt und wieder als
+    Bitmap ausgibt. Rufen Sie zum Vergleich die Verschlüsselung noch einmal im CBC-Modus auf und
+    vergleichen Sie die erhaltenen Resultate. Informieren Sie sich dazu über das Datenformat von BMP-
+    Dateien und die Verwendung einer geeigneten Kryptobibliothek (z. B. die Java-Cryptography-API
+    unter \url{http://www.ibm.com/developerworks/java/tutorials/j-sec1/section4.html} oder die Python-pycrypto-
+    API unter \url{https://www.dlitz.net/software/pycrypto/api/current/}).
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Das Hauptproblem des ECB-Modus ist, dass identische Klartextblöcke in identische Schlüsseltextblöcke umgewandelt werden. Dies führt dazu, dass Muster im Klartext auch im Schlüsseltext sichtbar bleiben, was die Sicherheit gefährdet.
+        \item Veranschaulichung:
+        \begin{itemize}
+            \item Entwickeln Sie ein Programm, das eine BMP-Bilddatei einliest und diese im ECB-Modus verschlüsselt. Das resultierende Bild wird die ursprünglichen Muster zeigen, da identische Klartextblöcke identisch verschlüsselt werden.
+            \item Im Vergleich dazu führt der CBC-Modus durch die Abhängigkeit jedes Blocks vom vorherigen Block zu einer Verschleierung der Muster.
+        \end{itemize}
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Cipher-Block-Chaining-Betriebsmodus}
+  Beim Cipher-Block-Chaining-Betriebsmodus wird ein Klartextblock \( M_i \) vor der Anwendung der Verschlüsselungsfunktion mit dem unmittelbar vorher erzeugten Chiffretextblock \( C_{i-1} \) durch die XOR-Operation verknüpft.
+  Die erzeugten Chiffretextblöcke hängen dadurch von ihren Vorgängern ab. Bei der Verschlüsselung des ersten Klartextblocks \( M_1 \) wird für \( C_0 \) ein zufällig gewählter Initialisierungsvektor (IV) verwendet.
+  
+  Hinweis: Gehen Sie davon aus, dass eine moderne Blockchiffre eingesetzt wird, z. B. AES.
+  \begin{enumerate}
+    \item Wie unterscheiden sich zwei Schlüsseltexte, die mit demselben Schlüssel erzeugt wurden und denselben Klartext enthalten, jedoch mit unterschiedlichen IVs erzeugt wurden?
+    \item Wie unterscheiden sich zwei Schlüsseltexte, wenn sie sich lediglich an einer Stelle im ersten Klartextblock unterscheiden (also ein Bit gekippt wird) und ansonsten völlig identisch sind (bei gleichem IV und Schlüssel)?
+    \item Welche Auswirkung hat es beim Entschlüsseln, wenn durch einen Übertragungsfehler ein Bit im zweiten Schlüsseltextblock bei der Übertragung verändert wird?
+    \item Welche Auswirkung hat es beim Entschlüsseln, wenn durch einen Übertragungsfehler ein Bit im Initialisierungsvektor verändert wird?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Bei unterschiedlichen IVs führen zwei identische Klartexte zu unterschiedlichen Schlüsseltexten, da der IV die Anfangswerte beeinflusst.
+        \item Ein Unterschied in einem Bit im ersten Klartextblock propagiert sich in allen nachfolgenden Schlüsseltextblöcken durch die XOR-Operation.
+        \item Ein Fehler im zweiten Schlüsseltextblock wirkt sich nur auf den entsprechenden Klartextblock und den nächsten aus, da der CBC-Modus Block für Block entschlüsselt.
+        \item Ein Fehler im IV beeinflusst nur den ersten Klartextblock.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Synchronisationsfehler bei Betriebsarten von Blockchiffren}
+  Neben additiven Fehlern, bei denen einzelne Bitpositionen oder Nachrichtenabschnitte zufällig oder absichtlich gekippte Bitwerte aufweisen, können auch einzelne Bits oder ganze Blöcke von Nachrichten zufällig oder absichtlich verloren gehen. Wenn etwa ganze Nachrichtenblöcke jeweils einzeln in Datenpaketen transportiert werden, könnte ein verlorenes Datenpaket einen solchen Synchronisationsfehler hervorrufen.
+  \begin{enumerate}
+    \item Bitte beschreiben Sie die Fehlerfortpflanzung eines Synchronisationsfehlers aufgrund eines verlorenen Nachrichtenblocks beim Electronic Code Book (ECB)-Modus.
+    \item Bitte beschreiben Sie die Fehlerfortpflanzung eines Synchronisationsfehlers aufgrund eines verlorenen Bits beim Electronic Code Book (ECB)-Modus.
+    \item Wie verhält sich die Fehlerfortpflanzung eines Synchronisationsfehlers beim Cipher Block Chaining (CBC)-Modus, wenn einzelne Bits des übertragenen Ciphertextes verloren gehen?
+    \item Bitte vergleichen Sie die Situation einer Fehlerfortpflanzung aufgrund eines Synchronisationsfehlers bei den stromorientierten Betriebsarten mit der bei CBC.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Im ECB-Modus führt der Verlust eines Nachrichtenblocks nicht zu einer Synchronisationsstörung der verbleibenden Blöcke, da jeder Block unabhängig verschlüsselt wird.
+        \item Ein verlorenes Bit im ECB-Modus zerstört den betroffenen Block, aber die folgenden Blöcke bleiben lesbar.
+        \item Im CBC-Modus führt der Verlust einzelner Bits dazu, dass alle nachfolgenden Blöcke falsch entschlüsselt werden, da der Modus auf den vorherigen Block angewiesen ist.
+        \item Bei stromorientierten Betriebsarten (z. B. CTR-Modus) ist die Fehlerfortpflanzung auf den aktuellen Block beschränkt, da kein Feedback aus vorherigen Blöcken verwendet wird. Dies ist ein Vorteil gegenüber CBC.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\setcounter{subsection}{50}
+\begin{exercise}{Verketteter Cipher-Block-Chaining-Betriebsmodus}
+  Beim verketteten Cipher-Block-Chaining-Betriebsmodus wird zur Steigerung des Datendurchsatzes nur für die erste Nachricht \( M_1 \) ein Initialisierungsvektor \( IV \) gewählt. Das heißt für den Schlüsseltext \( C_1 = C_1^0 || \ldots || C_1^{n_1} \) der ersten Nachricht \( M_1 = M_1^1 || \ldots || M_1^{n_1} \) gilt wie beim normalen CBC:
+  \[
+      C_1^0 = IV, \quad C_1^i = E(C_1^{i-1} \oplus M_1^i, K) \quad \text{mit } i = 1, \ldots, n_1.
+  \]
+  Für alle folgenden Nachrichten \( M_2, \ldots \) wird anstelle des \( IV \) der letzte Schlüsseltextblock des vorherigen Schlüsseltextes verwendet. Das heißt für den Schlüsseltext \( C^j = C^j_1 || \ldots || C^j_{n_j} \) aller weiteren Nachrichten \( M_j = M_j^1 || \ldots || M_j^{n_j} \) mit \( j > 1 \) gilt:
+  \[
+      C^j_1 = E(C^{j-1}_{n_{j-1}} \oplus M_j^1, K), \quad C^j_i = E(C^j_{i-1} \oplus M_j^i, K) \quad \text{mit } i = 2, \ldots, n_j.
+  \]
+  \begin{enumerate}
+    \item Berechnen Sie unter Angabe aller Zwischenschritte die prozentuale Erhöhung des Datendurchsatzes. Führen Sie die Berechnungen sowohl für einen Block als auch für vier Blöcke pro Nachricht aus. Gehen Sie in beiden Fällen von insgesamt \( 2^{20} \) zu verschlüsselnden Nachrichten vor Neugenerierung eines Schlüssels und Neustart mit einem neuen \( IV \) aus.
+    \item Ihnen ist ein Schlüsseltext \( C^j \) in die Hände gefallen, der nur aus zwei möglichen Klartexten \( M_j \) oder \( \tilde{M}_j \) gebildet worden sein kann. Erläutern Sie, wie Sie ermitteln könnten, welcher der beiden Klartexte verschlüsselt wurde, wenn Sie den Klartext \( M_{j+1} \) für die nächste Nachricht selbst wählen dürfen.
+    \item Beschreiben Sie ein Szenario für einen derartigen Angriff.
+    \item Bewerten Sie ausgehend von der bisherigen Diskussion die Folge selbst kleinster Änderungen für die Sicherheit kryptographischer Algorithmen.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Bei einem verketteten CBC-Modus steigt der Datendurchsatz, da kein neuer IV benötigt wird. Für \( 2^{20} \) Nachrichten bei einer Blockgröße von \( 128 \) Bit beträgt der Effizienzgewinn ca. 0,01\%, da der Initialisierungsaufwand entfällt.
+        \item Wenn \( M_j \) oder \( \tilde{M}_j \) verschlüsselt wurde, kann durch die Manipulation des nächsten Klartextblocks \( M_{j+1} \) festgestellt werden, welcher Klartext verwendet wurde. Dies ermöglicht einen Known-Plaintext-Angriff.
+        \item Ein mögliches Szenario: Ein Angreifer, der Zugriff auf den Kommunikationskanal hat, modifiziert gezielt den nächsten Klartextblock, um Rückschlüsse auf vorherige Blöcke zu ziehen.
+        \item Selbst kleinste Änderungen im Verfahren können signifikante Sicherheitsrisiken schaffen. Hier: Die Wiederverwendung des letzten Blocks des vorherigen Schlüsseltextes anstelle eines neuen IVs.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Indeterministische Verschlüsselung \ref{ex:indeterministic}}\end{exercise}
+
+\begin{exercise}{Elliptische Kurven: Grundlagen}
+  Elliptic Curve Cryptography (ECC) bezeichnet asymmetrische Kryptosysteme, die auf Operationen auf elliptischen Kurven über endlichen Körpern aufbauen.
+  \begin{enumerate}
+    \item Erläutern Sie, auf welchem mathematischen Problem die Sicherheit von ECC beruht.
+    \item Beschreiben Sie, wie der Diffie-Hellman-Schlüsselaustausch auf Basis von ECC aussehen könnte.
+    \item Welche Vorteile bietet ECC gegenüber Kryptosystemen wie RSA?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Die Sicherheit von ECC beruht auf dem Problem der diskreten Logarithmen über elliptischen Kurven, das als schwer lösbar gilt.
+        \item Der Diffie-Hellman-Schlüsselaustausch funktioniert, indem beide Kommunikationspartner Punkte auf der elliptischen Kurve austauschen und einen gemeinsamen Punkt berechnen.
+        \item Vorteile von ECC:
+        \begin{itemize}
+            \item Kürzere Schlüssel bei gleicher Sicherheit (z. B. ECC-256 entspricht RSA-3072).
+            \item Geringerer Speicher- und Rechenaufwand.
+        \end{itemize}
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Elliptische Kurven: Rechenbeispiele zur Punktaddition}
+  Gegeben sei die elliptische Kurve \( E(\mathbb{GF}(p)) \) mit \( a = 1, b = 6, p = 11 \). Hinweis: Wir betrachten für diese Aufgabe die in der Kryptographie häufig genutzten elliptischen Kurven über \( \mathbb{Z}_p \) der Form \( f(x, y) : y^2 \equiv x^3 + ax + b \mod p \).
+  \begin{enumerate}
+    \item Berechnen Sie die Punkte, die auf dieser Kurve liegen.
+    \item Suchen Sie sich zwei beliebige Punkte auf der Kurve und addieren Sie diese. Wie funktioniert die Punktaddition im Allgemeinen?
+    \item Berechnen Sie die skalare Multiplikation des Punktes \( (2, 4) \) mit dem Skalar \( 3 \). Was ist das allgemeine Vorgehen hier?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Punkte auf der elliptischen Kurve \( y^2 = x^3 + x + 6 \mod 11 \):
+        \[
+        \{(2, 4), (5, 2), (7, 6), (8, 3)\}
+        \]
+        \item Beispiel Punktaddition:
+        \[
+        P = (2, 4), Q = (5, 2) \quad \text{Ergebnis: } P + Q = (7, 6)
+        \]
+        \item Skalare Multiplikation:
+        \[
+        3 \cdot (2, 4) = (8, 3)
+        \]
+        Vorgehen: Addieren Sie \( P \) wiederholt zu sich selbst.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\setcounter{subsection}{60}
+\begin{exercise}{RSA: Eigenschaften und Sicherheit \ref{ex:rsa}}\end{exercise}
+
+\begin{exercise}{Forward Secrecy mit RSA}
+  Zur Erreichung von Forward Secrecy erzeugt Alice auf ihrem Server mit dem RSA-Verfahren einen privaten Schlüssel \( d \) sowie den dazu passenden öffentlichen Schlüssel \( c \), den sie persönlich an ihre Nutzerinnen und Nutzer verteilt. Zusätzlich erzeugt der Server von Alice bei jedem Verbindungsaufbau ein neues kurzlebiges (engl. ephemeral) RSA-Schlüsselpaar, das aus einem öffentlichen Schlüssel \( c_e \) und einem geheimen Schlüssel \( d_e \) besteht. Der Server signiert mit dem privaten Schlüssel \( d \) den neuen öffentlichen Schlüssel \( c_e \) und sendet diesen zusammen mit der Signatur über die aufgebaute Verbindung an die Kundin. Die Kundin prüft anschließend die Signatur mithilfe des zuvor von Alice erhaltenen öffentlichen Schlüssels \( c \).
+  \begin{enumerate}
+    \item Welche Verbindungen könnten von einem sehr starken Angreifer wie einem Nachrichtendienst noch entschlüsselt werden, wenn dieser an \( d \) gelangt? Begründen Sie Ihre Antwort.
+    \item Skizzieren Sie einen Angriff, der möglich wäre, wenn die Kundin die Signatur nicht prüft.
+    \item Alice ist das Verfahren zu langsam. Sie nimmt folgende Änderung vor: Statt jedes Mal bei der Erzeugung von \( c_e \) und \( d_e \) neue Primzahlen \( p \) und \( q \) für den Modulus \( N_e \) zu generieren, verwendet sie immer die gleichen Primzahlen. Nun wählt sie lediglich den öffentlichen Exponenten \( c_e \) neu und berechnet einen dazugehörigen geheimen Exponenten \( d_e \). Warum ist dies keine gute Idee? Zeigen Sie, wie sich dieses geänderte Verfahren angreifen lässt, um aufgezeichnete Verbindungen zu entschlüsseln.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Forward Secrecy wird durch kurzlebige (ephemeral) RSA-Schlüssel erreicht. Jede neue Verbindung erhält ein neues Schlüsselpaar.
+        \item Wenn ein Angreifer den privaten Schlüssel erhält, kann er vergangene Verbindungen entschlüsseln, falls diese nicht mit ephemeral-Schlüsseln abgesichert wurden.
+        \item Ein Angreifer kann die Kommunikation entschlüsseln, indem er den abgefangenen Schlüsseltext mit dem kompromittierten privaten Schlüssel entschlüsselt.
+        \item Forward Secrecy kann durch regelmäßiges Rotieren der Schlüssel gewährleistet werden. Alte Schlüssel werden sicher gelöscht.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Diffie-Hellman-Schlüsselaustauschprotokoll}
+  Das Diffie-Hellman-Schlüsselaustauschprotokoll (DH-Protokoll) ermöglicht es zwei Kommunikationspartnern, durch den Austausch von Nachrichten über einen unsicheren Kanal einen symmetrischen Sitzungsschlüssel zu etablieren, der von passiven Angreifern nicht ermittelt werden kann. Beim ursprünglichen DH-Protokoll, das auch als "anonymes" DH-Protokoll bezeichnet wird, wird kein Schlüsselserver verwendet. Die Kommunikationspartner tauschen dabei erst im Moment des Schlüsselaustausches sämtliche Protokollnachrichten über den unsicheren Kanal aus.
+  \begin{enumerate}
+    \item Stellen Sie den Ablauf des anonymen DH-Protokolls zwischen den beiden Teilnehmern Alice und Bob mit passend gewählten kleinen Zahlen dar.
+    \item Erläutern Sie, auf welcher mathematischen Annahme die Sicherheit des DH-Protokolls basiert. Welche weiteren Annahmen macht man über den Angreifer (Angreifermodell)?
+    \item Schutz vor aktiven Angriffen ist möglich, wenn die Kommunikationspartner einige Parameter bzw. Protokollnachrichten vorab über einen sicheren Kanal ausgetauscht haben, der vom Angreifer nicht kontrolliert werden kann. Welche Nachrichten müssen vorab ausgetauscht worden sein, damit aktive Angriffe bemerkt werden können?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Ablauf:
+        \[
+        g = 5, p = 23, a = 6, b = 15 \quad \text{(geheime Schlüssel)}
+        \]
+        Öffentliche Schlüssel:
+        \[
+        A = g^a \mod p = 8, \quad B = g^b \mod p = 19
+        \]
+        Gemeinsamer Schlüssel:
+        \[
+        K = B^a \mod p = 2 = A^b \mod p
+        \]
+        \item Sicherheit basiert auf dem diskreten Logarithmusproblem (DLP). Der Angreifer kann \( g^a \) und \( g^b \) nicht effizient in \( a \) und \( b \) umwandeln.
+        \item Schutz vor aktiven Angriffen: Vorab-Austausch von \( g, p \) und Authentifizierung der öffentlichen Schlüssel (z. B. durch Signaturen).
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Elliptische Kurven: EC-ElGamal \ref{ex:elliptic}}\end{exercise}
 
 % \setcounter{subsection}{70}
 % \begin{exercise}{}
-
+%  % TODO
+%
 %   \begin{solution}
 %     % TODO
 %   \end{solution}
@@ -170,7 +424,8 @@
 
 % \setcounter{subsection}{80}
 % \begin{exercise}{}
-
+%  % TODO
+%
 %   \begin{solution}
 %     % TODO
 %   \end{solution}
@@ -178,7 +433,26 @@
 
 % \setcounter{subsection}{90}
 % \begin{exercise}{}
+%  % TODO
+%
+%   \begin{solution}
+%     % TODO
+%   \end{solution}
+% \end{exercise}
 
+% \setcounter{subsection}{100}
+% \begin{exercise}{}
+%  % TODO
+%
+%   \begin{solution}
+%     % TODO
+%   \end{solution}
+% \end{exercise}
+
+% \setcounter{subsection}{110}
+% \begin{exercise}{}
+%  % TODO
+%
 %   \begin{solution}
 %     % TODO
 %   \end{solution}
@@ -205,7 +479,16 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+        \item Ein DNS-Spoofing-Angriff kann für einen Distributed Denial of Service (DDoS)-Angriff ausgenutzt werden, indem der Angreifer gefälschte DNS-Antworten an Opfer sendet, die zu einem falschen Server führen. Der Server wird durch die massiven Anfragen überlastet.
+        \item Die Ausgabe zeigt ein ARP-Spoofing-Angriff. Alle IP-Adressen im lokalen Netzwerk werden mit derselben MAC-Adresse verknüpft (\texttt{00:1f:88:13:fe:f1}). Dadurch kann der Angreifer die Kommunikation zwischen den Teilnehmern überwachen oder manipulieren.
+        \item ARP-Spoofing funktioniert nur in lokalen Netzwerken, da ARP (Address Resolution Protocol) nicht über Router hinaus funktioniert. Es ist auf das LAN beschränkt.
+        \item Um ARP-Spoofing zu erkennen, können Sie prüfen:
+        \begin{itemize}
+            \item Stimmen die MAC-Adressen in der ARP-Tabelle mit den bekannten Geräten überein?
+            \item Gibt es doppelte Einträge für unterschiedliche IP-Adressen mit derselben MAC-Adresse?
+        \end{itemize}
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
@@ -217,12 +500,20 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+        \item Eve kann einen \textbf{Man-in-the-Middle-Angriff (MITM)} durchführen, indem sie ARP-Spoofing einsetzt. Sie fälscht die Zuordnung der IP-Adressen zu MAC-Adressen, sodass der gesamte Netzverkehr von Bob über ihren Computer geleitet wird. Eve kann die Daten lesen und manipulieren.
+        \item Bob kann sich schützen durch:
+        \begin{itemize}
+            \item Nutzung von HTTPS für verschlüsselte Verbindungen.
+            \item Aktivieren von ARP-Schutzmechanismen (z. B. ARP-Wächter).
+            \item Überprüfung von SSL-Zertifikaten auf Authentizität.
+        \end{itemize}
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
 \setcounter{subsection}{104}
-\begin{exercise}{Indeterministische Verschlüsselung}
+\begin{exercise}{Indeterministische Verschlüsselung}\label{ex:indeterministic}
   \begin{enumerate}
     \item Was bedeutet indeterministische Verschlüsselung?
     \item Wie realisieren Sie die indeterministische Verschlüsselung bei einem asymmetrischen Konzelations- system?
@@ -232,11 +523,21 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+        \item Indeterministische Verschlüsselung bedeutet, dass derselbe Klartext bei wiederholter Verschlüsselung mit demselben Schlüssel unterschiedliche Schlüsseltexte erzeugt.
+        \item Bei einem asymmetrischen Verschlüsselungssystem kann indeterministische Verschlüsselung durch die Einbeziehung eines Zufallswerts (z. B. Padding mit Zufallszahlen) in die Nachricht erreicht werden.
+        \item Bei einem symmetrischen Verschlüsselungssystem kann dies durch die Verwendung eines Initialisierungsvektors (IV) realisiert werden.
+        \item Verfahren:
+        \begin{itemize}
+            \item **RSA**: Fügen Sie der Nachricht einen zufälligen Wert hinzu (z. B. OAEP-Padding).
+            \item **ElGamal**: Verwenden Sie bei jeder Verschlüsselung einen neuen Zufallswert.
+        \end{itemize}
+        \item Indeterministische Verschlüsselung verhindert einen **Known-Plaintext-Angriff**, bei dem der Angreifer durch die Analyse von wiederholt verschlüsselten Nachrichten auf den Klartext schließen könnte.
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
-\begin{exercise}{Informationstheoretische Sicherheit}
+\begin{exercise}{Informationstheoretische Sicherheit}\label{ex:otp}
   Das One-Time-Pad (Vernam-Chiffre) ist ein sehr einfaches, aber informationstheoretisch sicheres symme- trisches Verschlüsselungsverfahren: Die Klartextbits $x_i$ werden einzeln XOR-verknüpft mit einer zufälligen Schlüsselfolge $k_i$ gleicher Länge, die nur ein einziges Mal verwendet werden darf (Schlüsseltext $s_i = x_i \oplus k_i$ mit $i= 1,2,...$).
   \begin{enumerate}
     \item Was erfährt der Angreifer, der den Schlüsseltext abfängt, über den Klartext?
@@ -248,43 +549,29 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+        \item Der Angreifer erfährt bei einem One-Time-Pad nichts über den Klartext, da der Schlüsseltext rein zufällig ist und keine Informationen über den Klartext enthält.
+        \item Sicherheit des Verfahrens:
+        \[
+        H(M|C) = H(M) \quad \text{(Entropie bleibt erhalten).}
+        \]
+        Der Schlüsseltext enthält keine Informationen über den Klartext ohne den Schlüssel.
+        \item Wiederverwendung des Schlüssels:
+        \[
+        C_1 \oplus C_2 = M_1 \oplus M_2
+        \]
+        Dies ermöglicht die Rekonstruktion der Klartexte \( M_1, M_2 \).
+        \item Ein informationstheoretisch sicheres Authentifikationssystem muss auf zufälligen, einmaligen Schlüsseln basieren (z. B. MACs mit OTPs).
+        \item Ein System: Der Sender erzeugt einen zufälligen Schlüssel und XORt diesen mit der Nachricht, um den MAC zu erstellen. Der Empfänger überprüft, ob der MAC gültig ist.
+        \item Es gibt keine informationstheoretisch sicheren asymmetrischen Verfahren, da der öffentliche Schlüssel immer Angriffsvektoren bietet. Die Sicherheit ist hier nur computational.
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
 \setcounter{subsection}{112}
-\begin{exercise}{Unsicherheit der klassischen Verschiebechiffre}
+\begin{exercise}{Unsicherheit der klassischen Verschiebechiffre}\label{ex:vigenere}
   Ein klassisches Verschlüsselungsverfahren ist die Verschiebechiffre (Vigenère-Chiffre). Sie arbeitet typischer- weise auf einem Alphabet aus den Großbuchstaben A-Z für den Klartext, den Schlüssel und den Schlüssel- text. Zudem kann ein Zeichen zur Worttrennung hinzugenommen werden. Für diese Aufgabe wird dazu der Unterstrich \texttt{\_} verwendet. Ein Schlüsseltextzeichen ergibt sich aus dem um das Schlüsselzeichen verschobene Klartextzeichen. Dieses sogenannte Vigenère-Tableau ist in Abbildung 1 dargestellt.
-  % TODO: add table
-  % A B C D E F G H I J K L M N O P Q R S T U V W X Y Z _
-  % A A B C D E F G H I J K L M N O P Q R S T U V W X Y Z _
-  % B B C D E F G H I J K L M N O P Q R S T U V W X Y Z _ A
-  % C C D E F G H I J K L M N O P Q R S T U V W X Y Z _ A B
-  % D D E F G H I J K L M N O P Q R S T U V W X Y Z _ A B C
-  % E E F G H I J K L M N O P Q R S T U V W X Y Z _ A B C D
-  % F F G H I J K L M N O P Q R S T U V W X Y Z _ A B C D E
-  % G G H I J K L M N O P Q R S T U V W X Y Z _ A B C D E F
-  % H H I J K L M N O P Q R S T U V W X Y Z _ A B C D E F G
-  % I I J K L M N O P Q R S T U V W X Y Z _ A B C D E F G H
-  % J J K L M N O P Q R S T U V W X Y Z _ A B C D E F G H I
-  % K K L M N O P Q R S T U V W X Y Z _ A B C D E F G H I J
-  % L L M N O P Q R S T U V W X Y Z _ A B C D E F G H I J K
-  % M M N O P Q R S T U V W X Y Z _ A B C D E F G H I J K L
-  % N N O P Q R S T U V W X Y Z _ A B C D E F G H I J K L M
-  % O O P Q R S T U V W X Y Z _ A B C D E F G H I J K L M N
-  % P P Q R S T U V W X Y Z _ A B C D E F G H I J K L M N O
-  % Q Q R S T U V W X Y Z _ A B C D E F G H I J K L M N O P
-  % R R S T U V W X Y Z _ A B C D E F G H I J K L M N O P Q
-  % S S T U V W X Y Z _ A B C D E F G H I J K L M N O P Q R
-  % T T U V W X Y Z _ A B C D E F G H I J K L M N O P Q R S
-  % U U V W X Y Z _ A B C D E F G H I J K L M N O P Q R S T
-  % V V W X Y Z _ A B C D E F G H I J K L M N O P Q R S T U
-  % W W X Y Z _ A B C D E F G H I J K L M N O P Q R S T U V
-  % X X Y Z _ A B C D E F G H I J K L M N O P Q R S T U V W
-  % Y Y Z _ A B C D E F G H I J K L M N O P Q R S T U V W X
-  % Z Z _ A B C D E F G H I J K L M N O P Q R S T U V W X Y
-  % _ _ A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
-  % Abbildung 1: Vigenère-Tableau
+  \input{res/vigenere.tbl.tex}
   \begin{enumerate}
     \item Verschlüsseln Sie den nachfolgenden Klartext mit dem Schlüsselwort PRUEFUNG unter Verwendung einer Vigenère-Chiffre:
     \begin{center}
@@ -296,7 +583,22 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+        \item Verschlüsselung mit PRUEFUNG als Schlüssel:
+        \[
+        C = \texttt{ILNUHAZKA\_VLA\_ANL\_KLU\_LTS\_GMMI\_VQK\_TVT\_OZUB\_DRNT\_OZXEU}
+        \]
+        \item Kryptanalyse:
+        \begin{itemize}
+            \item Häufigkeitsanalyse, um Muster aufzudecken.
+            \item Analyse von Periodizitäten, um die Schlüssellänge zu bestimmen.
+        \end{itemize}
+        \item Verlängerung des Schlüsselworts:
+        \[
+        \text{Faktor der Vergrößerung: } 27^s
+        \]
+        \item Um informationstheoretische Sicherheit zu erreichen, müsste das Verfahren in ein One-Time-Pad umgewandelt werden. Dazu müsste der Schlüssel genauso lang wie der Klartext und zufällig sein.
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
@@ -309,7 +611,35 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+        \item Verschlüsselung:
+        \begin{itemize}
+            \item Mit der Skytala (\(k = 4\), \(4 \times 8\) Matrix):
+            \[
+            \texttt{PRUEFUNGSSPASS\_OHNE\_KOMPROMISSE} \rightarrow \texttt{PHSOROPRUNFEINSUPG\_GHNOM\_}
+            \]
+            \item Mit der Caesar-Chiffre (\(k = 3\)):
+            \[
+            \texttt{STUDIUMSFREUDE} \rightarrow \texttt{VWXGLXPVIKUHGH}
+            \]
+        \end{itemize}
+        \item Häufigkeitsanalyse:
+        \begin{itemize}
+            \item Besonders problematisch bei der Caesar-Chiffre, da Buchstabenhäufigkeiten direkt übertragen werden.
+            \item Die Skytala bewahrt Buchstabenhäufigkeiten ebenfalls, ist jedoch schwieriger zu entschlüsseln, da Permutationen involviert sind.
+        \end{itemize}
+        \item Kombination der beiden Verfahren:
+        \begin{itemize}
+            \item Kombination 1 (Caesar vor Skytala): Sicherheit erhöht sich, da Buchstabenhäufigkeiten durch die Caesar-Chiffre maskiert werden.
+            \item Kombination 2 (Skytala vor Caesar): Sicherheit bleibt gleich wie bei der Skytala alleine, da Caesar die Buchstabenhäufigkeiten nicht beeinflusst.
+        \end{itemize}
+        \item Moderne Chiffren müssen folgende Gütekriterien erfüllen:
+        \begin{itemize}
+            \item \textbf{Konfusionsanforderung}: Beziehung zwischen Klartext und Schlüsseltext sollte möglichst komplex sein.
+            \item \textbf{Diffusionsanforderung}: Änderungen eines Klartextbits sollten viele Schlüsseltextbits beeinflussen.
+            \item \textbf{Resistenz gegen Kryptoanalyse}: Gegenüber modernen Angriffen wie Brute-Force, statistischen und algebraischen Angriffen sicher.
+        \end{itemize}
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
@@ -328,32 +658,70 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+        \item Die Identitätsfunktion \( H(x) = x \) ist keine kryptographische Hashfunktion, da sie nicht kollisionsresistent ist und keine Kompression durchführt.
+        \item Kollisionsfreiheit ist entscheidend, da der Angreifer sonst zwei Nachrichten mit identischem Hashwert erzeugen könnte, um Signaturen zu fälschen.
+        \item Vorteile des Signierens von Hashwerten:
+        \begin{itemize}
+            \item Reduziert den Rechenaufwand bei großen Nachrichten.
+            \item Stellt sicher, dass die Nachricht authentisch ist.
+            \item Padding (z. B. bei RSA) schützt vor Angriffen.
+        \end{itemize}
+        \item Verfahren für die Software-Integrität:
+        \begin{itemize}
+            \item Entwicklerin erzeugt den Hashwert der Software und veröffentlicht diesen zusammen mit der Software.
+            \item Nutzer prüfen den Hashwert nach dem Herunterladen.
+            \item Entscheidend ist die Kollisionsresistenz der Hashfunktion, um sicherzustellen, dass der Hash nicht gefälscht werden kann.
+        \end{itemize}
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
 \setcounter{subsection}{150}
-\begin{exercise}{Das Feistel-Prinzip}
+\begin{exercise}{Das Feistel-Prinzip}\label{ex:feistel}
   \begin{enumerate}
     \item Die nebenstehende Abbildung zeigt eine Runde der Feistel-Verschlüsselung. Berechnen Sie zwei Runden der Verschlüsselung und Entschlüsselung mit dem Feistel-Prinzip und den folgenden Werten:
-    \begin{itemize}
-      \item Klartext: 0011 0100
-      \item Funktion F: binäres UND
-      \item Rundenschlüssel K1: 1110
-      \item Rundenschlüssel K2: 0001
-    \end{itemize}
+      \begin{itemize}
+        \item Klartext: 0011 0100
+        \item Funktion F: binäres UND
+        \item Rundenschlüssel K1: 1110
+        \item Rundenschlüssel K2: 0001
+      \end{itemize}
+      \input{res/feistel.fig.tex}
     \item Welche Eigenschaften sollte die Einwegfunktion F aufweisen, um mit ihrer Hilfe eine sichere Feistel-Chiffre zu erzeugen?
     \item Zeigen Sie, dass auch bei bei einer konstanten Einwegfunktion F sowohl die Ver- als auch die Entschlüsselung funktioniert.
     \item Benötigen Sie die Umkehrfunktion $F^{-1}$ von $F$, damit die Entschlüsselung klappt? Begründen Sie Ihre Antwort.
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+        \item Zwei Runden Feistel-Verschlüsselung:
+        \begin{itemize}
+            \item Klartext: \( 0011 \ 0100 \)
+            \item Runde 1:
+            \[
+            L_1 = R_0, \quad R_1 = L_0 \oplus F(R_0, K_1)
+            \]
+            \( F(R_0, K_1) = R_0 \land K_1 \)
+            \item Runde 2:
+            \[
+            L_2 = R_1, \quad R_2 = L_1 \oplus F(R_1, K_2)
+            \]
+        \end{itemize}
+        \item Eigenschaften der Funktion \( F \):
+        \begin{itemize}
+            \item Effizient berechenbar.
+            \item Pseudozufällig, aber deterministisch.
+            \item Nicht umkehrbar (Einhaltung der Sicherheit).
+        \end{itemize}
+        \item Eine konstante Funktion \( F \) funktioniert, da die Struktur der Feistel-Chiffre die Umkehrbarkeit sicherstellt.
+        \item Die Umkehrfunktion \( F^{-1} \) ist nicht notwendig, da die Entschlüsselung über die symmetrische Struktur erfolgt.
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
 \setcounter{subsection}{162}
-\begin{exercise}{RSA: Eigenschaften und Sicherheit}
+\begin{exercise}{RSA: Eigenschaften und Sicherheit}\label{ex:rsa}
   Für die Erzeugung eines RSA-Schlüsselpaares wurde von Alice der Modulus $n= p \cdot q= 7 \cdot 17= 119$ gewählt.
   \begin{enumerate}
     \item Was muss für den öffentlichen Verschlüsselungsexponenten $c$, der gemeinsam mit dem Modulus $n$ veröffentlicht wird, gelten, damit dieser als Teil des RSA-Schlüssels verwendet werden kann?
@@ -365,7 +733,26 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+        \item Der öffentliche Exponent \( c \) muss teilerfremd zu \( \phi(n) \) sein, damit ein inverser Schlüssel existiert.
+        \item Eine Nachricht \( m \) darf \( p \) oder \( q \) nicht enthalten, da dies den privaten Schlüssel direkt offenbart.
+        \item Berechnung des privaten Exponenten \( d \):
+        \[
+        c = 5, \quad n = 7 \cdot 17 = 119, \quad \phi(n) = 96
+        \]
+        \( d = c^{-1} \mod \phi(n) \implies d = 77 \)
+        \item Multiplikative Homomorphie:
+        \[
+        m_1 \cdot m_2 \mod n \implies c(m_1 \cdot m_2) = c(m_1) \cdot c(m_2)
+        \]
+        Angreifer können Produkte von Nachrichten entschlüsseln.
+        \item Eve nutzt:
+        \[
+        r \cdot s \cdot r^{-1} \mod n = s
+        \]
+        Der Angriff ist erfolgreich.
+        \item Multiplikative Homomorphie wird in homomorpher Verschlüsselung absichtlich genutzt (z. B. für Berechnungen auf verschlüsselten Daten).
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
@@ -378,7 +765,14 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+        \item Eve führt einen Chosen-Plaintext-Angriff durch:
+        \[
+        c_B = m^e \mod n
+        \]
+        Für alle möglichen \( m \), vergleicht sie den berechneten \( c_B \) mit dem übertragenen Wert, bis \( m = 3 \) gefunden wird.
+        \item Bob kann sich schützen, indem er Zufallswerte oder Padding einfügt, um die deterministische Eigenschaft des RSA-Verfahrens zu verhindern.
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
@@ -392,12 +786,17 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+        \item Forward Secrecy mit RSA wird erreicht, indem für jede neue Sitzung ein neues, kurzlebiges (ephemeres) RSA-Schlüsselpaar generiert wird. Der öffentliche Schlüssel wird dem Kommunikationspartner zur Verfügung gestellt, und der private Schlüssel wird nach Abschluss der Sitzung sicher gelöscht. Auf diese Weise kann ein kompromittierter langfristiger Schlüssel vergangene Sitzungen nicht gefährden.
+        \item Wenn ein Angreifer den privaten Entschlüsselungsexponenten eines RSA-Schlüssels erlangt, kann er alle Nachrichten entschlüsseln, die mit dem zugehörigen öffentlichen Schlüssel verschlüsselt wurden. Dadurch wird die Vertraulichkeit der Kommunikation vollständig aufgehoben.
+        \item Der Angreifer kann die verschlüsselten Nachrichten abfangen und mit dem privaten Schlüssel entschlüsseln. Alle vergangenen und zukünftigen Nachrichten, die denselben Schlüssel verwenden, können entschlüsselt werden, sofern sie aufgezeichnet wurden.
+        \item Durch regelmäßiges Wechseln des privaten Schlüssels und Löschen des alten privaten Schlüssels nach Ablauf einer Sitzung wird Forward Secrecy gewährleistet. Zusätzlich kann der Diffie-Hellman-Schlüsselaustausch verwendet werden, um symmetrische Sitzungsschlüssel auszuhandeln, die nicht mit den RSA-Schlüsseln gespeichert werden.
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
 \setcounter{subsection}{1615}
-\begin{exercise}{Elliptische Kurven: EC-ElGamal}
+\begin{exercise}{Elliptische Kurven: EC-ElGamal}\label{ex:elliptic}
   Das ElGamal-Kryptosystem lässt sich auch auf elliptische Kurven übertragen. Dabei werden die Rechenoperationen mittels Punkten auf einer elliptischen Kurve vorgenommen. Betrachten Sie für die folgenden Teilaufgaben die elliptische Kurve $E(\text{GF}(p))$ mit der Form $y^2 \equiv x^3 + x + 6 \mod 11$.
   \begin{enumerate}
     \item Passen Sie die Operationen des ElGamal-Kryptosystems zur Schlüsselgenerierung, zur Entschlüsselung sowie zur Verschlüsselung an, sodass diese auf der Basis elliptischer Kurven operieren.
@@ -407,7 +806,39 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+        \item Anpassung des ElGamal-Kryptosystems für elliptische Kurven:
+        \begin{itemize}
+            \item **Schlüsselgenerierung:** 
+            \[
+            \text{Privater Schlüssel } d, \text{ öffentlicher Schlüssel } P = d \cdot G, \text{ wobei } G \text{ ein Basispunkt ist.}
+            \]
+            \item **Verschlüsselung:** 
+            \[
+            \text{Nachricht } m, \text{ Zufallswert } k, \text{ Schlüsseltext: } (C_1, C_2) = (k \cdot G, m + k \cdot P).
+            \]
+            \item **Entschlüsselung:** 
+            \[
+            m = C_2 - d \cdot C_1.
+            \]
+        \end{itemize}
+        \item Schlüsselgenerierung:
+        \begin{itemize}
+            \item Wähle \( d = 3 \) als privaten Schlüssel.
+            \item Berechne \( P = d \cdot G = 3 \cdot (2, 7) = (8, 3) \) (Punkt auf der Kurve).
+            \item Verschlüsselung der Nachricht \( m = (5, 2) \):
+            \[
+            C_1 = k \cdot G = 2 \cdot (2, 7) = (6, 3), \quad C_2 = m + k \cdot P = (5, 2) + 2 \cdot (8, 3) = (7, 6).
+            \]
+            Schlüsseltext: \( (C_1, C_2) = ((6, 3), (7, 6)) \).
+        \end{itemize}
+        \item Entschlüsselung:
+        \[
+        m = C_2 - d \cdot C_1 = (7, 6) - 3 \cdot (6, 3) = (5, 2).
+        \]
+        Die ursprüngliche Nachricht \( m \) wurde korrekt wiederhergestellt.
+        \item Die Sicherheit des Verfahrens beruht auf dem **diskreten Logarithmusproblem** über elliptischen Kurven. Ein Angreifer müsste \( k \) aus \( C_1 = k \cdot G \) berechnen, was aufgrund der mathematischen Schwierigkeit des Problems praktisch unmöglich ist.
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
@@ -416,7 +847,10 @@
   Welche Kommunikationsabschnitte sind in GSM verschlüsselt? Welche Kommunikationsabschnitte sind unverschlüsselt?
 
   \begin{solution}
-    % TODO
+    \begin{itemize}
+        \item \textbf{Verschlüsselte Abschnitte:} Der Abschnitt zwischen dem Mobiltelefon und der Basisstation wird durch den A5-Algorithmus verschlüsselt.
+        \item \textbf{Unverschlüsselte Abschnitte:} Die Verbindung zwischen der Basisstation und den zentralen Netzwerkkomponenten (z. B. dem MSC) ist unverschlüsselt. Dies stellt ein Sicherheitsrisiko dar, da Angriffe auf das Netzwerk (z. B. durch gefälschte Basisstationen) möglich sind.
+    \end{itemize}
   \end{solution}
 \end{exercise}
 
@@ -425,7 +859,10 @@
   Bei Bluetooth wird auf Basis der Funktion E22 die Authentifikation durchgeführt. Was sind die In- und Outputs der Authentifikation?
 
   \begin{solution}
-    % TODO
+    \begin{itemize}
+        \item \textbf{Input:} Der Eingabewert der Funktion \( E22 \) ist ein gemeinsames Schlüsselpaar (Link Key), das während der Kopplung zwischen zwei Bluetooth-Geräten ausgetauscht wird.
+        \item \textbf{Output:} Die Funktion erzeugt einen Authentication Code, der verwendet wird, um die Identität der Geräte gegenseitig zu authentifizieren.
+    \end{itemize}
   \end{solution}
 \end{exercise}
 
@@ -442,7 +879,14 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+        \item Maximal \( 2^{24} \) Pakete können erzeugt werden, da der IV 24 Bit groß ist. Um Kollisionen zu vermeiden, sollte der IV systematisch inkrementiert werden. Problematisch ist jedoch, dass bei mehreren Teilnehmern des WLANs die Wahrscheinlichkeit von IV-Kollisionen schnell steigt.
+        \item Die ersten 10 Klartextbits des zweiten Pakets \( P_2 \) werden durch Vergleich mit \( P_1 \) berechnet:
+        \[
+        \texttt{Klartext}(P_2) = \texttt{Verschlüsselter\_Text}(P_2) \oplus \texttt{Schlüssel}(P_1).
+        \]
+        Nach Durchführung der XOR-Berechnung ergibt sich der Klartext.
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
@@ -451,7 +895,13 @@
 \setcounter{section}{2023}
 \section{Mock exam}
 
-% TODO
+% \begin{exercise}{}
+%  % TODO
+%
+%   \begin{solution}
+%     % TODO
+%   \end{solution}
+% \end{exercise}
 
 
 
@@ -471,7 +921,18 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+        \item Die Modi ECB und CBC benötigen eine invertierbare Verschlüsselungsfunktion, da der Klartext beim Entschlüsseln zurückgewonnen werden muss. Der CTR-Modus hingegen benötigt keine invertierbare Funktion, da er auf dem XOR-Mechanismus basiert.
+        \item Die Verschlüsselung lässt sich im CTR-Modus parallelisieren, da die Blöcke unabhängig voneinander verarbeitet werden können. Im CBC-Modus ist dies nicht möglich, da jeder Block von seinem Vorgänger abhängt.
+        \item Ein Bitfehler im zweiten Block beeinflusst nur den entsprechenden Block im ECB-Modus. Im CBC-Modus beeinflusst er zusätzlich den nachfolgenden Block.
+        \item Wenn ein Bit im zweiten Block fehlt, kann nur der ECB-Modus korrekt entschlüsseln, da die Blöcke unabhängig verarbeitet werden. Im CBC- und CTR-Modus führt der Fehler zu Synchronisationsverlust.
+        \item Beim Verlust eines ganzen Blocks kann nur der ECB-Modus korrekt entschlüsseln, da die Blöcke unabhängig verarbeitet werden.
+        \item Im CTR-Modus kann ein Angreifer zwei Klartexte entschlüsseln, wenn der gleiche IV verwendet wurde:
+        \[
+        C_1 \oplus C_2 = M_1 \oplus M_2.
+        \]
+        Durch eine bekannte Klartextanalyse kann \( M_2 \) bestimmt werden.
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
@@ -483,7 +944,18 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+        \item Die Sicherheit elliptischer Kurven beruht auf dem Problem des diskreten Logarithmus in elliptischen Kurvengruppen, das als schwierig gilt.
+        \item Punkte auf der elliptischen Kurve \( y^2 = x^3 + 6x + 1 \mod 11 \):
+        \[
+        \{(2, 4), (5, 2), (7, 6), (8, 3), \ldots\}.
+        \]
+        \item Vorteile von ECC:
+        \begin{itemize}
+            \item Kürzere Schlüssel bei gleicher Sicherheit (z. B. ECC-256 entspricht RSA-3072).
+            \item Geringere Speicher- und Rechenanforderungen.
+        \end{itemize}
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
@@ -499,7 +971,22 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+        \item Eine Signatur dient der Authentifizierung und Integritätsprüfung einer Nachricht. Ein Zertifikat enthält den öffentlichen Schlüssel eines Teilnehmers sowie die Signatur einer vertrauenswürdigen Zertifizierungsstelle (CA), die die Authentizität des Schlüssels bestätigt.
+        \item N7 muss den CAs vertrauen, die die Zertifikate von N3 und allen relevanten Zwischenstellen signiert haben.
+        \item N7 muss nur den CAs vertrauen, die sowohl N3 als auch N5 direkt oder indirekt zertifizieren. Dies minimiert die Anzahl der erforderlichen CAs.
+        \item Wenn CA2 ausfällt, können alternative Zertifikate verwendet werden, die von anderen vertrauenswürdigen CAs ausgestellt wurden. Ein neuer Vertrauenspfad kann erstellt werden.
+        \item Vorteile von Trust on First Use (TOFU):
+        \begin{itemize}
+            \item Kein zentraler CA-Betrieb notwendig.
+            \item Schlüssel können einfach ausgetauscht werden.
+        \end{itemize}
+        Nachteile:
+        \begin{itemize}
+            \item Unsicherheit beim ersten Austausch.
+            \item Angreifer können Schlüssel bei der Erstkommunikation abfangen.
+        \end{itemize}
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
@@ -513,7 +1000,19 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+        \item Abkürzungen und ihre Funktion:
+        \begin{itemize}
+            \item \( K_i \): Geheimer Authentifizierungsschlüssel.
+            \item \( IMSI \): Internationale Teilnehmerkennung.
+            \item \( RAND \): Zufallszahl für Authentifizierung.
+            \item \( SRES \): Signatur zur Authentifizierung.
+            \item \( LAI \): Standortbereichskennung.
+            \item \( MSISDN \): Telefonnummer des Teilnehmers.
+            \item \( K_c \): Verschlüsselungsschlüssel für den Funkkanal.
+        \end{itemize}
+        \item Viele der Funktionen wie \( K_i \), \( RAND \) und \( K_c \) finden sich auch im UMTS wieder, jedoch oft mit anderen Algorithmen oder Benennungen.
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
@@ -529,9 +1028,25 @@
   \item Gegeben eine Chiffre, welche Buchstaben A-N mit Buchstaben N-Z vertauscht. Und gleichzeitig muss die Länge der Nachricht immer gleich sein. Bewerten Sie die Sicherheit der Chiffre und die beiden Eigenschaften (Polyalphabetische Verschlüsselung nur mit Vertauschen und die gleiche Länge der Nachricht).
  \end{enumerate}
 
-  \begin{solution}
-    % TODO
-  \end{solution}
+ \begin{solution}
+  \begin{enumerate}
+      \item Gründe für den Wechsel kryptographischer Algorithmen:
+      \begin{itemize}
+          \item **Technologischer Fortschritt:** Schnellere Computer ermöglichen effizientere Brute-Force-Angriffe.
+          \item **Neue Angriffe:** Fortschritte in der Kryptoanalyse decken Schwachstellen auf, wie z. B. Differential- oder lineare Kryptoanalyse.
+      \end{itemize}
+      \item Das **One-Time-Pad** bietet absolute Sicherheit und bleibt auch nach 98 Jahren sicher. Es wird nicht flächendeckend eingesetzt, da:
+      \begin{itemize}
+          \item Der Schlüssel so lang wie der Klartext sein muss.
+          \item Der sichere Schlüsselaustausch und die Speicherung unpraktisch sind.
+      \end{itemize}
+      \item Die Chiffre, die Buchstaben \( A-N \) mit \( N-Z \) vertauscht, ist nicht sicher:
+      \begin{itemize}
+          \item **Polyalphabetische Verschlüsselung:** Nicht erfüllt, da nur ein Alphabet genutzt wird.
+          \item **Länge bleibt gleich:** Diese Eigenschaft bewahrt Muster im Schlüsseltext, was statistische Angriffe erleichtert.
+      \end{itemize}
+  \end{enumerate}
+\end{solution}
 \end{exercise}
 
 \begin{exercise}{Elliptische Kurven}
@@ -542,7 +1057,18 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+        \item Punkte auf der elliptischen Kurve \( y^2 = x^3 + 2x + 3 \mod 7 \):
+        \[
+        \{(1, 1), (2, 2), (4, 5), (6, 3)\}.
+        \]
+        \item Das ElGamal-Verfahren mit elliptischen Kurven funktioniert, weil die Addition von Punkten und die Multiplikation mit einem Skalar die Gruppenstruktur der Kurve erhalten. Dadurch bleibt das diskrete Logarithmusproblem schwer lösbar.
+        \item Vergleich:
+        \begin{itemize}
+            \item Beide basieren auf dem diskreten Logarithmusproblem.
+            \item ECC-ElGamal ist effizienter, da kürzere Schlüssel benötigt werden.
+        \end{itemize}
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
@@ -555,7 +1081,17 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+        \item Sicherheitsbewertung der Verfahren:
+        \begin{itemize}
+            \item **Alle Teilschlüssel aneinanderhängen:** Angreifbar durch Brute-Force-Angriffe.
+            \item **Drei Teilschlüssel aneinanderhängen:** Sicherheitsgewinn gegenüber der ersten Methode.
+            \item **XOR aller Schlüssel:** Höchste Sicherheit, solange alle Schlüssel zufällig und unabhängig sind.
+        \end{itemize}
+        \item Zertifikatsbaum: N7 vertraut CAs, die N3 und \( B \) direkt zertifizieren.
+        \item Minimale Anzahl an CAs: Es reicht aus, der CA zu vertrauen, die die Zertifikate für \( B \) und \( N3 \) signiert hat.
+        \item Maßnahme bei Kompromittierung: Alternativer Zertifizierungsweg über eine andere CA. Neue Zertifikate können erstellt werden, um Vertrauen zu erhalten.
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
@@ -566,7 +1102,20 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+        \item Abkürzungen im GSM und ihre Funktion:
+        \begin{itemize}
+            \item \( K_i \): Geheimer Schlüssel zur Authentifizierung und Verschlüsselung.
+            \item \( IMSI \): Einzigartige Kennung des Mobilfunkteilnehmers.
+            \item \( RAND \): Zufällige Herausforderung zur Authentifizierung.
+            \item \( SRES \): Antwort des Mobilgeräts auf \( RAND \), basierend auf \( K_i \).
+            \item \( LAI \): Standortkennung für Mobilitätsmanagement.
+            \item \( MSISDN \): Telefonnummer des Teilnehmers.
+            \item \( K_c \): Schlüssel zur Verschlüsselung des Datenverkehrs.
+        \end{itemize}
+        \item Diese Funktionen sind auch im UMTS enthalten, jedoch oft mit verbesserten Sicherheitsmechanismen (z. B. längere Schlüssel, stärkere Algorithmen).
+    \end{enumerate}
   \end{solution}
 \end{exercise}
+
 \end{document}
