@@ -1,6 +1,6 @@
 \documentclass{article}
 
-\usepackage[]{../.template/xrcise}
+\usepackage[solutions]{../.template/xrcise}
 
 \subject{Security by Design}
 \semester{Winter 2024}
@@ -495,8 +495,8 @@
 \begin{exercise}{Kommunikationsmanipulation}
   Eve und Bob sind befreundet und wohnen im selben Haushalt. Ihre Computer sind an denselben Switch angeschlossen und über diesen mit dem Internet verbunden. Eve hat bald Geburtstag und vermutet, dass Bob ein Geschenk für Sie bei einem Onlineshop bestellen wird, der keine Verbindungsverschlüsselung einsetzt. Einerseits ist sie sehr neugierig und möchte gern so früh wie möglich erfahren, was sie geschenkt bekommt. Andererseits befürchtet sie, dass Bob ihr einen Stoffteddy schenken möchte, den sie nicht haben will. Sie möchte daher Bobs Kommunikation abhören und, wenn nötig, seine Bestellung manipulieren können.
   \begin{enumerate}
-    \item Nennen und erläutern Sie eine Angriffsart, mit der Eve den gesamten Netzverkehr von Bob abhören und manipulieren kann.
-    \item Wie kann Bob sich vor dem in Teilaufgabe a) beschriebenen Angriff schützen?
+    \item\label{itm:manipulation} Nennen und erläutern Sie eine Angriffsart, mit der Eve den gesamten Netzverkehr von Bob abhören und manipulieren kann.
+    \item Wie kann Bob sich vor dem in Teilaufgabe \ref{itm:manipulation} beschriebenen Angriff schützen?
   \end{enumerate}
 
   \begin{solution}
@@ -516,8 +516,8 @@
 \begin{exercise}{Indeterministische Verschlüsselung}\label{ex:indeterministic}
   \begin{enumerate}
     \item Was bedeutet indeterministische Verschlüsselung?
-    \item Wie realisieren Sie die indeterministische Verschlüsselung bei einem asymmetrischen Konzelations- system?
-    \item Was ändert sich gegenüber b) bei einem symmetrischen Konzelationssystem?
+    \item\label{itm:asymmetric} Wie realisieren Sie die indeterministische Verschlüsselung bei einem asymmetrischen Konzelationssystem?
+    \item Was ändert sich gegenüber \ref{itm:asymmetric} bei einem symmetrischen Konzelationssystem?
     \item Sie sollen eine indeterministische Verschlüsselung realisieren. Zur Auswahl stehen die Algorithmen RSA und ElGamal. Wie würden Sie bei beiden Algorithmen vorgehen?
     \item Beim Einsatz asymmetrischer Verschlüsselung sollte eine Nachricht vor der Verschlüsselung noch um (Pseudo-)Zufallszahlen ergänzt werden (indeterministische Verschlüsselung). Welcher Angriff kann dadurch verhindert werden?
   \end{enumerate}
@@ -525,7 +525,7 @@
   \begin{solution}
     \begin{enumerate}
         \item Indeterministische Verschlüsselung bedeutet, dass derselbe Klartext bei wiederholter Verschlüsselung mit demselben Schlüssel unterschiedliche Schlüsseltexte erzeugt.
-        \item Bei einem asymmetrischen Verschlüsselungssystem kann indeterministische Verschlüsselung durch die Einbeziehung eines Zufallswerts (z. B. Padding mit Zufallszahlen) in die Nachricht erreicht werden.
+        \item Bei einem asymmetrischen Verschlüsselungssystem kann indeterministische Verschlüsselung durch die Einbeziehung eines Zufallswerts (zB. Padding mit Zufallszahlen) in die Nachricht erreicht werden.
         \item Bei einem symmetrischen Verschlüsselungssystem kann dies durch die Verwendung eines Initialisierungsvektors (IV) realisiert werden.
         \item Verfahren:
         \begin{itemize}
@@ -538,39 +538,31 @@
 \end{exercise}
 
 \begin{exercise}{Informationstheoretische Sicherheit}\label{ex:otp}
-  Das One-Time-Pad (Vernam-Chiffre) ist ein sehr einfaches, aber informationstheoretisch sicheres symme- trisches Verschlüsselungsverfahren: Die Klartextbits $x_i$ werden einzeln XOR-verknüpft mit einer zufälligen Schlüsselfolge $k_i$ gleicher Länge, die nur ein einziges Mal verwendet werden darf (Schlüsseltext $s_i = x_i \oplus k_i$ mit $i= 1,2,...$).
+  Das One-Time-Pad (Vernam-Chiffre) ist ein sehr einfaches, aber informationstheoretisch sicheres symmetrisches Verschlüsselungsverfahren: Die Klartextbits $x_i$ werden einzeln XOR-verknüpft mit einer zufälligen Schlüsselfolge $k_i$ gleicher Länge, die nur ein einziges Mal verwendet werden darf (Schlüsseltext $s_i = x_i \oplus k_i$ mit $i= 1,2,...$).
   \begin{enumerate}
     \item Was erfährt der Angreifer, der den Schlüsseltext abfängt, über den Klartext?
     \item Wie würden Sie die Sicherheit des Verfahrens beweisen?
     \item Warum darf die Schlüsselfolge nicht mehrmals verwendet werden? Überlegen Sie sich, was passieren würde, wenn der Angreifer zwei Schlüsseltexte $s_1$ und $s_2$ (oder gar noch weitere) abfangen würde, die unter dem gleichen Schlüssel $k= k_1 = k_2$ verschlüsselt wurden (Annahme: Es handelt sich um sinnvolle Klartexte).
     \item Es existiert auch ein informationstheoretisch sicheres (symmetrisches) Verfahren zur Authentifikation. Welche Eigenschaft muss ein informationstheoretisch sicheres Authentifikationssystem besitzen?
     \item Entwerfen Sie ein solches System und erläutern Sie dessen Funktionsweise sowie dessen Schutz vor einem Angreifer und damit dessen informationstheoretische Sicherheit. Legen Sie eine bitweise Authentisierung (ein MAC-Bit pro Klartextbit) zugrunde.
-    \item Kann es informationstheoretisch sichere asymmetrische Verfahren zur Verschlüsselung bzw. Authenti- fikation geben? Begründen Sie Ihre Antwort.
+    \item Kann es informationstheoretisch sichere asymmetrische Verfahren zur Verschlüsselung bzw. Authentifikation geben? Begründen Sie Ihre Antwort.
   \end{enumerate}
 
   \begin{solution}
     \begin{enumerate}
-        \item Der Angreifer erfährt bei einem One-Time-Pad nichts über den Klartext, da der Schlüsseltext rein zufällig ist und keine Informationen über den Klartext enthält.
-        \item Sicherheit des Verfahrens:
-        \[
-        H(M|C) = H(M) \quad \text{(Entropie bleibt erhalten).}
-        \]
-        Der Schlüsseltext enthält keine Informationen über den Klartext ohne den Schlüssel.
-        \item Wiederverwendung des Schlüssels:
-        \[
-        C_1 \oplus C_2 = M_1 \oplus M_2
-        \]
-        Dies ermöglicht die Rekonstruktion der Klartexte \( M_1, M_2 \).
+        \item Lediglich die Länge des Klartexts. Der Klartext bleibt geheim.
+        \item Sicherheit des Verfahrens: $H(M|C) = H(M)$ (Entropie bleibt erhalten). Der Schlüsseltext enthält keine Informationen über den Klartext ohne den Schlüssel.
+        \item Wiederverwendung des Schlüssels: $C_1 \oplus C_2 = M_1 \oplus M_2$. Dies ermöglicht die Rekonstruktion der Klartexte $M_1, M_2$.
         \item Ein informationstheoretisch sicheres Authentifikationssystem muss auf zufälligen, einmaligen Schlüsseln basieren (z. B. MACs mit OTPs).
-        \item Ein System: Der Sender erzeugt einen zufälligen Schlüssel und XORt diesen mit der Nachricht, um den MAC zu erstellen. Der Empfänger überprüft, ob der MAC gültig ist.
-        \item Es gibt keine informationstheoretisch sicheren asymmetrischen Verfahren, da der öffentliche Schlüssel immer Angriffsvektoren bietet. Die Sicherheit ist hier nur computational.
+        \item Schlüssel und Hashfunktion austauschen. Sender: MAC erstellen $t_i=h(k_i, m_i)$. Empfänger: MAC überprüfen $t_i=h(k_i, m'_i)$.
+        \item Es gibt keine informationstheoretisch sicheren asymmetrischen Verfahren, da der öffentliche Schlüssel immer Angriffsvektoren bietet.
     \end{enumerate}
   \end{solution}
 \end{exercise}
 
 \setcounter{subsection}{112}
 \begin{exercise}{Unsicherheit der klassischen Verschiebechiffre}\label{ex:vigenere}
-  Ein klassisches Verschlüsselungsverfahren ist die Verschiebechiffre (Vigenère-Chiffre). Sie arbeitet typischer- weise auf einem Alphabet aus den Großbuchstaben A-Z für den Klartext, den Schlüssel und den Schlüssel- text. Zudem kann ein Zeichen zur Worttrennung hinzugenommen werden. Für diese Aufgabe wird dazu der Unterstrich \texttt{\_} verwendet. Ein Schlüsseltextzeichen ergibt sich aus dem um das Schlüsselzeichen verschobene Klartextzeichen. Dieses sogenannte Vigenère-Tableau ist in Abbildung 1 dargestellt.
+  Ein klassisches Verschlüsselungsverfahren ist die Verschiebechiffre (Vigenère-Chiffre). Sie arbeitet typischerweise auf einem Alphabet aus den Großbuchstaben A-Z für den Klartext, den Schlüssel und den Schlüsseltext. Zudem kann ein Zeichen zur Worttrennung hinzugenommen werden. Für diese Aufgabe wird dazu der Unterstrich \texttt{\_} verwendet. Ein Schlüsseltextzeichen ergibt sich aus dem um das Schlüsselzeichen verschobene Klartextzeichen. Dieses sogenannte Vigenère-Tableau ist in Abbildung 1 dargestellt.
   \input{res/vigenere.tbl.tex}
   \begin{enumerate}
     \item Verschlüsseln Sie den nachfolgenden Klartext mit dem Schlüsselwort PRUEFUNG unter Verwendung einer Vigenère-Chiffre:
@@ -584,19 +576,13 @@
 
   \begin{solution}
     \begin{enumerate}
-        \item Verschlüsselung mit PRUEFUNG als Schlüssel:
-        \[
-        C = \texttt{ILNUHAZKA\_VLA\_ANL\_KLU\_LTS\_GMMI\_VQK\_TVT\_OZUB\_DRNT\_OZXEU}
-        \]
+        \item Verschlüsselung mit PRUEFUNG als Schlüssel: $C = \texttt{ILNUHAZKA\_VLA\_ANL\_KLU\_LTS\_GMMI\_VQK\_TVT\_OZUB\_DRNT\_OZXEU}$
         \item Kryptanalyse:
-        \begin{itemize}
-            \item Häufigkeitsanalyse, um Muster aufzudecken.
-            \item Analyse von Periodizitäten, um die Schlüssellänge zu bestimmen.
-        \end{itemize}
-        \item Verlängerung des Schlüsselworts:
-        \[
-        \text{Faktor der Vergrößerung: } 27^s
-        \]
+          \begin{itemize}
+              \item Häufigkeitsanalyse, um Muster aufzudecken.
+              \item Analyse von Periodizitäten, um die Schlüssellänge zu bestimmen.
+          \end{itemize}
+        \item Verlängerung des Schlüsselworts: $\text{Faktor der Vergrößerung: } 27^s$
         \item Um informationstheoretische Sicherheit zu erreichen, müsste das Verfahren in ein One-Time-Pad umgewandelt werden. Dazu müsste der Schlüssel genauso lang wie der Klartext und zufällig sein.
     \end{enumerate}
   \end{solution}
@@ -614,31 +600,21 @@
     \begin{enumerate}
         \item Verschlüsselung:
         \begin{itemize}
-            \item Mit der Skytala (\(k = 4\), \(4 \times 8\) Matrix):
-            \[
-            \texttt{PRUEFUNGSSPASS\_OHNE\_KOMPROMISSE} \rightarrow \texttt{PHSOROPRUNFEINSUPG\_GHNOM\_}
-            \]
-            \item Mit der Caesar-Chiffre (\(k = 3\)):
-            \[
-            \texttt{STUDIUMSFREUDE} \rightarrow \texttt{VWXGLXPVIKUHGH}
-            \]
+            \item Mit der Skytala ($k = 4$): $\texttt{PRUEFUNGSSPASS\_OHNE\_KOMPROMISSE} \rightarrow \texttt{PSHRRSNOUPEMEA\_IFSKSUSOSN\_MEGOP}$
+            \item Mit der Caesar-Chiffre ($k = 3$): $\texttt{STUDIUMSFREUDE} \rightarrow \texttt{VWXGLXPVIKUHGH}$
         \end{itemize}
         \item Häufigkeitsanalyse:
-        \begin{itemize}
-            \item Besonders problematisch bei der Caesar-Chiffre, da Buchstabenhäufigkeiten direkt übertragen werden.
-            \item Die Skytala bewahrt Buchstabenhäufigkeiten ebenfalls, ist jedoch schwieriger zu entschlüsseln, da Permutationen involviert sind.
-        \end{itemize}
-        \item Kombination der beiden Verfahren:
-        \begin{itemize}
-            \item Kombination 1 (Caesar vor Skytala): Sicherheit erhöht sich, da Buchstabenhäufigkeiten durch die Caesar-Chiffre maskiert werden.
-            \item Kombination 2 (Skytala vor Caesar): Sicherheit bleibt gleich wie bei der Skytala alleine, da Caesar die Buchstabenhäufigkeiten nicht beeinflusst.
-        \end{itemize}
+          \begin{itemize}
+              \item Besonders problematisch bei der Caesar-Chiffre, da Buchstabenhäufigkeiten direkt übertragen werden.
+              \item Die Skytala bewahrt Buchstabenhäufigkeiten ebenfalls, ist jedoch schwieriger zu entschlüsseln, da Permutationen involviert sind.
+          \end{itemize}
+        \item Da beide Chiffren unabhängig voneinander angewendet werden und individuell schwach sind, ist die Sicherheit nicht stark erhöht. Reihenfolge der Anwendung ist irrelevant, da beide Operationen kommutativ sind.
         \item Moderne Chiffren müssen folgende Gütekriterien erfüllen:
-        \begin{itemize}
-            \item \textbf{Konfusionsanforderung}: Beziehung zwischen Klartext und Schlüsseltext sollte möglichst komplex sein.
-            \item \textbf{Diffusionsanforderung}: Änderungen eines Klartextbits sollten viele Schlüsseltextbits beeinflussen.
-            \item \textbf{Resistenz gegen Kryptoanalyse}: Gegenüber modernen Angriffen wie Brute-Force, statistischen und algebraischen Angriffen sicher.
-        \end{itemize}
+          \begin{itemize}
+              \item \textbf{Konfusionsanforderung}: Beziehung zwischen Klartext und Schlüsseltext sollte möglichst komplex sein.
+              \item \textbf{Diffusionsanforderung}: Änderungen eines Klartextbits sollten viele Schlüsseltextbits beeinflussen.
+              \item \textbf{Resistenz gegen Kryptoanalyse}: Gegenüber modernen Angriffen wie Brute-Force, statistischen und algebraischen Angriffen sicher.
+          \end{itemize}
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -648,7 +624,11 @@
   \begin{enumerate}
     \item Handelt es sich bei der Identitätsfunktion $H(x) = x$ um eine kryptographische Hashfunktion? Begründen Sie.
     \item Ist die Kollisionsfreiheit eine relevante Eigenschaft kryptographischer Hashfunktionen? Begründen Sie.
-    \item In der Praxis wird die digitale Signatur einer Nachricht $m$ meist durch Signieren des (kryptographischen) Hashwertes der Nachricht $H(m)$ und nicht der Nachricht selbst gebildet: $\text{Sig}_k(H(m))$. Warum kann ein Empfänger sich in diesem Fall auf die Authentizität der Nachricht verlassen? Welche Vorteile bringt das Signieren des Hashwertes einer Nachricht mit sich? Betrachten Sie hierfür auch den Fall, dass klassische RSA-Signaturen ohne Padding zum direkten Signieren von kurzen Nachrichten eingesetzt würden.
+    \item In der Praxis wird die digitale Signatur einer Nachricht $m$ meist durch Signieren des (kryptographischen) Hashwertes der Nachricht $H(m)$ und nicht der Nachricht selbst gebildet: $\text{Sig}_k(H(m))$.
+      \begin{itemize}
+        \item Warum kann ein Empfänger sich in diesem Fall auf die Authentizität der Nachricht verlassen?
+        \item Welche Vorteile bringt das Signieren des Hashwertes einer Nachricht mit sich? Betrachten Sie hierfür auch den Fall, dass klassische RSA-Signaturen ohne Padding zum direkten Signieren von kurzen Nachrichten eingesetzt würden.
+      \end{itemize}
     \item Eine Entwicklerin möchte eine von ihr entwickelte Software zur Verfügung stellen. Um den Datenverkehr auf ihrem eigenen Server zu reduzieren, stellt sie das Softwarepaket über ein kommerzielles Content Delivery Network (CDN) bereit. Sie möchte jedoch verhindern, dass ein böswilliger CDN-Betreiber die von ihr bereitgestellte Software durch eine mit einer Hintertür versehene Version ersetzt. Entwerfen Sie ein geeignetes Verfahren unter Nutzung von kryptographischen Hashfunktionen, das es Nutzenden erlaubt, die Integrität des Softwarepakets zu überprüfen. Sie können annehmen, dass der CDN-Betreiber keinen Zugriff auf den Server der Entwicklerin besitzt.
       \begin{itemize}
         \item Wie geht die Entwicklerin beim Veröffentlichen einer neuen Software-Version vor?
@@ -659,14 +639,9 @@
 
   \begin{solution}
     \begin{enumerate}
-        \item Die Identitätsfunktion \( H(x) = x \) ist keine kryptographische Hashfunktion, da sie nicht kollisionsresistent ist und keine Kompression durchführt.
+        \item Die Identitätsfunktion \( H(x) = x \) ist keine kryptographische Hashfunktion, da sie keine feste Ausgabelänge erzeugt, keine Einwegfunktion ist und keine Pseudozufälligkeit aufweist.
         \item Kollisionsfreiheit ist entscheidend, da der Angreifer sonst zwei Nachrichten mit identischem Hashwert erzeugen könnte, um Signaturen zu fälschen.
-        \item Vorteile des Signierens von Hashwerten:
-        \begin{itemize}
-            \item Reduziert den Rechenaufwand bei großen Nachrichten.
-            \item Stellt sicher, dass die Nachricht authentisch ist.
-            \item Padding (z. B. bei RSA) schützt vor Angriffen.
-        \end{itemize}
+        \item Kollisionsfreiheit des Hashwerts garantiert die Authentizität der Nachricht. Vorteile des Signierens des Hashwerts sind Effizienz (kleinere Datenmenge), Sicherheit (auch ohne padding keine Längeninformation) und Flexibilität (beliebiges Nachrichtenformat möglich).
         \item Verfahren für die Software-Integrität:
         \begin{itemize}
             \item Entwicklerin erzeugt den Hashwert der Software und veröffentlicht diesen zusammen mit der Software.
@@ -679,15 +654,16 @@
 
 \setcounter{subsection}{150}
 \begin{exercise}{Das Feistel-Prinzip}\label{ex:feistel}
+  Die nebenstehende Abbildung zeigt eine Runde der Feistel-Verschlüsselung. 
+  \input{res/feistel.fig.tex}
   \begin{enumerate}
-    \item Die nebenstehende Abbildung zeigt eine Runde der Feistel-Verschlüsselung. Berechnen Sie zwei Runden der Verschlüsselung und Entschlüsselung mit dem Feistel-Prinzip und den folgenden Werten:
+    \item Berechnen Sie zwei Runden der Verschlüsselung und Entschlüsselung mit dem Feistel-Prinzip und den folgenden Werten:
       \begin{itemize}
         \item Klartext: 0011 0100
         \item Funktion F: binäres UND
         \item Rundenschlüssel K1: 1110
         \item Rundenschlüssel K2: 0001
       \end{itemize}
-      \input{res/feistel.fig.tex}
     \item Welche Eigenschaften sollte die Einwegfunktion F aufweisen, um mit ihrer Hilfe eine sichere Feistel-Chiffre zu erzeugen?
     \item Zeigen Sie, dass auch bei bei einer konstanten Einwegfunktion F sowohl die Ver- als auch die Entschlüsselung funktioniert.
     \item Benötigen Sie die Umkehrfunktion $F^{-1}$ von $F$, damit die Entschlüsselung klappt? Begründen Sie Ihre Antwort.
@@ -695,27 +671,22 @@
 
   \begin{solution}
     \begin{enumerate}
-        \item Zwei Runden Feistel-Verschlüsselung:
-        \begin{itemize}
-            \item Klartext: \( 0011 \ 0100 \)
-            \item Runde 1:
-            \[
-            L_1 = R_0, \quad R_1 = L_0 \oplus F(R_0, K_1)
-            \]
-            \( F(R_0, K_1) = R_0 \land K_1 \)
-            \item Runde 2:
-            \[
-            L_2 = R_1, \quad R_2 = L_1 \oplus F(R_1, K_2)
-            \]
-        \end{itemize}
-        \item Eigenschaften der Funktion \( F \):
+        \item
+          \begin{itemize}
+            \item Klartext: $(L_0, R_0) = 0011 \ 0100$
+            \item Runde 1: $L_1 = R_0, \quad R_1 = L_0 \oplus R_0 \land K_1$
+            \item Runde 2: $L_2 = R_1, \quad R_2 = L_1 \oplus R_1 \land K_2$
+            \item Schlüsseltext: $(L_3, R_3) = (R_2, L_2) = 0101\ 0111$
+          \end{itemize}
+
+        \item Eigenschaften der Funktion $F$:
         \begin{itemize}
             \item Effizient berechenbar.
             \item Pseudozufällig, aber deterministisch.
             \item Nicht umkehrbar (Einhaltung der Sicherheit).
         \end{itemize}
-        \item Eine konstante Funktion \( F \) funktioniert, da die Struktur der Feistel-Chiffre die Umkehrbarkeit sicherstellt.
-        \item Die Umkehrfunktion \( F^{-1} \) ist nicht notwendig, da die Entschlüsselung über die symmetrische Struktur erfolgt.
+        \item Eine konstante Funktion $F$ funktioniert, da die Struktur der Feistel-Chiffre die Umkehrbarkeit sicherstellt.
+        \item Die Umkehrfunktion $F^{-1}$ ist nicht notwendig, da die Entschlüsselung über die symmetrische Struktur erfolgt.
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -734,13 +705,10 @@
 
   \begin{solution}
     \begin{enumerate}
-        \item Der öffentliche Exponent \( c \) muss teilerfremd zu \( \phi(n) \) sein, damit ein inverser Schlüssel existiert.
-        \item Eine Nachricht \( m \) darf \( p \) oder \( q \) nicht enthalten, da dies den privaten Schlüssel direkt offenbart.
-        \item Berechnung des privaten Exponenten \( d \):
-        \[
-        c = 5, \quad n = 7 \cdot 17 = 119, \quad \phi(n) = 96
-        \]
-        \( d = c^{-1} \mod \phi(n) \implies d = 77 \)
+        \item Der öffentliche Exponent $c$ muss teilerfremd zu $\varphi(n)$ sein, damit ein inverser Schlüssel existiert.
+        \item 
+        \item Berechnung des privaten Exponenten $d$ (mit $c = 5, n = 7 \cdot 17 = 119, \varphi(n) = 96$): $c \cdot d \equiv 1 \pmod{\varphi(n)}$
+          $d = c^{-1} \mod \varphi(n) \implies d = 77$
         \item Multiplikative Homomorphie:
         \[
         m_1 \cdot m_2 \mod n \implies c(m_1 \cdot m_2) = c(m_1) \cdot c(m_2)
