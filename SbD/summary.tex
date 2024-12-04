@@ -10,28 +10,31 @@
 
 \begin{document}\createtitle
 
-\includepdf[pages={14-16}, nup=1x3]{slides.pdf}
+\includepdf[pages={14-16,18-19,21-29,31-32,35,37-38,40-41}, nup=3x7]{slides.pdf}
 \part{Kryptographie}
 \section{Grundlagen}
 \subsection{Angriffsarten (schwer zu leicht)}
 \begin{enumerate}
-  \item \textbf{Ciphertext Only}: Angreifer kennt nur den Ciphertext
-  \item \textbf{Known Plaintext}: Angreifer kennt Ciphertext und Plaintext
-  \item \textbf{Chosen Plaintext} (adaptiv v. nicht-adaptiv): Angreifer kann Plaintext wählen und erhält den Ciphertext (nicht-adaptiv: alle Plaintexte müssen vorher gewählt werden)
+  \item \textbf{Ciphertext Only}: Angreifer kennt nur den Schlüsseltext
+  \item \textbf{Known Plaintext}: Angreifer kennt Schlüsseltext und Klartext
+  \item \textbf{Chosen Plaintext}: Angreifer kann Klartext wählen und erhält den Schlüsseltext (nicht-adaptiv: alle Klartexte müssen vorher gewählt werden)
 \end{enumerate}
 
 \subsection{Brechen (stark zu schwach)}
 \begin{enumerate}
-  \item \textbf{Vollständiges Brechen}: Schlüssel gefunden
-  \item \textbf{Universelles Brechen}: Äquivalenter Schlüssel gefunden
-  \item \textbf{Selektives Brechen}: Bestimmte Nachricht entschlüsselt
-  \item \textbf{Existenzielles Brechen}: Irgendeine Nachricht entschlüsselt
+  \item \textbf{Vollständig}: Schlüssel gefunden
+  \item \textbf{Universell}: Äquivalenter Schlüssel gefunden
+  \item \textbf{Selektiv}: Bestimmte Nachricht entschlüsselt
+  \item \textbf{Existenziell}: Irgendeine Nachricht entschlüsselt
 \end{enumerate}
 
+\subsection{Ziele}
+\begin{itemize}
+  \item \textbf{Verschlüsselung}: Vertraulichkeit
+  \item \textbf{Signatur}: Integrität, Authentizität
+\end{itemize}
 
-
-\includepdf[pages={18-32,35,37-41}, nup=3x7]{slides.pdf}
-\section{Klassische Chiffren}
+\subsection{Klassische Chiffren}
 \begin{itemize}
   \item \textbf{Transposition}: Veränderung der Reihenfolge
   \item \textbf{Subsitution}: Ersetzen von Zeichen
@@ -48,35 +51,21 @@
 \end{enumerate}
 
 
-\includepdf[pages={44-108}, nup=4x9]{slides.pdf}
-\section{Moderne Kryptographie}
-\subsection{Symmetrische Systeme}
-\begin{enumerate}
-  \item \textbf{One-Time-Pad (mod 2)}: Vernam-Chiffre mit zufälligem Schlüssel
-  \item \textbf{Symmetrische Authentifikationscodes}: Erweiterung des One-Time-Pad mit Message Authentication Code (MAC)
-  \item \textbf{DES (Data Encryption Standard)}: 56-Bit-Blockchiffre nach Feistel-Prinzip
-  \item \textbf{IDEA (International Data Encryption Algorithm)}: 128-Bit-Blockchiffre mit XOR, Addition und Multiplikation
-  \item \textbf{AES (Advanced Encryption Standard)}: 128-Bit-Blockchiffre mit 10, 12 oder 14 Runden
-\end{enumerate}
 
-\subsubsection{Gütekriterien}
+\includepdf[pages={44-108}, nup=4x9]{slides.pdf}
+\section{Symmetrische Systeme}
 \begin{itemize}
   \item \textbf{Vollständigkeit}: Jedes Output-Bit hängt von jedem Input-Bit ab
   \item \textbf{Avalanche}: Jede Änderung im Input führt zu vielen Änderungen im Output
   \item \textbf{Nichtlinearität}: Output ist nicht linear abhängig vom Input
   \item \textbf{Korrelationsimmunität}: Keine Korrelation zwischen Input und Output
-  \item sekundäre Kriterien: Implementierbarkeit, Längentreue, Schnelligkeit
+  \item \textit{sekundär}: Implementierbarkeit, Längentreue, Schnelligkeit
 \end{itemize}
 
-\subsubsection{Feistel-Prinzip}
-\begin{itemize}
-  \item \textbf{In Hälften teilen}: Klartext wird in zwei Hälften geteilt
-  \item \textbf{Runden}: Rundenfunktion wird auf eine Hälfte angewendet und das Ergebnis mit der anderen Hälfte XOR-verknüpft
-  \item \textbf{Austauschen der Hälften}: Die Hälften werden getauscht
-  \item \textbf{Dekodierung}: Entschlüsselung ist identisch zur Verschlüsselung (Runden umgekehrt)
-\end{itemize}
+\subsection{Feistel-Prinzip}
+\input{res/feistel.fig}
 
-\subsubsection{DES (Data Encryption Standard)}
+\subsection{DES (Data Encryption Standard)}
 \begin{itemize}
   \item[+] vollständig
   \item[+] kein analytischer Zusammenhang zwischen Input und Output
@@ -87,7 +76,7 @@
   \item \textbf{möglicher Angriff}: Known-Plaintext-Angriff mit $2^{57}$ Aufwand
 \end{itemize}
 
-\subsubsection{IDEA (International Data Encryption Algorithm)}
+\subsection{IDEA (International Data Encryption Algorithm)}
 \begin{itemize}
   \item \textbf{Schlüssellänge}: 128-Bit-Blockchiffre, entwickelt als sicherer Ersatz für DES.
   \item \textbf{Struktur}: Verwendet eine Kombination aus XOR-, Addition- und Multiplikationsoperationen für hohe Sicherheit.
@@ -95,7 +84,7 @@
   \item \textbf{Verwendung}: Besonders populär in Europa und wurde in PGP (Pretty Good Privacy) integriert.
 \end{itemize}
 
-\subsubsection{AES (Advanced Encryption Standard)}
+\subsection{AES (Advanced Encryption Standard)}
 \begin{itemize}
   \item \textbf{Schlüssellänge}: Unterstützt 128, 192 und 256 Bit, damit für verschiedene Sicherheitsniveaus geeignet.
   \item \textbf{Struktur}: Verwendet 10, 12 oder 14 Runden von Byte-Substitution, Zeilenverschiebung, Spaltenmischung und Rundenschlüssel-Addition.
@@ -103,7 +92,7 @@
   \item \textbf{Verwendung}: Weltweiter Standard für Verschlüsselung in Regierung, Industrie und dem Finanzsektor.
 \end{itemize}
 
-\subsubsection{Betriebsarten symmetrischer Blockchiffren}
+\subsection{Betriebsarten}
 \begin{enumerate}
   \item \textbf{ECB (Electronic Codebook Mode)}: Klartext wird in Blöcke geteilt und einzeln verschlüsselt
   \item \textbf{CBC (Cipher Block Chaining Mode)}: Klartext wird in Blöcke geteilt und XOR-verknüpft
@@ -115,61 +104,74 @@
 
 
 \includepdf[pages={44, 109-142}, nup=4x9]{slides.pdf}
-\subsection{Asymmetrische Systeme}
-\begin{enumerate}
-  \item \textbf{Diffie-Hellman-Key-Exchange}: Schlüsselaustausch über unsicheren Kanal; Sicherheit durch diskretes Logarithmusproblem, anfällig für Man-in-the-Middle-Angriffe.
-  \item \textbf{ElGamal Kryptosystem}: Asymmetrische Verschlüsselung und Signatur; Diffie-Hellman-basiert, stärkere Sicherheit, aber höhere Schlüsselanforderungen.
-  \item \textbf{RSA zur Konzelation und Signatur}: Asymmetrische Verschlüsselung auf Faktorisierungsannahme; verbreitet in SSL/TLS, bietet Vertraulichkeit und Authentizität.
-  \item \textbf{Blinde Signaturen mit RSA}: Signatur ohne Kenntnis des Inhalts für Anonymität; Anwendung in elektronischen Abstimmungen und digitalen Währungen.
-  \item \textbf{Kryptosysteme auf Basis elliptischer Kurven}: Hohe Sicherheit bei kleinen Schlüsseln; effizient und ideal für mobile/räumlich beschränkte Geräte.
-\end{enumerate}
-
-\subsubsection{Mathematische Grundlagen}
+\section{Asymmetrische Systeme}
 \begin{itemize}
-  \item \textbf{Erweiterter Euklidischer Algorithmus}: Berechnung des ggT und inversen Elemente in Restklassenringen.
-  \item \textbf{Euler-Phi-Funktion}: $\varphi(n)$ gibt die Anzahl der zu $n$ teilerfremden Zahlen kleiner als $n$ an.
-  \item \textbf{Primitive Wurzel}: $g$ ist primitive Wurzel modulo $p$, wenn $g^i \mod p \neq 1$ für $i < p-1$
-  \item \textbf{Diskreter Logarithmus}: Exponent in der Primitiven Wurzel
-  \item \textbf{Faktorisierungsannahme}: Primfaktoren sind nicht leicht zu berechnen (auch nicht nachgewiesen schwer)
+  \item \textbf{Erweiterter Euklidischer Algorithmus}: ggT berechnen und erweiterter Algorithmus für Inverse
+    \[ c_k=\frac{r_{k-2}}{r_{k-1}} \quad r_k = r_{k-2} \pmod{r_{k-1}} \quad s_k=s_{k-1}+c_ks_{k-2} \quad t_k=t_{k-1}+c_kt_{k-2} \]
+  \item \textbf{Euler-Phi-Funktion}: $\varphi(n)$ gibt die Anzahl der zu $n$ teilerfremden (engl. coprime) Zahlen kleiner als $n$ an.
+    \[ \varphi(p \cdot q) = (p-1) \cdot (q-1) \quad \text{Primzahlen: }\varphi(p) = p-1 \]
+  \item \textbf{Primitive Wurzel}: Teilerfremdes $a$ ist primitive Wurzel modulo $n$:
+    \[ a^d \not\equiv 1 \pmod{n} \text{ für } 1 \leq d < \varphi(n) \]
+  \item \textbf{Diskreter Logarithmus}: $c$ ist diskreter Logarithmus von $a$ zur Basis $b$ modulo $n$:
+    \[ b^c \equiv a \pmod{n} \to c = \log_b a \pmod{n} \]
+  \item \textbf{Faktorisierungsannahme}: Primzahlen $p$ und $q$ sind schwer aus $n=p \cdot q$ zu berechnen.
 \end{itemize}
 
-\subsubsection{Diffie-Hellman-Key-Exchange}
+\subsection{Diffie-Hellman Key-Exchange}
+\input{res/diffiehellman.fig}
+
+\subsection{ElGamal Verschlüsselung}
+\textit{Basiert auf diskretem Logarithmus und Diffie-Hellman Key-Exchange. Einsatz zB. in GnuPG, PGP.}
 \begin{itemize}
-  \item \textbf{Ziel}: Ermöglicht sicheren Schlüsselaustausch zwischen zwei Parteien über unsichere Kanäle ohne vorherigen geheimen Austausch.
-  \item \textbf{Funktionsweise}: Berechnung gemeinsamer geheimer Schlüssel über Modulorechnung basierend auf einem öffentlichen Basiswert und Primzahl.
-  \item \textbf{Sicherheitsprinzip}: Sicherheit basiert auf der Schwierigkeit des diskreten Logarithmusproblems.
-  \item \textbf{Schwachstelle}: Anfällig für Man-in-the-Middle-Angriffe, wenn nicht authentifiziert.
+  \item \textbf{Parameter}
+    \[
+      \underbrace{p\in\mathbb{P}, \overbrace{a}^\text{primitive Wurzel}}_\text{global}\quad
+      \underbrace{\overbrace{k}^\text{zufällig}\in\mathbb{Z}^*_{p-1}}_\text{privater Schlüssel}\quad
+      \underbrace{y = a^{-k} \pmod{p}}_\text{öffentlicher Schlüssel} 
+    \]
+  \item \textbf{Verschlüsselung} von Nachricht $m\in\mathbb{Z}^*_{p-1}$ für $B$: $k \in k<p$ zufällig wählen
+    \[ d = a^z \mod{p} \text{ und } c = y_B^z \cdot m \pmod{p} \]
+  \item \textbf{Entschlüsselung} von $a^z \mod{p}$ und $c$
+    \[ m^* = d^{k_B} \cdot c \pmod{p} \]
 \end{itemize}
 
-\subsubsection{ElGamal Kryptosystem}
+\subsection{ElGamal Signatur}
+\textit{Basiert auf diskretem Logarithmus. Einsatz zB. im Digital Signature Algorithm (DSA).}
 \begin{itemize}
-  \item \textbf{Verwendung}: Für Verschlüsselung und digitale Signaturen geeignet.
-  \item \textbf{Schlüssellänge}: Bietet längere Schlüssel für höhere Sicherheit, aber weniger Effizienz im Vergleich zu RSA.
-  \item \textbf{Sicherheitsprinzip}: Beruht auf der Schwierigkeit des diskreten Logarithmusproblems.
-  \item \textbf{Vorteile}: Flexibel und erweiterbar auf elliptische Kurven für mehr Effizienz.
+  \item \textbf{Parameter}
+    \[
+      \underbrace{p\in\mathbb{P}, \overbrace{a}^\text{primitive Wurzel}}_\text{global}\quad
+      \underbrace{\overbrace{x}^\text{zufällig} \in \mathbb{Z}^*_{p-1}}_\text{privater Schlüssel}\quad
+      \underbrace{y = a^{x} \pmod{p}}_\text{öffentlicher Schlüssel}
+    \]
+  \item \textbf{Signatur} von Nachricht $m\in\mathbb{Z}^*_{p-1}$ für $A$: $z\in\mathbb{Z}^*_{p-1}$ zufällig wählen
+    \[ r = a^z \mod{p} \text{ und } s = k^{-1} \cdot (m - x_A \cdot r) \mod{p-1} \]
+  \item \textbf{Verifikation} von $a^z \mod{p}$ und $r$ und $s$
+    \[ v = (y^r \cdot r^s) \mod{p} \text{ entspricht } a^m \mod{p} \to \text{Signatur gültig} \]
 \end{itemize}
 
-\subsubsection{RSA zur Konzelation und Signatur}
+\subsection{Rivest-Shamir-Adleman (RSA) Verschlüsselung}
+\textit{Basiert auf Faktorisierungsannahme. Einsatz zB. in TLS, PGP, S/MIME.}
 \begin{itemize}
-  \item \textbf{Verwendung}: Verschlüsselung und digitale Signatur mit öffentlichen und privaten Schlüsseln.
-  \item \textbf{Schlüssellänge}: Variable Schlüssellänge (typisch 1024, 2048 oder 4096 Bit), längere Schlüssel bieten höhere Sicherheit.
-  \item \textbf{Grundlage}: Faktorisierungsannahme, d.h., die Schwierigkeit der Primfaktorzerlegung großer Zahlen.
-  \item \textbf{Anwendung}: Weltweit in SSL/TLS und anderen Sicherheitssystemen implementiert.
+  \item \textbf{Parameter}
+    \[
+      \underbrace{p,q\in\mathbb{P}}_\text{geheim}\quad
+      \underbrace{n=p\cdot q}_\text{öffentlich}\quad
+      \underbrace{\varphi(n)=(p-1)\cdot(q-1)}_\text{geheim}\quad
+      \underbrace{c\in\mathbb{Z}^*_{\varphi(n)}}_\text{öffentlich}\quad
+      \underbrace{d=c^{-1} \pmod{\varphi(n)}}_\text{geheim}
+    \]
+  \item \textbf{Verschlüsselung} von Nachricht $m\in\mathbb{Z}_n$ für $B$
+    \[ c = m^e \mod{n} \]
+  \item \textbf{Entschlüsselung} von $c$
+    \[ m = c^d \mod{n} \]
+  \item \textbf{Signatur}: analog zur Verschlüsselung. Signatur $s$ wird anstelle von $c$ übertragen.
+  \item \textbf{Verifikation}: analog zur Entschlüsselung. Verifikation von $s$ anstelle von $m$.
+  \item \textbf{Blinde Signatur} von $m$ für $A$: $r\in\mathbb{Z}_n$ zufällig wählen, Nachricht mit $r$ blenden, signieren lassen und entblenden.
 \end{itemize}
 
-\subsubsection{Blinde Signaturen mit RSA}
-\begin{itemize}
-  \item \textbf{Prinzip}: Der Signierer erstellt eine Signatur ohne den Inhalt der Nachricht zu kennen (Anonymität).
-  \item \textbf{Verfahren}: Der Verfasser maskiert die Nachricht, bevor sie zur Signatur übergeben wird, und entfernt die Maske nach der Signierung.
-  \item \textbf{Anwendung}: Nützlich in Szenarien wie elektronischen Abstimmungen, bei denen die Vertraulichkeit wichtig ist.
-\end{itemize}
-
-\subsubsection{Kryptosysteme auf Basis elliptischer Kurven}
-\begin{itemize}
-  \item \textbf{Effizienz}: Höhere Sicherheit bei kleineren Schlüssellängen (z.B. ein 256-Bit-Schlüssel bietet Sicherheit ähnlich einem 3072-Bit-RSA-Schlüssel).
-  \item \textbf{Grundlage}: Elliptische Kurven über endlichen Feldern, basierend auf dem diskreten Logarithmusproblem.
-  \item \textbf{Verwendung}: Ideal für mobile und ressourcenbeschränkte Geräte, oft verwendet in modernen Sicherheitsprotokollen (z.B. ECDSA für digitale Signaturen).
-\end{itemize}
+\subsection{Elliptic Curve Cryptography (ECC)}
+% TODO: Add ECC
 
 
 
