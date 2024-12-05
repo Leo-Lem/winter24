@@ -115,6 +115,8 @@
   \item \textbf{Diskreter Logarithmus}: $c$ ist diskreter Logarithmus von $a$ zur Basis $b$ modulo $n$:
     \[ b^c \equiv a \pmod{n} \to c = \log_b a \pmod{n} \]
   \item \textbf{Faktorisierungsannahme}: Primzahlen $p$ und $q$ sind schwer aus $n=p \cdot q$ zu berechnen.
+  \item \textbf{(diskrete) Elliptische Kurve}: Eine elliptische Kurve über $\mathbb{Z}_p$ ist definiert durch
+    \[ y^2 \equiv x^3 + ax + b \pmod{p} \text{ und } -4a^3 - 27b^2 \not\equiv 0 \pmod{p} \]
 \end{itemize}
 
 \subsection{Diffie-Hellman Key-Exchange}
@@ -171,7 +173,17 @@
 \end{itemize}
 
 \subsection{Elliptic Curve Cryptography (ECC)}
-% TODO: Add ECC
+\textit{Basiert auf diskretem Logarithmus für elliptische Kurven (ECDLP) . Einsatz zB. ed25519, ECDH, ECDSA.}
+\begin{itemize}
+  \item \textbf{Parameter}
+    \[
+      \underbrace{P}_\text{Generatorpunkt}\quad
+      \underbrace{n}_\text{privater Schlüssel}\quad
+      \underbrace{Q=nP}_\text{öffentlicher Schlüssel}
+    \]
+  \item \textbf{Verschlüsselung \& Entschlüsselung}: je nach Verfahren (ElGamal, RSA, …)
+  \item \textbf{Vorteile}: kleinere Schlüssel, kürzere Signaturen, weniger Rechenaufwand
+\end{itemize}
 
 
 
