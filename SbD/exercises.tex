@@ -699,27 +699,20 @@
     \item Warum kann eine mit RSA zu verschlüsselnde Nachricht $m$ nicht gleichzeitig einen Faktor $p$ und $q$ enthalten?
     \item Alice wählt den öffentlichen Verschlüsselungsexponenten $c= 5$. Berechnen Sie den zugehörigen geheimen Entschlüsselungsexponenten $d$ mithilfe des erweiterten euklidischen Algorithmus.
     \item Bei naiver Anwendung des RSA-Verfahrens wird eine Nachricht $m$, für die $1 < m < n$ gelten muss, ohne Veränderung mit dem öffentlichen Verschlüsselungsexponenten $c$ potenziert und modulo $n$ reduziert. Problematisch ist hierbei der multiplikative Homomorphismus des RSA-Verfahrens. Erläutern Sie kurz diese Eigenschaft anhand zweier Nachrichten $m_1$ und $m_2$.
-    \item Wie könnte die Angreiferin Eve die Eigenschaft des multiplikativen Homomorphismus ausnutzen, um an die Klartextnachricht einer abgefangenen verschlüsselten Nachricht $s$, die an Alice adressiert war, zu gelangen? Zeigen Sie das Vorgehen anhand der abgefangenen verschlüsselten Nachricht $s= 101$, der eigens von Eve gewählten Zufallszahl $r= 22$ sowie dem multiplikativen Inversen der Zufallszahl $r^{-1} = 92 \mod 119$. Verwenden Sie auf Empfängerseite (Alice) den gegebenen RSA-Modulus, den öffentlichen Verschlüsselungsexponenten $c= 11$ und den geheimen Entschlüsselungsexponenten $d= 35$, der nur Alice, aber nicht Eve bekannt ist.
+    \item Wie könnte die Angreiferin Eve die Eigenschaft des multiplikativen Homomorphismus ausnutzen, um an die Klartextnachricht einer abgefangenen verschlüsselten Nachricht $s$, die an Alice adressiert war, zu gelangen? Zeigen Sie das Vorgehen anhand der abgefangenen verschlüsselten Nachricht $s= 101$, der eigens von Eve gewählten Zufallszahl $r= 22$ sowie dem multiplikativen Inversen der Zufallszahl $r^{-1} = 92 \mod 119$. Verwenden Sie auf Empfängerseite (Alice) den gegebenen RSA-Modulus, den öffentlichen Verschlüsselungsexponenten $c=11$ und den geheimen Entschlüsselungsexponenten $d=35$, der nur Alice, aber nicht Eve bekannt ist.
     \item Nennen Sie ein Anwendungsbeispiel, bei dem der multiplikative Homomorphismus des RSA-Verfahrens "ausgenutzt" bzw. gewollt angewendet wird.
   \end{enumerate}
 
   \begin{solution}
     \begin{enumerate}
-        \item Der öffentliche Exponent $c$ muss teilerfremd zu $\varphi(n)$ sein, damit ein inverser Schlüssel existiert.
-        \item 
+        \item Der öffentliche Exponent $c$ muss teilerfremd zu $\varphi(n)$ sein, damit ein inverser Schlüssel existiert. Und zwischen 2 und $\varphi(n)$ liegen, um sicherzustellen, dass die Nachricht nicht trivial verschlüsselt wird.
+        \item Da die Nachricht dann trivial verschlüsselt wäre mit $c = 0$, was auf $m=n$ schließen lässt.
         \item Berechnung des privaten Exponenten $d$ (mit $c = 5, n = 7 \cdot 17 = 119, \varphi(n) = 96$): $c \cdot d \equiv 1 \pmod{\varphi(n)}$
-          $d = c^{-1} \mod \varphi(n) \implies d = 77$
-        \item Multiplikative Homomorphie:
-        \[
-        m_1 \cdot m_2 \mod n \implies c(m_1 \cdot m_2) = c(m_1) \cdot c(m_2)
-        \]
-        Angreifer können Produkte von Nachrichten entschlüsseln.
-        \item Eve nutzt:
-        \[
-        r \cdot s \cdot r^{-1} \mod n = s
-        \]
-        Der Angriff ist erfolgreich.
-        \item Multiplikative Homomorphie wird in homomorpher Verschlüsselung absichtlich genutzt (z. B. für Berechnungen auf verschlüsselten Daten).
+          \[ d = c^{-1} \mod \varphi(n) \implies d = 77 \]
+        \item Angreifer können Produkte von Nachrichten entschlüsseln.
+          \[ m_1 \cdot m_2 \mod n \implies c(m_1 \cdot m_2) = c(m_1) \cdot c(m_2) \]
+        \item Eve berechnet $s'=s \cdot r^c \mod{n}$ und sendet $s'$ an Alice. Alice entschlüsselt $s'$ mit $s''=s'^d \mod{n}$ und erhält $s''=s \cdot r \mod{n}$. Durch Multiplikation mit $r^{-1}$ erhält Eve $s$.
+        \item Ein Anwendungsbeispiel sind Berechnungen auf verschlüsselten Daten.
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -734,11 +727,7 @@
 
   \begin{solution}
     \begin{enumerate}
-        \item Eve führt einen Chosen-Plaintext-Angriff durch:
-        \[
-        c_B = m^e \mod n
-        \]
-        Für alle möglichen \( m \), vergleicht sie den berechneten \( c_B \) mit dem übertragenen Wert, bis \( m = 3 \) gefunden wird.
+        \item Da $m\in{1...6}$, probiert Eve alle möglichen Werte aus und verschlüsselt sie mit Bobs öffentlichem Schlüssel. Sie erhält $c_B = 9$ für $m_B = 4$. Bob hat also eine 4 gewürfelt.
         \item Bob kann sich schützen, indem er Zufallswerte oder Padding einfügt, um die deterministische Eigenschaft des RSA-Verfahrens zu verhindern.
     \end{enumerate}
   \end{solution}
@@ -755,10 +744,11 @@
 
   \begin{solution}
     \begin{enumerate}
-        \item Forward Secrecy mit RSA wird erreicht, indem für jede neue Sitzung ein neues, kurzlebiges (ephemeres) RSA-Schlüsselpaar generiert wird. Der öffentliche Schlüssel wird dem Kommunikationspartner zur Verfügung gestellt, und der private Schlüssel wird nach Abschluss der Sitzung sicher gelöscht. Auf diese Weise kann ein kompromittierter langfristiger Schlüssel vergangene Sitzungen nicht gefährden.
-        \item Wenn ein Angreifer den privaten Entschlüsselungsexponenten eines RSA-Schlüssels erlangt, kann er alle Nachrichten entschlüsseln, die mit dem zugehörigen öffentlichen Schlüssel verschlüsselt wurden. Dadurch wird die Vertraulichkeit der Kommunikation vollständig aufgehoben.
-        \item Der Angreifer kann die verschlüsselten Nachrichten abfangen und mit dem privaten Schlüssel entschlüsseln. Alle vergangenen und zukünftigen Nachrichten, die denselben Schlüssel verwenden, können entschlüsselt werden, sofern sie aufgezeichnet wurden.
-        \item Durch regelmäßiges Wechseln des privaten Schlüssels und Löschen des alten privaten Schlüssels nach Ablauf einer Sitzung wird Forward Secrecy gewährleistet. Zusätzlich kann der Diffie-Hellman-Schlüsselaustausch verwendet werden, um symmetrische Sitzungsschlüssel auszuhandeln, die nicht mit den RSA-Schlüsseln gespeichert werden.
+        \item Garnicht, RSA bietet keine Forward Secrecy.
+        \item Da alle Nachrichten dann vom Angreifer entschlüsselt werden können.
+        \item Angreifer entschlüsselt mittels Exponent
+          \[ m=c^d \mod{n} \]
+        \item Wenn die Schlüssel regelmäßig gewechselt werden, können bei Kompromittierung nur die Nachrichten entschlüsselt werden, die mit dem aktuellen Schlüssel verschlüsselt wurden.
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -775,37 +765,15 @@
 
   \begin{solution}
     \begin{enumerate}
-        \item Anpassung des ElGamal-Kryptosystems für elliptische Kurven:
-        \begin{itemize}
-            \item **Schlüsselgenerierung:** 
-            \[
-            \text{Privater Schlüssel } d, \text{ öffentlicher Schlüssel } P = d \cdot G, \text{ wobei } G \text{ ein Basispunkt ist.}
-            \]
-            \item **Verschlüsselung:** 
-            \[
-            \text{Nachricht } m, \text{ Zufallswert } k, \text{ Schlüsseltext: } (C_1, C_2) = (k \cdot G, m + k \cdot P).
-            \]
-            \item **Entschlüsselung:** 
-            \[
-            m = C_2 - d \cdot C_1.
-            \]
-        \end{itemize}
-        \item Schlüsselgenerierung:
-        \begin{itemize}
-            \item Wähle \( d = 3 \) als privaten Schlüssel.
-            \item Berechne \( P = d \cdot G = 3 \cdot (2, 7) = (8, 3) \) (Punkt auf der Kurve).
-            \item Verschlüsselung der Nachricht \( m = (5, 2) \):
-            \[
-            C_1 = k \cdot G = 2 \cdot (2, 7) = (6, 3), \quad C_2 = m + k \cdot P = (5, 2) + 2 \cdot (8, 3) = (7, 6).
-            \]
-            Schlüsseltext: \( (C_1, C_2) = ((6, 3), (7, 6)) \).
-        \end{itemize}
-        \item Entschlüsselung:
-        \[
-        m = C_2 - d \cdot C_1 = (7, 6) - 3 \cdot (6, 3) = (5, 2).
-        \]
-        Die ursprüngliche Nachricht \( m \) wurde korrekt wiederhergestellt.
-        \item Die Sicherheit des Verfahrens beruht auf dem **diskreten Logarithmusproblem** über elliptischen Kurven. Ein Angreifer müsste \( k \) aus \( C_1 = k \cdot G \) berechnen, was aufgrund der mathematischen Schwierigkeit des Problems praktisch unmöglich ist.
+        \item 
+          \begin{itemize}
+            \item \textbf{Schlüsselgenerierung} mit Generaturpunkt $P$, privaten Schlüssel $d$ und öffentlicher Schlüssel $Q = d \cdot P$.
+            \item \textbf{Verschlüsselung} von Nachricht $m$ mit Zufallswert $k$ und Schlüsseltext $(C_1, C_2) = (kP, m + kQ)$.
+            \item \textbf{Entschlüsselung} des Schlüsseltextes $(C_1, C_2)$ mit privatem Schlüssel $d$ als $m = C_2 - d \cdot C_1$.
+          \end{itemize}
+        \item
+        \item 
+        \item 
     \end{enumerate}
   \end{solution}
 \end{exercise}
