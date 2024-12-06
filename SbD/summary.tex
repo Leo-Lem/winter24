@@ -107,10 +107,10 @@
 \section{Asymmetrische Systeme}
 \begin{itemize}
   \item \textbf{Erweiterter Euklidischer Algorithmus}: ggT berechnen und erweiterter Algorithmus für Inverse
-    \[ c_k=\frac{r_{k-2}}{r_{k-1}} \quad r_k = r_{k-2} \pmod{r_{k-1}} \quad s_k=s_{k-1}+c_ks_{k-2} \quad t_k=t_{k-1}+c_kt_{k-2} \]
+    \[ c_k=\lfloor\frac{r_{k-2}}{r_{k-1}}\rfloor \quad r_k = r_{k-2} \pmod{r_{k-1}} \quad s_k=s_{k-2}-c_ks_{k-1} \quad t_k=t_{k-2}-c_kt_{k-1} \]
   \item \textbf{Euler-Phi-Funktion}: $\varphi(n)$ gibt die Anzahl der zu $n$ teilerfremden (engl. coprime) Zahlen kleiner als $n$ an.
     \[ \varphi(p \cdot q) = (p-1) \cdot (q-1) \quad \text{Primzahlen: }\varphi(p) = p-1 \]
-  \item \textbf{Primitive Wurzel}: Teilerfremdes $a$ ist primitive Wurzel modulo $n$:
+  \item \textbf{Primitive Wurzel}: Teilerfremdes $a$ ist primitive Wurzel modulo $n$, da $a^d \pmod{n}$ alle Reste erzeugt. Auch übertragen als:
     \[ a^d \not\equiv 1 \pmod{n} \text{ für } 1 \leq d < \varphi(n) \]
   \item \textbf{Diskreter Logarithmus}: $c$ ist diskreter Logarithmus von $a$ zur Basis $b$ modulo $n$:
     \[ b^c \equiv a \pmod{n} \to c = \log_b a \pmod{n} \]
@@ -127,14 +127,13 @@
 \begin{itemize}
   \item \textbf{Parameter}
     \[
-      \underbrace{p\in\mathbb{P}, \overbrace{a}^\text{primitive Wurzel}}_\text{global}\quad
-      \underbrace{\overbrace{k}^\text{zufällig}\in\mathbb{Z}^*_{p-1}}_\text{privater Schlüssel}\quad
-      \underbrace{y = a^{-k} \pmod{p}}_\text{öffentlicher Schlüssel} 
+      \underbrace{\overbrace{x}^\text{zufällig}\in\mathbb{Z}^*_{p-1}}_\text{geheim}\quad
+      \underbrace{p\in\mathbb{P} \quad \overbrace{a}^\text{Primwurzel} \quad y = a^{-x} \pmod{p}}_\text{öffentlich}
     \]
-  \item \textbf{Verschlüsselung} von Nachricht $m\in\mathbb{Z}^*_{p-1}$ für $B$: $k \in k<p$ zufällig wählen
-    \[ d = a^z \mod{p} \text{ und } c = y_B^z \cdot m \pmod{p} \]
+  \item \textbf{Verschlüsselung} von Nachricht $m\in\mathbb{Z}^*_{p-1}$ mit zufälligem $z\in\mathbb{Z}^*_{p-1}$
+    \[ [d,c] = [a^z, y^z \cdot m] \pmod{p} \]
   \item \textbf{Entschlüsselung} von $a^z \mod{p}$ und $c$
-    \[ m^* = d^{k_B} \cdot c \pmod{p} \]
+    \[ m = d^x \cdot c \pmod{p} \]
 \end{itemize}
 
 \subsection{ElGamal Signatur}
@@ -142,12 +141,11 @@
 \begin{itemize}
   \item \textbf{Parameter}
     \[
-      \underbrace{p\in\mathbb{P}, \overbrace{a}^\text{primitive Wurzel}}_\text{global}\quad
-      \underbrace{\overbrace{x}^\text{zufällig} \in \mathbb{Z}^*_{p-1}}_\text{privater Schlüssel}\quad
-      \underbrace{y = a^{x} \pmod{p}}_\text{öffentlicher Schlüssel}
+      \underbrace{\overbrace{x}^\text{zufällig}\in\mathbb{Z}^*_{p-1}}_\text{geheim}\quad
+      \underbrace{p\in\mathbb{P} \quad \overbrace{a}^\text{Primwurzel} \quad y = a^{x} \pmod{p}}_\text{öffentlich}
     \]
-  \item \textbf{Signatur} von Nachricht $m\in\mathbb{Z}^*_{p-1}$ für $A$: $z\in\mathbb{Z}^*_{p-1}$ zufällig wählen
-    \[ r = a^z \mod{p} \text{ und } s = k^{-1} \cdot (m - x_A \cdot r) \mod{p-1} \]
+  \item \textbf{Signatur} von Nachricht $m\in\mathbb{Z}^*_{p-1}$ mit zufälligem $z\in\mathbb{Z}^*_{p-1}$
+    \[ r = a^z \pmod{p} \text{ und } s = z^{-1} \cdot (m - x \cdot r) \pmod{p-1} \]
   \item \textbf{Verifikation} von $a^z \mod{p}$ und $r$ und $s$
     \[ v = (y^r \cdot r^s) \mod{p} \text{ entspricht } a^m \mod{p} \to \text{Signatur gültig} \]
 \end{itemize}
@@ -157,16 +155,13 @@
 \begin{itemize}
   \item \textbf{Parameter}
     \[
-      \underbrace{p,q\in\mathbb{P}}_\text{geheim}\quad
-      \underbrace{n=p\cdot q}_\text{öffentlich}\quad
-      \underbrace{\varphi(n)=(p-1)\cdot(q-1)}_\text{geheim}\quad
-      \underbrace{c\in\mathbb{Z}^*_{\varphi(n)}}_\text{öffentlich}\quad
-      \underbrace{d=c^{-1} \pmod{\varphi(n)}}_\text{geheim}
+      \underbrace{p,q\in\mathbb{P} \quad \varphi(n)=(p-1)\cdot(q-1)}_\text{geheim}\quad
+      \underbrace{n=p\cdot q \quad \overbrace{e}^\text{zufällig}\in\mathbb{Z}^*_{\varphi(n)}}_\text{öffentlich}\quad
     \]
-  \item \textbf{Verschlüsselung} von Nachricht $m\in\mathbb{Z}_n$ für $B$
-    \[ c = m^e \mod{n} \]
+  \item \textbf{Verschlüsselung} von Nachricht $m\in\mathbb{Z}_n$
+    \[ c = m^e \pmod{n} \]
   \item \textbf{Entschlüsselung} von $c$
-    \[ m = c^d \mod{n} \]
+    \[ m = c^d \pmod{n} \text{ mit } d=e^{-1} \pmod{\varphi(n)}\]
   \item \textbf{Signatur}: analog zur Verschlüsselung. Signatur $s$ wird anstelle von $c$ übertragen.
   \item \textbf{Verifikation}: analog zur Entschlüsselung. Verifikation von $s$ anstelle von $m$.
   \item \textbf{Blinde Signatur} von $m$ für $A$: $r\in\mathbb{Z}_n$ zufällig wählen, Nachricht mit $r$ blenden, signieren lassen und entblenden.
