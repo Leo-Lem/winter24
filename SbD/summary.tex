@@ -543,61 +543,32 @@ MITM-Angriffe sind durch schlechte HTTPS-Konfiguration und unzureichende Zertifi
 \includepdf[pages={286-362, 369-374}, nup=4x9]{slides.pdf}
 \section{Global Standard for Mobile Communication (GSM)}
 
-\subsection{Grundlagen und Architektur}
+\subsection{Architektur}
+\textit{Digitales Mobilfunksystem für Sprach- und Datenübertragung.}
 \begin{itemize}
-    \item \textbf{GSM:} Digitales Mobilfunksystem für Sprach- und Datendienste.
-    \item \textbf{Netzarchitektur:}
-    \begin{itemize}
-        \item \textbf{Base Station Subsystem (BSS):} Verbindet mobile Geräte mit dem Netzwerk.
-        \item \textbf{Network Switching Subsystem (NSS):} Verarbeitet Anrufe und Standortinformationen.
-        \item \textbf{Operation and Support Subsystem (OSS):} Überwacht und verwaltet das Netzwerk.
-    \end{itemize}
+    \item \textbf{Base Station Subsystem} (BSS): Verbindet mobile Geräte mit dem Netzwerk.
+    \item \textbf{Network Switching Subsystem} (NSS): Verarbeitet Anrufe und Standortinformationen.
+    \item \textbf{Operation and Support Subsystem} (OSS): Überwacht und verwaltet das Netzwerk.
 \end{itemize}
 
 \subsection{Sicherheitsfunktionen}
 \begin{itemize}
-    \item \textbf{Authentifizierung:}
-    \begin{itemize}
-        \item Nutzung eines gemeinsamen Schlüssels (Ki) zur Verifizierung des Benutzers.
-        \item Implementierung durch den Algorithmus A3.
-    \end{itemize}
-    \item \textbf{Verschlüsselung:}
-    \begin{itemize}
-        \item Schutz der Kommunikation durch A5-Algorithmen.
-        \item Ziel: Vertraulichkeit der Sprach- und Datenübertragung.
-    \end{itemize}
-    \item \textbf{Anonymität:}
-    \begin{itemize}
-        \item Nutzung temporärer Identifikatoren (TMSI), um die Identität der Benutzer zu verschleiern.
-    \end{itemize}
+    \item \textbf{Authentifizierung} mit gemeinsamem Schlüssel (Ki) durch A3-Algorithmus.
+    \item \textbf{Verschlüsselung} von Sprach- und Datenübertragung durch A5-Algorithmen.
+    \item \textbf{Anonymität} durch temporäre Identifikatoren (TMSI).
 \end{itemize}
 
 \subsection{Schwachstellen und Angriffe}
 \begin{itemize}
-    \item \textbf{Kryptografische Schwächen:}
-    \begin{itemize}
-        \item Veraltete Algorithmen (z.B. A5/1) können leicht entschlüsselt werden.
-    \end{itemize}
-    \item \textbf{IMSI-Catcher:}
-    \begin{itemize}
-        \item Geräte, die IMSI (International Mobile Subscriber Identity) abfangen, um Benutzer zu lokalisieren oder zu überwachen.
-    \end{itemize}
-    \item \textbf{Man-in-the-Middle-Angriffe:}
-    \begin{itemize}
-        \item Angreifer simulieren Basisstationen, um Kommunikation abzufangen.
-    \end{itemize}
+    \item \textbf{Kryptografische Schwächen}: Veraltete Algorithmen (z.B. A5/1) können leicht entschlüsselt werden.
+    \item \textbf{IMSI-Catcher}: Geräte, die IMSI (International Mobile Subscriber Identity) abfangen, um Benutzer zu lokalisieren oder zu überwachen.
+    \item \textbf{Man-in-the-Middle-Angriffe}: Angreifer simulieren Basisstationen, um Kommunikation abzufangen.
 \end{itemize}
 
 \subsection{Moderne Erweiterungen}
 \begin{itemize}
-    \item \textbf{GPRS (General Packet Radio Service):}
-    \begin{itemize}
-        \item Erweiterung für datenorientierte Dienste.
-    \end{itemize}
-    \item \textbf{EDGE (Enhanced Data rates for GSM Evolution):}
-    \begin{itemize}
-        \item Höhere Datendurchsätze für Mobilfunkanwendungen.
-    \end{itemize}
+    \item \textbf{GPRS} (General Packet Radio Service): Erweiterung für datenorientierte Dienste.
+    \item \textbf{EDGE} (Enhanced Data rates for GSM Evolution): Höhere Datendurchsätze für Mobilfunkanwendungen.
 \end{itemize}
 
 \includepdf[pages={376-388}, nup=3x7]{slides.pdf}
