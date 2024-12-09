@@ -45,7 +45,7 @@
           \texttt{GH\_DDFNLDIRIGTNSEEECEDEINNEK\_CRNUENNUH\_U\_GNGRDKIKAUOE}
           \]
   
-        \item Der geheime Schlüssel ist die Größe der Matrix: \( 7 \times 9 \) (Zeilen $\times$ Spalten). Beim ursprünglichen Zylinder entspricht dies dem Umfang des Zylinders.
+        \item Der geheime Schlüssel ist die Größe der Matrix: $ 7 \times 9 $ (Zeilen $\times$ Spalten). Beim ursprünglichen Zylinder entspricht dies dem Umfang des Zylinders.
   
         \item Kryptanalyse:
         \begin{itemize}
@@ -65,9 +65,9 @@
 
   \begin{solution}
     \begin{enumerate}
-        \item Bei Spaltenvertauschung gibt es \( s! \) mögliche Permutationen für \( s \) Spalten. Der Schlüsselraum vergrößert sich somit um den Faktor \( s! \) im Vergleich zur ursprünglichen Methode ohne Spaltenvertauschung.
+        \item Bei Spaltenvertauschung gibt es $ s! $ mögliche Permutationen für $ s $ Spalten. Der Schlüsselraum vergrößert sich somit um den Faktor $ s! $ im Vergleich zur ursprünglichen Methode ohne Spaltenvertauschung.
   
-        \item Klartext in eine \( 4 \times 3 \)-Matrix:
+        \item Klartext in eine $ 4 \times 3 $-Matrix:
           \[
           \texttt{ABCDEFGHIKLMN}
           \]
@@ -106,29 +106,23 @@
   Ihnen sind eine Reihe verschlüsselter deutscher Substantive in die Hände gefallen. Sie gehen davon aus, dass fahrlässigerweise alle Wörter mit demselben One-Time-Pad verschlüsselt wurden. Versuchen Sie, den Schlüssel zu ermitteln, indem Sie einen geeigneten Angriff implementieren. Die Schlüsseltexte (der 6 Substantive) in Dezimalschreibweise lauten:
 
   \begin{center}
-      \texttt{09 00 04 10} \\
-      \texttt{10 20 28 09} \\
-      \texttt{10 16 02 02} \\
-      \texttt{10 20 05 08} \\
-      \texttt{26 26 03 00} \\
-      \texttt{28 16 03 17}
+    \texttt{09 00 04 10} \\
+    \texttt{10 20 28 09} \\
+    \texttt{10 16 02 02} \\
+    \texttt{10 20 05 08} \\
+    \texttt{26 26 03 00} \\
+    \texttt{28 16 03 17}
   \end{center}
 
   Hinweis: Das Passwort und die Substantive sind ASCII-codiert (Alphabet = \{A, B, C, ..., Z\}).
 
   \begin{solution}
-    Durch die Wiederverwendung des One-Time-Pads \( k \) für mehrere Nachrichten \( m_1, m_2 \) entsteht folgende Gleichung:
-    \[
-    c_1 \oplus c_2 = (m_1 \oplus k) \oplus (m_2 \oplus k) = m_1 \oplus m_2
-    \]
-    Dies ergibt die XOR-Verknüpfung der Klartexte \( m_1 \oplus m_2 \), die durch Analyse entschlüsselt werden kann. Beispielsweise:
-    \[
-    c_1 = \texttt{09 00 04 10}, \quad c_2 = \texttt{10 20 28 09}
-    \]
+    Durch die Wiederverwendung des One-Time-Pads $ k $ für mehrere Nachrichten $ m_1, m_2 $ entsteht folgende Gleichung:
+      \[ c_1 \oplus c_2 = (m_1 \oplus k) \oplus (m_2 \oplus k) = m_1 \oplus m_2 \]
+    Dies ergibt die XOR-Verknüpfung der Klartexte $ m_1 \oplus m_2 $, die durch Analyse entschlüsselt werden kann. Beispielsweise:
+      \[ c_1 = \texttt{09 00 04 10}, \quad c_2 = \texttt{10 20 28 09} \]
     XOR:
-    \[
-    c_1 \oplus c_2 = \texttt{19 20 2C 19}
-    \]
+      \[ c_1 \oplus c_2 = \texttt{19 20 2C 19} \]
     Häufigkeitsanalysen und bekannte Wörter im Klartext ermöglichen die vollständige Entschlüsselung.
   \end{solution}
 \end{exercise}
@@ -165,44 +159,37 @@
 \begin{exercise}{Feistel-Prinzip \ref{ex:feistel}}\end{exercise}
 
 \begin{exercise}{Meet-in-the-Middle-Angriff auf 2-DES}
-  Um der geringen Schlüssellänge von 56 Bit des DES-Algorithmus zu begegnen, wurde vorgeschlagen, den
-  Algorithmus mehrfach hintereinander mit verschiedenen Schlüsseln anzuwenden. Eine schlechte Lösung ist
-  jedoch die lediglich zweifache Hintereinanderanwendung 2-DES.
+  Um der geringen Schlüssellänge von 56 Bit des DES-Algorithmus zu begegnen, wurde vorgeschlagen, den Algorithmus mehrfach hintereinander mit verschiedenen Schlüsseln anzuwenden. Eine schlechte Lösung ist jedoch die lediglich zweifache Hintereinanderanwendung 2-DES.
   \begin{enumerate}
     \item Vergleichen Sie die Schlüssellänge des 2-DES-Algorithmus mit der tatsächlich erreichten Sicherheit.
-    \item Sie haben folgendes Klartext/Schlüsseltext-Paar \( (m, c) \) einer 2-DES-Verschlüsselung \( E_{k_2}(E_{k_1}(m)) = c \)
-    erlangt: 
-    \[
-        m = \texttt{c183 50b5 52b8 f8b1}, \quad c = \texttt{42e0 4462 099e e8ca}.
-    \]
-    Ermitteln Sie \( k_1 \) und \( k_2 \), indem Sie einen Meet-in-the-Middle-Angriff durchführen. Benutzen Sie dafür die unten dargestellte Tabelle 1 ausgewählter DES-Funktionswerte. In der Tabelle können für einen gegebenen Klartext \( x \) bzw. einen Schlüsseltext \( y \) und einen Schlüssel \( k \) die Werte der Verschlüsselungsfunktion \( E \) bzw. Entschlüsselungsfunktion \( D \) des DES-Algorithmus nachgeschlagen werden. In welchen Zeilen haben Sie die DES-Funktionswerte, die zum Erfolg beim Meet-in-the-Middle Angriff führen, nachgeschlagen?
-    Hinweis: Beachten Sie das Beispiel zum Ablesen der Tabelle.
-
-    \input{res/des.tbl}
-
+    \item Sie haben folgendes Klartext/Schlüsseltext-Paar $ (m, c) $ einer 2-DES-Verschlüsselung $ E_{k_2}(E_{k_1}(m)) = c $ erlangt: 
+      \[ m = \texttt{c183 50b5 52b8 f8b1}, \quad c = \texttt{42e0 4462 099e e8ca}. \]
+      Ermitteln Sie $ k_1 $ und $ k_2 $, indem Sie einen Meet-in-the-Middle-Angriff durchführen. Benutzen Sie dafür die unten dargestellte Tabelle 1 ausgewählter DES-Funktionswerte. In der Tabelle können für einen gegebenen Klartext $ x $ bzw. einen Schlüsseltext $ y $ und einen Schlüssel $ k $ die Werte der Verschlüsselungsfunktion $ E $ bzw. Entschlüsselungsfunktion $ D $ des DES-Algorithmus nachgeschlagen werden. In welchen Zeilen haben Sie die DES-Funktionswerte, die zum Erfolg beim Meet-in-the-Middle Angriff führen, nachgeschlagen?
+      \textit{Hinweis: Beachten Sie das Beispiel zum Ablesen der Tabelle.}
+      \input{res/des.tbl}
     \item Wie viele Einträge enthält eine vollständige Tabelle, die bei einem Meet-in-the-Middle-Angriff auf den 2-DES-Algorithmus erstellt wird, mindestens? Welche Art von Berechnungen werden dort festgehalten?
   \end{enumerate}
 
   \begin{solution}
     \begin{enumerate}
-        \item 2-DES bietet nur \( 2^{56} \) statt \( 2^{112} \) effektiver Sicherheit, da ein Meet-in-the-Middle-Angriff \( E_{k_1}(m) = D_{k_2}(c) \) nutzt.
+        \item 2-DES bietet nur $ 2^{56} $ statt $ 2^{112} $ effektiver Sicherheit, da ein Meet-in-the-Middle-Angriff $ E_{k_1}(m) = D_{k_2}(c) $ nutzt.
         \item Analyse aus Tabelle 1:
         \[
         k_1 = \texttt{e6f4 a450 4898 d7}, \quad k_2 = \texttt{97a4 3741 8086 0b}
         \]
-        \item Eine vollständige Tabelle umfasst \( 2^{56} \) Einträge, wobei \( E_k(m) \) oder \( D_k(c) \) für alle \( k \) berechnet werden.
+        \item Eine vollständige Tabelle umfasst $ 2^{56} $ Einträge, wobei $ E_k(m) $ oder $ D_k(c) $ für alle $ k $ berechnet werden.
     \end{enumerate}
   \end{solution}
 \end{exercise}
 
 \begin{exercise}{Triple-DES}
   Beim Triple-DES-Algorithmus (3-DES) handelt es sich um die dreifache Hintereinanderausführung des DES-
-  Algorithmus. Dabei wird mit zwei 56 Bit langen Schlüsseln \( k_1 \) und \( k_2 \) gearbeitet und beim Verschlüsseln
-  entweder \( E(k_1) \to D(k_2) \to E(k_1) \) (EDE-Modus) oder \( E(k_1) \to E(k_2) \to E(k_1) \) (EEE-Modus) ausgeführt.
+  Algorithmus. Dabei wird mit zwei 56 Bit langen Schlüsseln $ k_1 $ und $ k_2 $ gearbeitet und beim Verschlüsseln
+  entweder $ E(k_1) \to D(k_2) \to E(k_1) $ (EDE-Modus) oder $ E(k_1) \to E(k_2) \to E(k_1) $ (EEE-Modus) ausgeführt.
   \begin{enumerate}
     \item Warum wird dem EDE-Modus meist der Vorzug vor dem EEE-Modus gegeben?
     \item Berechnen Sie die theoretische und die effektive Schlüssellänge des Triple-DES-Algorithmus unter ei-
-    nem Known-Plaintext-Angriff mit drei 56 Bit langen Schlüsseln, d.h. \( E(k_1) \to E(k_2) \to E(k_3) \).
+    nem Known-Plaintext-Angriff mit drei 56 Bit langen Schlüsseln, d.h. $ E(k_1) \to E(k_2) \to E(k_3) $.
   \end{enumerate}
 
   \begin{solution}
@@ -223,13 +210,7 @@
   (ECB-Modus). Dabei wird jeder Klartextblock unabhängig von den anderen Blöcken chiffriert.
   \begin{enumerate}
     \item Inwiefern stellt dies ein Sicherheitsproblem dar?
-    \item Veranschaulichen Sie das Problem, indem Sie ein Programm entwickeln, welches eine einfache Bitmap-
-    Grafik einliest, den Bildinhalt mit dem AES-Verfahren im ECB-Modus verschlüsselt und wieder als
-    Bitmap ausgibt. Rufen Sie zum Vergleich die Verschlüsselung noch einmal im CBC-Modus auf und
-    vergleichen Sie die erhaltenen Resultate. Informieren Sie sich dazu über das Datenformat von BMP-
-    Dateien und die Verwendung einer geeigneten Kryptobibliothek (z. B. die Java-Cryptography-API
-    unter \url{http://www.ibm.com/developerworks/java/tutorials/j-sec1/section4.html} oder die Python-pycrypto-
-    API unter \url{https://www.dlitz.net/software/pycrypto/api/current/}).
+    \item Veranschaulichen Sie das Problem, indem Sie ein Programm entwickeln, welches eine einfache Bitmap-Grafik einliest, den Bildinhalt mit dem AES-Verfahren im ECB-Modus verschlüsselt und wieder als Bitmap ausgibt. Rufen Sie zum Vergleich die Verschlüsselung noch einmal im CBC-Modus auf und vergleichen Sie die erhaltenen Resultate. Informieren Sie sich dazu über das Datenformat von BMP-Dateien und die Verwendung einer geeigneten Kryptobibliothek (z. B. die Java-Cryptography-API unter \url{http://www.ibm.com/developerworks/java/tutorials/j-sec1/section4.html} oder die Python-pycrypto- API unter \url{https://www.dlitz.net/software/pycrypto/api/current/}).
   \end{enumerate}
 
   \begin{solution}
@@ -245,8 +226,8 @@
 \end{exercise}
 
 \begin{exercise}{Cipher-Block-Chaining-Betriebsmodus}
-  Beim Cipher-Block-Chaining-Betriebsmodus wird ein Klartextblock \( M_i \) vor der Anwendung der Verschlüsselungsfunktion mit dem unmittelbar vorher erzeugten Chiffretextblock \( C_{i-1} \) durch die XOR-Operation verknüpft.
-  Die erzeugten Chiffretextblöcke hängen dadurch von ihren Vorgängern ab. Bei der Verschlüsselung des ersten Klartextblocks \( M_1 \) wird für \( C_0 \) ein zufällig gewählter Initialisierungsvektor (IV) verwendet.
+  Beim Cipher-Block-Chaining-Betriebsmodus wird ein Klartextblock $ M_i $ vor der Anwendung der Verschlüsselungsfunktion mit dem unmittelbar vorher erzeugten Chiffretextblock $ C_{i-1} $ durch die XOR-Operation verknüpft.
+  Die erzeugten Chiffretextblöcke hängen dadurch von ihren Vorgängern ab. Bei der Verschlüsselung des ersten Klartextblocks $ M_1 $ wird für $ C_0 $ ein zufällig gewählter Initialisierungsvektor (IV) verwendet.
   
   Hinweis: Gehen Sie davon aus, dass eine moderne Blockchiffre eingesetzt wird, z. B. AES.
   \begin{enumerate}
@@ -287,25 +268,25 @@
 
 \setcounter{subsection}{50}
 \begin{exercise}{Verketteter Cipher-Block-Chaining-Betriebsmodus}
-  Beim verketteten Cipher-Block-Chaining-Betriebsmodus wird zur Steigerung des Datendurchsatzes nur für die erste Nachricht \( M_1 \) ein Initialisierungsvektor \( IV \) gewählt. Das heißt für den Schlüsseltext \( C_1 = C_1^0 || \ldots || C_1^{n_1} \) der ersten Nachricht \( M_1 = M_1^1 || \ldots || M_1^{n_1} \) gilt wie beim normalen CBC:
+  Beim verketteten Cipher-Block-Chaining-Betriebsmodus wird zur Steigerung des Datendurchsatzes nur für die erste Nachricht $ M_1 $ ein Initialisierungsvektor $ IV $ gewählt. Das heißt für den Schlüsseltext $ C_1 = C_1^0 || \ldots || C_1^{n_1} $ der ersten Nachricht $ M_1 = M_1^1 || \ldots || M_1^{n_1} $ gilt wie beim normalen CBC:
   \[
       C_1^0 = IV, \quad C_1^i = E(C_1^{i-1} \oplus M_1^i, K) \quad \text{mit } i = 1, \ldots, n_1.
   \]
-  Für alle folgenden Nachrichten \( M_2, \ldots \) wird anstelle des \( IV \) der letzte Schlüsseltextblock des vorherigen Schlüsseltextes verwendet. Das heißt für den Schlüsseltext \( C^j = C^j_1 || \ldots || C^j_{n_j} \) aller weiteren Nachrichten \( M_j = M_j^1 || \ldots || M_j^{n_j} \) mit \( j > 1 \) gilt:
+  Für alle folgenden Nachrichten $ M_2, \ldots $ wird anstelle des $ IV $ der letzte Schlüsseltextblock des vorherigen Schlüsseltextes verwendet. Das heißt für den Schlüsseltext $ C^j = C^j_1 || \ldots || C^j_{n_j} $ aller weiteren Nachrichten $ M_j = M_j^1 || \ldots || M_j^{n_j} $ mit $ j > 1 $ gilt:
   \[
       C^j_1 = E(C^{j-1}_{n_{j-1}} \oplus M_j^1, K), \quad C^j_i = E(C^j_{i-1} \oplus M_j^i, K) \quad \text{mit } i = 2, \ldots, n_j.
   \]
   \begin{enumerate}
-    \item Berechnen Sie unter Angabe aller Zwischenschritte die prozentuale Erhöhung des Datendurchsatzes. Führen Sie die Berechnungen sowohl für einen Block als auch für vier Blöcke pro Nachricht aus. Gehen Sie in beiden Fällen von insgesamt \( 2^{20} \) zu verschlüsselnden Nachrichten vor Neugenerierung eines Schlüssels und Neustart mit einem neuen \( IV \) aus.
-    \item Ihnen ist ein Schlüsseltext \( C^j \) in die Hände gefallen, der nur aus zwei möglichen Klartexten \( M_j \) oder \( \tilde{M}_j \) gebildet worden sein kann. Erläutern Sie, wie Sie ermitteln könnten, welcher der beiden Klartexte verschlüsselt wurde, wenn Sie den Klartext \( M_{j+1} \) für die nächste Nachricht selbst wählen dürfen.
+    \item Berechnen Sie unter Angabe aller Zwischenschritte die prozentuale Erhöhung des Datendurchsatzes. Führen Sie die Berechnungen sowohl für einen Block als auch für vier Blöcke pro Nachricht aus. Gehen Sie in beiden Fällen von insgesamt $ 2^{20} $ zu verschlüsselnden Nachrichten vor Neugenerierung eines Schlüssels und Neustart mit einem neuen $ IV $ aus.
+    \item Ihnen ist ein Schlüsseltext $ C^j $ in die Hände gefallen, der nur aus zwei möglichen Klartexten $ M_j $ oder $ \tilde{M}_j $ gebildet worden sein kann. Erläutern Sie, wie Sie ermitteln könnten, welcher der beiden Klartexte verschlüsselt wurde, wenn Sie den Klartext $ M_{j+1} $ für die nächste Nachricht selbst wählen dürfen.
     \item Beschreiben Sie ein Szenario für einen derartigen Angriff.
     \item Bewerten Sie ausgehend von der bisherigen Diskussion die Folge selbst kleinster Änderungen für die Sicherheit kryptographischer Algorithmen.
   \end{enumerate}
 
   \begin{solution}
     \begin{enumerate}
-        \item Bei einem verketteten CBC-Modus steigt der Datendurchsatz, da kein neuer IV benötigt wird. Für \( 2^{20} \) Nachrichten bei einer Blockgröße von \( 128 \) Bit beträgt der Effizienzgewinn ca. 0,01\%, da der Initialisierungsaufwand entfällt.
-        \item Wenn \( M_j \) oder \( \tilde{M}_j \) verschlüsselt wurde, kann durch die Manipulation des nächsten Klartextblocks \( M_{j+1} \) festgestellt werden, welcher Klartext verwendet wurde. Dies ermöglicht einen Known-Plaintext-Angriff.
+        \item Bei einem verketteten CBC-Modus steigt der Datendurchsatz, da kein neuer IV benötigt wird. Für $ 2^{20} $ Nachrichten bei einer Blockgröße von $ 128 $ Bit beträgt der Effizienzgewinn ca. 0,01\%, da der Initialisierungsaufwand entfällt.
+        \item Wenn $ M_j $ oder $ \tilde{M}_j $ verschlüsselt wurde, kann durch die Manipulation des nächsten Klartextblocks $ M_{j+1} $ festgestellt werden, welcher Klartext verwendet wurde. Dies ermöglicht einen Known-Plaintext-Angriff.
         \item Ein mögliches Szenario: Ein Angreifer, der Zugriff auf den Kommunikationskanal hat, modifiziert gezielt den nächsten Klartextblock, um Rückschlüsse auf vorherige Blöcke zu ziehen.
         \item Selbst kleinste Änderungen im Verfahren können signifikante Sicherheitsrisiken schaffen. Hier: Die Wiederverwendung des letzten Blocks des vorherigen Schlüsseltextes anstelle eines neuen IVs.
     \end{enumerate}
@@ -336,28 +317,30 @@
 \end{exercise}
 
 \begin{exercise}{Elliptische Kurven: Rechenbeispiele zur Punktaddition}
-  Gegeben sei die elliptische Kurve \( E(\mathbb{GF}(p)) \) mit \( a = 1, b = 6, p = 11 \). Hinweis: Wir betrachten für diese Aufgabe die in der Kryptographie häufig genutzten elliptischen Kurven über \( \mathbb{Z}_p \) der Form \( f(x, y) : y^2 \equiv x^3 + ax + b \mod p \).
+  Gegeben sei die elliptische Kurve $E(\mathbb{GF}(p))$ mit $a = 1, b = 6, p = 11$:
+    \[ E(\mathbb{GF}(11)) : y^2 \equiv x^3 + x + 6 \pmod{11} \]
+  \textit{Hinweis: Wir betrachten für diese Aufgabe die in der Kryptographie häufig genutzten elliptischen Kurven über $ \mathbb{Z}_p $ der Form $f(x, y) : y^2 \equiv x^3 + ax + b \mod p$.}
   \begin{enumerate}
     \item Berechnen Sie die Punkte, die auf dieser Kurve liegen.
     \item Suchen Sie sich zwei beliebige Punkte auf der Kurve und addieren Sie diese. Wie funktioniert die Punktaddition im Allgemeinen?
-    \item Berechnen Sie die skalare Multiplikation des Punktes \( (2, 4) \) mit dem Skalar \( 3 \). Was ist das allgemeine Vorgehen hier?
+    \item Berechnen Sie die skalare Multiplikation des Punktes $(2, 4)$ mit dem Skalar $ 3 $. Was ist das allgemeine Vorgehen hier?
   \end{enumerate}
 
   \begin{solution}
     \begin{enumerate}
-        \item Punkte auf der elliptischen Kurve \( y^2 = x^3 + x + 6 \mod 11 \):
-        \[
-        \{(2, 4), (5, 2), (7, 6), (8, 3)\}
-        \]
-        \item Beispiel Punktaddition:
-        \[
-        P = (2, 4), Q = (5, 2) \quad \text{Ergebnis: } P + Q = (7, 6)
-        \]
-        \item Skalare Multiplikation:
-        \[
-        3 \cdot (2, 4) = (8, 3)
-        \]
-        Vorgehen: Addieren Sie \( P \) wiederholt zu sich selbst.
+        \item $\{(2,4), (2,7), (3,9), (3,2), (5,2), (5,8), (7,5), (7,6), (8,9), (8,2), (10,1), (10,10)\}$
+        \item $P+Q=(2,4)+(5,2)=(5,2)$.
+          \[
+            m=\begin{cases}
+              \frac{3x_P^2+a}{2y_P} \quad \text{falls } P=Q \\
+              \frac{y_Q-y_P}{x_Q-x_P}
+            \end{cases} \quad
+            \begin{array}{l}
+              x_R=m^2-x_P-x_Q\\
+              y_R=m(x_R-x_{P|Q})-y_{P|Q}
+            \end{array} \pmod{p} \]
+        \item $3 \cdot (2,4)=(2,4)$. Double-and-add:
+          \[ nP=2^{k-1}P+2^{k-2}P+\ldots+2P+P \]
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -366,19 +349,18 @@
 \begin{exercise}{RSA: Eigenschaften und Sicherheit \ref{ex:rsa}}\end{exercise}
 
 \begin{exercise}{Forward Secrecy mit RSA}
-  Zur Erreichung von Forward Secrecy erzeugt Alice auf ihrem Server mit dem RSA-Verfahren einen privaten Schlüssel \( d \) sowie den dazu passenden öffentlichen Schlüssel \( c \), den sie persönlich an ihre Nutzerinnen und Nutzer verteilt. Zusätzlich erzeugt der Server von Alice bei jedem Verbindungsaufbau ein neues kurzlebiges (engl. ephemeral) RSA-Schlüsselpaar, das aus einem öffentlichen Schlüssel \( c_e \) und einem geheimen Schlüssel \( d_e \) besteht. Der Server signiert mit dem privaten Schlüssel \( d \) den neuen öffentlichen Schlüssel \( c_e \) und sendet diesen zusammen mit der Signatur über die aufgebaute Verbindung an die Kundin. Die Kundin prüft anschließend die Signatur mithilfe des zuvor von Alice erhaltenen öffentlichen Schlüssels \( c \).
+  Zur Erreichung von Forward Secrecy erzeugt Alice auf ihrem Server mit dem RSA-Verfahren einen privaten Schlüssel $d$ sowie den dazu passenden öffentlichen Schlüssel $c$, den sie persönlich an ihre Nutzerinnen und Nutzer verteilt. Zusätzlich erzeugt der Server von Alice bei jedem Verbindungsaufbau ein neues kurzlebiges (engl. ephemeral) RSA-Schlüsselpaar, das aus einem öffentlichen Schlüssel $ c_e $ und einem geheimen Schlüssel $ d_e $ besteht. Der Server signiert mit dem privaten Schlüssel $ d $ den neuen öffentlichen Schlüssel $ c_e $ und sendet diesen zusammen mit der Signatur über die aufgebaute Verbindung an die Kundin. Die Kundin prüft anschließend die Signatur mithilfe des zuvor von Alice erhaltenen öffentlichen Schlüssels $ c $.
   \begin{enumerate}
-    \item Welche Verbindungen könnten von einem sehr starken Angreifer wie einem Nachrichtendienst noch entschlüsselt werden, wenn dieser an \( d \) gelangt? Begründen Sie Ihre Antwort.
+    \item Welche Verbindungen könnten von einem sehr starken Angreifer wie einem Nachrichtendienst noch entschlüsselt werden, wenn dieser an $1$ gelangt? Begründen Sie Ihre Antwort.
     \item Skizzieren Sie einen Angriff, der möglich wäre, wenn die Kundin die Signatur nicht prüft.
-    \item Alice ist das Verfahren zu langsam. Sie nimmt folgende Änderung vor: Statt jedes Mal bei der Erzeugung von \( c_e \) und \( d_e \) neue Primzahlen \( p \) und \( q \) für den Modulus \( N_e \) zu generieren, verwendet sie immer die gleichen Primzahlen. Nun wählt sie lediglich den öffentlichen Exponenten \( c_e \) neu und berechnet einen dazugehörigen geheimen Exponenten \( d_e \). Warum ist dies keine gute Idee? Zeigen Sie, wie sich dieses geänderte Verfahren angreifen lässt, um aufgezeichnete Verbindungen zu entschlüsseln.
+    \item Alice ist das Verfahren zu langsam. Sie nimmt folgende Änderung vor: Statt jedes Mal bei der Erzeugung von $c_e$ und $d_e$ neue Primzahlen $p$ und $q$ für den Modulus $N_e$ zu generieren, verwendet sie immer die gleichen Primzahlen. Nun wählt sie lediglich den öffentlichen Exponenten $ c_e $ neu und berechnet einen dazugehörigen geheimen Exponenten $ d_e $. Warum ist dies keine gute Idee? Zeigen Sie, wie sich dieses geänderte Verfahren angreifen lässt, um aufgezeichnete Verbindungen zu entschlüsseln.
   \end{enumerate}
 
   \begin{solution}
     \begin{enumerate}
-        \item Forward Secrecy wird durch kurzlebige (ephemeral) RSA-Schlüssel erreicht. Jede neue Verbindung erhält ein neues Schlüsselpaar.
-        \item Wenn ein Angreifer den privaten Schlüssel erhält, kann er vergangene Verbindungen entschlüsseln, falls diese nicht mit ephemeral-Schlüsseln abgesichert wurden.
-        \item Ein Angreifer kann die Kommunikation entschlüsseln, indem er den abgefangenen Schlüsseltext mit dem kompromittierten privaten Schlüssel entschlüsselt.
-        \item Forward Secrecy kann durch regelmäßiges Rotieren der Schlüssel gewährleistet werden. Alte Schlüssel werden sicher gelöscht.
+      \item Ein starker Angreifer kann alle Verbindungen entschlüsseln, wenn er $d$ erhält, da er damit alle geheimen Schlüssel $d_e$ berechnen kann.
+      \item Es könnten gefälschte öffentliche Schlüssel $c_e$ und Signaturen an die Kundin gesendet werden, die nicht von Alice stammen.
+      \item Durch die Verwendung der gleichen Primzahlen $p$ und $q$ für $N$ und $N_e$ kann ein Angreifer $d$ berechnen, wenn er $d_e$ kennt. Dies ermöglicht das Entschlüsseln aller Verbindungen.
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -393,20 +375,14 @@
 
   \begin{solution}
     \begin{enumerate}
-        \item Ablauf:
-        \[
-        g = 5, p = 23, a = 6, b = 15 \quad \text{(geheime Schlüssel)}
-        \]
-        Öffentliche Schlüssel:
-        \[
-        A = g^a \mod p = 8, \quad B = g^b \mod p = 19
-        \]
-        Gemeinsamer Schlüssel:
-        \[
-        K = B^a \mod p = 2 = A^b \mod p
-        \]
-        \item Sicherheit basiert auf dem diskreten Logarithmusproblem (DLP). Der Angreifer kann \( g^a \) und \( g^b \) nicht effizient in \( a \) und \( b \) umwandeln.
-        \item Schutz vor aktiven Angriffen: Vorab-Austausch von \( g, p \) und Authentifizierung der öffentlichen Schlüssel (z. B. durch Signaturen).
+        \item $g=5, p=11, \underbrace{a=2, b=3}_\text{geheim}$.\\
+          Öffentliche Schlüssel: $\begin{array}{l}
+              A\equiv g^a \equiv 5^2 \equiv 3\\
+              B\equiv g^b \equiv 5^3 \equiv 4
+            \end{array} \pmod{11}$\\
+          Gemeinsamer Schlüssel: $K\equiv B^a\equiv A^b\equiv 4^2\equiv 3^3\equiv 5 \pmod{11}$
+        \item Sicherheit basiert auf dem diskreten Logarithmusproblem (DLP). Der Angreifer kann $ g^a $ und $ g^b $ nicht effizient in $ a $ und $ b $ umwandeln.
+        \item Schutz vor aktiven Angriffen: Vorab-Austausch von $ g, p $ und Authentifizierung der öffentlichen Schlüssel (z. B. durch Signaturen).
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -639,7 +615,7 @@
 
   \begin{solution}
     \begin{enumerate}
-        \item Die Identitätsfunktion \( H(x) = x \) ist keine kryptographische Hashfunktion, da sie keine feste Ausgabelänge erzeugt, keine Einwegfunktion ist und keine Pseudozufälligkeit aufweist.
+        \item Die Identitätsfunktion $ H(x) = x $ ist keine kryptographische Hashfunktion, da sie keine feste Ausgabelänge erzeugt, keine Einwegfunktion ist und keine Pseudozufälligkeit aufweist.
         \item Kollisionsfreiheit ist entscheidend, da der Angreifer sonst zwei Nachrichten mit identischem Hashwert erzeugen könnte, um Signaturen zu fälschen.
         \item Kollisionsfreiheit des Hashwerts garantiert die Authentizität der Nachricht. Vorteile des Signierens des Hashwerts sind Effizienz (kleinere Datenmenge), Sicherheit (auch ohne padding keine Längeninformation) und Flexibilität (beliebiges Nachrichtenformat möglich).
         \item Verfahren für die Software-Integrität:
@@ -796,7 +772,7 @@
 
   \begin{solution}
     \begin{itemize}
-        \item \textbf{Input:} Der Eingabewert der Funktion \( E22 \) ist ein gemeinsames Schlüsselpaar (Link Key), das während der Kopplung zwischen zwei Bluetooth-Geräten ausgetauscht wird.
+        \item \textbf{Input:} Der Eingabewert der Funktion $ E22 $ ist ein gemeinsames Schlüsselpaar (Link Key), das während der Kopplung zwischen zwei Bluetooth-Geräten ausgetauscht wird.
         \item \textbf{Output:} Die Funktion erzeugt einen Authentication Code, der verwendet wird, um die Identität der Geräte gegenseitig zu authentifizieren.
     \end{itemize}
   \end{solution}
@@ -816,8 +792,8 @@
 
   \begin{solution}
     \begin{enumerate}
-        \item Maximal \( 2^{24} \) Pakete können erzeugt werden, da der IV 24 Bit groß ist. Um Kollisionen zu vermeiden, sollte der IV systematisch inkrementiert werden. Problematisch ist jedoch, dass bei mehreren Teilnehmern des WLANs die Wahrscheinlichkeit von IV-Kollisionen schnell steigt.
-        \item Die ersten 10 Klartextbits des zweiten Pakets \( P_2 \) werden durch Vergleich mit \( P_1 \) berechnet:
+        \item Maximal $ 2^{24} $ Pakete können erzeugt werden, da der IV 24 Bit groß ist. Um Kollisionen zu vermeiden, sollte der IV systematisch inkrementiert werden. Problematisch ist jedoch, dass bei mehreren Teilnehmern des WLANs die Wahrscheinlichkeit von IV-Kollisionen schnell steigt.
+        \item Die ersten 10 Klartextbits des zweiten Pakets $ P_2 $ werden durch Vergleich mit $ P_1 $ berechnet:
         \[
         \texttt{Klartext}(P_2) = \texttt{Verschlüsselter\_Text}(P_2) \oplus \texttt{Schlüssel}(P_1).
         \]
@@ -867,7 +843,7 @@
         \[
         C_1 \oplus C_2 = M_1 \oplus M_2.
         \]
-        Durch eine bekannte Klartextanalyse kann \( M_2 \) bestimmt werden.
+        Durch eine bekannte Klartextanalyse kann $ M_2 $ bestimmt werden.
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -882,7 +858,7 @@
   \begin{solution}
     \begin{enumerate}
         \item Die Sicherheit elliptischer Kurven beruht auf dem Problem des diskreten Logarithmus in elliptischen Kurvengruppen, das als schwierig gilt.
-        \item Punkte auf der elliptischen Kurve \( y^2 = x^3 + 6x + 1 \mod 11 \):
+        \item Punkte auf der elliptischen Kurve $ y^2 = x^3 + 6x + 1 \mod 11 $:
         \[
         \{(2, 4), (5, 2), (7, 6), (8, 3), \ldots\}.
         \]
@@ -939,15 +915,15 @@
     \begin{enumerate}
         \item Abkürzungen und ihre Funktion:
         \begin{itemize}
-            \item \( K_i \): Geheimer Authentifizierungsschlüssel.
-            \item \( IMSI \): Internationale Teilnehmerkennung.
-            \item \( RAND \): Zufallszahl für Authentifizierung.
-            \item \( SRES \): Signatur zur Authentifizierung.
-            \item \( LAI \): Standortbereichskennung.
-            \item \( MSISDN \): Telefonnummer des Teilnehmers.
-            \item \( K_c \): Verschlüsselungsschlüssel für den Funkkanal.
+            \item $ K_i $: Geheimer Authentifizierungsschlüssel.
+            \item $ IMSI $: Internationale Teilnehmerkennung.
+            \item $ RAND $: Zufallszahl für Authentifizierung.
+            \item $ SRES $: Signatur zur Authentifizierung.
+            \item $ LAI $: Standortbereichskennung.
+            \item $ MSISDN $: Telefonnummer des Teilnehmers.
+            \item $ K_c $: Verschlüsselungsschlüssel für den Funkkanal.
         \end{itemize}
-        \item Viele der Funktionen wie \( K_i \), \( RAND \) und \( K_c \) finden sich auch im UMTS wieder, jedoch oft mit anderen Algorithmen oder Benennungen.
+        \item Viele der Funktionen wie $ K_i $, $ RAND $ und $ K_c $ finden sich auch im UMTS wieder, jedoch oft mit anderen Algorithmen oder Benennungen.
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -976,7 +952,7 @@
           \item Der Schlüssel so lang wie der Klartext sein muss.
           \item Der sichere Schlüsselaustausch und die Speicherung unpraktisch sind.
       \end{itemize}
-      \item Die Chiffre, die Buchstaben \( A-N \) mit \( N-Z \) vertauscht, ist nicht sicher:
+      \item Die Chiffre, die Buchstaben $ A-N $ mit $ N-Z $ vertauscht, ist nicht sicher:
       \begin{itemize}
           \item **Polyalphabetische Verschlüsselung:** Nicht erfüllt, da nur ein Alphabet genutzt wird.
           \item **Länge bleibt gleich:** Diese Eigenschaft bewahrt Muster im Schlüsseltext, was statistische Angriffe erleichtert.
@@ -994,7 +970,7 @@
 
   \begin{solution}
     \begin{enumerate}
-        \item Punkte auf der elliptischen Kurve \( y^2 = x^3 + 2x + 3 \mod 7 \):
+        \item Punkte auf der elliptischen Kurve $ y^2 = x^3 + 2x + 3 \mod 7 $:
         \[
         \{(1, 1), (2, 2), (4, 5), (6, 3)\}.
         \]
@@ -1024,8 +1000,8 @@
             \item **Drei Teilschlüssel aneinanderhängen:** Sicherheitsgewinn gegenüber der ersten Methode.
             \item **XOR aller Schlüssel:** Höchste Sicherheit, solange alle Schlüssel zufällig und unabhängig sind.
         \end{itemize}
-        \item Zertifikatsbaum: N7 vertraut CAs, die N3 und \( B \) direkt zertifizieren.
-        \item Minimale Anzahl an CAs: Es reicht aus, der CA zu vertrauen, die die Zertifikate für \( B \) und \( N3 \) signiert hat.
+        \item Zertifikatsbaum: N7 vertraut CAs, die N3 und $ B $ direkt zertifizieren.
+        \item Minimale Anzahl an CAs: Es reicht aus, der CA zu vertrauen, die die Zertifikate für $ B $ und $ N3 $ signiert hat.
         \item Maßnahme bei Kompromittierung: Alternativer Zertifizierungsweg über eine andere CA. Neue Zertifikate können erstellt werden, um Vertrauen zu erhalten.
     \end{enumerate}
   \end{solution}
@@ -1041,13 +1017,13 @@
     \begin{enumerate}
         \item Abkürzungen im GSM und ihre Funktion:
         \begin{itemize}
-            \item \( K_i \): Geheimer Schlüssel zur Authentifizierung und Verschlüsselung.
-            \item \( IMSI \): Einzigartige Kennung des Mobilfunkteilnehmers.
-            \item \( RAND \): Zufällige Herausforderung zur Authentifizierung.
-            \item \( SRES \): Antwort des Mobilgeräts auf \( RAND \), basierend auf \( K_i \).
-            \item \( LAI \): Standortkennung für Mobilitätsmanagement.
-            \item \( MSISDN \): Telefonnummer des Teilnehmers.
-            \item \( K_c \): Schlüssel zur Verschlüsselung des Datenverkehrs.
+            \item $ K_i $: Geheimer Schlüssel zur Authentifizierung und Verschlüsselung.
+            \item $ IMSI $: Einzigartige Kennung des Mobilfunkteilnehmers.
+            \item $ RAND $: Zufällige Herausforderung zur Authentifizierung.
+            \item $ SRES $: Antwort des Mobilgeräts auf $ RAND $, basierend auf $ K_i $.
+            \item $ LAI $: Standortkennung für Mobilitätsmanagement.
+            \item $ MSISDN $: Telefonnummer des Teilnehmers.
+            \item $ K_c $: Schlüssel zur Verschlüsselung des Datenverkehrs.
         \end{itemize}
         \item Diese Funktionen sind auch im UMTS enthalten, jedoch oft mit verbesserten Sicherheitsmechanismen (z. B. längere Schlüssel, stärkere Algorithmen).
     \end{enumerate}
