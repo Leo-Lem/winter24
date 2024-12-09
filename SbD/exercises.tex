@@ -1,6 +1,6 @@
 \documentclass{article}
 
-\usepackage[solutions]{../.template/xrcise}
+\usepackage[]{../.template/xrcise}
 
 \subject{Security by Design}
 \semester{Winter 2024}
@@ -840,10 +840,8 @@
         \item Wenn ein Bit im zweiten Block fehlt, kann nur der ECB-Modus korrekt entschlüsseln, da die Blöcke unabhängig verarbeitet werden. Im CBC- und CTR-Modus führt der Fehler zu Synchronisationsverlust.
         \item Beim Verlust eines ganzen Blocks kann nur der ECB-Modus korrekt entschlüsseln, da die Blöcke unabhängig verarbeitet werden.
         \item Im CTR-Modus kann ein Angreifer zwei Klartexte entschlüsseln, wenn der gleiche IV verwendet wurde:
-        \[
-        C_1 \oplus C_2 = M_1 \oplus M_2.
-        \]
-        Durch eine bekannte Klartextanalyse kann $ M_2 $ bestimmt werden.
+          \[ C_1 \oplus C_2 = M_1 \oplus M_2. \]
+          Durch eine bekannte Klartextanalyse kann $M_2$ bestimmt werden.
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -872,7 +870,7 @@
 \end{exercise}
 
 \begin{exercise}{Zertifikate}
-  Das Zertifigierungsmodell ist transitiv anzunehmen.
+  Das Zertifizierungsmodell ist transitiv anzunehmen.
 
   \begin{enumerate}
     \item Erklären und grenzen Sie die Begriffe Signatur und Zertifikat voneinander ab.
