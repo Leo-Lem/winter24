@@ -767,13 +767,13 @@
     \begin{enumerate}
         \item 
           \begin{itemize}
-            \item \textbf{Schlüsselgenerierung} mit Generaturpunkt $P$, privaten Schlüssel $d$ und öffentlicher Schlüssel $Q = d \cdot P$.
+            \item \textbf{Schlüsselgenerierung} mit Generaturpunkt $P$, privatem Schlüssel $d$ und öffentlichem Schlüssel $Q = d \cdot P$.
             \item \textbf{Verschlüsselung} von Nachricht $m$ mit Zufallswert $k$ und Schlüsseltext $(C_1, C_2) = (kP, m + kQ)$.
             \item \textbf{Entschlüsselung} des Schlüsseltextes $(C_1, C_2)$ mit privatem Schlüssel $d$ als $m = C_2 - d \cdot C_1$.
           \end{itemize}
-        \item
-        \item 
-        \item 
+        \item % TODO
+        \item % TODO
+        \item Die Sicherheit beruht darauf, dass es schwierig ist die Operation $Q=nP$ umzukehren.
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -784,8 +784,8 @@
 
   \begin{solution}
     \begin{itemize}
-        \item \textbf{Verschlüsselte Abschnitte:} Der Abschnitt zwischen dem Mobiltelefon und der Basisstation wird durch den A5-Algorithmus verschlüsselt.
-        \item \textbf{Unverschlüsselte Abschnitte:} Die Verbindung zwischen der Basisstation und den zentralen Netzwerkkomponenten (z. B. dem MSC) ist unverschlüsselt. Dies stellt ein Sicherheitsrisiko dar, da Angriffe auf das Netzwerk (z. B. durch gefälschte Basisstationen) möglich sind.
+        \item \textbf{Verschlüsselte Abschnitte}: Abschnitt zwischen Mobiltelefon und Basisstation.
+        \item \textbf{Unverschlüsselte Abschnitte}: Basisstation $\to$ zentrale Netzwerkkomponenten (zB. MSC).
     \end{itemize}
   \end{solution}
 \end{exercise}
