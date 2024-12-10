@@ -1,6 +1,6 @@
 \documentclass{article}
 
-\usepackage[]{../.template/xrcise}
+\usepackage[solutions]{../.template/xrcise}
 
 \subject{Security by Design}
 \semester{Winter 2024}
@@ -834,14 +834,12 @@
 
   \begin{solution}
     \begin{enumerate}
-        \item Die Modi ECB und CBC benötigen eine invertierbare Verschlüsselungsfunktion, da der Klartext beim Entschlüsseln zurückgewonnen werden muss. Der CTR-Modus hingegen benötigt keine invertierbare Funktion, da er auf dem XOR-Mechanismus basiert.
-        \item Die Verschlüsselung lässt sich im CTR-Modus parallelisieren, da die Blöcke unabhängig voneinander verarbeitet werden können. Im CBC-Modus ist dies nicht möglich, da jeder Block von seinem Vorgänger abhängt.
-        \item Ein Bitfehler im zweiten Block beeinflusst nur den entsprechenden Block im ECB-Modus. Im CBC-Modus beeinflusst er zusätzlich den nachfolgenden Block.
-        \item Wenn ein Bit im zweiten Block fehlt, kann nur der ECB-Modus korrekt entschlüsseln, da die Blöcke unabhängig verarbeitet werden. Im CBC- und CTR-Modus führt der Fehler zu Synchronisationsverlust.
-        \item Beim Verlust eines ganzen Blocks kann nur der ECB-Modus korrekt entschlüsseln, da die Blöcke unabhängig verarbeitet werden.
-        \item Im CTR-Modus kann ein Angreifer zwei Klartexte entschlüsseln, wenn der gleiche IV verwendet wurde:
-          \[ C_1 \oplus C_2 = M_1 \oplus M_2. \]
-          Durch eine bekannte Klartextanalyse kann $M_2$ bestimmt werden.
+        \item ECB und CBC benötigen invertierbare Verschlüsselungsfunktionen, da die Entschlüsselung der Chiffre notwendig ist. Der CTR beruht auf XOR-Verknüpfung der Klar- und Schlüsseltexte und Berechnung und Verschlüsselung der Zählerwerte sowohl beim Sender als auch beim Empfänger. Daher ist keine invertierbare Verschlüsselungsfunktion notwendig.
+        \item Im ECB und CTR-Modus können die Blöcke parallel verschlüsselt werden, da sie unabhängig voneinander sind. Im CBC-Modus hängt die Verschlüsselung eines Blocks von der Verschlüsselung des vorherigen Blocks ab, daher ist keine Parallelisierung möglich.
+        \item Bei allen Modi führt ein Bitfehler im zweiten Block dazu, dass dieser Block nicht entschlüsselt werden kann. Im CBC-Modus wird zusätzlich der Block 3 verändert, da die XOR-Verknüpfung mit dem vorherigen Block nicht mehr korrekt ist.
+        \item Wenn die Blockgrenzen nicht bekannt sind, kann nur der erste Block entschlüsselt werden. Im CBC kann zusätzlich selbst bei bekannten Blockgrenzen nichts weiter entschlüsselt werden, da die XOR-Verknüpfung mit dem vorherigen Block nicht mehr korrekt ist.
+        \item Bei ECB und CTR können alle anderen Blöcke korrekt entschlüsselt werden, da sie unabhängig voneinander sind. Im CBC-Modus kann kein nachfolgender Block entschlüsselt werden, da die XOR-Verknüpfung mit dem vorherigen Block nicht mehr korrekt ist.
+        \item Da $m_1$ und $c_1$ kann daraus der Pseudozufallszahlenstrom $s=c_1\oplus m_1$ berechnet werden. Hiermit lässt sich dann $m_2=c_2\oplus s$ berechnen.
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -855,22 +853,22 @@
 
   \begin{solution}
     \begin{enumerate}
-        \item Die Sicherheit elliptischer Kurven beruht auf dem Problem des diskreten Logarithmus in elliptischen Kurvengruppen, das als schwierig gilt.
-        \item Punkte auf der elliptischen Kurve $ y^2 = x^3 + 6x + 1 \mod 11 $:
-        \[
-        \{(2, 4), (5, 2), (7, 6), (8, 3), \ldots\}.
-        \]
+        \item ECDLP (Elliptic Curve Discrete Logarithm Problem): Das Problem besteht darin, die Operation $Q=nP$, welche mathematisch einfach zu berechnen ist, umzukehren.
+        \item Punkte auf der elliptischen Kurve $y^2 = x^3 + 6x + 1 \pmod{11}$:
+          \[ \{(2,4), (4,5), (4,6), (6,3), (6,8), (7,5), (7,6), (8,2), (8,9), (9,4), (9,7), (10,1), (10,10)\} \]
         \item Vorteile von ECC:
-        \begin{itemize}
-            \item Kürzere Schlüssel bei gleicher Sicherheit (z. B. ECC-256 entspricht RSA-3072).
-            \item Geringere Speicher- und Rechenanforderungen.
-        \end{itemize}
+          \begin{itemize}
+              \item Kürzere Schlüssel bei gleicher Sicherheit (z. B. ECC-256 entspricht RSA-3072).
+              \item Geringere Speicher- und Rechenanforderungen.
+          \end{itemize}
     \end{enumerate}
   \end{solution}
 \end{exercise}
 
 \begin{exercise}{Zertifikate}
   Das Zertifizierungsmodell ist transitiv anzunehmen.
+
+  \input{res/2023-1.fig}
 
   \begin{enumerate}
     \item Erklären und grenzen Sie die Begriffe Signatur und Zertifikat voneinander ab.
@@ -887,20 +885,17 @@
         \item N7 muss nur den CAs vertrauen, die sowohl N3 als auch N5 direkt oder indirekt zertifizieren. Dies minimiert die Anzahl der erforderlichen CAs.
         \item Wenn CA2 ausfällt, können alternative Zertifikate verwendet werden, die von anderen vertrauenswürdigen CAs ausgestellt wurden. Ein neuer Vertrauenspfad kann erstellt werden.
         \item Vorteile von Trust on First Use (TOFU):
-        \begin{itemize}
-            \item Kein zentraler CA-Betrieb notwendig.
-            \item Schlüssel können einfach ausgetauscht werden.
-        \end{itemize}
-        Nachteile:
-        \begin{itemize}
-            \item Unsicherheit beim ersten Austausch.
-            \item Angreifer können Schlüssel bei der Erstkommunikation abfangen.
-        \end{itemize}
+          \begin{itemize}
+              \item[+] Kein zentraler CA-Betrieb notwendig.
+              \item[+] Schlüssel können einfach ausgetauscht werden.
+              \item[-] Unsicherheit beim ersten Austausch.
+              \item[-] Bei Schlüsseländerungen kann es zu Problemen kommen.
+          \end{itemize}
     \end{enumerate}
   \end{solution}
 \end{exercise}
 
-\begin{exercise}{GSM}
+\begin{exercise}{Forward Secrecy mit RSA}
   Zur Erreichung von Forward Secrecy erzeugt Alice auf ihrem Server mit dem RSA-Verfahren einen privaten Schlüssel $d$ sowie den dazu passenden öffentlichen Schlüssel $c$, den sie persönlich an ihre Nutzerinnen und Nutzer verteilt. Zusätzlich erzeugt der Server von Alice bei jedem Verbindungsaufbau ein neues kurzlebiges (engl. ephemeral) RSA-Schlüsselpaar, das aus einem öffentlichen Schlüssel $c_e$ und einem geheimen Schlüssel $d_e$ besteht. Der Server signiert mit dem privaten Schlüssel $d$ den neuen öffentlichen Schlüssel $c_e$ und sendet diesen zusammen mit der Signatur über die aufgebaute Verbindung an die Kundin. Die Kundin prüft anschließend die Signatur mithilfe des zuvor von Alice erhaltenen öffentlichen Schlüssels $c$. Ist die Signatur korrekt, nutzt die Kundin $c_e$, um einen neuen, zufällig generierten symmetrischen AES-Schlüssel $k$ zu verschlüsseln. Die weitere Kommunikation in dieser Verbindung wird symmetrisch mit $k$ verschlüsselt. Nach Verbindungsende löscht Alices Server $d_e$, $c_e$ und $k$.
 
   \begin{enumerate}
@@ -910,19 +905,7 @@
   \end{enumerate}
 
   \begin{solution}
-    \begin{enumerate}
-        \item Abkürzungen und ihre Funktion:
-        \begin{itemize}
-            \item $ K_i $: Geheimer Authentifizierungsschlüssel.
-            \item $ IMSI $: Internationale Teilnehmerkennung.
-            \item $ RAND $: Zufallszahl für Authentifizierung.
-            \item $ SRES $: Signatur zur Authentifizierung.
-            \item $ LAI $: Standortbereichskennung.
-            \item $ MSISDN $: Telefonnummer des Teilnehmers.
-            \item $ K_c $: Verschlüsselungsschlüssel für den Funkkanal.
-        \end{itemize}
-        \item Viele der Funktionen wie $ K_i $, $ RAND $ und $ K_c $ finden sich auch im UMTS wieder, jedoch oft mit anderen Algorithmen oder Benennungen.
-    \end{enumerate}
+    % TODO
   \end{solution}
 \end{exercise}
 
