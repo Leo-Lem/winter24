@@ -345,6 +345,7 @@
   \end{solution}
 \end{exercise}
 
+
 \setcounter{subsection}{60}
 \begin{exercise}{RSA: Eigenschaften und Sicherheit \ref{ex:rsa}}\end{exercise}
 
@@ -381,31 +382,115 @@
               B\equiv g^b \equiv 5^3 \equiv 4
             \end{array} \pmod{11}$\\
           Gemeinsamer Schlüssel: $K\equiv B^a\equiv A^b\equiv 4^2\equiv 3^3\equiv 5 \pmod{11}$
-        \item Sicherheit basiert auf dem diskreten Logarithmusproblem (DLP). Der Angreifer kann $ g^a $ und $ g^b $ nicht effizient in $ a $ und $ b $ umwandeln.
-        \item Schutz vor aktiven Angriffen: Vorab-Austausch von $ g, p $ und Authentifizierung der öffentlichen Schlüssel (z. B. durch Signaturen).
+        \item Sicherheit basiert auf dem diskreten Logarithmusproblem (DLP). Der Angreifer kann $g^a$ und $g^b$ nicht effizient in $a$ und $b$ umwandeln.
+        \item Schutz vor aktiven Angriffen: Vorab-Austausch von $g, p$ und Authentifizierung der öffentlichen Schlüssel (z. B. durch Signaturen).
     \end{enumerate}
   \end{solution}
 \end{exercise}
 
 \begin{exercise}{Elliptische Kurven: EC-ElGamal \ref{ex:elliptic}}\end{exercise}
 
-% \setcounter{subsection}{70}
-% \begin{exercise}{}
-%  % TODO
-%
-%   \begin{solution}
-%     % TODO
-%   \end{solution}
-% \end{exercise}
 
-% \setcounter{subsection}{80}
-% \begin{exercise}{}
-%  % TODO
-%
-%   \begin{solution}
-%     % TODO
-%   \end{solution}
-% \end{exercise}
+\setcounter{subsection}{70}
+\begin{exercise}{Symmetrische Schlüsselverteilung}
+  Drei Schlüsselverteilzentralen X, Y, Z sollen jeweils einen Anteil eines symmetrischen Schlüssels $k$ der Länge $\ell$ liefern.
+  \begin{enumerate}
+    \item Jede Schlüsselverteilzentrale liefert einen Teilschlüssel der Länge $\ell/3$. Die drei Teile werden zu $k$ konkateniert.
+    \item Jede Schlüsselverteilzentrale liefert einen Teilschlüssel der Länge $\ell$. Die drei Teile werden bitweise XOR-verknüpft.
+  \end{enumerate}
+  Welche Variante ist sicherer, wenn die Teilschlüssel von X und Y kompromittiert sind? Begründen Sie Ihre Antwort.
+
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Zertifizierungsmodelle}
+  Bei der Verschlüsselung und Signierung mithilfe asymmetrischer Kryptosysteme existieren zwei grundsätzliche Modelle für die Schlüsselzertifizierung: dezentral (Web of Trust) und hierarchisch-zentral.
+  \begin{enumerate}
+    \item Was ist der Zweck der Schlüsselzertifizierung?
+    \item\label{itm:zertvornach} Vergleichen Sie die Vor- und Nachteile bei der hierarchisch-zentralen Zertifizierung und der dezentralen Zertifizierung.
+    \item Beschreiben Sie das Konzept der Cross Certification. Welche Vorteile ergeben sich hieraus? Bei welchem der beiden Zertifizierungsmodelle kann es Anwendung finden?
+    \item Inwieweit schützen die beiden in Teilaufgabe \ref{itm:zertvornach} genannten Zertifizierungsmodelle jeweils vor einem Man-in-the-Middle-Angriff (auch Maskerade-Angriff genannt)?
+  \end{enumerate}
+
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Vertrauensbeziehungen in Public-Key-Infrastrukturen}
+  \begin{enumerate}
+    \item Gegeben sei folgende Zertifizierungsrelation.
+      \input{res/zertifikate-1.fig}
+      D will an A eine verschlüsselte Nachricht senden und ist sich jedoch lediglich sicher, dass der öffentliche Schlüssel von B authentisch ist. Kann D der Authentizität des öffentlichen Schlüssels von A vertrauen? Falls nein, was müsste zusätzlich gegeben sein?
+    \item Was ändert sich, wenn folgende Zertifizierungsrelation vorliegt?
+    \input{res/zertifikate-2.fig}
+  \end{enumerate}
+
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Gültigkeitsmodelle für Zertifikate und Signaturen}
+  \begin{enumerate}
+    \item Vergleichen Sie das Schalen- und das Kettenmodell im Hinblick auf die Gültigkeit von Zertifikaten und Signaturen.
+    \item Nennen Sie einen Grund dafür, dass in der Praxis zumeist das Kettenmodell verwendet wird.
+    \item Alice erwirbt ein Zertifikat von CA2. CA2 wurde von CA1 zertifiziert. Die Gültigkeitsdauern der Wurzel- und CA-Zertifikate sowie des Zertifikats von Alice sind in der Abbildung dargestellt.
+      \input{res/zertifikate-3.fig}
+      Zeichnen Sie jeweils den Zeitraum ein, in dem Alice dieses Zertifikat für die Erzeugung gültiger Signaturen nach dem Schalen- bzw. dem Kettenmodell verwenden kann.
+    \item Alice signiert zum Zeitpunkt $t_1$ eine Nachricht und sendet diese an Bob. Dieser erhält aufgrund eines Urlaubs in einer Region ohne ausreichende Internetversorgung die Nachricht erst zum Zeitpunkt $t_2$ und überprüft nun die Gültigkeit der Signatur. Prüfen Sie jeweils die Gültigkeit der Signatur nach dem Schalen- und dem Kettenmodell.
+    \item Da Alice sich wundert, dass Bob ihr nicht antwortet, sendet sie zum Zeitpunkt $t_2$ erneut eine mit ihrem Zertifikat signierte Nachricht an Bob. Durch ein technisches Problem erhält Bob diese aber erst zum Zeitpunkt $t_3$ und versucht nun, die Gültigkeit der Signatur zu verifizieren. Prüfen Sie jeweils die Gültigkeit der Signatur nach dem Schalen- und dem Kettenmodell.
+  \end{enumerate}
+
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
+
+
+\setcounter{subsection}{80}
+\begin{exercise}{Verbindungsverschlüsselung in GSM \ref{ex:gsm}}\end{exercise}
+
+\begin{exercise}{Datenbanken in GSM}
+  \begin{enumerate}
+    \item Welche Datenbanken (Register) gibt es im GSM?
+    \item Welchen Zweck erfüllt jede einzelne Datenbank?
+    \item Von welchen Parteien werden diese Datenbanken jeweils verwaltet?
+  \end{enumerate}
+
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Mobilfunk: GSM}
+  \begin{enumerate}
+    \item Welche Komponenten kennen das Geheimnis $K_i$ bei GSM?
+    \item Jeder GSM-Mobilfunkteilnehmer bekommt vom Netz eine sogenannte Temporary Mobile Subscriber Identity (TMSI) zugewiesen. Stellen Sie das zugrundeliegende Angreifermodell auf.
+    \item Bei GSM werden die Verschlüsselungsalgorithmen A5/1 bzw. A5/2 verwendet, bei UMTS der Algorithmus Kasumi und bei LTE der Algorithmus AES. Warum wurden die Algorithmen im Laufe der Weiterentwicklung der Mobilfunknetze geändert?
+    \item Im Mobilfunkbereich werden ausschließlich symmetrische Verfahren für die Kryptographie verwendet. Nennen Sie zwei Gründe, warum das der Fall ist.
+    \item Der historische Angriff des SIM-Clonings dauert ca. 8 bis 10 Stunden, obwohl nur 150.000 Berechnungsschritte notwendig sind. Beschreiben Sie, was der Angreifer beim SIM-Cloning macht und skizzieren Sie, welche Schwäche er dabei ausnutzt.
+  \end{enumerate}
+
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Verschlüsselung der ersten Protokollnachrichten}
+  \begin{enumerate}
+    \item Warum sind im GSM und UMTS Nachrichten wie Location Updating Request, CM Service Request, Authentication Request und Authentication Response nicht verschlüsselt?
+    \item Bitte skizzieren Sie einen Lösungsvorschlag, der die Verschlüsselung aller o. g. Nachrichten ermöglichen würde.
+  \end{enumerate}
+ 
+   \begin{solution}
+     % TODO
+   \end{solution}
+ \end{exercise}
+ 
+
 
 % \setcounter{subsection}{90}
 % \begin{exercise}{}
@@ -755,7 +840,7 @@
 \end{exercise}
 
 \setcounter{subsection}{228}
-\begin{exercise}{Verbindungsverschlüsselung in GSM}
+\begin{exercise}{Verbindungsverschlüsselung in GSM}\label{ex:gsm}
   Welche Kommunikationsabschnitte sind in GSM verschlüsselt? Welche Kommunikationsabschnitte sind unverschlüsselt?
 
   \begin{solution}
