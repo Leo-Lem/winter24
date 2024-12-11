@@ -1001,97 +1001,101 @@
 
 \begin{exercise}{Kryptographie}
  \begin{enumerate}
-  \item Erläutern Sie zwei Ursachen, die dafür sorgen, dass fast alle kryptographischen Algorithmen mit der Zeit nicht mehr Standard sind.
-  \item Sie möchten einen Text so verschlüsseln, dass er auch in 98 Jahren nicht ohne Kenntnis des von Ihnen versteckten Schlüssels entschlüsselt werden kann. Welches Verfahren wählen Sie dazu? Begründen Sie Ihre Entscheidung. Warum wird das Verfahren heutzutage nicht überall benutzt?
-  \item Gegeben eine Chiffre, welche Buchstaben A-N mit Buchstaben N-Z vertauscht. Und gleichzeitig muss die Länge der Nachricht immer gleich sein. Bewerten Sie die Sicherheit der Chiffre und die beiden Eigenschaften (Polyalphabetische Verschlüsselung nur mit Vertauschen und die gleiche Länge der Nachricht).
+    \item Erläutern Sie zwei Ursachen, die dafür sorgen, dass fast alle kryptographischen Algorithmen mit der Zeit nicht mehr Standard sind.
+    \item Sie möchten einen Text so verschlüsseln, dass er auch in 98 Jahren nicht ohne Kenntnis des von Ihnen versteckten Schlüssels entschlüsselt werden kann. Welches Verfahren wählen Sie dazu? Begründen Sie Ihre Entscheidung. Warum wird das Verfahren heutzutage nicht überall benutzt?
+    \item Gegeben eine Chiffre, welche Buchstaben A-N mit Buchstaben N-Z vertauscht. Und gleichzeitig muss die Länge der Nachricht immer gleich sein. Bewerten Sie die Sicherheit der Chiffre und die beiden Eigenschaften (Polyalphabetische Verschlüsselung nur mit Vertauschen und die gleiche Länge der Nachricht).
  \end{enumerate}
 
- \begin{solution}
-  \begin{enumerate}
-      \item Gründe für den Wechsel kryptographischer Algorithmen:
-      \begin{itemize}
-          \item **Technologischer Fortschritt:** Schnellere Computer ermöglichen effizientere Brute-Force-Angriffe.
-          \item **Neue Angriffe:** Fortschritte in der Kryptoanalyse decken Schwachstellen auf, wie z. B. Differential- oder lineare Kryptoanalyse.
-      \end{itemize}
-      \item Das **One-Time-Pad** bietet absolute Sicherheit und bleibt auch nach 98 Jahren sicher. Es wird nicht flächendeckend eingesetzt, da:
-      \begin{itemize}
-          \item Der Schlüssel so lang wie der Klartext sein muss.
-          \item Der sichere Schlüsselaustausch und die Speicherung unpraktisch sind.
-      \end{itemize}
-      \item Die Chiffre, die Buchstaben $ A-N $ mit $ N-Z $ vertauscht, ist nicht sicher:
-      \begin{itemize}
-          \item **Polyalphabetische Verschlüsselung:** Nicht erfüllt, da nur ein Alphabet genutzt wird.
-          \item **Länge bleibt gleich:** Diese Eigenschaft bewahrt Muster im Schlüsseltext, was statistische Angriffe erleichtert.
-      \end{itemize}
-  \end{enumerate}
-\end{solution}
+  \begin{solution}
+    \begin{enumerate}
+        \item Gründe für den Wechsel kryptographischer Algorithmen:
+          \begin{itemize}
+              \item \textbf{Technologischer Fortschritt}: Schnellere Computer ermöglichen effizientere Brute-Force-Angriffe.
+              \item \textbf{Neue Angriffe}: Fortschritte in der Kryptanalyse decken Schwachstellen auf, wie z. B. Differential- oder lineare Kryptanalyse.
+          \end{itemize}
+        \item Das One-Time-Pad bietet absolute Sicherheit und bleibt auch nach 98 Jahren sicher. Es wird nicht flächendeckend eingesetzt, da der Schlüssel so lang wie der Klartext sein muss und der sichere Schlüsselaustausch sowie die Speicherung unpraktisch sind.
+        \item Die Chiffre ist nicht sicher. Muster bleiben im Schlüsseltext erhalten und können durch Häufigkeitsanalyse gebrochen werden. Die gleiche Länge der Nachrichten erleichtert die Kryptanalyse, da die Länge der Schlüsseltexte Rückschlüsse auf die Länge der Klartexte zulässt.
+    \end{enumerate}
+  \end{solution}
 \end{exercise}
 
 \begin{exercise}{Elliptische Kurven}
   \begin{enumerate}
     \item Berechnen Sie für die folgenden Parameter alle Punkte auf der Kurve: $a = 2$, $b = 3$, $p = 7$.
-    \item Elgamal mit elliptischen Kurven wurde vorgestellt. Zeigen Sie, warum dieses Verfahren mit beliebigen Parametern funktioniert.
+    \item ElGamal mit elliptischen Kurven wurde vorgestellt. Zeigen Sie, warum dieses Verfahren mit beliebigen Parametern funktioniert.
     \item Vergleichen Sie den Elgamal aus der Vorlesung mit dem gegebenen. Auf welchem Prinzip beruht die Sicherheit? Denken Sie, dass er sicherer ist? Warum?
   \end{enumerate}
 
   \begin{solution}
     \begin{enumerate}
-        \item Punkte auf der elliptischen Kurve $ y^2 = x^3 + 2x + 3 \mod 7 $:
-        \[
-        \{(1, 1), (2, 2), (4, 5), (6, 3)\}.
-        \]
+        \item Punkte auf der elliptischen Kurve $y^2\equiv x^3+2x+3 \pmod{7}$:
+          \[ \{(6,1), (6,6)\} \]
         \item Das ElGamal-Verfahren mit elliptischen Kurven funktioniert, weil die Addition von Punkten und die Multiplikation mit einem Skalar die Gruppenstruktur der Kurve erhalten. Dadurch bleibt das diskrete Logarithmusproblem schwer lösbar.
-        \item Vergleich:
-        \begin{itemize}
-            \item Beide basieren auf dem diskreten Logarithmusproblem.
-            \item ECC-ElGamal ist effizienter, da kürzere Schlüssel benötigt werden.
-        \end{itemize}
+        \item EC-ElGamal ist nicht unbedingt sicherer, da sowohl das DLP als auch das ECDLP schwer lösbar sind. Der Vorteil von EC-ElGamal ist die kürzere Schlüssellänge sowie effizientere Verarbeitung/Speicherung bei gleicher Sicherheit.
     \end{enumerate}
   \end{solution}
 \end{exercise}
 
 \begin{exercise}{Zertifikate}
   \begin{enumerate}
-    \item Es wurden 3 verschiedene Möglichkeiten gegeben, einen Schlüssel von verschiedenen Schlüsselpartnern (S, V, C, T) zu kombinieren. Alle Teilschlüssel werden aneinander gehängt l/4. 3 der Teilschlüssel wird aneinander gehängt und der letzte Teilnehmer bestimmt die Reihenfolge. Alle Schlüssel werden XOR berechnet. Bewerten Sie die Sicherheit der Verfahren.
-    \item Gegeben ist ein Zertifikatsbaum mit 5 Teilnehmern. $E \rightarrow D$, $E \rightarrow B$, $E \rightarrow A$, $E \rightarrow C$, $C \rightarrow B$, $A \rightarrow B$, $G \rightarrow \emptyset$. Betrachten Sie die Zertifizierungsrelation. $G$ möchte jetzt zusätzlich eine verschlüsselte Nachricht an $B$ senden. Welcher Zertifizierungsstelle bzw. welchen Zertifizierungsstellen muss $G$ mindestens vertrauen, um das Zertifikat von $B$ prüfen zu können?
-    \item Wählen Sie Ihre Lösung so, dass die Anzahl an Zertifizierungsstellen, denen $N4$ (explizit) vertrauen muss, minimal ist.
-    \item In der Zertifizierungsrelation aus Teilaufgabe c) wird die Zertifizierungsstelle $C$ kompromittiert und fällt deshalb aus. $G$ möchte eine verschlüsselte Nachricht an $C$ senden. Welche Maßnahme ermöglicht es $G$, das Zertifikat von $B$ trotz des Ausfalls von $CA4$ zu überprüfen?
+    \item Gegeben seien drei Möglichkeiten einen Schlüssel von verschiedenen Schlüsselpartnern $(S,V,C,T)$ zu kombinieren. Bewerten Sie die Sicherheit der Verfahren.
+      \begin{itemize}
+        \item Alle Teilschlüssel (l/4) werden aneinandergehängt.
+        \item Drei der Teilschlüssel werden aneinandergehängt und der letzte Teilnehmer bestimmt die Reihenfolge.
+        \item Alle Schlüssel werden XOR-verknüpft.
+      \end{itemize}
+    \item\label{itm:zertifizierungsstellen} Gegeben ist ein Zertifikatsbaum mit 5 Teilnehmern. Betrachten Sie die Zertifizierungsrelation.\\
+      \begin{tikzpicture}[->,  >=stealth]
+        \node (E) at (0, 0) {$E$};
+        \node (A) [below left of=E] {$A$};
+        \draw (E) -- (A);
+        \node (B) [below right of=A] {$B$};
+        \draw (E) -- (B);
+        \draw (A) -- (B);
+        \node (C) [below right of=E] {$C$};
+        \draw (E) -- (C);
+        \draw (C) -- (B);
+        \node (D) [right of=C] {$D$};
+        \draw (E) -- (D);
+        \node (G) [right of=D] {$G$};
+      \end{tikzpicture}\\
+      $G$ möchte jetzt zusätzlich eine verschlüsselte Nachricht an $B$ senden. Welcher Zertifizierungsstelle bzw. welchen Zertifizierungsstellen muss $G$ mindestens vertrauen, um das Zertifikat von $B$ prüfen zu können? Wählen Sie Ihre Lösung so, dass die Anzahl an Zertifizierungsstellen, denen $G$ (explizit) vertrauen muss, minimal ist.
+    \item In der Zertifizierungsrelation aus \ref{itm:zertifizierungsstellen} wird die Zertifizierungsstelle $C$ kompromittiert und fällt deshalb aus. $G$ möchte eine verschlüsselte Nachricht an $B$ senden. Welche Maßnahme ermöglicht es $G$, das Zertifikat von $B$ trotz des Ausfalls von $C$ zu überprüfen?
   \end{enumerate}
 
   \begin{solution}
     \begin{enumerate}
-        \item Sicherheitsbewertung der Verfahren:
+      \item
         \begin{itemize}
-            \item **Alle Teilschlüssel aneinanderhängen:** Angreifbar durch Brute-Force-Angriffe.
-            \item **Drei Teilschlüssel aneinanderhängen:** Sicherheitsgewinn gegenüber der ersten Methode.
-            \item **XOR aller Schlüssel:** Höchste Sicherheit, solange alle Schlüssel zufällig und unabhängig sind.
+          \item Geringe Sicherheit, da die Sicherheit vollständig von den Teilschlüsseln abhängt.
+          \item Höhere Sicherheit, da die zufällige Reihenfolge Angriffe schwieriger macht.
+          \item Höchste Sicherheit, solange die Teilschlüssel unabhängig, gleichmäßig verteilt und zufällig sind.
         \end{itemize}
-        \item Zertifikatsbaum: N7 vertraut CAs, die N3 und $ B $ direkt zertifizieren.
-        \item Minimale Anzahl an CAs: Es reicht aus, der CA zu vertrauen, die die Zertifikate für $ B $ und $ N3 $ signiert hat.
-        \item Maßnahme bei Kompromittierung: Alternativer Zertifizierungsweg über eine andere CA. Neue Zertifikate können erstellt werden, um Vertrauen zu erhalten.
+      \item $G$ muss nur der Zertifizierungsstellen $E$ vertrauen, um das Zertifikat von $B$ zu prüfen, da $E$ die Wurzel des Zertifikatsbaums ist und alle anderen Zertifikate signiert.
+      \item $G$ kann das Zertifikat von $B$ trotz des Ausfalls von $C$ prüfen, indem $G$ das Zertifikat von $B$ über $A$ und $E$ prüft.
     \end{enumerate}
   \end{solution}
 \end{exercise}
 
 \begin{exercise}{GSM}
   \begin{enumerate}
-    \item Sagen Sie zu folgenden Abkürzungen welche Funktion sie im GSM erfüllen: $Ki$, $IMSI$, $RAND$, $SRES$, $LAI$, $MSISDN$, $Kc$.
+    \item Welche Funktionen bezeichnen diese Abkürzungen in GSM: \texttt{Ki}, \texttt{IMSI}, \texttt{RAND}, \texttt{SRES}, \texttt{LAI}, \texttt{MSISDN}, \texttt{Kc}.
     \item Welche dieser Abkürzungen ist auch noch im UMTS enthalten bzw. mit ähnlicher Funktion aber anderen Namen?
   \end{enumerate}
 
   \begin{solution}
     \begin{enumerate}
         \item Abkürzungen im GSM und ihre Funktion:
-        \begin{itemize}
-            \item $ K_i $: Geheimer Schlüssel zur Authentifizierung und Verschlüsselung.
-            \item $ IMSI $: Einzigartige Kennung des Mobilfunkteilnehmers.
-            \item $ RAND $: Zufällige Herausforderung zur Authentifizierung.
-            \item $ SRES $: Antwort des Mobilgeräts auf $ RAND $, basierend auf $ K_i $.
-            \item $ LAI $: Standortkennung für Mobilitätsmanagement.
-            \item $ MSISDN $: Telefonnummer des Teilnehmers.
-            \item $ K_c $: Schlüssel zur Verschlüsselung des Datenverkehrs.
-        \end{itemize}
-        \item Diese Funktionen sind auch im UMTS enthalten, jedoch oft mit verbesserten Sicherheitsmechanismen (z. B. längere Schlüssel, stärkere Algorithmen).
+          \begin{itemize}
+            \item \texttt{Ki}: Key Identifier. Geheimer Schlüssel zur Authentifizierung, gespeichert in SIM-Karte und HLR/AuC. Zur Authentifizierung des Mobiltelefons genutzt.
+            \item \texttt{IMSI}: International Mobile Subscriber Identity. Eindeutige Kennung des Mobilfunkteilnehmers. Identifizierung des Benutzers im Netzwerk
+            \item \texttt{RAND}: Random Number. Dient als Herausforderung (Challenge) für die Authentifizierung.
+            \item \texttt{SRES}: Signed Response. Antwort auf die Herausforderung, die vom Mobiltelefon berechnet wird. Wird zur Authentifizierung genutzt.
+            \item \texttt{LAI}: Location Area Identity. Identifiziert die Location Area, in der sich das Mobiltelefon befindet.
+            \item \texttt{MSISDN}: Mobile Station International Subscriber Directory Number. Telefonnummer des Mobiltelefons.
+            \item \texttt{Kc}: Ciphering Key. Wird zur Verschlüsselung der Kommunikation zwischen Mobiltelefon und Basisstation genutzt.
+          \end{itemize}
+        \item Enthalten: \texttt{Ki}, \texttt{IMSI}, \texttt{RAND}, \texttt{MSISDN}. Mit anderem Namen/ähnlicher Funktion: \texttt{SRES}: \texttt{XRES}, \texttt{LAI}: \texttt{RAI}, \texttt{Kc}: \texttt{CK}.
     \end{enumerate}
   \end{solution}
 \end{exercise}
