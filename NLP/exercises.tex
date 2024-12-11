@@ -44,9 +44,9 @@
   \begin{solution}
     Morphological breakdown:
     \begin{itemize}
-        \item **index:** stem = "index"
-        \item **incorrect:** prefix = "in," stem = "correct"
-        \item **interesting:** stem = "interest," suffix = "ing"
+        \item \textbf{index}: stem = "index"
+        \item \textbf{incorrect}: prefix = "in," stem = "correct"
+        \item \textbf{interesting}: stem = "interest," suffix = "ing"
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -69,9 +69,9 @@
 
   \begin{solution}
     \begin{itemize}
-        \item **Corpus definition:** A corpus is a large and structured set of texts, often used for linguistic research.
-        \item **How to build:** Collect text data, preprocess it (cleaning, normalization), and annotate it for specific tasks.
-        \item **Usage:** Analyze linguistic patterns, train NLP models, and evaluate machine learning algorithms.
+        \item \textbf{Corpus definition}: A corpus is a large and structured set of texts, often used for linguistic research.
+        \item \textbf{How to build}: Collect text data, preprocess it (cleaning, normalization), and annotate it for specific tasks.
+        \item \textbf{Usage}: Analyze linguistic patterns, train NLP models, and evaluate machine learning algorithms.
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -81,8 +81,8 @@
 
   \begin{solution}
     \begin{itemize}
-        \item **Definition:** NLP datasets are collections of annotated or unannotated text data designed for specific NLP tasks (e.g., sentiment analysis, translation).
-        \item **Importance:**
+        \item \textbf{Definition}: NLP datasets are collections of annotated or unannotated text data designed for specific NLP tasks (e.g., sentiment analysis, translation).
+        \item \textbf{Importance}:
         \begin{itemize}
             \item Serve as a foundation for training and testing machine learning models.
             \item Enable reproducibility in research.
@@ -97,8 +97,8 @@
 
   \begin{solution}
     \begin{itemize}
-        \item **Annotation process:** Adding labels or metadata to text data (e.g., part-of-speech tags, sentiment labels, named entities).
-        \item **Impact on machine learning:**
+        \item \textbf{Annotation process}: Adding labels or metadata to text data (e.g., part-of-speech tags, sentiment labels, named entities).
+        \item \textbf{Impact on machine learning}:
         \begin{itemize}
             \item Improves model performance by providing high-quality training data.
             \item Enables supervised learning by associating input with output labels.
@@ -114,13 +114,22 @@
   \begin{solution}
     Strategies include:
     \begin{itemize}
-        \item **Task design:** Clearly define annotation tasks with examples and guidelines.
-        \item **Platform selection:** Use platforms like Amazon Mechanical Turk or Prolific.
-        \item **Quality control:** Use redundancy (multiple annotators per task) and include test questions to ensure reliability.
-        \item **Data aggregation:** Combine annotations using majority voting or statistical models.
+        \item \textbf{Task design}: Clearly define annotation tasks with examples and guidelines.
+        \item \textbf{Platform selection}: Use platforms like Amazon Mechanical Turk or Prolific.
+        \item \textbf{Quality control}: Use redundancy (multiple annotators per task) and include test questions to ensure reliability.
+        \item \textbf{Data aggregation}: Combine annotations using majority voting or statistical models.
     \end{itemize}
   \end{solution}
 \end{exercise}
+
+% Q: Why are more features not always better for learning a
+% classifier?
+% A: More training data might be needed; Dependent features
+% might lead to deficient models; Some ML algorithms can only deal
+% with specific data types; Slower.
+% Q: What is the typical type of input data that a sequence tagger
+% training step requires?
+% A: Labeled training text. (e.g. POS, NER)
 
 
 
@@ -131,31 +140,19 @@
   Give at least 3 examples of ambiguity in tokenization.
 
   \begin{solution}
-    Examples of ambiguity in tokenization:
     \begin{enumerate}
-        \item **Hyphenated words:** Does "state-of-the-art" count as one token or three?
-        \item **Contractions:** Should "don't" be treated as one token or split into "do" and "n't"?
-        \item **Punctuation:** How should punctuation like periods in "U.S." or apostrophes in possessives ("John's book") be handled?
+        \item \textbf{Hyphenated words}: Does "state-of-the-art" count as one token or three?
+        \item \textbf{Contractions}: Should "don't" be treated as one token or split into "do" and "n't"?
+        \item \textbf{Punctuation}: How should punctuation like periods in "U.S." or apostrophes in possessives ("John's book") be handled?
     \end{enumerate}
   \end{solution}
 \end{exercise}
 
 \begin{exercise}{Parse trees}
-  Given the sentence "John shot the man with the gun" and a grammar: Draw all existing parse trees. Which types of syntactic ambiguity occur here and where?
+  "\textit{John shot the man with the gun}". Draw all possible parse trees for this sentence using the English grammar. What types of syntactic ambiguity are present?
 
   \begin{solution}
-    For the sentence "John shot the man with the gun":
-    \begin{enumerate}
-        \item **Parse trees:**
-            \begin{itemize}
-                \item Tree 1: "with the gun" modifies "the man" (John shot a man who had the gun).
-                \item Tree 2: "with the gun" modifies "shot" (John used a gun to shoot the man).
-            \end{itemize}
-        \item **Syntactic ambiguity:** 
-        \begin{itemize}
-            \item **Attachment ambiguity:** Whether "with the gun" attaches to "shot" or "the man."
-        \end{itemize}
-    \end{enumerate}
+    A parse tree can be drawn using the following structures: $S, N, V, Det, P, NP, VP, PP$. This is an example of attachment ambiguity. The prepositional phrase "with the gun" can attach to either "shot" or "the man".
   \end{solution}
 \end{exercise}
 
@@ -163,42 +160,28 @@
   What is the difference between stemming and lemmatization?
 
   \begin{solution}
-    \begin{itemize}
-        \item **Stemming:** Reduces a word to its base form by chopping off prefixes or suffixes. Example: "running" → "run".
-        \item **Lemmatization:** Reduces a word to its dictionary form (lemma), considering the word's context and grammar. Example: "better" → "good."
-    \end{itemize}
-    Lemmatization is more precise than stemming but computationally more expensive.
+    While stemming reduces a word to its base form by removing pre- and suffices ("running" → "run"), lemmatization considers the word's context and grammar to find its dictionary form ("better" → "good"). Lemmatization is more precise than stemming but computationally more expensive.
   \end{solution}
 \end{exercise}
 
 \begin{exercise}{Web as corpus}
-  List 4 issues you have to deal with when using the web as a corpus for NLP purposes. Explain each.
+  List 4 issues you have to deal with when using the web as a corpus for NLP purposes and explain each.
 
   \begin{solution}
-    Issues when using the web as a corpus:
     \begin{enumerate}
-        \item **Noisy data:** Content may contain errors, irrelevant information, or non-standard grammar.
-        \item **Duplication:** Identical or nearly identical data appears multiple times.
-        \item **Bias:** Web content often reflects societal biases, which can skew analyses.
-        \item **Dynamic content:** Web pages change frequently, making reproducibility challenging.
+        \item \textbf{Noise}: Content may contain errors, irrelevant information, or non-standard grammar.
+        \item \textbf{Duplicates}: Identical or nearly identical data appears multiple times.
+        \item \textbf{Bias}: Web content often reflects societal biases, which can skew analyses.
+        \item \textbf{Reproducability}: Web pages change frequently, making reproducibility challenging.
     \end{enumerate}
   \end{solution}
 \end{exercise}
 
 \begin{exercise}{Cross-language QA}
-  How does cross-language QA work? What are its issues?
+  How does cross-language QA work and what are the main issues?
 
   \begin{solution}
-    Cross-language QA involves answering questions in one language based on information in another.
-    \begin{itemize}
-        \item **Process:** Translate either the query or the documents to a common language, perform QA, and translate the result back.
-        \item **Issues:** 
-        \begin{itemize}
-            \item Loss of information in translation.
-            \item Mismatches between linguistic structures of languages.
-            \item Cultural differences in phrasing questions or answers.
-        \end{itemize}
-    \end{itemize}
+    Cross-language QA involves answering questions in one language based on information in another. This is accomplished by translating the question, retrieving relevant information in the target language, and generating an answer. Challenges include translation errors, cultural differences.
   \end{solution}
 \end{exercise}
 
@@ -206,26 +189,19 @@
   What are the main concepts in a machine learning pipeline?
 
   \begin{solution}
-    Main components of a machine learning pipeline:
-    \begin{enumerate}
-        \item **Data preprocessing:** Cleaning, normalizing, and transforming raw data.
-        \item **Feature extraction:** Selecting or engineering features that represent the data.
-        \item **Model training:** Using labeled data to train the algorithm.
-        \item **Evaluation:** Measuring performance using metrics like accuracy or F1-score.
-        \item **Deployment:** Integrating the trained model into production systems.
-    \end{enumerate}
+    Data Preprocessing $\to$ Feature extraction $\to$ Model training $\to$ Evaluation $\to$ Deployment
   \end{solution}
 \end{exercise}
 
 \begin{exercise}{IR evaluation}
-  What are the problems with precision, recall, and f-measure in IR? How can these be improved? Why is Cohen's Kappa better?
+  What are the problems with precision, recall, and F-measure in IR? How can these be improved? Why is Cohen's Kappa better?
 
   \begin{solution}
     \begin{itemize}
-        \item **Precision:** Biased toward over-selecting relevant documents.
-        \item **Recall:** Favors retrieving more documents, even if irrelevant.
-        \item **F-measure:** Averages precision and recall but doesn’t prioritize false positives or negatives.
-        \item **Cohen's Kappa:** Measures inter-rater reliability and incorporates agreement by chance, making it better for comparing systems.
+        \item \textbf{Precision}: How relevant are the retrieved documents? Favors retrieving fewer documents.
+        \item \textbf{Recall}: How many of the relevant documents were retrieved? Favors retrieving more documents.
+        \item \textbf{F-measure}: Harmonic mean of precision and recall. Balances the two metrics but not adjustable.
+        \item \textbf{Cohen's Kappa}: Measures inter-annotator agreement, accounting for chance agreement. Better for evaluating IR systems because it considers agreement beyond chance.
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -236,9 +212,9 @@
   \begin{solution}
     For P@5, P@10, and MAP:
     \begin{itemize}
-        \item **P@5:** Count relevant documents in the top 5 results and divide by 5.
-        \item **P@10:** Same calculation for the top 10 results.
-        \item **MAP:** Average Precision for each query, then average across all queries.
+        \item \textbf{P@5}: Count relevant documents in the top 5 results and divide by 5.
+        \item \textbf{P@10}: Same calculation for the top 10 results.
+        \item \textbf{MAP}: Average Precision for each query, then average across all queries.
     \end{itemize}
     Steps:
     \begin{itemize}
@@ -261,10 +237,10 @@
   \begin{solution}
     Correct statements:
     \begin{enumerate}
-        \item **True:** Features for Naive Bayes do not need to be uncorrelated, though it assumes independence for computation.
-        \item **False:** Naive Bayes is fast to train, not slow.
-        \item **False:** SVM is not inherently multi-label but can be adapted for multi-label classification.
-        \item **True:** SVM handles sparse data well due to its kernel functions.
+        \item \textbf{True}: Features for Naive Bayes do not need to be uncorrelated, though it assumes independence for computation.
+        \item \textbf{False}: Naive Bayes is fast to train, not slow.
+        \item \textbf{False}: SVM is not inherently multi-label but can be adapted for multi-label classification.
+        \item \textbf{True}: SVM handles sparse data well due to its kernel functions.
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -275,10 +251,10 @@
   \begin{solution}
     Steps for constructing a corpus:
     \begin{enumerate}
-        \item **Data collection:** Crawl web pages, scrape data, or gather domain-specific text.
-        \item **Cleaning:** Remove duplicates, irrelevant content, and normalize text.
-        \item **Annotation:** Add metadata or labels for tasks like classification or parsing.
-        \item **Usability:** Store in accessible formats (e.g., JSON, XML) and document the corpus for ease of use.
+        \item \textbf{Data collection}: Crawl web pages, scrape data, or gather domain-specific text.
+        \item \textbf{Cleaning}: Remove duplicates, irrelevant content, and normalize text.
+        \item \textbf{Annotation}: Add metadata or labels for tasks like classification or parsing.
+        \item \textbf{Usability}: Store in accessible formats (e.g., JSON, XML) and document the corpus for ease of use.
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -289,9 +265,9 @@
   \begin{solution}
     Challenges in pragmatics and discourse analysis:
     \begin{itemize}
-        \item **Context dependency:** Understanding depends heavily on prior sentences or external knowledge.
-        \item **Ambiguity:** Words and phrases can have multiple meanings depending on the situation.
-        \item **Social norms:** Interpretations vary based on cultural or societal factors.
+        \item \textbf{Context dependency}: Understanding depends heavily on prior sentences or external knowledge.
+        \item \textbf{Ambiguity}: Words and phrases can have multiple meanings depending on the situation.
+        \item \textbf{Social norms}: Interpretations vary based on cultural or societal factors.
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -301,8 +277,8 @@
 
   \begin{solution}
     \begin{itemize}
-        \item **Definition:** Hate speech involves language that attacks or discriminates against individuals or groups based on attributes like race, religion, ethnicity, gender, or sexual orientation.
-        \item **Constructing a hate speech classifier:**
+        \item \textbf{Definition}: Hate speech involves language that attacks or discriminates against individuals or groups based on attributes like race, religion, ethnicity, gender, or sexual orientation.
+        \item \textbf{Constructing a hate speech classifier}:
         \begin{enumerate}
             \item Collect labeled datasets with examples of hate speech and non-hate speech.
             \item Preprocess text (e.g., tokenization, removing stop words).
@@ -319,8 +295,8 @@
 
   \begin{solution}
     \begin{itemize}
-        \item **Definition:** Counter hate speech is content designed to reduce the impact of hate speech, often by promoting positive, empathetic, or factual responses.
-        \item **Constructing a counter hate speech system:**
+        \item \textbf{Definition}: Counter hate speech is content designed to reduce the impact of hate speech, often by promoting positive, empathetic, or factual responses.
+        \item \textbf{Constructing a counter hate speech system}:
         \begin{enumerate}
             \item Collect datasets of effective counter hate responses.
             \item Train models to generate or retrieve appropriate responses based on the hate speech content.
@@ -337,11 +313,11 @@
   \begin{solution}
     Steps in a crowdsourced annotation workflow:
     \begin{enumerate}
-        \item **Task design:** Define the annotation task clearly with examples and instructions.
-        \item **Platform setup:** Use a crowdsourcing platform (e.g., Amazon Mechanical Turk, Prolific).
-        \item **Quality control:** Include test questions and redundancy (multiple annotators per item) to ensure data reliability.
-        \item **Data aggregation:** Aggregate annotations using majority voting or weighted schemes.
-        \item **Evaluation:** Analyze annotation quality and address inconsistencies.
+        \item \textbf{Task design}: Define the annotation task clearly with examples and instructions.
+        \item \textbf{Platform setup}: Use a crowdsourcing platform (e.g., Amazon Mechanical Turk, Prolific).
+        \item \textbf{Quality control}: Include test questions and redundancy (multiple annotators per item) to ensure data reliability.
+        \item \textbf{Data aggregation}: Aggregate annotations using majority voting or weighted schemes.
+        \item \textbf{Evaluation}: Analyze annotation quality and address inconsistencies.
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -351,8 +327,8 @@
 
   \begin{solution}
     \begin{itemize}
-        \item **Duplicates:** Duplicates arise from mirrored websites, copied content, or redundant crawls.
-        \item **Detection methods:**
+        \item \textbf{Duplicates}: Duplicates arise from mirrored websites, copied content, or redundant crawls.
+        \item \textbf{Detection methods}:
         \begin{itemize}
             \item Hashing (e.g., MD5 or SHA): Compare hash values of documents.
             \item Similarity measures: Use cosine similarity or Jaccard index on n-grams.
@@ -368,17 +344,17 @@
   \begin{solution}
     Differences between QA (Question Answering) and IR (Information Retrieval):
     \begin{itemize}
-        \item **Goal:**
+        \item \textbf{Goal}:
         \begin{itemize}
             \item QA aims to provide direct answers.
             \item IR retrieves documents containing relevant information.
         \end{itemize}
-        \item **Processing:**
+        \item \textbf{Processing}:
         \begin{itemize}
             \item QA requires deeper natural language understanding.
             \item IR focuses on keyword matching and ranking.
         \end{itemize}
-        \item **Applications:**
+        \item \textbf{Applications}:
         \begin{itemize}
             \item QA: Chatbots, customer support.
             \item IR: Search engines.
@@ -392,8 +368,8 @@
 
   \begin{solution}
     \begin{itemize}
-        \item **Applications:** Multi-language QA systems are used in global customer support, cross-border e-commerce, and multi-language search engines.
-        \item **Difficulties:**
+        \item \textbf{Applications}: Multi-language QA systems are used in global customer support, cross-border e-commerce, and multi-language search engines.
+        \item \textbf{Difficulties}:
         \begin{itemize}
             \item Translation errors can distort queries or results.
             \item Cultural and linguistic differences complicate understanding and generating answers.
@@ -409,10 +385,10 @@
   \begin{solution}
     Approaches for language detection:
     \begin{enumerate}
-        \item **N-gram analysis:** Compare n-grams of text against language-specific frequency profiles.
-        \item **Machine learning models:** Use classifiers trained on labeled text for different languages.
-        \item **Lexicon-based methods:** Match words in the text to dictionaries of different languages.
-        \item **Hybrid approaches:** Combine multiple methods for higher accuracy.
+        \item \textbf{N-gram analysis}: Compare n-grams of text against language-specific frequency profiles.
+        \item \textbf{Machine learning models}: Use classifiers trained on labeled text for different languages.
+        \item \textbf{Lexicon-based methods}: Match words in the text to dictionaries of different languages.
+        \item \textbf{Hybrid approaches}: Combine multiple methods for higher accuracy.
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -422,9 +398,9 @@
 
   \begin{solution}
     \begin{itemize}
-        \item **Factual QA:** Deals with objective information (e.g., "What is the capital of France?").
-        \item **Opinionated QA:** Involves subjective answers (e.g., "Is Paris a good travel destination?").
-        \item **Evaluation:** Factual QA is easier to evaluate as answers can be verified against ground truth. Opinionated QA requires subjective or aggregated assessments.
+        \item \textbf{Factual QA}: Deals with objective information (e.g., "What is the capital of France?").
+        \item \textbf{Opinionated QA}: Involves subjective answers (e.g., "Is Paris a good travel destination?").
+        \item \textbf{Evaluation}: Factual QA is easier to evaluate as answers can be verified against ground truth. Opinionated QA requires subjective or aggregated assessments.
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -434,8 +410,8 @@
 
   \begin{solution}
     \begin{itemize}
-        \item **RAG (Retrieval-Augmented Generation):** Combines retrieval models with generative models to produce context-aware answers. External knowledge is retrieved and fed into the generation model.
-        \item **LangChain:** A framework for building applications with large language models, offering tools for integrating RAG systems. It manages chaining retrieval and generation steps efficiently.
+        \item \textbf{RAG (Retrieval-Augmented Generation)}: Combines retrieval models with generative models to produce context-aware answers. External knowledge is retrieved and fed into the generation model.
+        \item \textbf{LangChain}: A framework for building applications with large language models, offering tools for integrating RAG systems. It manages chaining retrieval and generation steps efficiently.
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -445,15 +421,15 @@
 
   \begin{solution}
     \begin{itemize}
-        \item **Supervised learning:** Uses labeled data to train machine learning models.
+        \item \textbf{Supervised learning}: Uses labeled data to train machine learning models.
         \begin{itemize}
-            \item **Advantages:** High accuracy with large datasets.
-            \item **Drawbacks:** Relies on annotated data and is domain-dependent.
+            \item \textbf{Advantages}: High accuracy with large datasets.
+            \item \textbf{Drawbacks}: Relies on annotated data and is domain-dependent.
         \end{itemize}
-        \item **Lexicon-based approaches:** Use sentiment dictionaries to determine polarity.
+        \item \textbf{Lexicon-based approaches}: Use sentiment dictionaries to determine polarity.
         \begin{itemize}
-            \item **Advantages:** Simplicity and no training requirement.
-            \item **Drawbacks:** Limited contextual understanding and poor performance on complex text.
+            \item \textbf{Advantages}: Simplicity and no training requirement.
+            \item \textbf{Drawbacks}: Limited contextual understanding and poor performance on complex text.
         \end{itemize}
     \end{itemize}
   \end{solution}
@@ -464,7 +440,7 @@
 
   \begin{solution}
     \begin{itemize}
-        \item **Minimum Edit Distance for "TAC" and "CAT":**
+        \item \textbf{Minimum Edit Distance for "TAC" and "CAT"}:
         \[
         \begin{array}{c|c|c|c|c}
             &  & C & A & T \\
@@ -475,7 +451,7 @@
             C & 3 & 2 & 2 & 2 \\
         \end{array}
         \]
-        \item **Word outcomes:** Possible outcomes from edits:
+        \item \textbf{Word outcomes}: Possible outcomes from edits:
         \begin{enumerate}
             \item CAT
             \item TAT
@@ -496,11 +472,11 @@
 
   \begin{solution}
     \begin{enumerate}
-        \item **Data collection:** Gather data from relevant sources (e.g., web crawling, domain-specific text).
-        \item **Cleaning and preprocessing:** Remove duplicates, non-linguistic content, and normalize text (e.g., case normalization, tokenization).
-        \item **Annotation:** Add metadata or linguistic labels (e.g., POS tags, syntactic trees) to the text.
-        \item **Storage:** Store the corpus in an accessible format like JSON, XML, or relational databases.
-        \item **Documentation:** Provide guidelines and metadata about the corpus for user understanding.
+        \item \textbf{Data collection}: Gather data from relevant sources (e.g., web crawling, domain-specific text).
+        \item \textbf{Cleaning and preprocessing}: Remove duplicates, non-linguistic content, and normalize text (e.g., case normalization, tokenization).
+        \item \textbf{Annotation}: Add metadata or linguistic labels (e.g., POS tags, syntactic trees) to the text.
+        \item \textbf{Storage}: Store the corpus in an accessible format like JSON, XML, or relational databases.
+        \item \textbf{Documentation}: Provide guidelines and metadata about the corpus for user understanding.
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -510,10 +486,10 @@
 
   \begin{solution}
     \begin{itemize}
-        \item **Context dependency:** Requires understanding of the broader context beyond sentence boundaries.
-        \item **Ambiguity:** Words or phrases can have multiple meanings depending on the discourse.
-        \item **Cultural and social norms:** Interpretation is influenced by societal and cultural factors.
-        \item **Incomplete information:** Missing parts of conversations or text make it harder to analyze.
+        \item \textbf{Context dependency}: Requires understanding of the broader context beyond sentence boundaries.
+        \item \textbf{Ambiguity}: Words or phrases can have multiple meanings depending on the discourse.
+        \item \textbf{Cultural and social norms}: Interpretation is influenced by societal and cultural factors.
+        \item \textbf{Incomplete information}: Missing parts of conversations or text make it harder to analyze.
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -523,8 +499,8 @@
 
   \begin{solution}
     \begin{itemize}
-        \item **Sequence tagging:** The process of assigning labels to each element in a sequence (e.g., part-of-speech tagging, named entity recognition).
-        \item **Conditional Random Field (CRF):** A probabilistic model used for structured prediction in sequence data. It considers the context of neighboring labels to improve accuracy.
+        \item \textbf{Sequence tagging}: The process of assigning labels to each element in a sequence (e.g., part-of-speech tagging, named entity recognition).
+        \item \textbf{Conditional Random Field (CRF)}: A probabilistic model used for structured prediction in sequence data. It considers the context of neighboring labels to improve accuracy.
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -534,7 +510,7 @@
 
   \begin{solution}
     \begin{itemize}
-        \item **Minimum Edit Distance Table:**
+        \item \textbf{Minimum Edit Distance Table}:
         \[
         \begin{array}{c|c|c|c|c}
             &  & C & A & T \\
@@ -545,7 +521,7 @@
             C & 3 & 2 & 2 & 2 \\
         \end{array}
         \]
-        \item **Outcomes:**
+        \item \textbf{Outcomes}:
         \begin{enumerate}
             \item CAT
             \item TAT
@@ -561,8 +537,8 @@
 
   \begin{solution}
     \begin{itemize}
-        \item **P@5:** Count relevant documents in the top 5 results and divide by 5.
-        \item **MAP:** For each query, calculate average precision across relevant documents and average these scores.
+        \item \textbf{P@5}: Count relevant documents in the top 5 results and divide by 5.
+        \item \textbf{MAP}: For each query, calculate average precision across relevant documents and average these scores.
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -572,8 +548,8 @@
 
   \begin{solution}
     \begin{itemize}
-        \item **Definition:** Hate speech targets individuals or groups based on attributes like race, religion, gender, or orientation.
-        \item **Classifier construction:**
+        \item \textbf{Definition}: Hate speech targets individuals or groups based on attributes like race, religion, gender, or orientation.
+        \item \textbf{Classifier construction}:
         \begin{enumerate}
             \item Collect labeled datasets of hate and non-hate speech.
             \item Preprocess data by removing noise and tokenizing.
@@ -589,8 +565,8 @@
 
   \begin{solution}
     \begin{itemize}
-        \item **Definition:** Counter hate speech neutralizes hate content by promoting positive or factual responses.
-        \item **System construction:**
+        \item \textbf{Definition}: Counter hate speech neutralizes hate content by promoting positive or factual responses.
+        \item \textbf{System construction}:
         \begin{enumerate}
             \item Collect examples of effective counter hate responses.
             \item Use NLP techniques to classify hate speech and generate counter-responses.
@@ -605,8 +581,8 @@
 
   \begin{solution}
     \begin{itemize}
-        \item **Lexicon extension:** Expand sentiment dictionaries using related terms from distributed word embeddings like Word2Vec or GloVe.
-        \item **Process:**
+        \item \textbf{Lexicon extension}: Expand sentiment dictionaries using related terms from distributed word embeddings like Word2Vec or GloVe.
+        \item \textbf{Process}:
         \begin{enumerate}
             \item Identify synonyms, antonyms, or similar words in embedding spaces.
             \item Update lexicons with these terms to improve coverage.
@@ -620,7 +596,7 @@
 
   \begin{solution}
     \begin{itemize}
-        \item **Lexicon-based approaches:** 
+        \item \textbf{Lexicon-based approaches}: 
         \begin{itemize}
             \item Use pre-built dictionaries of words with sentiment labels (e.g., positive, negative).
             \item Advantages:
@@ -634,7 +610,7 @@
                     \item Poor performance on context-dependent sentiment (e.g., sarcasm).
                 \end{itemize}
         \end{itemize}
-        \item **Supervised learning approaches:**
+        \item \textbf{Supervised learning approaches}:
         \begin{itemize}
             \item Train machine learning models on labeled data to classify sentiment.
             \item Advantages:
@@ -657,10 +633,10 @@
 
   \begin{solution}
     \begin{itemize}
-        \item **Context-dependence:** Lexicons fail to account for how sentiment changes with context.
-        \item **Negation handling:** Sentences like "not bad" may be incorrectly classified without understanding negation.
-        \item **Ambiguity:** Words can have different sentiments in different contexts (e.g., "hot" in weather vs. arguments).
-        \item **Domain-specific issues:** Lexicons often do not cover domain-specific terms or slang.
+        \item \textbf{Context-dependence}: Lexicons fail to account for how sentiment changes with context.
+        \item \textbf{Negation handling}: Sentences like "not bad" may be incorrectly classified without understanding negation.
+        \item \textbf{Ambiguity}: Words can have different sentiments in different contexts (e.g., "hot" in weather vs. arguments).
+        \item \textbf{Domain-specific issues}: Lexicons often do not cover domain-specific terms or slang.
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -676,12 +652,12 @@
 
   \begin{solution}
     \begin{itemize}
-        \item **Correct:** 
+        \item \textbf{Correct}: 
         \begin{itemize}
             \item Features for Naive Bayes classifiers do not need to be uncorrelated.
             \item SVM handles sparse data well.
         \end{itemize}
-        \item **Incorrect:**
+        \item \textbf{Incorrect}:
         \begin{itemize}
             \item Naive Bayes is actually fast to train.
             \item SVM is not inherently multi-label but can be adapted for multi-label classification.
@@ -695,10 +671,10 @@
 
   \begin{solution}
     \begin{itemize}
-        \item **N-gram analysis:** Compare the frequency of character n-grams against language-specific profiles.
-        \item **Machine learning models:** Train classifiers (e.g., SVM, neural networks) using labeled text data for various languages.
-        \item **Lexicon-based methods:** Use dictionaries to match input text to language-specific words.
-        \item **Hybrid approaches:** Combine n-gram, lexicon, and machine learning techniques for better accuracy.
+        \item \textbf{N-gram analysis}: Compare the frequency of character n-grams against language-specific profiles.
+        \item \textbf{Machine learning models}: Train classifiers (e.g., SVM, neural networks) using labeled text data for various languages.
+        \item \textbf{Lexicon-based methods}: Use dictionaries to match input text to language-specific words.
+        \item \textbf{Hybrid approaches}: Combine n-gram, lexicon, and machine learning techniques for better accuracy.
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -709,11 +685,11 @@
   \begin{solution}
     Steps in a crowdsourced annotation workflow:
     \begin{enumerate}
-        \item **Task design:** Define the annotation task with clear instructions and examples.
-        \item **Platform setup:** Deploy the task on crowdsourcing platforms like Amazon Mechanical Turk.
-        \item **Quality control:** Use redundancy by assigning multiple annotators to the same task and include test questions.
-        \item **Data aggregation:** Combine annotations using majority voting or weighted scoring methods.
-        \item **Evaluation:** Analyze the consistency and reliability of annotations.
+        \item \textbf{Task design}: Define the annotation task with clear instructions and examples.
+        \item \textbf{Platform setup}: Deploy the task on crowdsourcing platforms like Amazon Mechanical Turk.
+        \item \textbf{Quality control}: Use redundancy by assigning multiple annotators to the same task and include test questions.
+        \item \textbf{Data aggregation}: Combine annotations using majority voting or weighted scoring methods.
+        \item \textbf{Evaluation}: Analyze the consistency and reliability of annotations.
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -724,10 +700,10 @@
   \begin{solution}
     Ambiguities in tokenization include:
     \begin{itemize}
-        \item **Hyphenation:** Is "state-of-the-art" one token or three?
-        \item **Punctuation:** Should periods in abbreviations (e.g., "U.S.") be separated?
-        \item **Contractions:** Should "don't" be split into "do" and "n't"?
-        \item **Language differences:** Tokenization rules vary by language (e.g., Chinese characters vs. English words).
+        \item \textbf{Hyphenation}: Is "state-of-the-art" one token or three?
+        \item \textbf{Punctuation}: Should periods in abbreviations (e.g., "U.S.") be separated?
+        \item \textbf{Contractions}: Should "don't" be split into "do" and "n't"?
+        \item \textbf{Language differences}: Tokenization rules vary by language (e.g., Chinese characters vs. English words).
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -738,17 +714,17 @@
   \begin{solution}
     Differences between QA and IR:
     \begin{itemize}
-        \item **Goal:**
+        \item \textbf{Goal}:
         \begin{itemize}
             \item QA provides direct answers to user queries.
             \item IR retrieves documents that may contain relevant information.
         \end{itemize}
-        \item **Processing:**
+        \item \textbf{Processing}:
         \begin{itemize}
             \item QA requires natural language understanding and reasoning.
             \item IR focuses on keyword matching and ranking algorithms.
         \end{itemize}
-        \item **Applications:**
+        \item \textbf{Applications}:
         \begin{itemize}
             \item QA is used in chatbots and virtual assistants.
             \item IR powers search engines like Google.
@@ -763,10 +739,10 @@
   \begin{solution}
     Challenges in cross-language QA include:
     \begin{itemize}
-        \item **Translation errors:** Inaccurate translations can distort queries or answers.
-        \item **Lack of parallel resources:** Few high-quality bilingual corpora exist for certain language pairs.
-        \item **Cultural differences:** Questions or answers may need cultural adaptation.
-        \item **Mismatched structures:** Linguistic differences make aligning queries and answers difficult.
+        \item \textbf{Translation errors}: Inaccurate translations can distort queries or answers.
+        \item \textbf{Lack of parallel resources}: Few high-quality bilingual corpora exist for certain language pairs.
+        \item \textbf{Cultural differences}: Questions or answers may need cultural adaptation.
+        \item \textbf{Mismatched structures}: Linguistic differences make aligning queries and answers difficult.
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -776,8 +752,8 @@
 
   \begin{solution}
     \begin{itemize}
-        \item **Stemming:** Reduces a word to its root by chopping off affixes (e.g., "running" → "run"). It is less precise and may produce non-words.
-        \item **Lemmatization:** Converts a word to its base form (lemma) based on its context (e.g., "better" → "good"). It is more accurate but computationally expensive.
+        \item \textbf{Stemming}: Reduces a word to its root by chopping off affixes (e.g., "running" → "run"). It is less precise and may produce non-words.
+        \item \textbf{Lemmatization}: Converts a word to its base form (lemma) based on its context (e.g., "better" → "good"). It is more accurate but computationally expensive.
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -787,13 +763,13 @@
 
   \begin{solution}
     \begin{itemize}
-        \item **Reasons for duplicates:**
+        \item \textbf{Reasons for duplicates}:
         \begin{itemize}
             \item Content mirroring across websites.
             \item Republishing of syndicated articles.
             \item Crawling the same site multiple times.
         \end{itemize}
-        \item **Detection methods:**
+        \item \textbf{Detection methods}:
         \begin{itemize}
             \item Hashing (e.g., MD5, SHA) to compare file contents.
             \item Cosine similarity or Jaccard index for text comparisons.
@@ -809,10 +785,10 @@
   \begin{solution}
     Challenges include:
     \begin{itemize}
-        \item **Noisy data:** Web content often includes irrelevant or ungrammatical text.
-        \item **Duplication:** Large-scale crawls often capture duplicate data.
-        \item **Bias:** Web data may reflect societal or geographic biases.
-        \item **Dynamic content:** Websites frequently change, making reproducibility difficult.
+        \item \textbf{Noisy data}: Web content often includes irrelevant or ungrammatical text.
+        \item \textbf{Duplication}: Large-scale crawls often capture duplicate data.
+        \item \textbf{Bias}: Web data may reflect societal or geographic biases.
+        \item \textbf{Dynamic content}: Websites frequently change, making reproducibility difficult.
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -823,9 +799,9 @@
   \begin{solution}
     TREC (Text REtrieval Conference) defines these question types:
     \begin{itemize}
-        \item **Factoid questions:** Require specific factual answers (e.g., "Who is the president of the U.S.?").
-        \item **List questions:** Require a list of items (e.g., "List countries in the EU").
-        \item **Definition questions:** Seek explanations or definitions (e.g., "What is AI?").
+        \item \textbf{Factoid questions}: Require specific factual answers (e.g., "Who is the president of the U.S.?").
+        \item \textbf{List questions}: Require a list of items (e.g., "List countries in the EU").
+        \item \textbf{Definition questions}: Seek explanations or definitions (e.g., "What is AI?").
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -835,8 +811,8 @@
 
   \begin{solution}
     \begin{itemize}
-        \item **Definition:** QALD (Question Answering over Linked Data) focuses on answering questions using linked data (e.g., RDF datasets).
-        \item **Challenges:**
+        \item \textbf{Definition}: QALD (Question Answering over Linked Data) focuses on answering questions using linked data (e.g., RDF datasets).
+        \item \textbf{Challenges}:
         \begin{itemize}
             \item Mapping natural language queries to structured data.
             \item Handling incomplete or ambiguous data in linked datasets.
@@ -857,9 +833,9 @@
   \begin{solution}
     Comprehensiveness refers to the extent to which a system, dataset, or model covers all relevant aspects of a task or domain. In NLP:
     \begin{itemize}
-        \item **Datasets:** Comprehensive datasets should include diverse and representative samples of the target domain.
-        \item **Models:** Comprehensive models should handle all variations and exceptions within their scope.
-        \item **Applications:** Comprehensive applications should meet all user requirements for a given task.
+        \item \textbf{Datasets}: Comprehensive datasets should include diverse and representative samples of the target domain.
+        \item \textbf{Models}: Comprehensive models should handle all variations and exceptions within their scope.
+        \item \textbf{Applications}: Comprehensive applications should meet all user requirements for a given task.
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -870,9 +846,9 @@
   \begin{solution}
     To complete the image, analyze the given context and fill in the white boxes based on:
     \begin{itemize}
-        \item **Labels:** Assign appropriate titles or labels to the boxes (e.g., steps in a pipeline).
-        \item **Relationships:** Connect missing elements to ensure the flow aligns with the diagram's logic.
-        \item **Annotations:** Use any provided hints to accurately reconstruct the intended content.
+        \item \textbf{Labels}: Assign appropriate titles or labels to the boxes (e.g., steps in a pipeline).
+        \item \textbf{Relationships}: Connect missing elements to ensure the flow aligns with the diagram's logic.
+        \item \textbf{Annotations}: Use any provided hints to accurately reconstruct the intended content.
     \end{itemize}
     The exact answer depends on the image provided.
   \end{solution}
@@ -884,8 +860,8 @@
   \begin{solution}
     Two common NLTK parameters starting with "c" are:
     \begin{itemize}
-        \item **Chunking:** Groups words into meaningful units (e.g., noun phrases) based on part-of-speech tagging.
-        \item **Concordance:** Displays occurrences of a word within a context window, useful for lexical analysis.
+        \item \textbf{Chunking}: Groups words into meaningful units (e.g., noun phrases) based on part-of-speech tagging.
+        \item \textbf{Concordance}: Displays occurrences of a word within a context window, useful for lexical analysis.
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -896,9 +872,9 @@
   \begin{solution}
     For multi-class classification, SVM uses:
     \begin{itemize}
-        \item **One-vs-One (OvO):** Trains a classifier for every pair of classes. Final classification is determined by majority voting.
-        \item **One-vs-All (OvA):** Trains one classifier per class against all other classes. The highest-confidence prediction is chosen.
-        \item **Extensions:** Kernel tricks and soft margins can be applied for better generalization.
+        \item \textbf{One-vs-One (OvO)}: Trains a classifier for every pair of classes. Final classification is determined by majority voting.
+        \item \textbf{One-vs-All (OvA)}: Trains one classifier per class against all other classes. The highest-confidence prediction is chosen.
+        \item \textbf{Extensions}: Kernel tricks and soft margins can be applied for better generalization.
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -908,12 +884,12 @@
 
   \begin{solution}
     \begin{itemize}
-        \item **Classical ML:**
+        \item \textbf{Classical ML}:
         \begin{itemize}
             \item Relies on manually engineered features (e.g., TF-IDF, n-grams).
             \item Requires domain expertise for feature extraction.
         \end{itemize}
-        \item **Deep learning:**
+        \item \textbf{Deep learning}:
         \begin{itemize}
             \item Automatically learns hierarchical feature representations.
             \item Captures complex patterns (e.g., semantics, dependencies).
@@ -946,9 +922,9 @@
   \begin{solution}
     Given true positives (\(TP\)), false positives (\(FP\)), and false negatives (\(FN\)):
     \begin{itemize}
-        \item **Precision:** \( \frac{TP}{TP + FP} \)
-        \item **Recall:** \( \frac{TP}{TP + FN} \)
-        \item **F1-Score:** \( 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}} \)
+        \item \textbf{Precision}: \( \frac{TP}{TP + FP} \)
+        \item \textbf{Recall}: \( \frac{TP}{TP + FN} \)
+        \item \textbf{F1-Score}: \( 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}} \)
     \end{itemize}
     Plug in the values provided to compute these metrics.
   \end{solution}
@@ -960,9 +936,9 @@
   \begin{solution}
     Classification is used in IR for:
     \begin{itemize}
-        \item **Query classification:** Identify user intent (e.g., navigational vs. informational).
-        \item **Document classification:** Categorize documents into predefined topics or genres.
-        \item **Relevance classification:** Predict whether a document is relevant to a query.
+        \item \textbf{Query classification}: Identify user intent (e.g., navigational vs. informational).
+        \item \textbf{Document classification}: Categorize documents into predefined topics or genres.
+        \item \textbf{Relevance classification}: Predict whether a document is relevant to a query.
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -972,13 +948,13 @@
 
   \begin{solution}
     \begin{itemize}
-        \item **For:**
+        \item \textbf{For}:
         \begin{itemize}
             \item Expands dataset availability to resource-scarce languages.
             \item Enables cross-lingual NLP research.
             \item Saves effort in recreating annotations.
         \end{itemize}
-        \item **Against:**
+        \item \textbf{Against}:
         \begin{itemize}
             \item Potential loss of annotation quality in translation.
             \item Context or cultural relevance may not transfer.
@@ -993,13 +969,13 @@
 
   \begin{solution}
     \begin{itemize}
-        \item **For:**
+        \item \textbf{For}:
         \begin{itemize}
             \item Large-scale, diverse data sources.
             \item Includes up-to-date content.
             \item Covers multiple languages and domains.
         \end{itemize}
-        \item **Against:**
+        \item \textbf{Against}:
         \begin{itemize}
             \item Noisy and unstructured data.
             \item Contains duplicates and redundant information.
@@ -1015,9 +991,9 @@
   \begin{solution}
     Example:
     \begin{itemize}
-        \item **Preprocessing:** Tokenization, normalization, and cleaning.
-        \item **Feature extraction:** TF-IDF, embeddings.
-        \item **Modeling:** Training, evaluation, and deployment.
+        \item \textbf{Preprocessing}: Tokenization, normalization, and cleaning.
+        \item \textbf{Feature extraction}: TF-IDF, embeddings.
+        \item \textbf{Modeling}: Training, evaluation, and deployment.
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -1027,12 +1003,12 @@
 
   \begin{solution}
     \begin{itemize}
-        \item **Mean Reciprocal Rank (MRR):**
+        \item \textbf{Mean Reciprocal Rank (MRR)}:
         \[
         MRR = \frac{1}{N} \sum_{i=1}^{N} \frac{1}{\text{rank}_i}
         \]
         Where \(\text{rank}_i\) is the rank of the first correct answer for query \(i\).
-        \item **Accuracy:** \(\frac{\text{Number of correct answers}}{\text{Total number of queries}}\)
+        \item \textbf{Accuracy}: \(\frac{\text{Number of correct answers}}{\text{Total number of queries}}\)
     \end{itemize}
     Calculate based on the provided data.
   \end{solution}
@@ -1044,10 +1020,10 @@
   \begin{solution}
     Language detection involves identifying the language of a given text. Common approaches:
     \begin{itemize}
-        \item **N-gram analysis:** Compare character n-grams to language profiles.
-        \item **Lexicon-based methods:** Match text to language-specific dictionaries.
-        \item **Machine learning:** Train classifiers (e.g., SVM, neural networks) on labeled text.
-        \item **Hybrid models:** Combine multiple techniques for higher accuracy.
+        \item \textbf{N-gram analysis}: Compare character n-grams to language profiles.
+        \item \textbf{Lexicon-based methods}: Match text to language-specific dictionaries.
+        \item \textbf{Machine learning}: Train classifiers (e.g., SVM, neural networks) on labeled text.
+        \item \textbf{Hybrid models}: Combine multiple techniques for higher accuracy.
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -1058,10 +1034,10 @@
   \begin{solution}
     Plagiarism detection methods:
     \begin{itemize}
-        \item **String matching:** Use algorithms to find exact matches between documents.
-        \item **Semantic similarity:** Apply embeddings to detect paraphrased or rephrased content.
-        \item **Citation analysis:** Check for missing or incorrect citations.
-        \item **Fingerprinting:** Generate hashes of text fragments and compare across sources.
+        \item \textbf{String matching}: Use algorithms to find exact matches between documents.
+        \item \textbf{Semantic similarity}: Apply embeddings to detect paraphrased or rephrased content.
+        \item \textbf{Citation analysis}: Check for missing or incorrect citations.
+        \item \textbf{Fingerprinting}: Generate hashes of text fragments and compare across sources.
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -1071,13 +1047,13 @@
 
   \begin{solution}
     \begin{itemize}
-        \item **Pros:**
+        \item \textbf{Pros}:
         \begin{itemize}
             \item Fast and scalable data annotation.
             \item Access to diverse annotators.
             \item Cost-effective compared to hiring experts.
         \end{itemize}
-        \item **Cons:**
+        \item \textbf{Cons}:
         \begin{itemize}
             \item Quality control is challenging.
             \item May introduce noise or bias.
@@ -1093,9 +1069,9 @@
   \begin{solution}
     Recall can be improved by:
     \begin{itemize}
-        \item **Expanding queries:** Use synonyms, related terms, or stemming to match more results.
-        \item **Reducing filters:** Remove restrictive criteria (e.g., date, location).
-        \item **Boosting document recall:** Index more documents or reduce relevance thresholds.
+        \item \textbf{Expanding queries}: Use synonyms, related terms, or stemming to match more results.
+        \item \textbf{Reducing filters}: Remove restrictive criteria (e.g., date, location).
+        \item \textbf{Boosting document recall}: Index more documents or reduce relevance thresholds.
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -1106,9 +1082,9 @@
   \begin{solution}
     For non-words, spell checkers:
     \begin{itemize}
-        \item **Dictionary lookup:** Identify words not in the dictionary.
-        \item **Edit distance:** Suggest corrections based on similarity (e.g., Levenshtein distance).
-        \item **Contextual models:** Use surrounding words to predict the intended word.
+        \item \textbf{Dictionary lookup}: Identify words not in the dictionary.
+        \item \textbf{Edit distance}: Suggest corrections based on similarity (e.g., Levenshtein distance).
+        \item \textbf{Contextual models}: Use surrounding words to predict the intended word.
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -1119,10 +1095,10 @@
   \begin{solution}
     The IR cycle includes:
     \begin{itemize}
-        \item **Indexing:** Process and store data for efficient retrieval.
-        \item **Querying:** Users submit queries to search the index.
-        \item **Retrieval:** Return ranked results based on relevance scores.
-        \item **Evaluation:** Assess performance using metrics like precision and recall.
+        \item \textbf{Indexing}: Process and store data for efficient retrieval.
+        \item \textbf{Querying}: Users submit queries to search the index.
+        \item \textbf{Retrieval}: Return ranked results based on relevance scores.
+        \item \textbf{Evaluation}: Assess performance using metrics like precision and recall.
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -1133,9 +1109,9 @@
   \begin{solution}
     The Vector Space Model represents documents and queries as vectors:
     \begin{itemize}
-        \item **Terms:** Each dimension corresponds to a term in the vocabulary.
-        \item **Weights:** TF-IDF scores are used as weights for each term.
-        \item **Similarity:** Compute cosine similarity to rank documents by relevance to the query.
+        \item \textbf{Terms}: Each dimension corresponds to a term in the vocabulary.
+        \item \textbf{Weights}: TF-IDF scores are used as weights for each term.
+        \item \textbf{Similarity}: Compute cosine similarity to rank documents by relevance to the query.
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -1145,9 +1121,9 @@
 
   \begin{solution}
     \begin{itemize}
-        \item **Factual sentiment analysis:** Focuses on extracting objective sentiment (e.g., product ratings).
-        \item **Opinionated analysis:** Identifies subjective opinions (e.g., customer reviews).
-        \item **Key difference:** Factual analysis is more structured and easier to evaluate, whereas opinionated analysis is subjective and context-dependent.
+        \item \textbf{Factual sentiment analysis}: Focuses on extracting objective sentiment (e.g., product ratings).
+        \item \textbf{Opinionated analysis}: Identifies subjective opinions (e.g., customer reviews).
+        \item \textbf{Key difference}: Factual analysis is more structured and easier to evaluate, whereas opinionated analysis is subjective and context-dependent.
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -1158,10 +1134,10 @@
   \begin{solution}
     Sentiment analysis applications:
     \begin{itemize}
-        \item **Customer feedback:** Analyze reviews for product improvements.
-        \item **Social media monitoring:** Detect trends and public sentiment.
-        \item **Political analysis:** Gauge public opinion on policies or events.
-        \item **Market research:** Understand consumer preferences.
+        \item \textbf{Customer feedback}: Analyze reviews for product improvements.
+        \item \textbf{Social media monitoring}: Detect trends and public sentiment.
+        \item \textbf{Political analysis}: Gauge public opinion on policies or events.
+        \item \textbf{Market research}: Understand consumer preferences.
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -1172,9 +1148,9 @@
   \begin{solution}
     The Teacher/Student approach combines:
     \begin{itemize}
-        \item **Teacher signals:** Provide detailed instructions and explanations.
-        \item **Student feedback:** Allows iterative learning and personalization.
-        \item **Better than audio:** Interaction and adaptivity enhance understanding and retention compared to static audio content.
+        \item \textbf{Teacher signals}: Provide detailed instructions and explanations.
+        \item \textbf{Student feedback}: Allows iterative learning and personalization.
+        \item \textbf{Better than audio}: Interaction and adaptivity enhance understanding and retention compared to static audio content.
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -1184,9 +1160,9 @@
 
   \begin{solution}
     \begin{itemize}
-        \item **Representation:** Encodes data (e.g., text or images) into feature vectors.
-        \item **Fusion:** Combines multiple data modalities (e.g., text and images) to improve performance.
-        \item **Differences:** Representation focuses on individual modalities, whereas fusion integrates multiple modalities into a unified representation.
+        \item \textbf{Representation}: Encodes data (e.g., text or images) into feature vectors.
+        \item \textbf{Fusion}: Combines multiple data modalities (e.g., text and images) to improve performance.
+        \item \textbf{Differences}: Representation focuses on individual modalities, whereas fusion integrates multiple modalities into a unified representation.
     \end{itemize}
   \end{solution}
 \end{exercise}
