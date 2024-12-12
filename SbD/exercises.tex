@@ -401,7 +401,11 @@
   Welche Variante ist sicherer, wenn die Teilschlüssel von X und Y kompromittiert sind? Begründen Sie Ihre Antwort.
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+      \item $k=k_x \Vert k_y \Vert k_z$. Wenn $k_x$ und $k_y$ kompromittiert sind, muss nur noch $k_z$ geraten werden. Die verbleibende Entropie ist stark verringert.
+      \item $k=k_x \oplus k_y \oplus k_z$. Wenn $k_x$ und $k_y$ kompromittiert sind, bleibt $k_z$ sicher. Die verbleibende Entropie ist unverändert.
+    \end{enumerate}
+    Die zweite Variante ist sicherer, aufgrund der längeren Teilschlüssel. Konkatenation ist allerdings nicht grundsätzlich sicherer als XOR-Verknüpfung.
   \end{solution}
 \end{exercise}
 
@@ -415,7 +419,12 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+      \item Schlüsselzertifizierung dient der Authentifizierung von Schlüsseln und der Sicherstellung ihrer Integrität.
+      \item Skalierbarkeit und Vertrauen bei zentraler Zertifizierung, aber Single Point of Failure. Dezentrale Zertifizierung bietet mehr Flexibilität und Unabhängigkeit, aber schwierige Vertrauensbildung.
+      \item Cross Certification ermöglicht die Vertrauensbildung zwischen zwei Zertifizierungsstellen. Hierbei werden die Zertifikate der jeweils anderen Stelle gegenseitig akzeptiert. Anwendung findet es in hierarchisch-zentralen Modellen.
+      \item Hierarchisch-zentrale Modelle schützen durch ausschließliche Akzeptanz authentischer Zertifikate, solange die CA nicht kompromittiert ist. Dezentrale Modelle schützen durch die Vertrauensbildung zwischen den Nutzern solange Zertifikate überprüft werden.
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
@@ -429,7 +438,10 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+      \item D kann A nicht vertrauen, da weder eine direkte noch eine indirekte Zertifizierung von A durch B vorliegt und D nur B vertraut.
+      \item Nun kann D A vertrauen, da B C zertifiziert und C A zertifiziert. Somit liegt eine indirekte Zertifizierung von A durch B vor.
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
@@ -445,7 +457,13 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+      \item Im Schalenmodell müssen alle Zertifikate und Signaturen zum Zeitpunkt der Überprüfung gültig sein. Im Kettenmodell müssen diese lediglich zum Zeitpunkt der Ausstellung gültig sein.
+      \item Das Kettenmodell wird in der Praxis bevorzugt, da es flexibler ist und die Gültigkeit von Zertifikaten und Signaturen nicht permanent überprüft werden muss.
+      \item Schalenmodell: Zertifikatsausstellung bis Ablauf Wurzelzertifikat. Kettenmodell: Zertifikatsausstellung bis Ablauf Alice's Zertifikat.
+      \item In beiden Modellen gültig, da Zertifikatskette und Signatur zum Zeitpunkt der Ausstellung gültig waren.
+      \item Nur noch im Kettenmodell gültig, da im Schalenmodell die Kette nicht mehr gültig ist.
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
@@ -461,7 +479,12 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+      \item \textbf{Home Location Register} (HLR): Speichert Daten von Teilnehmern und wird von Netzbetreibern verwaltet.
+      \item \textbf{Visitor Location Register} (VLR): Speichert Daten von aktuell eingebuchten Teilnehmern und wird von Netzbetreibern verwaltet.
+      \item \textbf{Authentication Center} (AuC): Generiert und speichert Schlüssel und wird von Netzbetreibern verwaltet.
+      \item \textbf{Equipment Identity Register} (EIR): Speichert Daten von Geräten und wird von Netzbetreibern verwaltet.
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
@@ -475,7 +498,13 @@
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+      \item Das Geheimnis $K_i$ kennen der Teilnehmer (SIM-Karte) und das Authentication Center (AuC).
+      \item Ziele des Angreifers sind IMSI-Catching (Identitätsdiebstahl) und Tracking. Möglichkeiten des Angreifers sind IMSI-Catcher (gefälschte Basisstation) und Analyse der TSMI-Vergabe.
+      \item Die Algorithmen wurden geändert, um die Sicherheit zu erhöhen. A5/1 und A5/2 sind unsicher, Kasumi (UMTS) und AES (LTE) sind sicherer.
+      \item Symmetrische Verfahren sind schneller und benötigen weniger Rechenleistung und verbrauchen somit weniger Energie.
+      \item Ziel ist die Kopie einer SIM-Karte, hierbei werden wiederholte Authentifizierungsanfragen genutzt um $K_i$ zu ermitteln. Da die Authentifizierungsanfragen relativ langsam sind, dauert der Angriff lange.
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
@@ -486,7 +515,10 @@
   \end{enumerate}
  
    \begin{solution}
-     % TODO
+     \begin{enumerate}
+      \item Die Nachrichten sind nicht verschlüsselt, da der Schlüsselaustausch noch nicht abgeschlossen ist und die Nachrichten zur Authentifizierung dienen.
+      \item Einführung eines Pre-Shared Keys (PSK) für die Verschlüsselung der ersten Nachrichten. Der PSK wird bei der SIM-Karten-Aktivierung festgelegt und ist den Netzbetreibern bekannt.
+     \end{enumerate}
    \end{solution}
  \end{exercise}
  
