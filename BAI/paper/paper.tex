@@ -144,7 +144,11 @@
 \end{center}
 
 \begin{abstract}
- This paper is about image captioning. We discuss the current state of the art and overview the most important methods. We present the results of our experiments with different encoder and decoder models. We use the flickr8k dataset and evaluate the models using the BLEU score. We discuss the results and give an outlook on future work.
+    Image captioning, the task of generating descriptive textual captions for images, bridges the gap between computer vision and natural language processing.
+    This paper investigates the performance of three decoder architectures---Gated Recurrent Units (GRU), Long Short-Term Memory networks (LSTM), and Transformers---for image caption generation.
+    Using the \textbf{Flickr8k} dataset, features are extracted from images using a pre-trained \textbf{EfficientNet B0} model, and captions are generated using the respective decoders.
+    The models are implemented in \textbf{PyTorch}, and their performance is evaluated using standard metrics: \textbf{BLEU}, \textbf{METEOR}, and \textbf{NIST}.
+    % TODO: results
 \end{abstract}
 
 \tableofcontents
@@ -159,132 +163,185 @@
 \section{Introduction}
 \label{sec:introduction}
 
-Image captioning involves generating textual descriptions of given images. It is a complex problem because it combines the visual and textual domains. In recent years, deep learning has revolutionized the field of image captioning.
-
-Image captioning is a complex and interdisciplinary task bridging computer vision (CV) and natural language processing (NLP). Generating natural, descriptive sentences for images involves detecting and interpreting visual elements and their relationships within depicted scenes. Recent advancements leverage deep learning, particularly Convolutional Neural Networks (CNNs) for feature extraction and Recurrent Neural Networks (RNNs) for sequential language generation. For instance, models such as "Show and Tell" \cite{Vinyals:2015} and "Show, Attend, and Tell" \cite{Xu} utilize CNN-RNN architectures, with the latter integrating attention mechanisms to enhance focus on specific image regions, thereby improving caption relevance and accuracy.
-
-Additionally, methods like Reinforcement Learning (RL) have been explored to optimize these models directly on evaluation metrics, addressing issues such as exposure bias by aligning training and inference methods more closely \cite{Rennie}.
-
-Another approach has dealt with the tendency of beam search to produce near-duplicate captions. Diverse Beam Search ensures that generated captions capture a broader range of plausible descriptions, reflecting the inherent ambiguity in image captioning tasks \cite{Vijayakumar}.
-
-We begin by discussing the most critical methods in image captioning. We then present the results of our experiments with different encoder and decoder models. We use the flickr8k dataset and evaluate the models using the BLEU score. We discuss the results and give an outlook on future work.
+Image captioning involves generating textual descriptions of given images. It is a complex problem because it combines the visual and textual domains, thus bridging computer vision (CV) and natural language processing (NLP). Generating natural, descriptive sentences for images involves detecting and interpreting visual elements and their relationships within depicted scenes.
+\par While deep learning with attention mechanisms has long since been the dominant approach in image captioning \cite{xu2015show}, recent advances have been brought about by transformers \cite{vaswani2017attention}. These models have shown remarkable performance in various natural language processing tasks, including image captioning.
+\par This paper aims to compare the performance of different decoders directly, while keeping other parameters constant. The flickr8k dataset is used and the models are implemented using \textbf{PyTorch}. The BLEU, METEOR, and NIST scores are used as the evaluation metric.
 
 
 
-\section{Methods}
-\label{sec:methods}
+\section{Data}\label{sec:data}
+We focus on the flickr8k dataset \cite{hodosh2013flickr8k}, a pivotal resource in image captioning. Comprising roughly 8.000 diverse images, each with five reference captions, this dataset is renowned for its quality and is a common choice for image captioning research due to its manageable size.
 
-In image captioning tasks, a model takes an image as input and generates a caption as output. The model consists of an encoder that extracts features from the image and a decoder that generates the caption. We discuss the dataset, encoder-decoder architecture, encoder models, decoder models, and evaluation metrics.
-
-\subsection{Dataset}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{res/flickr8k.png}
+    \includegraphics[width=.9\textwidth]{res/flickr8k.png}
     \caption{Example images and captions from the flickr8k dataset.}
     \label{fig:flickr8k}
 \end{figure}
-We focused on the flickr8k dataset, a pivotal resource in image captioning. Comprising 8.000 diverse images, each with five reference captions, this dataset is renowned for its quality and is a common choice for image captioning research due to its manageable size.
-\par Other commonly used datasets are flickr30k and MS COCO, but these datasets are more extensive and cannot be processed due to our limited computational resources.
 
-\subsection{Encoder-Decoder Architecture}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=.5\textwidth]{res/encoder-decoder.png}
-    \caption{A Survey on Various Deep Learning Models for Automatic Image Captioning \cite{gaurav}}
-    \label{fig:encoder-decoder}
-\end{figure}
-Usually, an encoder-decoder architecture is used to achieve image captioning. The encoder is a convolutional neural network (CNN) that extracts features from the image. The decoder is a recurrent neural network (RNN) that generates the caption word by word.
-
-\subsection{Encoder Models}
-We experimented with two different models for encoding images: ResNet-50 and VGG-16.
-\par ResNet-50 is a deep residual network widely used for image classification. It has 50 layers and uses skip connections to avoid the vanishing gradient problem. It was introduced in \cite{he}.
-VGG-16, a deep convolutional neural network developed by the Visual Geometry Group at the University of Oxford, is known for its simplicity and effectiveness, making it an accessible choice for our research.
-Thanks to their pre-training on the ImageNet dataset, the models do not need to be trained from scratch, saving valuable time and computational resources.
-
-\subsection{Decoder Models}
-We experimented with two different models for decoding captions: GRU and LSTM.
-\par Gated Recurrent Units (GRUs) are a type of RNN similar to LSTMs but with fewer parameters. They are easier to train and faster to compute. They were introduced in \cite{cho}.
-\par Long Short-Term Memory (LSTM) networks are a type of RNN designed to avoid the vanishing gradient problem. They have a cell state that can store information over long sequences. They were introduced in \cite{hochreiter}.
-
-\subsection{Evaluation Metrics}
-The accuracy of image captioning is commonly measured using BLEU or CIDEr scores.
-\par BLEU is a precision-based metric that compares n-grams in the generated caption to those in the reference captions. It ranges from 0 to 1, with higher values indicating better performance. It was introduced in \cite{papineni}.
-\par CIDEr is a recall-based metric that compares the generated caption to the reference captions using cosine similarity. Ranging from 0 to 1, higher values indicate better performance. It was introduced in \cite{vedantam}.
-\par For simplicity, we only use the BLEU score in our experiments.
+\subsection{Splitting the Data}\label{sec:splitting}
+A predefined fixed split of the dataset into training, validation, and test sets is used. These datasets are stored in separate \textit{CSV} files.
+\par The training set contains 60\% of the data, the validation set 20\%, and the test set 20\%. This split is fixed to ensure reproducibility and comparability of the results.
 
 
+\subsection{Preprocessing}\label{sec:preprocessing}
+The models require the images and the captions to be in a suitable format.
 
-\section{Approach}
-\label{sec:approach}
+\subsubsection{Image Encoder}\label{sec:image-encoder}
+Contrary to the usual approach, the encoding is applied as part of the preprocessing to save computational resources and simplify the model.
+\par EfficientNet is used over other models due to its high performance compared to ResNet, for example. The model is pre-trained on the ImageNet dataset and used to extract features from the images. We use the B0 variant because it strikes a balance between computational efficiency and accuracy \cite{tan2019efficientnet}.
 
-Our approach begins with data preprocessing, followed by model training and evaluation.
+\subsubsection{Images}\label{sec:images}
+The raw \textit{JPEG} images are loaded using the \textbf{PIL} library and preprocessed as follows:
+\begin{enumerate}
+    \item Resize the images to 224x224 pixels.
+    \item Normalize the pixel values to the range [0, 1].
+    \item Encode the images as tensors of the dimension (224, 224, 3).
+    \item Use a pre-trained \texttt{EfficientNet B0} model to extract features from the images resulting in a tensor of the dimension (1280).
+\end{enumerate}
 
-\subsection{Data Preprocessing}
-\par We preprocess the images by resizing them to 224x224 pixels, normalizing the pixel values, and encoding them to tensors of the dimension (224, 224, 3).
-\par We create a vocabulary of words and map each word to an index.
-\par We preprocess the captions by tokenizing them, converting them to lowercase, and padding them to a fixed length. Then, we encode them using the vocabulary and convert them to one-dimensional tensors with a specified max\_length.
-
-\subsection{Model Training}
-We only train the decoder model because the encoder models are pre-trained on ImageNet. We use the Adam optimizer and the categorical cross-entropy loss function. We train our model for the specified number of epochs and save the weights with the best BLEU score on the validation set. The model's state is saved after each epoch to resume training if necessary.
-
-\subsection{Model Evaluation}
-Evaluation happens after each training epoch. This approach enables us to monitor the model's performance and save the weights with the best BLEU score. We evaluate the model on the test set using the BLEU score and compare it to the validation set's BLEU score to detect overfitting. These scores are also stored after each epoch to analyze the model's performance over time.
-
-
-
-\section{Results}
-\label{sec:results}
-
-We present the results of our experiments with different encoder and decoder models. \ref{fig:results} shows the BLEU scores of the models on the test set over the epochs. The detailed BLEU score results are shown in \ref{tab:results}.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{res/results.png}
-    \caption{Results of the experiments with different encoder and decoder models.}
-    \label{fig:results}
-\end{figure}
+\subsubsection{Vocabulary}\label{sec:vocabulary}
+\begin{quote}\center Configurable: \texttt{SIZE}, \texttt{THRESHOLD} \end{quote}
+To encode the captions, a vocabulary of words is created from the captions and each word is mapped to an index. Special tokens are added for padding, unknown tokens, start, and end of the sequence. The vocabulary size is limited to \texttt{SIZE} and words with a frequency below \texttt{THRESHOLD} are replaced by the unknown token.
 
 \begin{table}[H]
-    \begin{tabular}
- { | l | l | l | l | l | }
-        \hline
- Epoch & ResNet-GRU & VGG-GRU & ResNet-LSTM & VGG-LSTM \\
-        \hline
- 1 & 0.0074 & 0.0025 & 0.0035 & 0.0157 \\
- 2 & 0.0028 & 0.0024 & 0.0050 & 0.0056 \\
- 3 & 0.0024 & 0.0037 & 0.0045 & 0.0055 \\
- 4 & 0.0036 & 0.0030 & 0.0034 & 0.0052 \\
- 5 & 0.0038 & 0.0025 & 0.0035 & 0.0062 \\
- 6 & 0.0056 & 0.0026 & 0.0037 & 0.0069 \\
- 7 & 0.0058 & 0.0028 & 0.0038 & 0.0060 \\
- 8 & 0.0069 & 0.0031 & 0.0037 & 0.0058 \\
- 9 & 0.0045 & 0.0034 & 0.0030 & 0.0058 \\
- 10 & 0.0037 & 0.0029 & 0.0034 & 0.0052 \\
-        \hline
+    \begin{tabular}{c|cccccccc}
+        \textbf{Word} & $<$pad$>$ & $<$unknown$>$ & $<$start$>$ & $<$end$>$ & is & and & dog & with \\
+        \textbf{Index} & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7
     \end{tabular}
-
-    \caption{Detailed results of the experiments with different encoder and decoder models.}
-    \label{tab:results}
+    \caption{Example vocabulary with special tokens. \label{tab:vocabulary}}
 \end{table}
 
-The results show that the VGG encoder with the LSTM decoder achieves the best performance, with a BLEU score of .157 in the first epoch. Other combinations, like the VGG-GRU or the ResNet-LSTM, are significantly worse, with respective BLEU scores of .0025 and .0035 in the first epoch. The ResNet-GRU model performs slightly better, with a BLEU score of .0074 in the first epoch.
-
-For most models, their BLEU score peaks in the first few epochs and then decreases. The VGG-LSTM model is the most stable over the epochs and somewhat contradicts this hypothesis. However, the other models show a similar decrease over the epochs. These findings suggest overfitting to the training data.
-
-Given the mixed nature of the results, it is challenging to draw definitive conclusions. The VGG encoder paired with the LSTM decoder is the most effective combination available., achieving the highest BLEU score in the first epoch. Nevertheless, further experiments are needed to confirm this result.
-
-
-\section{Conclusion}
-\label{sec:conclusion}
-
-In this paper, we discuss the current state of the art in image captioning and present our experiments with different encoder and decoder models. We use the flickr8k dataset and evaluate the models using the BLEU score.
-
-In the future, further experiments could be conducted with
+\subsubsection{Captions}\label{sec:captions}
+\begin{quote}\center Configurable: \texttt{CAPTION\_LEN}\end{quote}
+The raw captions are loaded from the \textit{CSV} file and preprocessed as follows:
 \begin{enumerate}
-    \item different encoder and decoder models, like attention mechanisms and transformer models.
-    \item different datasets, like flickr30k and MS COCO.
-    \item different evaluation metrics, like CIDEr.
+    \item Convert the captions to lowercase.
+    \item Tokenize the captions.
+    \item Encode the captions using our Vocabulary \ref{sec:vocabulary}.
+    \item Pad or truncate the captions to a fixed length \texttt{CAPTION\_LEN}.
+    \item Convert the captions to one-dimensional tensors with a specified \texttt{CAPTION\_LEN}.
 \end{enumerate}
+
+\subsection{Dataset and Dataloader}\label{sec:dataset}
+To use the data efficiently within the model, a custom \textbf{PyTorch}-based Dataset with \textbf{PyTorch}'s DataLoader is used
+\par The Dataset loads the images and captions and returns them as a tuple.
+\par The DataLoader then batches the data and, for training data, shuffles the batches.
+
+
+
+\section{Models}\label{sec:models}
+\begin{quote}\center Configurable: \texttt{HIDDEN\_DIM}, \texttt{EMBEDDING\_DIM}, \texttt{NUM\_LAYERS}, \texttt{DROPOUT}\end{quote}
+In our paper, different decoder models are used for experiments, while the encoder (refer to \ref{sec:image-encoder}) stays the same. Two RNNs, GRU and LSTM, and a Transformer (decoder) for decoding the captions are compared.
+\par We use the \textbf{PyTorch} library to implement the models.
+
+\subsection{GRU}\label{sec:gru}
+Gated recurrent units are a popular simplified alternative to LSTMs \cite{cho2014gru}. The GRU model architecture is shown in Figure \ref{fig:gru}.
+\par The model predicts each token in sequence. The hidden state is updated at each time step and used to predict the next token.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.9\textwidth]{res/gru.png}
+    \caption{The GRU model architecture.}\label{fig:gru}
+\end{figure}
+
+\subsection{LSTM}\label{sec:lstm}
+Long Short-Term Memory networks are a type of RNN that can learn long-term dependencies \cite{hochreiter1997lstm}. The LSTM model architecture is shown in Figure \ref{fig:lstm}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.9\textwidth]{res/lstm.png}
+    \caption{The LSTM model architecture.}\label{fig:lstm}
+\end{figure}
+
+\subsection{Transformer}\label{sec:transformer}
+The Transformer model architecture is shown in Figure \ref{fig:transformer}. The model is based on the original paper by Vaswani et al. \cite{vaswani2017attention}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.9\textwidth]{res/transformer.png}
+    \caption{The Transformer model architecture.}\label{fig:transformer}
+\end{figure}
+
+
+
+\section{Experiments}\label{sec:experiments}
+The research question we are trying to answer is: \textit{Which decoder model performs best for the task of image captioning?}
+
+\subsection{Training}\label{sec:training}
+\begin{quote}\center Configurable: \texttt{EPOCHS}, \texttt{PATIENCE}, \texttt{BATCH\_SIZE}, \texttt{LEARNING\_RATE}\end{quote}
+\par The models are trained using the Adam optimizer and the CrossEntropyLoss function.
+\par The models are trained for a number of epochs \texttt{EPOCHS}. If the \texttt{PATIENCE} hyperparameter is set and the validation loss does not improve for \texttt{PATIENCE} epochs, the training is stopped early. Batching makes training more efficient and can be adjusted with the \texttt{BATCH\_SIZE} hyperparameter.
+
+\subsection{Evaluation metrics}\label{sec:evaluation-metrics}
+To evaluate the models, BLEU, METEOR, and NIST scores are used. These are common metrics used in machine translation and image captioning tasks.
+\begin{enumerate}
+    \item BLEU (Bilingual Evaluation Understudy) is a metric that compares the generated captions to the reference captions. It measures the n-gram overlap between the generated and reference captions \cite{papineni2002bleu}.
+    \item METEOR (Metric for Evaluation of Translation with Explicit ORdering) is a metric that considers the generated and reference captions as sequences of words. It uses a harmonic mean of precision and recall \cite{banerjee2005meteor}.
+    \item NIST (Normalized Information Retrieval Metric) is a metric that rewards longer n-grams more than shorter ones. It is based on the BLEU metric \cite{doddington2002nist}.
+\end{enumerate}
+
+\subsection{Results}\label{sec:results}
+Our experiments use the hyperparameters shown in Table \ref{tab:hyperparameters}.
+\begin{table}[H]
+    \center
+    \begin{tabular}{r|l}
+        \texttt{CAPTION\_LEN} & 20 \\
+        \texttt{SIZE} & 8000 \\
+        \texttt{THRESHOLD} & 2 \\
+        \texttt{HIDDEN\_DIM} & 512 \\
+        \texttt{EMBEDDING\_DIM} & 256 \\
+        \texttt{NUM\_LAYERS} & 2 \\
+        \texttt{DROPOUT} & .1 \\
+        \texttt{EPOCHS} & 100 \\
+        \texttt{PATIENCE} & None \\
+        \texttt{BATCH\_SIZE} & 64 \\
+        \texttt{LEARNING\_RATE} & 1e-3
+    \end{tabular}
+    \caption{Hyperparameters used in the experiments.}\label{tab:hyperparameters}
+\end{table}
+
+The training and validation loss for the different models are shown in Figure \ref{fig:loss}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.3\textwidth]{res/training-model-gru.png}
+    \includegraphics[width=.3\textwidth]{res/training-model-lstm.png}
+    \includegraphics[width=.3\textwidth]{res/training-model-transformer.png}
+    \caption{Training and validation loss for the different models.}\label{fig:loss}
+\end{figure}
+Training the models took approximately 20 hours per model on a single GPU.
+% TODO: interpret
+
+The results of the evaluation metrics are shown in Table \ref{tab:results} and Figure \ref{fig:results}.
+\begin{table}[H]
+    \center
+    \begin{tabular}{c|c|c|c}
+        \textbf{Model} & \textbf{BLEU} & \textbf{METEOR} & \textbf{NIST} \\
+        GRU &&& \\
+        LSTM &&& \\
+        Transformer &&&
+    \end{tabular}
+    \caption{Results of the evaluation metrics for the different models.}\label{tab:results}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.9\textwidth]{res/metrics.png}
+    \caption{Results of the evaluation metrics for the different models.}\label{fig:results}
+\end{figure}
+% TODO: insert and interpret results
+
+
+
+\section{Conclusion}\label{sec:conclusion}
+
+This paper presents our experiments with different decoder models for the task of image captioning. The flickr8k dataset is used and the models are evaluated using BLEU, METEOR, and NIST scores.
+\par Our results show [...] % TODO
+\par In the future, further experiments should be conducted with
+\begin{enumerate}
+    \item other encoder models, like ResNet or VGG.
+    \item varying the batch size or learning rate to optimize the training process.
+    \item different datasets, like flickr30k and MS COCO.
+\end{enumerate}
+These can build on the code provided in this paper and extend the research on image captioning.
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -293,7 +350,7 @@ In the future, further experiments could be conducted with
 \newpage
 \thispagestyle{empty}
 
-\bibliographystyle{apalike}
+\bibliographystyle{acm}
 \bibliography{bib}
 
 \end{document}
