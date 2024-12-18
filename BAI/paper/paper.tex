@@ -80,6 +80,8 @@
 % Tables with a nicer padding:
 \renewcommand{\arraystretch}{1.2}
 
+\setlength{\footskip}{15pt} 
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -148,9 +150,10 @@
     This paper investigates the performance of three decoder architectures---Gated Recurrent Units (GRU), Long Short-Term Memory networks (LSTM), and Transformers---for image caption generation.
     Using the \textbf{Flickr8k} dataset, features are extracted from images using a pre-trained \textbf{EfficientNet B0} model, and captions are generated using the respective decoders.
     The models are implemented in \textbf{PyTorch}, and their performance is evaluated using standard metrics: \textbf{BLEU}, \textbf{METEOR}, and \textbf{NIST}.
-    % TODO: results
+    The results show that the Transformer model outperforms the GRU and LSTM models in all metrics.
 \end{abstract}
 
+\setcounter{tocdepth}{1}
 \tableofcontents
 \newpage
 \pagenumbering{arabic}
@@ -181,7 +184,7 @@ We focus on the flickr8k dataset \cite{hodosh2013flickr8k}, a pivotal resource i
 
 \subsection{Splitting the Data}\label{sec:splitting}
 A predefined fixed split of the dataset into training, validation, and test sets is used. These datasets are stored in separate \textit{CSV} files.
-\par The training set contains 60\% of the data, the validation set 20\%, and the test set 20\%. This split is fixed to ensure reproducibility and comparability of the results.
+\par The training set contains 80\% of the data, the validation set 10\%, and the test set 10\%. This split is fixed to ensure reproducibility and comparability of the results.
 
 
 \subsection{Preprocessing}\label{sec:preprocessing}
@@ -226,7 +229,7 @@ The raw captions are loaded from the \textit{CSV} file and preprocessed as follo
 \subsection{Dataset and Dataloader}\label{sec:dataset}
 To use the data efficiently within the model, a custom \textbf{PyTorch}-based Dataset with \textbf{PyTorch}'s DataLoader is used
 \par The Dataset loads the images and captions and returns them as a tuple.
-\par The DataLoader then batches the data and, for training data, shuffles the batches.
+\par The DataLoader then batches the data.
 
 
 
@@ -237,26 +240,28 @@ In our paper, different decoder models are used for experiments, while the encod
 
 \subsection{GRU}\label{sec:gru}
 Gated recurrent units are a popular simplified alternative to LSTMs \cite{cho2014gru}. The GRU model architecture is shown in Figure \ref{fig:gru}.
-\par The model predicts each token in sequence. The hidden state is updated at each time step and used to predict the next token.
+\par The model predicts each token in sequence. The hidden state is updated at each time step and used to predict the next token. The model is trained using teacher forcing, where the true target token is used as input to predict the next token.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=.9\textwidth]{res/gru.png}
+    \includegraphics[width=.7\textwidth]{res/gru.png}
     \caption{The GRU model architecture.}\label{fig:gru}
 \end{figure}
 
 \subsection{LSTM}\label{sec:lstm}
 Long Short-Term Memory networks are a type of RNN that can learn long-term dependencies \cite{hochreiter1997lstm}. The LSTM model architecture is shown in Figure \ref{fig:lstm}.
+\par Like the GRU model, the LSTM model predicts each token in sequence. The hidden state is updated at each time step and used to predict the next token. The model is trained using teacher forcing.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=.9\textwidth]{res/lstm.png}
+    \includegraphics[width=.7\textwidth]{res/lstm.png}
     \caption{The LSTM model architecture.}\label{fig:lstm}
 \end{figure}
 
 \subsection{Transformer}\label{sec:transformer}
-The Transformer model architecture is shown in Figure \ref{fig:transformer}. The model is based on the original paper by Vaswani et al. \cite{vaswani2017attention}.
+The Transformer model architecture is shown in Figure \ref{fig:transformer}. The model is based on the original paper \cite{vaswani2017attention}.
+\par Contrary to the RNNs, the Transformer predicts the whole sequence at once. The model uses self-attention mechanisms to capture dependencies between words in the sequence. The model is trained using teacher forcing.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=.9\textwidth]{res/transformer.png}
+    \includegraphics[width=.7\textwidth]{res/transformer.png}
     \caption{The Transformer model architecture.}\label{fig:transformer}
 \end{figure}
 
@@ -273,15 +278,16 @@ The research question we are trying to answer is: \textit{Which decoder model pe
 \subsection{Evaluation metrics}\label{sec:evaluation-metrics}
 To evaluate the models, BLEU, METEOR, and NIST scores are used. These are common metrics used in machine translation and image captioning tasks.
 \begin{enumerate}
-    \item BLEU (Bilingual Evaluation Understudy) is a metric that compares the generated captions to the reference captions. It measures the n-gram overlap between the generated and reference captions \cite{papineni2002bleu}.
+    \item BLEU (Bilingual Evaluation Understudy) is a metric that compares the generated captions to the reference captions. It measures the n-gram overlap between the generated and reference captions \cite{papineni2002bleu}. We use the BLEU-4 score, meaning up to 4-grams are considered.
     \item METEOR (Metric for Evaluation of Translation with Explicit ORdering) is a metric that considers the generated and reference captions as sequences of words. It uses a harmonic mean of precision and recall \cite{banerjee2005meteor}.
-    \item NIST (Normalized Information Retrieval Metric) is a metric that rewards longer n-grams more than shorter ones. It is based on the BLEU metric \cite{doddington2002nist}.
+    \item NIST (Normalized Information Retrieval Metric) is a metric that rewards longer n-grams more than shorter ones. It is based on the BLEU metric \cite{doddington2002nist}. We use the NIST-4 score, meaning up to 4-grams are considered.
 \end{enumerate}
 
 \subsection{Results}\label{sec:results}
 Our experiments use the hyperparameters shown in Table \ref{tab:hyperparameters}.
 \begin{table}[H]
     \center
+    \fontsize{8}{10}\selectfont
     \begin{tabular}{r|l}
         \texttt{CAPTION\_LEN} & 20 \\
         \texttt{SIZE} & 8000 \\
@@ -301,39 +307,54 @@ Our experiments use the hyperparameters shown in Table \ref{tab:hyperparameters}
 The training and validation loss for the different models are shown in Figure \ref{fig:loss}.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=.3\textwidth]{res/training-model-gru.png}
-    \includegraphics[width=.3\textwidth]{res/training-model-lstm.png}
-    \includegraphics[width=.3\textwidth]{res/training-model-transformer.png}
+    \includegraphics[width=.3\textwidth]{res/training-gru.png}
+    \includegraphics[width=.3\textwidth]{res/training-lstm.png}
+    \includegraphics[width=.3\textwidth]{res/training-transformer.png}
     \caption{Training and validation loss for the different models.}\label{fig:loss}
 \end{figure}
-Training the models took approximately 20 hours per model on a single GPU.
-% TODO: interpret
+Training the models took approximately 20 hours per model on a single GPU. The validation loss is similar for all models, but the LSTM model converges faster than the GRU and Transformer models.
 
 The results of the evaluation metrics are shown in Table \ref{tab:results} and Figure \ref{fig:results}.
-\begin{table}[H]
-    \center
-    \begin{tabular}{c|c|c|c}
-        \textbf{Model} & \textbf{BLEU} & \textbf{METEOR} & \textbf{NIST} \\
-        GRU &&& \\
-        LSTM &&& \\
-        Transformer &&&
-    \end{tabular}
-    \caption{Results of the evaluation metrics for the different models.}\label{tab:results}
-\end{table}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=.9\textwidth]{res/metrics.png}
-    \caption{Results of the evaluation metrics for the different models.}\label{fig:results}
+    \begin{minipage}{0.4\textwidth}
+        \begin{table}[H]
+            \centering
+            \fontsize{8}{10}\selectfont
+            \begin{tabular}{c|c|c|c}
+                & \textbf{BLEU-4} & \textbf{METEOR} & \textbf{NIST-4} \\
+                GRU & & & \\
+                LSTM & & & \\
+                Transformer & & &
+            \end{tabular}
+            \caption{Evaluation metrics.}\label{tab:results}
+        \end{table}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.5\textwidth}
+        \centering
+        \includegraphics[width=.9\textwidth]{res/metrics.png}
+        \caption{Evaluation metrics.}\label{fig:results}
+    \end{minipage}
 \end{figure}
-% TODO: insert and interpret results
+
+These results show that the Tableransformer model outperforms the other models in all metrics. The LSTM model performs better than the GRU model, but worse than the Transformer model.
+\par Compared to other research, our results are much worse. \cite{vinyals2015show} achieved a BLEU score of  27.7, for example, and \cite{xu2015show} achieved a METEOR score of 24.3.
+\par This has several reasons: \begin{enumerate}
+    \item \textbf{Smaller Dataset}: The flickr8k dataset is smaller than other datasets like MS COCO, which is used in \cite{vinyals2015show} and \cite{xu2015show}.
+    \item \textbf{Encoder}: The EfficientNet B0 model is less powerful than other models like ResNet, for example \cite{he2016deep}.
+    \item \textbf{No attention mechanisms}: The models used in this paper do not use attention mechanisms, which are crucial for image captioning \cite{xu2015show}
+    \item \textbf{Limited training time}: The models were trained for a limited number of epochs due to computational constraints.
+\end{enumerate}
+\par Nonetheless, we were able to show the comparative advantage of Transformers over RNNs for image captioning.
 
 
 
 \section{Conclusion}\label{sec:conclusion}
 
 This paper presents our experiments with different decoder models for the task of image captioning. The flickr8k dataset is used and the models are evaluated using BLEU, METEOR, and NIST scores.
-\par Our results show [...] % TODO
+\par Our results show Transformers outperform RNNs for image captioning.
 \par In the future, further experiments should be conducted with
 \begin{enumerate}
     \item other encoder models, like ResNet or VGG.
@@ -350,6 +371,7 @@ These can build on the code provided in this paper and extend the research on im
 \newpage
 \thispagestyle{empty}
 
+\fontsize{12}{14}\selectfont
 \bibliographystyle{acm}
 \bibliography{bib}
 
