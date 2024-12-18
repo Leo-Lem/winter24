@@ -364,17 +364,6 @@
   \end{solution}
 \end{exercise}
 
-\begin{exercise}{RAG and LangChain}\label{ex:rag}
-  What is Retrieval-Augmented Generation (RAG), and how does LangChain assist in implementing it?
-
-  \begin{solution}
-    \begin{itemize}
-        \item \textbf{RAG (Retrieval-Augmented Generation)}: Combines retrieval models with generative models to produce context-aware answers. External knowledge is retrieved and fed into the generation model.
-        \item \textbf{LangChain}: A framework for building applications with large language models, offering tools for integrating RAG systems. It manages chaining retrieval and generation steps efficiently.
-    \end{itemize}
-  \end{solution}
-\end{exercise}
-
 \begin{exercise}{Sentiment analysis}\label{ex:sent-analysis}
   Sentiment analysis aims to determine the sentiment expressed in text.
   \begin{enumerate}
@@ -500,7 +489,7 @@
 
 \begin{exercise}{MRR and accuracy}
   \input{res/qa-answers.fig}
-  Calculate MRR and Accuracy for the Question/Answering system in Figure \ref{fig:qa-answers}.
+  Calculate Mean Reciprocal Rank (MRR) and Accuracy for the given query results in Figure \ref{fig:qa-answers} at $k=5$.
 
   \begin{solution}
     \begin{itemize}
@@ -601,6 +590,17 @@
         \item \textbf{Factoid questions}: Require specific factual answers (e.g., "Who is the president of the U.S.?").
         \item \textbf{List questions}: Require a list of items (e.g., "List countries in the EU").
         \item \textbf{Definition questions}: Seek explanations or definitions (e.g., "What is AI?").
+    \end{itemize}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{RAG and LangChain}\label{ex:rag}
+  What is Retrieval-Augmented Generation (RAG), and how does LangChain assist in implementing it?
+
+  \begin{solution}
+    \begin{itemize}
+        \item \textbf{RAG (Retrieval-Augmented Generation)}: Combines retrieval models with generative models to produce context-aware answers. External knowledge is retrieved and fed into the generation model.
+        \item \textbf{LangChain}: A framework for building applications with large language models, offering tools for integrating RAG systems. It manages chaining retrieval and generation steps efficiently.
     \end{itemize}
   \end{solution}
 \end{exercise}
