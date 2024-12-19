@@ -229,56 +229,115 @@
 % Content
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}
+% Slide 1: Introduction
+\begin{frame}{Introduction}
+	\textbf{What is Image Captioning?}
 	\begin{itemize}
-			\item \textbf{Image Captioning}: Generating textual descriptions for images \cite{vinyals:2015}.
-			\item \textbf{Challenges}: Complex problem combining computer vision (CV) and natural language processing (NLP) \cite{xu}.
-			\item \textbf{Advancements}: Deep learning models using CNNs for feature extraction and RNNs for language generation \cite{he, simonyan}.
+			\item Task: Generate descriptive textual captions for images.
+			\item Combines computer vision (CV) and natural language processing (NLP).
+			\item Applications: Assistive technology, automated metadata generation, and more.
 	\end{itemize}
+	% Speaker Notes:
+	% Begin by briefly explaining the task of image captioning. Highlight its interdisciplinary nature and practical applications.
 \end{frame}
 
-\section{Methods}
-\begin{frame}{Methods}
+% Slide 2: Problem Statement
+\begin{frame}{Problem Statement}
+	\textbf{Challenges in Image Captioning}
 	\begin{itemize}
-			\item \textbf{Dataset:} Flickr8k, with 8,000 images and five captions per image \cite{vinyals:2015}.
-			\item \textbf{Architecture:} Encoder-Decoder architecture:
-					\begin{itemize}
-							\item Encoder: CNN-based (ResNet-50, VGG-16) \cite{he, simonyan}.
-							\item Decoder: RNN-based (GRU, LSTM) \cite{hochreiter}.
-					\end{itemize}
-			\item \textbf{Evaluation Metrics:} BLEU score for performance \cite{papineni}, with CIDEr as an alternative \cite{vedantam}.
+			\item Detecting and interpreting visual elements accurately.
+			\item Generating coherent and contextually relevant text.
+			\item Balancing computational efficiency and model performance.
 	\end{itemize}
+	% Speaker Notes:
+	% Emphasize the dual challenges of visual understanding and text generation. Mention the need for scalable solutions in real-world applications.
 \end{frame}
 
-\section{Approach}
-\begin{frame}{Approach}
+% Slide 3: Methodology (Dataset and Features)
+\begin{frame}{Methodology: Dataset and Features}
+	\textbf{Dataset: Flickr8k}
 	\begin{itemize}
-			\item \textbf{Data Preprocessing:} Resize images, normalize, and tokenize captions \cite{vinyals:2015}.
-			\item \textbf{Model Training:} Train decoder using Adam optimizer and monitor BLEU score for validation \cite{papineni}.
-			\item \textbf{Model Evaluation:} Evaluate BLEU score after each epoch for overfitting assessment \cite{rennie}.
+			\item Contains 8,000 images with five captions per image.
 	\end{itemize}
+	\textbf{Feature Extraction}
+	\begin{itemize}
+			\item Pre-trained EfficientNet B0 model.
+			\item Extracts high-level features from images.
+	\end{itemize}
+	% Speaker Notes:
+	% Explain why Flickr8k was chosen and describe its characteristics. Introduce EfficientNet B0 as a state-of-the-art feature extractor.
 \end{frame}
 
-\section{Results}
-\begin{frame}{Results}
+% Slide 4: Methodology (Decoder Architectures)
+\begin{frame}{Methodology: Decoder Architectures}
+	\textbf{Architectures Evaluated}
 	\begin{itemize}
-			\item BLEU scores for encoder-decoder combinations (ResNet-GRU, VGG-GRU, ResNet-LSTM, VGG-LSTM) \cite{he, simonyan}.
-				\item \textbf{Best Performance:} VGG encoder with LSTM decoder, highest BLEU score in the first epoch \cite{vinyals:2015}.
-				\item Observation of \textbf{Overfitting}: Decrease in BLEU scores over epochs \cite{rennie}.
+			\item GRU (Gated Recurrent Units)
+			\item LSTM (Long Short-Term Memory Networks)
+			\item Transformer
 	\end{itemize}
+	\textbf{Implementation}
+	\begin{itemize}
+			\item Implemented in PyTorch.
+			\item Trained using image features and paired captions.
+	\end{itemize}
+	% Speaker Notes:
+	% Briefly describe each architecture and its role in the pipeline. Mention the choice of PyTorch for implementation.
 \end{frame}
 
-\section{Conclusion}
-\begin{frame}{Conclusion}
+% Slide 5: Results (Metrics)
+\begin{frame}{Results: Metrics}
+	\textbf{Evaluation Metrics}
 	\begin{itemize}
-			\item \textbf{Summary:} VGG-LSTM model achieved the best BLEU score and stability across epochs \cite{vinyals:2016}.
-			\item \textbf{Future Work:} Explore other architectures (e.g., transformers), datasets (e.g., Flickr30k, MS COCO), and metrics (e.g., CIDEr) \cite{vedantam}.
+			\item BLEU: Measures n-gram overlap.
+			\item METEOR: Considers semantic matching.
+			\item NIST: Focuses on information content.
 	\end{itemize}
+	\textbf{Key Findings}
+	\begin{itemize}
+			\item Transformer underperforms GRU and LSTM in all metrics.
+	\end{itemize}
+	% Speaker Notes:
+	% Introduce the metrics and explain their relevance. Highlight the surprising result of Transformer underperformance.
 \end{frame}
 
-\begin{frame}[allowframebreaks]
-	\bibliographystyle{apalike}
-	\bibliography{bib}
+% Slide 6: Results (Comparison)
+\begin{frame}{Results: Comparison of Architectures}
+	\begin{itemize}
+			\item GRU and LSTM outperform Transformer.
+			\item Transformer struggles with smaller datasets like Flickr8k.
+	\end{itemize}
+	\textbf{Visual Comparison}
+	\includegraphics[width=.6\textwidth]{res/metrics.png}
+	% Speaker Notes:
+	% Present the comparison visually and discuss why the Transformer might struggle with limited data.
+\end{frame}
+
+% Slide 7: Discussion
+\begin{frame}{Discussion}
+	\textbf{Insights and Implications}
+	\begin{itemize}
+			\item Traditional architectures (GRU, LSTM) remain competitive.
+			\item Transformers may require larger datasets to realize their full potential.
+	\end{itemize}
+	% Speaker Notes:
+	% Reflect on what these results mean for the field and the practical implications of using different architectures.
+\end{frame}
+
+% Slide 8: Conclusion and Future Work
+\begin{frame}{Conclusion and Future Work}
+	\textbf{Summary}
+	\begin{itemize}
+			\item Evaluated GRU, LSTM, and Transformer for image captioning.
+			\item GRU and LSTM outperform Transformer on Flickr8k.
+	\end{itemize}
+	\textbf{Future Work}
+	\begin{itemize}
+			\item Test on larger datasets (e.g., MS COCO).
+			\item Explore hybrid architectures.
+	\end{itemize}
+	% Speaker Notes:
+	% Summarize the study's key points and suggest future directions for improvement and exploration.
 \end{frame}
 
 \end{document}

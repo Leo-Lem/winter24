@@ -150,7 +150,7 @@
     This paper investigates the performance of three decoder architectures---Gated Recurrent Units (GRU), Long Short-Term Memory networks (LSTM), and Transformers---for image caption generation.
     Using the \textbf{Flickr8k} dataset, features are extracted from images using a pre-trained \textbf{EfficientNet B0} model, and captions are generated using the respective decoders.
     The models are implemented in \textbf{PyTorch}, and their performance is evaluated using standard metrics: \textbf{BLEU}, \textbf{METEOR}, and \textbf{NIST}.
-    The results show that the Transformer model outperforms the GRU and LSTM models in all metrics.
+    Unexpectedly, the Transformer model underperforms compared to the LSTM and GRU models across all metrics. This underperformance may stem from the limited training time and computational resources, as well as the Transformer's unique architecture.
 \end{abstract}
 
 \setcounter{tocdepth}{1}
@@ -166,8 +166,8 @@
 \section{Introduction}
 \label{sec:introduction}
 
-Image captioning involves generating textual descriptions of given images. It is a complex problem because it combines the visual and textual domains, thus bridging computer vision (CV) and natural language processing (NLP). Generating natural, descriptive sentences for images involves detecting and interpreting visual elements and their relationships within depicted scenes.
-\par While deep learning with attention mechanisms has long since been the dominant approach in image captioning \cite{xu2015show}, recent advances have been brought about by transformers \cite{vaswani2017attention}. These models have shown remarkable performance in various natural language processing tasks, including image captioning.
+Image captioning, the task of generating descriptive textual captions for given images, represents a significant challenge at the intersection of computer vision (CV) and natural language processing (NLP). This task requires models to accurately detect and interpret visual elements within an image while synthesizing coherent and contextually appropriate textual descriptions. Such a multifaceted problem has broad applications, including assistive technologies for visually impaired individuals, automated metadata generation, and content-based image retrieval.
+\par Deep learning approaches, particularly those employing attention mechanisms, have dominated image captioning research in recent years \cite{xu2015show}. These methods leverage the ability of neural networks to focus on relevant parts of an image while generating text. Building upon this foundation, Transformer-based architectures \cite{vaswani2017attention} have recently emerged as state-of-the-art in both NLP and CV tasks, owing to their ability to model complex dependencies and process sequences in parallel.
 \par This paper aims to compare the performance of different decoders directly, while keeping other parameters constant. The flickr8k dataset is used and the models are implemented using \textbf{PyTorch}. The BLEU, METEOR, and NIST scores are used as the evaluation metric.
 
 
@@ -312,10 +312,9 @@ The training and validation loss for the different models are shown in Figure \r
     \includegraphics[width=.3\textwidth]{res/training-transformer.png}
     \caption{Training and validation loss for the different models.}\label{fig:loss}
 \end{figure}
-Training the models took approximately 20 hours per model on a single GPU. The validation loss is similar for all models, but the LSTM model converges faster than the GRU and Transformer models.
+Training the models took approximately 20 hours per model on a single GPU. The validation loss is similar for all models. The weird shape of the Transformer losses is due to interrupted training.
 
 The results of the evaluation metrics are shown in Table \ref{tab:results} and Figure \ref{fig:results}.
-
 \begin{figure}[H]
     \centering
     \begin{minipage}{0.4\textwidth}
@@ -324,9 +323,9 @@ The results of the evaluation metrics are shown in Table \ref{tab:results} and F
             \fontsize{8}{10}\selectfont
             \begin{tabular}{c|c|c|c}
                 & \textbf{BLEU-4} & \textbf{METEOR} & \textbf{NIST-4} \\
-                GRU & & & \\
-                LSTM & & & \\
-                Transformer & & &
+                GRU & .0511 & .1551 & 1.0202 \\
+                LSTM & .0541 & .1537 & .9137 \\
+                Transformer & .0183 & .0956 & .6013
             \end{tabular}
             \caption{Evaluation metrics.}\label{tab:results}
         \end{table}
@@ -339,22 +338,22 @@ The results of the evaluation metrics are shown in Table \ref{tab:results} and F
     \end{minipage}
 \end{figure}
 
-These results show that the Tableransformer model outperforms the other models in all metrics. The LSTM model performs better than the GRU model, but worse than the Transformer model.
+The results show that the LSTM and GRU models perform roughly the same, while the Transformer model performs worse in all metrics. This is contrary to expectations, as Transformers have shown remarkable performance in various NLP tasks.
+\par This is likely due to the limited training time and computational resources. Also, the Transformer predicts the whole sequence at once, which might be suboptimal for image captioning tasks.
 \par Compared to other research, our results are much worse. \cite{vinyals2015show} achieved a BLEU score of  27.7, for example, and \cite{xu2015show} achieved a METEOR score of 24.3.
-\par This has several reasons: \begin{enumerate}
+\par This might have several reasons: \begin{enumerate}
     \item \textbf{Smaller Dataset}: The flickr8k dataset is smaller than other datasets like MS COCO, which is used in \cite{vinyals2015show} and \cite{xu2015show}.
     \item \textbf{Encoder}: The EfficientNet B0 model is less powerful than other models like ResNet, for example \cite{he2016deep}.
     \item \textbf{No attention mechanisms}: The models used in this paper do not use attention mechanisms, which are crucial for image captioning \cite{xu2015show}
     \item \textbf{Limited training time}: The models were trained for a limited number of epochs due to computational constraints.
 \end{enumerate}
-\par Nonetheless, we were able to show the comparative advantage of Transformers over RNNs for image captioning.
 
 
 
 \section{Conclusion}\label{sec:conclusion}
 
 This paper presents our experiments with different decoder models for the task of image captioning. The flickr8k dataset is used and the models are evaluated using BLEU, METEOR, and NIST scores.
-\par Our results show Transformers outperform RNNs for image captioning.
+\par Our results show that the LSTM and GRU models outperform the Transformer model in all metrics given the limited training time and computational resources.
 \par In the future, further experiments should be conducted with
 \begin{enumerate}
     \item other encoder models, like ResNet or VGG.
