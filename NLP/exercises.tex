@@ -2,13 +2,13 @@
 
 \usepackage[]{../.template/xrcise}
 
-\subject{Natural Language Processsing}
+\subject{Natural Language Processing}
 \semester{Winter 2024}
 \author{Leopold Lemmermann}
 
 \begin{document}\createtitle
 
-\setcounter{section}{2022}\sheet{1st exam}
+\setcounter{section}{2022}\sheet{Exam}
 
 \begin{exercise}{Tokenization ambiguity}\label{ex:tokenization}
   List three types of tokenization ambiguity and explain each.
@@ -248,7 +248,7 @@
 
 
 
-\setcounter{section}{2021}\sheet{1st exam}
+\setcounter{section}{2021}\sheet{Exam}
 
 \begin{exercise}{NLP and the Web}
   \begin{enumerate}
@@ -297,12 +297,12 @@
 \begin{exercise}{Information retrieval metrics}\label{ex:ir-metrics}
   Two search engines have produced the following results ($+$ = relevant, $-$ = irrelevant).
   \begin{itemize}
-    \item \textbf{Engine A}: $+, -, +, -, +, +, -, +, +, +$
-    \item \textbf{Engine B}: $+, +, -, +, +, -, +, +, -, +$
+    \item \textbf{Engine A}: $+-+-+\quad+-+++$
+    \item \textbf{Engine B}: $---+-\quad-++-+$
   \end{itemize}
 
   \begin{enumerate}
-    \item Calculate P@5, P@10 and MAP for both engines.
+    \item Calculate P@5, P@10 and MAP@5 for both engines.
     \item How do these metrics help evaluate the performance of IR systems?
   \end{enumerate}
 
@@ -310,17 +310,17 @@
     \begin{enumerate}
       \item \begin{itemize}
           \item \textbf{Engine A}:
-          \begin{itemize}
-            \item $P@5 = \frac{3}{5} = 0.6$
-            \item $P@10 = \frac{7}{10} = 0.7$
-            \item $MAP = \frac{1}{3} \left( \frac{1}{1} + \frac{2}{4} + \frac{3}{5} \right) = 0.5666$
-          \end{itemize}
+            \begin{itemize}
+              \item $P@5 = \frac{3}{5} = .6$
+              \item $P@10 = \frac{7}{10} = .7$
+              \item $MA@5 = (\frac{1}{1} + \frac{2}{3} + \frac{3}{5}) / 3 = .756$
+            \end{itemize}
           \item \textbf{Engine B}:
-          \begin{itemize}
-            \item $P@5 = \frac{4}{5} = 0.8$
-            \item $P@10 = \frac{7}{10} = 0.7$
-            \item $MAP = \frac{1}{3} \left( \frac{1}{1} + \frac{2}{4} + \frac{3}{7} \right) = 0.5476$
-          \end{itemize}
+            \begin{itemize}
+              \item $P@5 = \frac{1}{5} = .2$
+              \item $P@10 = \frac{4}{10} = .4$
+              \item $MAP@5 = (\frac{1}{4}) / 1 = .25$
+            \end{itemize}
         \end{itemize}
       \item These metrics help evaluate IR systems by measuring precision at different cutoff points and the average precision across all relevant documents.
     \end{enumerate}
@@ -339,12 +339,10 @@
           \item \textbf{N-gram analysis}: Compare the frequency of character n-grams against language-specific profiles.
           \item \textbf{Machine learning models}: Train classifiers (e.g., SVM, neural networks) using labeled text data for various languages.
           \item \textbf{Lexicon-based methods}: Use dictionaries to match input text to language-specific words.
-          \item \textbf{Hybrid approaches}: Combine n-gram, lexicon, and machine learning techniques for better accuracy.
         \end{itemize}
       \item \begin{itemize}
           \item \textbf{String matching}: Use algorithms to find exact matches between documents.
           \item \textbf{Semantic similarity}: Apply embeddings to detect paraphrased or rephrased content.
-          \item \textbf{Citation analysis}: Check for missing or incorrect citations.
           \item \textbf{Fingerprinting}: Generate hashes of text fragments and compare across sources.
         \end{itemize}
       \end{enumerate}
@@ -368,9 +366,9 @@
 
   \begin{solution}
     \begin{itemize}
-        \item \textbf{Expanding queries}: Use synonyms, related terms, or stemming to match more results.
         \item \textbf{Reducing filters}: Remove restrictive criteria (e.g., date, location).
         \item \textbf{Boosting document recall}: Index more documents or reduce relevance thresholds.
+
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -400,8 +398,8 @@
     \begin{enumerate}
         \item \begin{itemize}
             \item \textbf{Customer feedback}: Analyze reviews for product improvements.
-            \item \textbf{Social media monitoring}: Detect trends and public sentiment.
             \item \textbf{Political analysis}: Gauge public opinion on policies or events.
+            \item \textbf{Stock market prediction}: Predict stock prices based on sentiment in financial news.
           \end{itemize}
         \item \begin{itemize}
             \item \textbf{Factual sentiment analysis}: Focuses on extracting objective sentiment (e.g., product ratings).
@@ -422,7 +420,7 @@
   \begin{solution}
     \begin{itemize}
         \item \textbf{Factoid questions}: Require specific factual answers (e.g., "Who is the president of the U.S.?").
-        \item \textbf{List questions}: Require a list of items (e.g., "List countries in the EU").
+        \item \textbf{List questions}: Require a list of items (e.g., "What countries are in the EU?").
         \item \textbf{Definition questions}: Seek explanations or definitions (e.g., "What is AI?").
     \end{itemize}
   \end{solution}
@@ -440,7 +438,7 @@
 
 
 
-\setcounter{section}{2020}\sheet{1st exam}
+\setcounter{section}{2020}\sheet{Exam}
 
 \begin{exercise}{Comprehensiveness}
   What is comprehensiveness, specifically in the context of NLP?
