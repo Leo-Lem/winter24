@@ -8,56 +8,7 @@
 
 \begin{document}\createtitle
 
-\sheet{Lecture questions}
-
-\begin{exercise}{NLP and the Web}
-  \begin{enumerate}
-    \item The web is an application area for NLP. Provide examples of applications.
-    \item How can the web improve the quality of NLP? Provide examples.
-  \end{enumerate}
-
-  \begin{solution}
-    \begin{enumerate}
-      \item Information extraction, sentiment analysis, machine translation, question answering, etc.
-      \item Web as a corpus, analyzing web-based knowledge repositories, extracting structured information, using web-scale data for training language models.
-    \end{enumerate}
-  \end{solution}
-\end{exercise}
-
-\begin{exercise}{Datasets}
-  \begin{enumerate}
-    \item What datasets are used in NLP research, and why are they important?
-    \item What is the annotation process for a corpus or dataset, and how does it impact machine learning applications?
-    \item What are the main strategies for large-scale dataset collection using crowdsourcing?
-  \end{enumerate}
-
-  \begin{solution}
-    \begin{enumerate}
-      \item NLP datasets are collections of annotated or unannotated text data designed for specific NLP tasks (e.g., sentiment analysis, translation). They serve as a foundation for training and testing machine learning models, enable reproducibility in research, and facilitate comparisons between models and techniques.
-      \item Annotation process involves adding labels or metadata to text data (e.g., part-of-speech tags, sentiment labels). It improves model performance by providing high-quality training data, enables supervised learning by associating input with output labels, and impacts scalability and generalization of models depending on annotation quality.
-      \item Strategies include task design (clearly define annotation tasks with examples and guidelines), platform selection (use platforms like Amazon Mechanical Turk or Prolific), quality control (use redundancy and include test questions to ensure reliability), and data aggregation (combine annotations using majority voting or statistical models).
-    \end{enumerate}
-  \end{solution}
-\end{exercise}
-
-\begin{exercise}{Text preprocessing}
-  \begin{enumerate}
-    \item Why are more features not always better for learning a classifier?
-    \item What is the typical type of input data that a sequence tagger training step requires?
-  \end{enumerate}
-
-  \begin{solution}
-    \begin{enumerate}
-      \item More features can lead to overfitting, require more training data, introduce noise, and slow down training and inference.
-      \item Labeled training text (e.g., part-of-speech tags, named entity recognition).
-    \end{enumerate}
-  \end{solution}
-\end{exercise}
-
-
-
-\setcounter{section}{2022}
-\sheet{1st exam}
+\setcounter{section}{2022}\sheet{1st exam}
 
 \begin{exercise}{Tokenization ambiguity}\label{ex:tokenization}
   List three types of tokenization ambiguity and explain each.
@@ -173,18 +124,6 @@
   \end{solution}
 \end{exercise}
 
-\begin{exercise}{Pragmatics and discourse analysis}\label{ex:pragmatics}
-  Why are pragmatics and discourse analysis difficult?
-
-  \begin{solution}
-    \begin{itemize}
-      \item \textbf{Context dependency}: Understanding depends heavily on prior sentences or external knowledge.
-      \item \textbf{Ambiguity}: Words and phrases can have multiple meanings depending on the situation.
-      \item \textbf{Social norms}: Interpretations vary based on cultural or societal factors.
-    \end{itemize}
-  \end{solution}
-\end{exercise}
-
 \begin{exercise}{Hate speech}\label{ex:hate-speech}
   \begin{enumerate}
     \item Define hate speech.
@@ -271,6 +210,90 @@
   \end{solution}
 \end{exercise}
 
+\begin{exercise}{Question answering}\label{ex:qa}
+  Question Answering (QA) systems aim to provide direct answers to user queries.
+  \begin{enumerate}
+    \item What are the differences between factual QA and opinionated QA? and which is easier to evaluate?
+    \item Briefly explain QALD. What are key challenges?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item \begin{itemize}
+          \item \textbf{Factual QA}: Answers objective questions with verifiable information.
+          \item \textbf{Opinionated QA}: Provides subjective answers based on opinions or preferences.
+          \item Factual QA is easier to evaluate as answers can be verified against ground truth.
+        \end{itemize}
+      \item QALD (Question Answering over Linked Data) focuses on answering questions using linked data (e.g., RDF datasets). Challenges include mapping natural language queries to structured data, handling incomplete or ambiguous data, and scaling to large and heterogeneous sources.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Cross-language QA}\label{ex:cross-lang-qa}
+  Cross-language Question Answering (QA) is a challenging task.
+  \begin{enumerate}
+    \item Explain the process of cross-language question-answering.
+    \item Where is it applied?
+    \item Explain the challenges faced in cross-language QA.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Translate the question, retrieve relevant information in the target language, generate an answer, and translate it back.
+        \item Multi-language QA systems are used in global customer support, cross-border e-commerce, and multi-language search engines.
+        \item Challenges include translation errors, lack of parallel resources, cultural differences, and mismatched linguistic structures.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+
+
+\setcounter{section}{2021}\sheet{1st exam}
+
+\begin{exercise}{NLP and the Web}
+  \begin{enumerate}
+    \item The web is an application area for NLP. Provide at least three examples of applications.
+    \item How can the web improve the quality of NLP? Provide at least three examples.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Information extraction, sentiment analysis, machine translation, question answering, …
+      \item Web as a corpus, crowdsourcing annotations, multilingual data, …
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Datasets}
+  \begin{enumerate}
+    \item What datasets are used in NLP research, and why are they important?
+    \item What is the annotation process for a corpus or dataset, and how does it impact machine learning applications?
+    \item What are the main strategies for large-scale dataset collection using crowdsourcing?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Collections of (possibly annotated) text data used for training and evaluating NLP models. They are crucial for developing and testing algorithms.
+      \item Add metadata or linguistic labels to the text, which can be used for training supervised machine learning models. The quality of annotations directly impacts the performance of machine learning applications.
+      \item Task design (clear instructions, examples), platform selection (e.g., Amazon Mechanical Turk), quality control (test questions, redundancy), data aggregation (majority voting, adjudication), and evaluation (inter-annotator agreement, error analysis).
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Text preprocessing}
+  \begin{enumerate}
+    \item Why are more features not always better for learning a classifier?
+    \item What is the typical type of input data that a sequence tagger training step requires?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Overfitting, noise, and computational complexity can increase with the number of features, leading to poor generalization.
+      \item Labeled training text (e.g., part-of-speech tags, named entity recognition).
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
 \begin{exercise}{Information retrieval metrics}\label{ex:ir-metrics}
   Two search engines have produced the following results ($+$ = relevant, $-$ = irrelevant).
   \begin{itemize}
@@ -328,39 +351,39 @@
   \end{solution}
 \end{exercise}
 
-\begin{exercise}{Question answering}\label{ex:qa}
-  Question Answering (QA) systems aim to provide direct answers to user queries.
-  \begin{enumerate}
-    \item What are the differences between factual QA and opinionated QA? and which is easier to evaluate?
-    \item Briefly explain QALD. What are key challenges?
-  \end{enumerate}
+\begin{exercise}{NLTK}
+  Explain two parameters in NLTK that start with a "c".
 
   \begin{solution}
-    \begin{enumerate}
-      \item \begin{itemize}
-          \item \textbf{Factual QA}: Answers objective questions with verifiable information.
-          \item \textbf{Opinionated QA}: Provides subjective answers based on opinions or preferences.
-          \item Factual QA is easier to evaluate as answers can be verified against ground truth.
-        \end{itemize}
-      \item QALD (Question Answering over Linked Data) focuses on answering questions using linked data (e.g., RDF datasets). Challenges include mapping natural language queries to structured data, handling incomplete or ambiguous data, and scaling to large and heterogeneous sources.
-    \end{enumerate}
+    \begin{itemize}
+      \item \textbf{Chunking}: Identifies and groups words into syntactic chunks based on their POS tags.
+      \item \textbf{Collocations}: Identifies words that frequently co-occur within a certain span.
+      \item \textbf{Concordance}: Displays a word in context, showing its surrounding words within a specified window.
+    \end{itemize}
   \end{solution}
 \end{exercise}
 
-\begin{exercise}{Cross-language QA}\label{ex:cross-lang-qa}
-  Cross-language Question Answering (QA) is a challenging task.
-  \begin{enumerate}
-    \item Explain the process of cross-language question-answering.
-    \item Where is it applied?
-    \item Explain the challenges faced in cross-language QA.
-  \end{enumerate}
+\begin{exercise}{Recall improvement}
+  Explain how to improve recall when using a search engine without changing the algorithm.
 
   \begin{solution}
-    \begin{enumerate}
-        \item Translate the question, retrieve relevant information in the target language, generate an answer, and translate it back.
-        \item Multi-language QA systems are used in global customer support, cross-border e-commerce, and multi-language search engines.
-        \item Challenges include translation errors, lack of parallel resources, cultural differences, and mismatched linguistic structures.
-    \end{enumerate}
+    \begin{itemize}
+        \item \textbf{Expanding queries}: Use synonyms, related terms, or stemming to match more results.
+        \item \textbf{Reducing filters}: Remove restrictive criteria (e.g., date, location).
+        \item \textbf{Boosting document recall}: Index more documents or reduce relevance thresholds.
+    \end{itemize}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Pragmatics and discourse analysis}\label{ex:pragmatics}
+  Why are pragmatics and discourse analysis difficult?
+
+  \begin{solution}
+    \begin{itemize}
+      \item \textbf{Context dependency}: Understanding depends heavily on prior sentences or external knowledge.
+      \item \textbf{Ambiguity}: Words and phrases can have multiple meanings depending on the situation.
+      \item \textbf{Social norms}: Interpretations vary based on cultural or societal factors.
+    \end{itemize}
   \end{solution}
 \end{exercise}
 
@@ -393,17 +416,15 @@
   \end{solution}
 \end{exercise}
 
-
-
-\setcounter{section}{2020}
-\sheet{1st exam}
-
-\begin{exercise}{Comprehensiveness}
-  What is comprehensiveness, specifically in the context of NLP?
+\begin{exercise}{TREC}\label{ex:trec}
+  What are the TREC question types?
 
   \begin{solution}
-    Comprehensiveness refers to the extent to which a system, dataset, or model covers all relevant aspects of a task or domain.
-    In NLP, comprehensiveness can be evaluated based on the coverage of linguistic phenomena, language varieties, or domain-specific terms in a dataset or model.
+    \begin{itemize}
+        \item \textbf{Factoid questions}: Require specific factual answers (e.g., "Who is the president of the U.S.?").
+        \item \textbf{List questions}: Require a list of items (e.g., "List countries in the EU").
+        \item \textbf{Definition questions}: Seek explanations or definitions (e.g., "What is AI?").
+    \end{itemize}
   \end{solution}
 \end{exercise}
 
@@ -414,6 +435,19 @@
 
   \begin{solution}
     1. query formulation, 2. query classification, 3. indexing, 4. doc retrieval, 5. passage retrieval
+  \end{solution}
+\end{exercise}
+
+
+
+\setcounter{section}{2020}\sheet{1st exam}
+
+\begin{exercise}{Comprehensiveness}
+  What is comprehensiveness, specifically in the context of NLP?
+
+  \begin{solution}
+    Comprehensiveness refers to the extent to which a system, dataset, or model covers all relevant aspects of a task or domain.
+    In NLP, comprehensiveness can be evaluated based on the coverage of linguistic phenomena, language varieties, or domain-specific terms in a dataset or model.
   \end{solution}
 \end{exercise}
 
@@ -428,18 +462,6 @@
         \item Sequence tagging assigns labels to each token in a sequence (e.g., POS tagging, named entity recognition).
         \item CRF is a probabilistic model that considers the dependencies between labels in a sequence, improving tagging accuracy by modeling label transitions.
     \end{enumerate}
-  \end{solution}
-\end{exercise}
-
-\begin{exercise}{NLTK}
-  Explain two parameters in NLTK that start with a "c".
-
-  \begin{solution}
-    \begin{itemize}
-      \item \textbf{Chunking}: Identifies and groups words into syntactic chunks based on their POS tags.
-      \item \textbf{Collocations}: Identifies words that frequently co-occur within a certain span.
-      \item \textbf{Concordance}: Displays a word in context, showing its surrounding words within a specified window.
-    \end{itemize}
   \end{solution}
 \end{exercise}
 
@@ -495,18 +517,6 @@
     \begin{itemize}
         \item \textbf{Mean Reciprocal Rank} $MRR = \frac{1}{N} \sum_{i=1}^{N} \frac{1}{\text{rank}_i} = \frac{1}{3} (\frac{1}{3}+\frac{1}{1}+0 = .4444)$
         \item \textbf{Accuracy} $\frac{\text{Number of correct answers}}{\text{Total number of queries}} = \frac{2}{3} = .6666$
-    \end{itemize}
-  \end{solution}
-\end{exercise}
-
-\begin{exercise}{Recall improvement}
-  Explain how to improve recall when using a search engine without changing the algorithm.
-
-  \begin{solution}
-    \begin{itemize}
-        \item \textbf{Expanding queries}: Use synonyms, related terms, or stemming to match more results.
-        \item \textbf{Reducing filters}: Remove restrictive criteria (e.g., date, location).
-        \item \textbf{Boosting document recall}: Index more documents or reduce relevance thresholds.
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -579,18 +589,6 @@
         \end{array}\]
         \item CAT, TAT, TAC, CAC
     \end{enumerate}
-  \end{solution}
-\end{exercise}
-
-\begin{exercise}{TREC}\label{ex:trec}
-  What are the TREC question types?
-
-  \begin{solution}
-    \begin{itemize}
-        \item \textbf{Factoid questions}: Require specific factual answers (e.g., "Who is the president of the U.S.?").
-        \item \textbf{List questions}: Require a list of items (e.g., "List countries in the EU").
-        \item \textbf{Definition questions}: Seek explanations or definitions (e.g., "What is AI?").
-    \end{itemize}
   \end{solution}
 \end{exercise}
 
