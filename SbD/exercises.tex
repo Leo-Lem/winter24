@@ -524,105 +524,120 @@
  
 
 
-% \setcounter{subsection}{90}
-% Aufgabe 1 Bluetooth-Pairing
-% Bei Bluetooth erfolgt zur sicheren Gerätekopplung zunächst ein sogenanntes Pairing, das in zwei Phasen
-% abläuft.
-% a) Bitte beschreiben Sie jeweils die Aufgabe der beiden Phasen.
-% b) Wie lauten die jeweiligen Ein- und Ausgabewerte in beiden Phasen?
-% \begin{exercise}{}
-%  % TODO
-%
-%   \begin{solution}
-%     % TODO
-%   \end{solution}
-% \end{exercise}
+\setcounter{subsection}{90}
+\begin{exercise}{Bluetooth-Pairing}
+  Bei Bluetooth erfolgt zur sicheren Gerätekopplung zunächst ein sogenanntes Pairing, das in zwei Phasen abläuft.
+  \begin{enumerate}
+    \item Bitte beschreiben Sie jeweils die Aufgabe der beiden Phasen.
+    \item Wie lauten die jeweiligen Ein- und Ausgabewerte in beiden Phasen?
+  \end{enumerate}
 
-% Aufgabe 2 TMSI-Vergabe
-% Bitte erläutern Sie
-% a) das Schutzziel
-% b) das Angreifermodell und
-% c) das Verfahren zur Vergabe einer TMSI im GSM.
-% d) Existiert in Bluetooth eine vergleichbare Funktionalität wie die TMSI-Vergabe im GSM? Bitte begründen
-% Sie Ihre Antwort kurz!
-% \begin{exercise}{}
-%  % TODO
-%
-%   \begin{solution}
-%     % TODO
-%   \end{solution}
-% \end{exercise}
+  \begin{solution}
+    \begin{enumerate}
+      \item \textbf{Phase 1 (Pairing):} Authentifizierung und Schlüsselaustausch. \textbf{Phase 2 (Bonding):} Speicherung der Schlüssel für zukünftige Verbindungen.
+      \item \textbf{Phase 1:} Eingabe: PIN, Ausgabe: Link Key. \textbf{Phase 2:} Eingabe: Link Key, Ausgabe: Keine.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
 
-% Aufgabe 3 Bruchstückhafter AES
-% Bei AES werden rundenweise „AddRoundKey“, „SubBytes“, „ShiftRows“ und „MixColumns“ angewandt. Für
-% diese Aufgabe können Sie eine Blocklänge von 128 Bit und eine Schlüssellänge von 256 Bit annehmen. Bitte
-% zeigen Sie unter Angabe der hierfür notwendigen Angriffsart und unter Berechnung der effektiven Schlüssel-
-% länge im Kontext dieser Angriffsart die Unsicherheit von AES bei Verzicht pro Runde auf ...
-% a) ... die Anwendung der Operation „AddRoundKey“.
-% b) ... die Anwendung der Operation „SubBytes“ bei der Schlüsselexpansion sowie der Verschlüsselung.
-% c) ... die Anwendung der Operation „SubBytes“ bei der Verschlüsselung, mit jedoch weiterbestehender
-% Anwendung dieser Operation bei der Schlüsselexpansion.
-% d) ... die Anwendung der Operation „ShiftRows“.
-% e) ... die Anwendung der Operation „MixColumns“
-% \begin{exercise}{}
-%  % TODO
-%
-%   \begin{solution}
-%     % TODO
-%   \end{solution}
-% \end{exercise}
+\begin{exercise}{TMSI-Vergabe}
+  Bitte erläutern Sie:
+  \begin{enumerate}
+    \item das Schutzziel
+    \item das Angreifermodell und
+    \item das Verfahren zur Vergabe einer TMSI im GSM.
+    \item Existiert in Bluetooth eine vergleichbare Funktionalität wie die TMSI-Vergabe im GSM? Bitte begründen Sie Ihre Antwort kurz!
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Schutzziel: Vermeidung von IMSI-Catching und Tracking.
+      \item Angreifermodell: IMSI-Catcher und Analyse der TMSI-Vergabe.
+      \item Verfahren: Zufällige Vergabe einer TMSI durch das VLR.
+      \item Bluetooth: Nein, da Bluetooth keine IMSI verwendet.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Bruchstückhafter AES}
+  Bei AES werden rundenweise "AddRoundKey", "SubBytes", "ShiftRows" und "MixColumns" angewandt. Für diese Aufgabe können Sie eine Blocklänge von 128 Bit und eine Schlüssellänge von 256 Bit annehmen. Bitte zeigen Sie unter Angabe der hierfür notwendigen Angriffsart und unter Berechnung der effektiven Schlüssellänge im Kontext dieser Angriffsart die Unsicherheit von AES bei Verzicht pro Runde auf …
+  \begin{enumerate}
+    \item … die Anwendung der Operation "AddRoundKey".
+    \item … die Anwendung der Operation "SubBytes" bei der Schlüsselexpansion sowie der Verschlüsselung.
+    \item … die Anwendung der Operation "SubBytes" bei der Verschlüsselung, mit jedoch weiterbestehender Anwendung dieser Operation bei der Schlüsselexpansion.
+    \item … die Anwendung der Operation "ShiftRows".
+    \item … die Anwendung der Operation "MixColumns".
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Angriffsart: Known-Plaintext-Angriff. Effektive Schlüssellänge: 128 Bit.
+      \item Angriffsart: Chosen-Plaintext-Angriff. Effektive Schlüssellänge: 128 Bit.
+      \item Angriffsart: Chosen-Plaintext-Angriff. Effektive Schlüssellänge: 128 Bit.
+      \item Angriffsart: Known-Plaintext-Angriff. Effektive Schlüssellänge: 128 Bit.
+      \item Angriffsart: Known-Plaintext-Angriff. Effektive Schlüssellänge: 128 Bit.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
 
 
-% \setcounter{subsection}{100}
+\setcounter{subsection}{100}
 % Aufgabe 1 Spoofing
 % a) Inwiefern kann ein DNS-Spoofing-Angriff für einen Distributed Denial of Service (DDoS)-Angriff ausge-
 % nutzt werden? Erklären Sie anschaulich.
 % b) Warum funktioniert ARP-Spoofing nur in einem lokalen Netz?
 % c) Sie vermuten, Opfer eines ARP-Spoofing-Angriffs zu sein. Was können Sie an Ihrem Rechner überprü-
 % fen, um einen solchen Angriff erkennen zu können?
-% \begin{exercise}{}
-%  % TODO
-%
-%   \begin{solution}
-%     % TODO
-%   \end{solution}
-% \end{exercise}
+\begin{exercise}{Spoofing}
+  \begin{enumerate}
+    \item Inwiefern kann ein DNS-Spoofing-Angriff für einen Distributed Denial of Service (DDoS)-Angriff genutzt werden? Erklären Sie anschaulich.
+    \item Warum funktioniert ARP-Spoofing nur in einem lokalen Netz?
+    \item Sie vermuten, Opfer eines ARP-Spoofing-Angriffs zu sein. Was können Sie an Ihrem Rechner überprüfen, um einen solchen Angriff erkennen zu können?
+  \end{enumerate}
 
-% Aufgabe 2 Mehrfachnutzung des IV in einem WEP-verschlüsselten WLAN
-% a) Der in WEP verwendete Initialisierungsvektor (IV) ist 24 Bit groß und steht in einem Paket P am Paketan-
-% fang vor dem Schlüsseltext. Wie viele Pakete können maximal erzeugt werden, wenn kein IV mehrfach
-% verwendet werden soll? Wie sind die IVs von einem Teilnehmer des WLANs zu erzeugen, sodass eine
-% Kollision möglichst spät auftritt? Welches Problem gibt es bei diesem Verfahren, wenn mehrere Teilneh-
-% mer kommunizieren?
-% b) Nehmen Sie an, Sie haben die Pakete P1 und P2 empfangen:
-% P1: 00010 00111 11111 11110 11001 01001 00101 ...
-% P2: 00010 00111 11111 11110 11000 10011 00010 ...
-% Die ersten 10 Klartextbits des ersten Paketes P1 lauten 10010 01100. Bestimmen Sie die ersten 10
-% Klartextbits des zweiten Paketes P2.
-% \begin{exercise}{}
-%  % TODO
-%
-%   \begin{solution}
-%     % TODO
-%   \end{solution}
-% \end{exercise}
+  \begin{solution}
+    \begin{enumerate}
+      \item Ein DNS-Spoofing-Angriff kann genutzt werden, um die IP-Adressen von Opfern auf die IP-Adresse des Opfers umzuleiten. Dadurch wird der Traffic auf das Opfer umgeleitet und es kommt zu einem DDoS-Angriff.
+      \item ARP-Spoofing funktioniert nur in einem lokalen Netz, da ARP-Pakete nicht über Router weitergeleitet werden.
+      \item Überprüfen Sie die ARP-Tabelle Ihres Rechners, um verdächtige Einträge zu identifizieren.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
 
-% Aufgabe 3 Challenge-Response-Authentifikation in GSM, Bluetooth und WEP
-% Sowohl im GSM als auch in Bluetooth und im WEP-Standard kommt eine Challenge-Response-
-% Authentifikation zum Einsatz.
-% a) Wie läuft eine einseitige Challenge-Response-Authentifikation allgemein ab?
-% b) Bitte benennen Sie Gemeinsamkeiten und Unterschiede der Challenge-Response-Authentifikation in
-% Bluetooth, GSM und WEP. Beschränken Sie sich dabei auf den Ablauf und die wesentlichen Eigen-
-% schaften.
-% c) Die Challenge-Response-Authentifikation bei WEP weist eine Schwäche auf. Wie nutzt ein Angriff diese
-% Schwäche aus? Machen Sie einen Vorschlag, wie man diesen Angriff verhindern könnte.
-% \begin{exercise}{}
-%  % TODO
-%
-%   \begin{solution}
-%     % TODO
-%   \end{solution}
-% \end{exercise}
+\begin{exercise}{Mehrfachnutzung des IV in einem WEP-verschlüsselten WLAN}
+  \begin{enumerate}
+    \item Der in WEP verwendete Initialisierungsvektor (IV) ist 24 Bit groß und steht in einem Paket $P$ am Paketanfang vor dem Schlüsseltext. Wie viele Pakete können maximal erzeugt werden, wenn kein IV mehrfach verwendet werden soll? Wie sind die IVs von einem Teilnehmer des WLANs zu erzeugen, sodass eine Kollision möglichst spät auftritt? Welches Problem gibt es bei diesem Verfahren, wenn mehrere Teilnehmer kommunizieren?
+    \item Nehmen Sie an, Sie haben die Pakete $P_1$ und $P_2$ empfangen:
+      \begin{align*}
+        P_1&: 00010\ 00111\ 11111\ 11110\ 11001\ 01001\ 00101\ \ldots\\
+        P_2&: 00010\ 00111\ 11111\ 11110\ 11000\ 10011\ 00010\ \ldots
+      \end{align*}
+      Die ersten 10 Klartextbits des ersten Paketes $P_1$ lauten $10010\ 01100$. Bestimmen Sie die ersten 10 Klartextbits des zweiten Paketes $P_2$.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Es können maximal $2^{24}$ Pakete erzeugt werden, wenn kein IV mehrfach verwendet werden soll. IVs sollten zufällig erzeugt werden, um Kollisionen zu vermeiden. Bei mehreren Teilnehmern kann es zu Kollisionen kommen, wenn IVs nicht synchronisiert werden.
+      \item Die ersten 10 Klartextbits des zweiten Paketes $P_2$ lauten $10010\ 01101$.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Challenge-Response-Authentifikation in GSM, Bluetooth und WEP}
+  \begin{enumerate}
+    \item Wie läuft eine einseitige Challenge-Response-Authentifikation allgemein ab?
+    \item Bitte benennen Sie Gemeinsamkeiten und Unterschiede der Challenge-Response-Authentifikation in Bluetooth, GSM und WEP. Beschränken Sie sich dabei auf den Ablauf und die wesentlichen Eigenschaften.
+    \item Die Challenge-Response-Authentifikation bei WEP weist eine Schwäche auf. Wie nutzt ein Angriff diese Schwäche aus? Machen Sie einen Vorschlag, wie man diesen Angriff verhindern könnte.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Ein Teilnehmer sendet eine Challenge an einen anderen Teilnehmer, der diese Challenge mit einer Response beantwortet.
+      \item Gemeinsamkeiten: Authentifizierung durch Challenge-Response-Verfahren. Unterschiede: Verwendung in unterschiedlichen Protokollen, z. B. GSM, Bluetooth und WEP.
+      \item Angriff: Wiederholte Authentifizierungsanfragen. Verhinderung: Begrenzung der Authentifizierungsanfragen.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
 
 % Aufgabe 4 Challenge-Response-Authentifikation überarbeitet
 % In der klassischen beidseitigen Challenge-Response-Authentifikation mittels symmetrischer, deterministi-
@@ -662,13 +677,33 @@
 % f) Beschreiben Sie ein Challenge-Response-Protokoll zur gegenseitigen Authentifkation mit asymmetri-
 % scher statt symmetrischer Verschlüsselung. Was muss gelten damit das Protokoll gegen Angriffe wie in
 % b) geschützt ist?
-% \begin{exercise}{}
-%  % TODO
-%
-%   \begin{solution}
-%     % TODO
-%   \end{solution}
-% \end{exercise}
+\begin{exercise}{Challenge-Response-Authentifikation überarbeitet}
+  In der klassischen beidseitigen Challenge-Response-Authentifikation mittels symmetrischer, deterministischer Verschlüsselung sendet ein prüfendes IT-System eine Zufallszahl als Challenge und erwartet deren Verschlüsselung mit einem gemeinsamen Schlüssel $K$. Nachfolgend findet sich eine formale Darstellung:
+  \begin{align*}
+    \text{Lokal für Kanal 1:} & A \text{ wählt und speichert vorläufig } R_A\\
+    \text{Kanal 1:} & A \xrightarrow{R_A} B\\
+    \text{Lokal für Kanal 1:} & B \text{ wählt und speichert vorläufig } R_B\\
+    \text{Lokal für Kanal 1:} & B \text{ berechnet } C_A := E_K(R_A)\\
+    \text{Kanal 1:} & A \xleftarrow{R_B, C_A} B\\
+    \text{Lokal für Kanal 1:} & A \text{ testet } C_A = E_K(R_A) \text{ und löscht } R_A\\
+    \text{Lokal für Kanal 1:} & A \text{ berechnet } C_B := E_K(R_B)\\
+    \text{Kanal 1:} & A \xrightarrow{C_B} B\\
+    \text{Lokal für Kanal 1:} & B \text{ testet } C_B = E_K(R_B) \text{ und löscht } R_B
+  \end{align*}
+  Der verwendete Schlüssel $K$ darf hierbei nur dem Geprüften und dem prüfenden IT-System bekannt sein. Wo immer Sie im Rahmen dieser Aufgabe ein Protokoll beschreiben sollen, verwenden Sie diese formale Darstellung. Bezeichnen Sie für eine asymmetrische Verschlüsselung mit $PK$ den öffentlichen und mit $SK$ den geheimen Schlüssel, sowie mit $E_{PK}(\cdot)$ die Ver- und mit $D_{SK}(\cdot)$ die Entschlüsselung.
+  \begin{enumerate}
+    \item Wieso werden Zufallszahlen und nicht feste Werte verwendet?
+    \item Gegen welche Art von Angriff, bei welcher der Angreifer nur mit einer Partei kommunizieren muss, ist die klassische Challenge-Response-Authentifikation wie oben dargestellt verwundbar? Beschreiben Sie einen erfolgreichen Angriff.
+    \item Wie lässt sich der Angriff aus b) durch dauerhaftes statt vorläufiges Speichern der versandten Challenges und entsprechende Prüfungen vermeiden?
+    \item Beschreiben Sie eine überarbeitete Challenge-Response-Authentifikation mittels symmetrischer Verschlüsselung, die gegen Angriffe wie in b) geschützt ist und keine dauerhafte Speicherung von Daten erfordert.
+    \item Beschreiben Sie ein Protokoll zur gegenseitigen Authentifikation mit lediglich einer Anwendung eines symmetrischen Verschlüsselungsalgorithmus.
+    \item Beschreiben Sie ein Challenge-Response-Protokoll zur gegenseitigen Authentifikation mit asymmetrischer statt symmetrischer Verschlüsselung. Was muss gelten, damit das Protokoll gegen Angriffe wie in b) geschützt ist?
+  \end{enumerate}
+
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
 
 
 % \setcounter{subsection}{110}
