@@ -1117,8 +1117,8 @@
     \begin{enumerate}
         \item ECB und CBC benötigen invertierbare Verschlüsselungsfunktionen, da die Entschlüsselung der Chiffre notwendig ist. Der CTR beruht auf XOR-Verknüpfung der Klar- und Schlüsseltexte und Berechnung und Verschlüsselung der Zählerwerte sowohl beim Sender als auch beim Empfänger. Daher ist keine invertierbare Verschlüsselungsfunktion notwendig.
         \item Im ECB und CTR-Modus können die Blöcke parallel verschlüsselt werden, da sie unabhängig voneinander sind. Im CBC-Modus hängt die Verschlüsselung eines Blocks von der Verschlüsselung des vorherigen Blocks ab, daher ist keine Parallelisierung möglich.
-        \item Bei allen Modi führt ein Bitfehler im zweiten Block dazu, dass dieser Block nicht entschlüsselt werden kann. Im CBC-Modus wird zusätzlich der Block 3 verändert, da die XOR-Verknüpfung mit dem vorherigen Block nicht mehr korrekt ist.
-        \item Wenn die Blockgrenzen nicht bekannt sind, kann nur der erste Block entschlüsselt werden. Im CBC kann zusätzlich selbst bei bekannten Blockgrenzen nichts weiter entschlüsselt werden, da die XOR-Verknüpfung mit dem vorherigen Block nicht mehr korrekt ist.
+        \item Bei allen Modi führt ein Bitfehler im zweiten Block dazu, dass dieser Block nicht entschlüsselt werden kann. Im CBC-Modus wird zusätzlich das relevante Bit im Block 3 verändert, da die XOR-Verknüpfung mit dem vorherigen Block nicht mehr korrekt ist.
+        \item Wenn Blockgrenzen bekannt sind, wie in 3., aber bei CBC wird der dritte Block völlig unbrauchbar. Wenn nicht, sind Block 2 und alle nachfolgenden Blöcke nicht entschlüsselbar aufgrund des Synchronisationsverlusts.
         \item Bei ECB und CTR können alle anderen Blöcke korrekt entschlüsselt werden, da sie unabhängig voneinander sind. Im CBC-Modus kann kein nachfolgender Block entschlüsselt werden, da die XOR-Verknüpfung mit dem vorherigen Block nicht mehr korrekt ist.
         \item Da $m_1$ und $c_1$ kann daraus der Pseudozufallszahlenstrom $s=c_1\oplus m_1$ berechnet werden. Hiermit lässt sich dann $m_2=c_2\oplus s$ berechnen.
     \end{enumerate}
@@ -1128,7 +1128,7 @@
 \begin{exercise}{Elliptische Kurven}
   \begin{enumerate}
     \item Auf welcher mathematischen Schwierigkeit basiert der ECC?
-    \item Berechnen Sie die Punkte auf der folgenden elliptischen Kurve: $a = 6$, $b = 1$, $p = 11$ (allgemeine Formel war gegeben).
+    \item Berechnen Sie die Punkte auf der folgenden elliptischen Kurve: $a = 6$, $b = 1$, $p = 11$.
     \item Nennen Sie zwei Vorteile, die ECC gegenüber sicherheitsmäßig vergleichbaren Verfahren hat.
   \end{enumerate}
 
