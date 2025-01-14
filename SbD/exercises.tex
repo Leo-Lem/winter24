@@ -1,6 +1,6 @@
 \documentclass{article}
 
-\usepackage[solutions]{../.template/xrcise}
+\usepackage[]{../.template/xrcise}
 
 \subject{Security by Design}
 \semester{Winter 2024}
@@ -141,40 +141,32 @@
     \item Sie haben folgendes Klartext/Schlüsseltext-Paar $ (m, c) $ einer 2-DES-Verschlüsselung $ E_{k_2}(E_{k_1}(m)) = c $ erlangt: 
       \[ m = \texttt{c183 50b5 52b8 f8b1}, \quad c = \texttt{42e0 4462 099e e8ca}. \]
       Ermitteln Sie $ k_1 $ und $ k_2 $, indem Sie einen Meet-in-the-Middle-Angriff durchführen. Benutzen Sie dafür die unten dargestellte Tabelle 1 ausgewählter DES-Funktionswerte. In der Tabelle können für einen gegebenen Klartext $ x $ bzw. einen Schlüsseltext $ y $ und einen Schlüssel $ k $ die Werte der Verschlüsselungsfunktion $ E $ bzw. Entschlüsselungsfunktion $ D $ des DES-Algorithmus nachgeschlagen werden. In welchen Zeilen haben Sie die DES-Funktionswerte, die zum Erfolg beim Meet-in-the-Middle Angriff führen, nachgeschlagen?
-      \textit{Hinweis: Beachten Sie das Beispiel zum Ablesen der Tabelle.}
+      \par\textit{Hinweis: Beachten Sie das Beispiel zum Ablesen der Tabelle.}
       \input{res/des.tbl}
     \item Wie viele Einträge enthält eine vollständige Tabelle, die bei einem Meet-in-the-Middle-Angriff auf den 2-DES-Algorithmus erstellt wird, mindestens? Welche Art von Berechnungen werden dort festgehalten?
   \end{enumerate}
 
   \begin{solution}
     \begin{enumerate}
-        \item 2-DES bietet nur $ 2^{56} $ statt $ 2^{112} $ effektiver Sicherheit, da ein Meet-in-the-Middle-Angriff $ E_{k_1}(m) = D_{k_2}(c) $ nutzt.
+        \item 2-DES bietet nur $2*2^{56}$ statt $2^{112}$ effektiver Sicherheit, da ein Meet-in-the-Middle-Angriff $E_{k_1}(m) = D_{k_2}(c)$ nutzen kann. Somit ist die Sicherheit bei doppelter Schlüssellänge lediglich um den Faktor 2 erhöht.
         \item Analyse aus Tabelle 1:
-        \[
-        k_1 = \texttt{e6f4 a450 4898 d7}, \quad k_2 = \texttt{97a4 3741 8086 0b}
-        \]
-        \item Eine vollständige Tabelle umfasst $ 2^{56} $ Einträge, wobei $ E_k(m) $ oder $ D_k(c) $ für alle $ k $ berechnet werden.
+          \[  k_1 = \texttt{e6f4 a450 4898 d7}, \quad k_2 = \texttt{97a4 3741 8086 0b} \]
+        \item Eine vollständige Tabelle umfasst $2*2^{56}$ Einträge, wobei $E_k(m)$ und $D_k(c)$ für alle $k$ berechnet werden.
     \end{enumerate}
   \end{solution}
 \end{exercise}
 
 \begin{exercise}{Triple-DES}
-  Beim Triple-DES-Algorithmus (3-DES) handelt es sich um die dreifache Hintereinanderausführung des DES-
-  Algorithmus. Dabei wird mit zwei 56 Bit langen Schlüsseln $ k_1 $ und $ k_2 $ gearbeitet und beim Verschlüsseln
-  entweder $ E(k_1) \to D(k_2) \to E(k_1) $ (EDE-Modus) oder $ E(k_1) \to E(k_2) \to E(k_1) $ (EEE-Modus) ausgeführt.
+  Beim Triple-DES-Algorithmus (3-DES) handelt es sich um die dreifache Hintereinanderausführung des DES-Algorithmus. Dabei wird mit zwei 56 Bit langen Schlüsseln $k_1$ und $k_2$ gearbeitet und beim Verschlüsseln entweder $E(k_1) \to D(k_2) \to E(k_1)$ (EDE-Modus) oder $E(k_1) \to E(k_2) \to E(k_1)$ (EEE-Modus) ausgeführt.
   \begin{enumerate}
     \item Warum wird dem EDE-Modus meist der Vorzug vor dem EEE-Modus gegeben?
-    \item Berechnen Sie die theoretische und die effektive Schlüssellänge des Triple-DES-Algorithmus unter ei-
-    nem Known-Plaintext-Angriff mit drei 56 Bit langen Schlüsseln, d.h. $ E(k_1) \to E(k_2) \to E(k_3) $.
+    \item Berechnen Sie die theoretische und die effektive Schlüssellänge des Triple-DES-Algorithmus unter einem Known-Plaintext-Angriff mit drei 56 Bit langen Schlüsseln, d.h. $E(k_1) \to E(k_2) \to E(k_3)$.
   \end{enumerate}
 
   \begin{solution}
     \begin{enumerate}
-        \item Der EDE-Modus (Encrypt-Decrypt-Encrypt) schützt gegen Meet-in-the-Middle-Angriffe, da die Verschlüsselung durch Entschlüsselung unterbrochen wird.
-        \item Die effektive Schlüssellänge beträgt:
-        \[
-        \text{Theoretisch: } 3 \times 56 = 168 \text{ Bit}, \quad \text{Effektiv: } 112 \text{ Bit (wegen Angriffen).}
-        \]
+        \item Abwärtskompatibilität mit DES bei $k_1=k_2$.
+        \item Theoretisch 168 Bit (3*56 Bit), effektiv 112 Bit (2*56) aufgrund der Anfälligkeit gegenüber Meet-in-the-Middle-Angriffen.
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -202,10 +194,9 @@
 \end{exercise}
 
 \begin{exercise}{Cipher-Block-Chaining-Betriebsmodus}
-  Beim Cipher-Block-Chaining-Betriebsmodus wird ein Klartextblock $ M_i $ vor der Anwendung der Verschlüsselungsfunktion mit dem unmittelbar vorher erzeugten Chiffretextblock $ C_{i-1} $ durch die XOR-Operation verknüpft.
-  Die erzeugten Chiffretextblöcke hängen dadurch von ihren Vorgängern ab. Bei der Verschlüsselung des ersten Klartextblocks $ M_1 $ wird für $ C_0 $ ein zufällig gewählter Initialisierungsvektor (IV) verwendet.
-  
-  Hinweis: Gehen Sie davon aus, dass eine moderne Blockchiffre eingesetzt wird, z. B. AES.
+  Beim Cipher-Block-Chaining-Betriebsmodus wird ein Klartextblock $M_i$ vor der Anwendung der Verschlüsselungsfunktion mit dem unmittelbar vorher erzeugten Chiffretextblock $C_{i-1}$ durch die XOR-Operation verknüpft.
+  Die erzeugten Chiffretextblöcke hängen dadurch von ihren Vorgängern ab. Bei der Verschlüsselung des ersten Klartextblocks $M_1$ wird für $C_0$ ein zufällig gewählter Initialisierungsvektor (IV) verwendet.
+    \par\textit{Hinweis: Gehen Sie davon aus, dass eine moderne Blockchiffre eingesetzt wird, z. B. AES.}
   \begin{enumerate}
     \item Wie unterscheiden sich zwei Schlüsseltexte, die mit demselben Schlüssel erzeugt wurden und denselben Klartext enthalten, jedoch mit unterschiedlichen IVs erzeugt wurden?
     \item Wie unterscheiden sich zwei Schlüsseltexte, wenn sie sich lediglich an einer Stelle im ersten Klartextblock unterscheiden (also ein Bit gekippt wird) und ansonsten völlig identisch sind (bei gleichem IV und Schlüssel)?
@@ -236,34 +227,30 @@
     \begin{enumerate}
         \item Im ECB-Modus führt der Verlust eines Nachrichtenblocks nicht zu einer Synchronisationsstörung der verbleibenden Blöcke, da jeder Block unabhängig verschlüsselt wird.
         \item Ein verlorenes Bit im ECB-Modus zerstört den betroffenen Block, aber die folgenden Blöcke bleiben lesbar.
-        \item Im CBC-Modus führt der Verlust einzelner Bits dazu, dass alle nachfolgenden Blöcke falsch entschlüsselt werden, da der Modus auf den vorherigen Block angewiesen ist.
-        \item Bei stromorientierten Betriebsarten (z. B. CTR-Modus) ist die Fehlerfortpflanzung auf den aktuellen Block beschränkt, da kein Feedback aus vorherigen Blöcken verwendet wird. Dies ist ein Vorteil gegenüber CBC.
+        \item Im CBC-Modus führt der Verlust einzelner Bits dazu, dass zusätzlich zum fehlerhaften Block der nachfolgenden Block nicht mehr entschlüsselt werden kann.
+        \item Bei stromorientierten Betriebsarten (zB. CTR-Modus) ist die Fehlerfortpflanzung auf den aktuellen Block beschränkt, da kein Feedback aus vorherigen Blöcken verwendet wird. Dies ist ein Vorteil gegenüber CBC.
     \end{enumerate}
   \end{solution}
 \end{exercise}
 
 \setcounter{subsection}{50}
 \begin{exercise}{Verketteter Cipher-Block-Chaining-Betriebsmodus}
-  Beim verketteten Cipher-Block-Chaining-Betriebsmodus wird zur Steigerung des Datendurchsatzes nur für die erste Nachricht $ M_1 $ ein Initialisierungsvektor $ IV $ gewählt. Das heißt für den Schlüsseltext $ C_1 = C_1^0 || \ldots || C_1^{n_1} $ der ersten Nachricht $ M_1 = M_1^1 || \ldots || M_1^{n_1} $ gilt wie beim normalen CBC:
-  \[
-      C_1^0 = IV, \quad C_1^i = E(C_1^{i-1} \oplus M_1^i, K) \quad \text{mit } i = 1, \ldots, n_1.
-  \]
-  Für alle folgenden Nachrichten $ M_2, \ldots $ wird anstelle des $ IV $ der letzte Schlüsseltextblock des vorherigen Schlüsseltextes verwendet. Das heißt für den Schlüsseltext $ C^j = C^j_1 || \ldots || C^j_{n_j} $ aller weiteren Nachrichten $ M_j = M_j^1 || \ldots || M_j^{n_j} $ mit $ j > 1 $ gilt:
-  \[
-      C^j_1 = E(C^{j-1}_{n_{j-1}} \oplus M_j^1, K), \quad C^j_i = E(C^j_{i-1} \oplus M_j^i, K) \quad \text{mit } i = 2, \ldots, n_j.
-  \]
+  Beim verketteten Cipher-Block-Chaining-Betriebsmodus wird zur Steigerung des Datendurchsatzes nur für die erste Nachricht $M_1$ ein Initialisierungsvektor $IV$ gewählt. Das heißt für den Schlüsseltext $C_1 = C_1^0 || \ldots || C_1^{n_1}$ der ersten Nachricht $M_1 = M_1^1 || \ldots || M_1^{n_1}$ gilt wie beim normalen CBC:
+    \[ C_1^0 = IV, \quad C_1^i = E(C_1^{i-1} \oplus M_1^i, K) \quad \text{mit } i = 1, \ldots, n_1. \]
+  Für alle folgenden Nachrichten $M_2, \ldots$ wird anstelle des $IV$ der letzte Schlüsseltextblock des vorherigen Schlüsseltextes verwendet. Das heißt für den Schlüsseltext $C^j = C^j_1 || \ldots || C^j_{n_j}$ aller weiteren Nachrichten $M_j = M_j^1 || \ldots || M_j^{n_j}$ mit $j > 1$ gilt:
+    \[ C^j_1 = E(C^{j-1}_{n_{j-1}} \oplus M_j^1, K), \quad C^j_i = E(C^j_{i-1} \oplus M_j^i, K) \quad \text{mit } i = 2, \ldots, n_j. \]
   \begin{enumerate}
-    \item Berechnen Sie unter Angabe aller Zwischenschritte die prozentuale Erhöhung des Datendurchsatzes. Führen Sie die Berechnungen sowohl für einen Block als auch für vier Blöcke pro Nachricht aus. Gehen Sie in beiden Fällen von insgesamt $ 2^{20} $ zu verschlüsselnden Nachrichten vor Neugenerierung eines Schlüssels und Neustart mit einem neuen $ IV $ aus.
-    \item Ihnen ist ein Schlüsseltext $ C^j $ in die Hände gefallen, der nur aus zwei möglichen Klartexten $ M_j $ oder $ \tilde{M}_j $ gebildet worden sein kann. Erläutern Sie, wie Sie ermitteln könnten, welcher der beiden Klartexte verschlüsselt wurde, wenn Sie den Klartext $ M_{j+1} $ für die nächste Nachricht selbst wählen dürfen.
+    \item Berechnen Sie unter Angabe aller Zwischenschritte die prozentuale Erhöhung des Datendurchsatzes. Führen Sie die Berechnungen sowohl für einen Block als auch für vier Blöcke pro Nachricht aus. Gehen Sie in beiden Fällen von insgesamt $2^{20}$ zu verschlüsselnden Nachrichten vor Neugenerierung eines Schlüssels und Neustart mit einem neuen $IV$ aus.
+    \item Ihnen ist ein Schlüsseltext $C^j$ in die Hände gefallen, der nur aus zwei möglichen Klartexten $M_j$ oder $\tilde{M}_j$ gebildet worden sein kann. Erläutern Sie, wie Sie ermitteln könnten, welcher der beiden Klartexte verschlüsselt wurde, wenn Sie den Klartext $M_{j+1}$ für die nächste Nachricht selbst wählen dürfen.
     \item Beschreiben Sie ein Szenario für einen derartigen Angriff.
     \item Bewerten Sie ausgehend von der bisherigen Diskussion die Folge selbst kleinster Änderungen für die Sicherheit kryptographischer Algorithmen.
   \end{enumerate}
 
   \begin{solution}
     \begin{enumerate}
-        \item Bei einem verketteten CBC-Modus steigt der Datendurchsatz, da kein neuer IV benötigt wird. Für $ 2^{20} $ Nachrichten bei einer Blockgröße von $ 128 $ Bit beträgt der Effizienzgewinn ca. 0,01\%, da der Initialisierungsaufwand entfällt.
-        \item Wenn $ M_j $ oder $ \tilde{M}_j $ verschlüsselt wurde, kann durch die Manipulation des nächsten Klartextblocks $ M_{j+1} $ festgestellt werden, welcher Klartext verwendet wurde. Dies ermöglicht einen Known-Plaintext-Angriff.
-        \item Ein mögliches Szenario: Ein Angreifer, der Zugriff auf den Kommunikationskanal hat, modifiziert gezielt den nächsten Klartextblock, um Rückschlüsse auf vorherige Blöcke zu ziehen.
+        \item Bei einem verketteten CBC-Modus steigt der Datendurchsatz, da kein neuer IV benötigt wird. Für einen Block pro Nachricht: $100\%$, für vier Blöcke pro Nachricht: $25\%$.
+        \item Wählen Sie $M_{j+1}^0=M_j^0 \oplus C_j^{-1}$ als Klartext für den ersten Block der nächsten Nachricht. Das ergibt $C_{j+1}^0=E(C_j^{-1} \oplus M_{j+1}^0)=E(C_j^{-1} \oplus M_j^0 \oplus C_j^{-1})=E(M_j^0)=C_j^0$, wenn $M_j$ verschlüsselt wurde.
+        \item Ein Angreifer, der Zugriff auf den Kommunikationskanal hat, modifiziert gezielt den nächsten Klartextblock, um Rückschlüsse auf vorherige Blöcke zu ziehen.
         \item Selbst kleinste Änderungen im Verfahren können signifikante Sicherheitsrisiken schaffen. Hier: Die Wiederverwendung des letzten Blocks des vorherigen Schlüsseltextes anstelle eines neuen IVs.
     \end{enumerate}
   \end{solution}
