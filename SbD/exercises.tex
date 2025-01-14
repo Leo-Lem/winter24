@@ -1,6 +1,6 @@
 \documentclass{article}
 
-\usepackage[]{../.template/xrcise}
+\usepackage[solutions]{../.template/xrcise}
 
 \subject{Security by Design}
 \semester{Winter 2024}
@@ -14,44 +14,35 @@
 \begin{exercise}{Skytala}
   Bei der Skytala handelt es sich um eine Transpositionschiffre, bei der ursprünglich ein Zylinder mit einem Papierstreifen umwickelt wurde. Die Ver- und Entschlüsselung kann aber auch mithilfe einer Matrix dargestellt werden.
   \begin{enumerate}
-      \item Verschlüsseln Sie den folgenden Klartext mit einer Skytala, die durch eine Matrix mit sieben Zeilen und neun Spalten beschrieben werden kann:
+    \item\label{ex:skytala} Verschlüsseln Sie den folgenden Klartext mit einer Skytala, die durch eine Matrix mit sieben Zeilen und neun Spalten beschrieben werden kann:
       \begin{center}
-          \texttt{GLUECKLICH\_IST\_DER\_DER\_DEN\_DINGEN\_AUF\_DEN\_GRUND\_GEHEN\_KONNTE}
+        \texttt{GLUECKLICH\_IST\_DER\_DER\_DEN\_DINGEN\_AUF\_DEN\_GRUND\_GEHEN\_KONNTE}
       \end{center}
-      \item Was ist der geheim zu haltende symmetrische Schlüssel der Skytala aus Teilaufgabe a) und wie hängt dieser mit der ursprünglichen Variante mit Zylinder und Papierstreifen zusammen?
-      \item Erläutern Sie kurz zwei sinnvolle Ansätze zur Kryptanalyse, d. h. Ansätze zum Brechen einer Skytala.
+    \item Was ist der geheim zu haltende symmetrische Schlüssel der Skytala aus Teilaufgabe \ref{ex:skytala} und wie hängt dieser mit der ursprünglichen Variante mit Zylinder und Papierstreifen zusammen?
+    \item Erläutern Sie kurz zwei sinnvolle Ansätze zur Kryptanalyse, d. h. Ansätze zum Brechen einer Skytala.
   \end{enumerate}
 
   \begin{solution}
     \begin{enumerate}
-        \item Verschlüsselung mit Skytala: Teilen Sie den Klartext in eine Matrix mit 7 Zeilen und 9 Spalten:
+        \item Teilen Sie den Klartext in eine Matrix mit 7 Zeilen und 9 Spalten:
           \[
-          \texttt{GLUECKLICH IST DER DER DEN DINGEN AUF DEN GRUND GEHEN KONNTE}
+            \begin{array}{ccccccccc}
+            G & L & U & E & C & K & L & I & C \\
+            H & \_ & I & S & T & \_ & D & E & R \\
+            \_ & D & E & R & \_ & D & E & N & \_ \\
+            D & I & N & G & E & N & \_ & A & U \\
+            F & D & E & N & \_ & G & R & U & N \\
+            D & G & E & H & E & N & \_ & K & O \\
+            N & T & T & E & \_ & & & & \\
+            \end{array}
           \]
-          Die Matrix:
-          \[
-          \begin{array}{ccccccccc}
-          G & L & U & E & C & K & L & I & C \\
-          H & \_ & I & S & T & \_ & D & E & R \\
-          \_ & D & E & R & \_ & D & E & N & \_ \\
-          D & I & N & G & E & N & \_ & A & U \\
-          F & D & E & N & \_ & G & R & U & N \\
-          D & G & E & H & E & N & \_ & K & O \\
-          N & T & T & E & \_ & & & & \\
-          \end{array}
-          \]
-          Der Schlüsseltext wird spaltenweise abgelesen: 
-          \[
-          \texttt{GH\_DDFNLDIRIGTNSEEECEDEINNEK\_CRNUENNUH\_U\_GNGRDKIKAUOE}
-          \]
-  
-        \item Der geheime Schlüssel ist die Größe der Matrix: $ 7 \times 9 $ (Zeilen $\times$ Spalten). Beim ursprünglichen Zylinder entspricht dies dem Umfang des Zylinders.
-  
-        \item Kryptanalyse:
-        \begin{itemize}
-            \item Häufigkeitsanalyse: Anhand von Buchstabenhäufigkeiten und Mustererkennung können Transpositionsmuster aufgedeckt werden.
-            \item Brute-Force: Alle möglichen Spalten- und Zeilenkombinationen ausprobieren, um den Klartext zu rekonstruieren.
-        \end{itemize}
+          Der Schlüsseltext wird spaltenweise abgelesen: $\texttt{GH\_DDFNLDIRIGTNSEEECEDEINNEK\_CRNUENNUH\_U\_GNGRDKIKAUOE}$.
+        \item Der geheime Schlüssel ist die Größe der Matrix: $7\times9$ (Zeilen $\times$ Spalten). Beim ursprünglichen Zylinder entspricht dies dem Umfang des Zylinders.
+        \item Kryptanalyse der Skytala.
+          \begin{itemize}
+              \item Brute-Force: Alle möglichen Spalten- und Zeilenkombinationen ausprobieren, um den Klartext zu rekonstruieren.
+              \item N-gram-Analyse: Häufige Buchstabenkombinationen im Klartext können auf die Anzahl der Spalten hinweisen und die Wahrscheinlichkeit erhöhen, den Schlüssel zu erraten.
+          \end{itemize}
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -65,25 +56,17 @@
 
   \begin{solution}
     \begin{enumerate}
-        \item Bei Spaltenvertauschung gibt es $ s! $ mögliche Permutationen für $ s $ Spalten. Der Schlüsselraum vergrößert sich somit um den Faktor $ s! $ im Vergleich zur ursprünglichen Methode ohne Spaltenvertauschung.
-  
-        \item Klartext in eine $ 4 \times 3 $-Matrix:
+        \item Bei Spaltenvertauschung gibt es $s!$ mögliche Permutationen für $s$ Spalten. Der Schlüsselraum vergrößert sich somit um den Faktor $s!$ im Vergleich zur ursprünglichen Methode ohne Spaltenvertauschung.
+        \item Klartext in eine $4\times3$-Matrix:
           \[
-          \texttt{ABCDEFGHIKLMN}
+            \begin{array}{ccc}
+            1 & 2 & 3 \\
+            4 & 5 & 6 \\
+            7 & 8 & 9 \\
+            10 & 11 & 12 \\
+            \end{array}
           \]
-          In die Matrix eingetragen:
-          \[
-          \begin{array}{ccc}
-          A & B & C \\
-          D & E & F \\
-          G & H & I \\
-          K & L & M \\
-          \end{array}
-          \]
-          Zyklisches Schreiben ergibt:
-          \[
-          \texttt{ADGKBELHCFIM}
-          \]
+          Zyklisches Schreiben ergibt $\texttt{14710 25811 36912}$.
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -92,12 +75,15 @@
 \begin{exercise}{Vigenère-Chiffre \ref{ex:vigenere}}\end{exercise}
 
 \begin{exercise}{Zufallszahlen bei der Schlüsselgenerierung}
-  Warum sind bei der Schlüsselgenerierung (echte) Zufallszahlen nötig? Weshalb eignet sich die XOR-Verknüpfung, wenn zur Erhöhung der Sicherheit mehrere Zufallszahlen zu einer einzelnen Zufallszahl verknüpft werden, etwa bei der Schlüsselgenerierung?
+  \begin{enumerate}
+    \item Warum sind bei der Schlüsselgenerierung (echte) Zufallszahlen nötig?
+    \item Weshalb eignet sich die XOR-Verknüpfung, wenn zur Erhöhung der Sicherheit mehrere Zufallszahlen zu einer einzelnen Zufallszahl verknüpft werden, etwa bei der Schlüsselgenerierung?
+  \end{enumerate}
 
   \begin{solution}
     \begin{enumerate}
         \item Echte Zufallszahlen sind notwendig, um sicherzustellen, dass Schlüssel nicht vorhersagbar sind. Ein nicht zufälliger Schlüssel kann durch statistische oder deterministische Methoden berechnet werden.
-        \item Die XOR-Verknüpfung sichert, dass ein kombinierter Schlüssel nur dann vorhersagbar ist, wenn alle zufälligen Werte vollständig bekannt sind. Dadurch wird ein höherer Grad an Sicherheit erzielt.
+        \item Länge bleibt unverändert, XOR-Operation ist invertierbar durch sich selbst, kommutativ bei der Reihenfolge der Operanden.
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -117,13 +103,7 @@
   Hinweis: Das Passwort und die Substantive sind ASCII-codiert (Alphabet = \{A, B, C, ..., Z\}).
 
   \begin{solution}
-    Durch die Wiederverwendung des One-Time-Pads $ k $ für mehrere Nachrichten $ m_1, m_2 $ entsteht folgende Gleichung:
-      \[ c_1 \oplus c_2 = (m_1 \oplus k) \oplus (m_2 \oplus k) = m_1 \oplus m_2 \]
-    Dies ergibt die XOR-Verknüpfung der Klartexte $ m_1 \oplus m_2 $, die durch Analyse entschlüsselt werden kann. Beispielsweise:
-      \[ c_1 = \texttt{09 00 04 10}, \quad c_2 = \texttt{10 20 28 09} \]
-    XOR:
-      \[ c_1 \oplus c_2 = \texttt{19 20 2C 19} \]
-    Häufigkeitsanalysen und bekannte Wörter im Klartext ermöglichen die vollständige Entschlüsselung.
+    ???
   \end{solution}
 \end{exercise}
 
@@ -136,18 +116,14 @@
 
   \begin{solution}
     \begin{enumerate}
-        \item Ursachen für Algorithmuswechsel:
-        \begin{itemize}
-            \item **Technologischer Fortschritt**: Schnellere Computer machen bestimmte Algorithmen unsicher.
-            \item **Neue Angriffsmethoden**: Entdeckte Schwachstellen führen zur Ablösung alter Verfahren.
-        \end{itemize}
-  
-        \item Das **One-Time-Pad** bietet langfristige Sicherheit, da es informationstheoretisch sicher ist. Es wird nicht überall genutzt, da Schlüssel so lang wie der Klartext sein müssen und sicher verteilt werden müssen.
-  
-        \item Bestimmung der Chiffre:
-        \begin{itemize}
-            \item **Häufigkeitsanalyse**: Substitutionschiffren wie Caesar zeigen typische Muster.
-            \item **Permutationsanalyse**: Transpositionen hinterlassen Permutationsmuster.
+        \item \begin{itemize}
+            \item Technologischer Fortschritt: Schnellere Computer machen bestimmte Algorithmen unsicher.
+            \item Neue Angriffsmethoden: Entdeckte Schwachstellen führen zur Ablösung alter Verfahren.
+          \end{itemize}
+        \item Das One-Time-Pad bietet langfristige Sicherheit, da es informationstheoretisch sicher ist. Es wird nicht überall genutzt, da Schlüssel so lang wie der Klartext sein müssen und sicher verteilt werden müssen.
+        \item \begin{itemize}
+            \item Häufigkeitsanalyse: Substitutionschiffren wie Caesar zeigen typische Muster.
+            \item Permutationsanalyse: Transpositionen hinterlassen Permutationsmuster.
         \end{itemize}
     \end{enumerate}
   \end{solution}
@@ -786,10 +762,10 @@
         \item Bei einem symmetrischen Verschlüsselungssystem kann dies durch die Verwendung eines Initialisierungsvektors (IV) realisiert werden.
         \item Verfahren:
         \begin{itemize}
-            \item **RSA**: Fügen Sie der Nachricht einen zufälligen Wert hinzu (z. B. OAEP-Padding).
-            \item **ElGamal**: Verwenden Sie bei jeder Verschlüsselung einen neuen Zufallswert.
+            \item RSA: Fügen Sie der Nachricht einen zufälligen Wert hinzu (z. B. OAEP-Padding).
+            \item ElGamal: Verwenden Sie bei jeder Verschlüsselung einen neuen Zufallswert.
         \end{itemize}
-        \item Indeterministische Verschlüsselung verhindert einen **Known-Plaintext-Angriff**, bei dem der Angreifer durch die Analyse von wiederholt verschlüsselten Nachrichten auf den Klartext schließen könnte.
+        \item Indeterministische Verschlüsselung verhindert einen Known-Plaintext-Angriff, bei dem der Angreifer durch die Analyse von wiederholt verschlüsselten Nachrichten auf den Klartext schließen könnte.
     \end{enumerate}
   \end{solution}
 \end{exercise}
