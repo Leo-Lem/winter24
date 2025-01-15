@@ -545,12 +545,6 @@
 
 
 \setcounter{subsection}{100}
-% Aufgabe 1 Spoofing
-% a) Inwiefern kann ein DNS-Spoofing-Angriff für einen Distributed Denial of Service (DDoS)-Angriff ausge-
-% nutzt werden? Erklären Sie anschaulich.
-% b) Warum funktioniert ARP-Spoofing nur in einem lokalen Netz?
-% c) Sie vermuten, Opfer eines ARP-Spoofing-Angriffs zu sein. Was können Sie an Ihrem Rechner überprü-
-% fen, um einen solchen Angriff erkennen zu können?
 \begin{exercise}{Spoofing}
   \begin{enumerate}
     \item Inwiefern kann ein DNS-Spoofing-Angriff für einen Distributed Denial of Service (DDoS)-Angriff genutzt werden? Erklären Sie anschaulich.
@@ -602,44 +596,6 @@
   \end{solution}
 \end{exercise}
 
-% Aufgabe 4 Challenge-Response-Authentifikation überarbeitet
-% In der klassischen beidseitigen Challenge-Response-Authentifikation mittels symmetrischer, deterministi-
-% scher Verschlüsselung sendet ein prüfendes IT-System eine Zufallszahl als Challenge und erwartet deren
-% Verschlüsselung mit einem gemeinsamen Schlüssel K. Nachfolgend findet sich eine formale Darstellung:
-% Lokal für Kanal 1: A wählt und speichert vorläufig RA
-% Kanal 1: A RA −−−−→B
-% Lokal für Kanal 1: B wählt und speichert vorläufig RB
-% Lokal für Kanal 1: B berechnet CA := EK(RA)
-% Kanal 1: A RB,CA ←−−−−B
-% ?
-% Lokal für Kanal 1: A testet CA
-% = EK(RA) (oder: DK(CA) ?
-% = RA) und löscht RA
-% Lokal für Kanal 1: A berechnet CB := EK(RB)
-% Kanal 1: A CB −−−−→B
-% Lokal für Kanal 1: B testet CB
-% ?
-% = EK(RB) (oder: DK(CB) ?
-% = RB) und löscht RB
-% Der verwendete Schlüssel K darf hierbei nur dem Geprüftem und dem prüfenden IT-System bekannt sein.
-% Wo immer Sie im Rahmen dieser Aufgabe ein Protokoll beschreiben sollen, verwenden Sie diese formale
-% Darstellung. Bezeichnen Sie für eine asymmetrische Verschlüsselung mit PK den öffentlichen und mit SK den
-% geheimen Schlüssel, sowie mit EPK(·) die Ver- und mit DSK(·) die Entschlüsselung.
-% a) Wieso werden Zufallszahlen und nicht feste Werte verwendet?
-% b) Gegen welche Art von Angriff, bei welcher der Angreifer nur mit einer Partei kommunizieren muss, ist
-% die klassiche Challenge-Reponse-Authentifikation wie oben dargestellt verwundbar? Beschreiben Sie
-% einen erfolgreichen Angriff.
-% c) Wie lässt sich der Angriff aus b) durch dauerhaftes statt vorläufiges Speichern der versandten Challen-
-% ges und entsprechende Prüfungen vermeiden?
-% d) Beschreiben Sie eine überarbeitete Challenge-Response-Authentifikation mittels symmetrischer Ver-
-% schlüsselung, die gegen Angriffe wie in b) geschützt ist und keine dauerhafte Speicherung von Daten
-% erfordert.
-% e) Die klassische Challenge-Response-Authentifikation mittels symmetrischer Verschlüsselung wendet
-% den Verschlüsselungsalgorithmus zweimal an. Beschreiben Sie ein Protokoll zur gegenseitigen Au-
-% thentifikation mit lediglich einer Anwendung eines symmetrischen Verschlüsselungsalgorithmus.
-% f) Beschreiben Sie ein Challenge-Response-Protokoll zur gegenseitigen Authentifkation mit asymmetri-
-% scher statt symmetrischer Verschlüsselung. Was muss gelten damit das Protokoll gegen Angriffe wie in
-% b) geschützt ist?
 \begin{exercise}{Challenge-Response-Authentifikation überarbeitet}
   In der klassischen beidseitigen Challenge-Response-Authentifikation mittels symmetrischer, deterministischer Verschlüsselung sendet ein prüfendes IT-System eine Zufallszahl als Challenge und erwartet deren Verschlüsselung mit einem gemeinsamen Schlüssel $K$. Nachfolgend findet sich eine formale Darstellung:
   \begin{align*}
@@ -669,14 +625,85 @@
 \end{exercise}
 
 
-% \setcounter{subsection}{110}
-% \begin{exercise}{}
-%  % TODO
-%
-%   \begin{solution}
-%     % TODO
-%   \end{solution}
-% \end{exercise}
+\setcounter{subsection}{110}
+\begin{exercise}{Kommutative Verschlüsselung}
+  Kommutative Verschlüsselung erlaubt das mehrfache Ver- und anschließende Entschlüsseln durch unterschiedliche Parteien in beliebiger Reihenfolge, also
+  \begin{align*}
+    D_{K_2}(D_{K_1}(E_{K_2}(E_{K_1}(M)))) &= M\\
+    D_{SK_2}(D_{SK_1}(E_{PK_2}(E_{PK_1}(M)))) &= M
+  \end{align*}
+  für Verschlüsselungen, denen man nicht ansieht, wie oft verschlüsselt wurde. Diese Eigenschaft gilt zuzüglich zur allgemein für Verschlüsselungen gültigen Eigenschaft
+  \begin{align*}
+    D_{K_i}(E_{K_i}(M)) &= M\\
+    D_{SK_i}(E_{PK_i}(M)) &= M
+  \end{align*}
+  \begin{enumerate}
+    \item Zeigen Sie, dass folgende Verschlüsselungen kommutativ entsprechend der obigen Definition sind:
+      \begin{enumerate}
+        \item CTR, wenn Initialisierungsvektoren mit dem geheimen Schlüssel ausgetauscht wurden und daher nicht mit dem Schlüsseltext mitgesendet werden müssen (Sie dürfen der Einfachheit halber annehmen, dass alle Parteien dieselbe Blockgröße verwenden.)
+        \item RSA, wenn alle Parteien denselben Modulus verwenden
+      \end{enumerate}
+    \item Welche weitere Kommutativitätseigenschaft weisen CTR und RSA mit den Spezifikationen aus a) auf?
+    \item Beschreiben Sie eine Möglichkeit, aus ElGamal eine kommutative Verschlüsselung zu machen. Überlegen Sie dazu, wie eine Kommutativitätsdefinition für eine Verschlüsselung aussehen kann, der anzusehen ist, wie oft verschlüsselt wurde.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item
+      \begin{enumerate}
+        \item CTR ist kommutativ, wenn Initialisierungsvektoren mit dem geheimen Schlüssel ausgetauscht wurden, da die Verschlüsselung unabhängig vom Schlüsseltext ist.
+        \item RSA ist kommutativ, wenn alle Parteien denselben Modulus verwenden, da die Verschlüsselung unabhängig vom Schlüsseltext ist.
+      \end{enumerate}
+      \item CTR und RSA sind zusätzlich zu den obigen Eigenschaften auch homomorph.
+      \item ElGamal kann kommutativ gemacht werden, indem der öffentliche Schlüssel $PK$ durch den geheimen Schlüssel $SK$ ersetzt wird. Eine mögliche Kommutativitätsdefinition könnte lauten: $EK_1(EK_2(M)) = EK_2(EK_1(M))$.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Geburtstagsangriff auf CBC}
+  In dieser Aufgabe betrachten Sie einen Geburtstagsangriff auf den Cipher-Block-Chaining-Betriebsmodus, also einen Angriff, der die hohe Wahrscheinlichkeit eines Mehrfachauftreten desselben Wertes bei stochastisch unabhängigen Ziehungen ausnutzt.
+  \par\textit{Hinweis: Bitte gehen Sie im Folgenden davon aus, dass die Blockchiffre von hoher Güte ist, also $E(\cdot, K)$ mit Schlüssel $K$ als eine zufällige Permutation modelliert werden kann. Das heißt insbesondere, Sie können annehmen, dass $E(\cdot, K)$ für unterschiedliche Klartexte stochastisch unabhängige Schlüsseltexte ausgibt.}
+  
+  \begin{enumerate}
+    \item\label{ex:attack} Bitte entwickeln und beschreiben Sie einen Angriff auf CBC, mit dem ein passiver, beobachtender Angreifer einen Schlüsseltextblock mit ihm zunächst unbekanntem Klartext entschlüsseln kann, wenn alle der folgenden Annahmen gelten:
+      \begin{itemize}
+        \item Der Angreifer kann Schlüsseltexte abhören, welche alle mit demselben Schlüssel generiert wurden.
+        \item Der Angreifer kennt für jeden abgehörten Schlüsseltext den vorderen $p$-ten Anteil des zugrunde liegenden Klartexts.
+        \item Mindestens ein Schlüsseltextblock innerhalb des vorderen $p$-ten Anteils ohne den Initialisierungsvektor gleicht einem Schlüsseltextblock innerhalb des hinteren $(1-p)$-ten Anteils ohne den Initialisierungsvektor.
+      \end{itemize}
+      Nachfolgend findet sich ein Beispiel für drei Schlüsseltexte aus je acht Blöcken ohne den Initialisierungsvektor, die die obige Bedingung mit $p=25\%$ erfüllen:
+      \begin{center}
+        \begin{tabular}{c ccccccccc}
+          $IV_1$ & $C_{1,1}$ & $C_{1,2}$ & $C_{1,3}$ & $C_{1,4}$ & $C_{1,5}$ & $C_{1,6}$ & $C_{1,7}$ & $C_{1,8}$\\
+          & $M_{1,1}$ & $M_{1,2}$ & $X$ & $X$ & $X$ & $X$ & $X$ & $X$\vspace{.5em}\\
+          $IV_2$ & $C_{2,1}$ & $C_{2,2}$ & $C_{2,3}$ & $C_{2,4}$ & $C_{2,5}$ & $C_{2,6}$ & $C_{2,7}$ & $C_{2,8}$\\
+          & $M_{2,1}$ & $M_{2,2}$ & $X$ & $X$ & $X$ & $X$ & $X$ & $X$\vspace{.5em}\\
+          $IV_3$ & $C_{3,1}$ & $C_{3,2}$ & $C_{3,3}$ & $C_{3,4}$ & $C_{3,5}$ & $C_{3,6}$ & $C_{3,7}$ & $C_{3,8}$\\
+          & $M_{3,1}$ & $M_{3,2}$ &  $X$ & $X$ & $X$ & $X$ & $X$ & $X$\\
+        \end{tabular}
+      \end{center}
+    \item Berechnen Sie unter Berücksichtigung der Reihenfolge der Ziehung die Wahrscheinlichkeit, dass bei $m$ zufälligen, stochastisch unabhängigen Ziehungen aus einer Menge $\{1, \ldots, n\}$ mindestens zweimal die gleiche Zahl gezogen wird.
+    \item Geben Sie die Wahrscheinlichkeit an, dass mindestens einmal Gleichheit von unterschiedlichen Schlüsseltextblöcken auftritt, wenn der Angreifer $N$ Schlüsseltexte mit einer Blockgröße von $B$ Bit und $L + 1$ Blöcken pro Schlüsseltext (also $L$ vielen ohne den Initialisierungsvektor) abhört.
+    \item Berechnen Sie eine untere Grenze für die Anzahl an abzuhörenden Schlüsseltexten unter demselben Schlüssel, sodass mindestens einmal Gleichheit von unterschiedlichen Schlüsseltextblöcken mindestens mit Wahrscheinlichkeit $q$ auftritt.
+    \item\label{ex:lowerbound} Berechnen Sie eine untere Grenze für die Anzahl an abzuhörenden (und mit demselben Schlüssel generierten) Schlüsseltexten, sodass mindestens einmal Gleichheit eines vorderen Schlüsseltextblocks und eines hinteren Schlüsseltextblocks (also wie in \ref{ex:attack}) mindestens mit Wahrscheinlichkeit $q$ auftritt.
+    \item Berechnen Sie die untere Grenze aus \ref{ex:lowerbound} für $B = 64$, $L = 4$, $p = 50\%$ und $q = 50\%$. Geben Sie die unteren Grenzen auch als Zweierpotenzen an.
+    \item Berechnen Sie die untere Grenze aus \ref{ex:lowerbound} für $B = 64$, $L = 4$, $p = 50\%$ und $q = 99\%$. Geben Sie die unteren Grenzen auch als Zweierpotenzen an.
+    \item Berechnen Sie jeweils, wie viel Zeit und Speicherplatz der Angriff aus \ref{ex:attack} bei Parameterwahl wie in \ref{ex:lowerbound} benötigt. Bewerten Sie darauf aufbauend die realistische Durchführbarkeit des Angriffs aus \ref{ex:attack}.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Der Angreifer kann den Klartextblock $M2,1$ entschlüsseln, da $C2,1 = C3,1$ gilt. Der Angreifer berechnet $M2,1 = D_{SK}(C2,1 \oplus IV2) = D_{SK}(C3,1 \oplus IV3)$.
+      \item Die Wahrscheinlichkeit, dass bei $m$ Ziehungen aus einer Menge von $n$ Zahlen mindestens zweimal die gleiche Zahl gezogen wird, beträgt $1 - \frac{n!}{(n-m)!n^m}$.
+      \item Die Wahrscheinlichkeit, dass mindestens einmal Gleichheit von unterschiedlichen Schlüsseltextblöcken auftritt, beträgt $1 - \left(1 - \frac{1}{2^B}\right)^{N \cdot L}$.
+      \item Die untere Grenze für die Anzahl an abzuhörenden Schlüsseltexten beträgt $\lceil \frac{\log(1 - q)}{L \cdot \log(1 - 1/2^B)} \rceil$.
+      \item Die untere Grenze für die Anzahl an abzuhörenden Schlüsseltexten beträgt $\lceil \frac{\log(1 - q)}{2 \cdot L \cdot \log(1 - 1/2^B)} \rceil$.
+      \item Die untere Grenze beträgt $2^{10}$.
+      \item Die untere Grenze beträgt $2^{16}$.
+      \item Der Angriff benötigt $2^{16} \cdot 64$ Bit Speicherplatz und $2^{16} \cdot 64$ Bit Zeit. Der Angriff ist aufgrund des hohen Speicherplatzbedarfs nicht realistisch durchführbar.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
 
 
 
