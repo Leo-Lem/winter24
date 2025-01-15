@@ -315,16 +315,16 @@
 \begin{exercise}{Forward Secrecy mit RSA}
   Zur Erreichung von Forward Secrecy erzeugt Alice auf ihrem Server mit dem RSA-Verfahren einen privaten Schlüssel $d$ sowie den dazu passenden öffentlichen Schlüssel $c$, den sie persönlich an ihre Nutzerinnen und Nutzer verteilt. Zusätzlich erzeugt der Server von Alice bei jedem Verbindungsaufbau ein neues kurzlebiges (engl. ephemeral) RSA-Schlüsselpaar, das aus einem öffentlichen Schlüssel $ c_e $ und einem geheimen Schlüssel $ d_e $ besteht. Der Server signiert mit dem privaten Schlüssel $ d $ den neuen öffentlichen Schlüssel $ c_e $ und sendet diesen zusammen mit der Signatur über die aufgebaute Verbindung an die Kundin. Die Kundin prüft anschließend die Signatur mithilfe des zuvor von Alice erhaltenen öffentlichen Schlüssels $ c $.
   \begin{enumerate}
-    \item Welche Verbindungen könnten von einem sehr starken Angreifer wie einem Nachrichtendienst noch entschlüsselt werden, wenn dieser an $1$ gelangt? Begründen Sie Ihre Antwort.
+    \item Welche Verbindungen könnten von einem sehr starken Angreifer wie einem Nachrichtendienst noch entschlüsselt werden, wenn dieser an $d$ gelangt? Begründen Sie Ihre Antwort.
     \item Skizzieren Sie einen Angriff, der möglich wäre, wenn die Kundin die Signatur nicht prüft.
     \item Alice ist das Verfahren zu langsam. Sie nimmt folgende Änderung vor: Statt jedes Mal bei der Erzeugung von $c_e$ und $d_e$ neue Primzahlen $p$ und $q$ für den Modulus $N_e$ zu generieren, verwendet sie immer die gleichen Primzahlen. Nun wählt sie lediglich den öffentlichen Exponenten $ c_e $ neu und berechnet einen dazugehörigen geheimen Exponenten $ d_e $. Warum ist dies keine gute Idee? Zeigen Sie, wie sich dieses geänderte Verfahren angreifen lässt, um aufgezeichnete Verbindungen zu entschlüsseln.
   \end{enumerate}
 
   \begin{solution}
     \begin{enumerate}
-      \item Ein starker Angreifer kann alle Verbindungen entschlüsseln, wenn er $d$ erhält, da er damit alle geheimen Schlüssel $d_e$ berechnen kann.
-      \item Es könnten gefälschte öffentliche Schlüssel $c_e$ und Signaturen an die Kundin gesendet werden, die nicht von Alice stammen.
-      \item Durch die Verwendung der gleichen Primzahlen $p$ und $q$ für $N$ und $N_e$ kann ein Angreifer $d$ berechnen, wenn er $d_e$ kennt. Dies ermöglicht das Entschlüsseln aller Verbindungen.
+      \item Bei Kenntnis von $d$ können mittels einem Man-in-the-Middle Angriff neue Schlüssel $c_e$ abgefangen und durch eigene ersetzt werden. Dadurch kann der Angreifer alle nachfolgenden Verbindungen entschlüsseln, jedoch nicht die alten.
+      \item Es könnten gefälschte öffentliche Schlüssel $c_e$ mit falscher/ohne Signatur an die Kundin gesendet werden. Diese würde die Verbindung aufbauen und der Angreifer könnte die Kommunikation mithören.
+      \item Durch die Verwendung der gleichen Primzahlen $p$ und $q$ für $N_e$ kann eine Common Modulus Attack durchgeführt werden. Der Angreifer kann die Nachrichten entschlüsseln. EEA auf $a\cdot c_{e1}+b\cdot c_{e2} \equiv 1$ anwenden und dann $m=c_{e1}^a\cdot c_{e2}^b \pmod{N_e}$ berechnen.
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -345,7 +345,7 @@
               B\equiv g^b \equiv 5^3 \equiv 4
             \end{array} \pmod{11}$\\
           Gemeinsamer Schlüssel: $K\equiv B^a\equiv A^b\equiv 4^2\equiv 3^3\equiv 5 \pmod{11}$
-        \item Sicherheit basiert auf dem diskreten Logarithmusproblem (DLP). Der Angreifer kann $g^a$ und $g^b$ nicht effizient in $a$ und $b$ umwandeln.
+        \item Sicherheit basiert auf dem Problem des diskreten Logarithmus. Der Angreifer kann keine diskreten Logarithmen effizient berechnen. Annahmen: Passiver Angreifer, der nur den Verkehr mithören kann.
         \item Schutz vor aktiven Angriffen: Vorab-Austausch von $g, p$ und Authentifizierung der öffentlichen Schlüssel (z. B. durch Signaturen).
     \end{enumerate}
   \end{solution}
@@ -368,7 +368,7 @@
       \item $k=k_x \Vert k_y \Vert k_z$. Wenn $k_x$ und $k_y$ kompromittiert sind, muss nur noch $k_z$ geraten werden. Die verbleibende Entropie ist stark verringert.
       \item $k=k_x \oplus k_y \oplus k_z$. Wenn $k_x$ und $k_y$ kompromittiert sind, bleibt $k_z$ sicher. Die verbleibende Entropie ist unverändert.
     \end{enumerate}
-    Die zweite Variante ist sicherer, aufgrund der längeren Teilschlüssel. Konkatenation ist allerdings nicht grundsätzlich sicherer als XOR-Verknüpfung.
+    Die zweite Variante ist sicherer, aufgrund der längeren Teilschlüssel. Konkatenation ist allerdings nicht grundsätzlich unsicherer als XOR-Verknüpfung.
   \end{solution}
 \end{exercise}
 
@@ -421,10 +421,10 @@
 
   \begin{solution}
     \begin{enumerate}
-      \item Im Schalenmodell müssen alle Zertifikate und Signaturen zum Zeitpunkt der Überprüfung gültig sein. Im Kettenmodell müssen diese lediglich zum Zeitpunkt der Ausstellung gültig sein.
-      \item Das Kettenmodell wird in der Praxis bevorzugt, da es flexibler ist und die Gültigkeit von Zertifikaten und Signaturen nicht permanent überprüft werden muss.
-      \item Schalenmodell: Zertifikatsausstellung bis Ablauf Wurzelzertifikat. Kettenmodell: Zertifikatsausstellung bis Ablauf Alice's Zertifikat.
-      \item In beiden Modellen gültig, da Zertifikatskette und Signatur zum Zeitpunkt der Ausstellung gültig waren.
+      \item Im Schalenmodell müssen alle Zertifikate und Signaturen zum Zeitpunkt der Signatur gültig sein. Im Kettenmodell muss lediglich das signierende Zertifikat zum Zeitpunkt der Signatur gültig sein.
+      \item Das Kettenmodell wird in der Praxis bevorzugt, da weniger Zertifikate überprüft werden müssen.
+      \item Schalenmodell: Signatur bis Ablauf Wurzelzertifikat. Kettenmodell: Signatur bis Ablauf Alices Zertifikat.
+      \item In beiden Modellen gültig, da Zertifikatskette zum Zeitpunkt der Signatur gültig waren.
       \item Nur noch im Kettenmodell gültig, da im Schalenmodell die Kette nicht mehr gültig ist.
     \end{enumerate}
   \end{solution}

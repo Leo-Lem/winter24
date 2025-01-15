@@ -108,7 +108,7 @@
 \section{Asymmetrische Systeme}
 \begin{itemize}
   \item \textbf{Erweiterter Euklidischer Algorithmus}: ggT berechnen und erweiterter Algorithmus für Inverse
-    \[ c_k=\lfloor\frac{r_{k-2}}{r_{k-1}}\rfloor \quad r_k = r_{k-2} \pmod{r_{k-1}} \quad s_k=s_{k-2}-c_ks_{k-1} \quad t_k=t_{k-2}-c_kt_{k-1} \]
+    \[ c_k=\lfloor\frac{r_{k-2}}{r_{k-1}}\rfloor \quad r_k = r_{k-2} \pmod{r_{k-1}} \quad s_k=c_ks_{k-1}+s_{k-2} \quad t_k=c_kt_{k-1}+t_{k-2} \]
   \item \textbf{Euler-Phi-Funktion}: $\varphi(n)$ gibt die Anzahl der zu $n$ teilerfremden (engl. coprime) Zahlen kleiner als $n$ an.
     \[ \varphi(p \cdot q) = (p-1) \cdot (q-1) \quad \text{Primzahlen: }\varphi(p) = p-1 \]
   \item \textbf{Primitive Wurzel}: Teilerfremdes $a$ ist primitive Wurzel modulo $n$, da $a^d \pmod{n}$ alle Reste erzeugt. Auch übertragen als:
