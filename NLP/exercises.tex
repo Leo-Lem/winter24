@@ -1,6 +1,6 @@
 \documentclass{article}
 
-\usepackage[]{../.template/xrcise}
+\usepackage[solutions]{../.template/xrcise}
 
 \subject{Natural Language Processing}
 \semester{Winter 2024}
@@ -313,7 +313,7 @@
             \begin{itemize}
               \item $P@5 = \frac{3}{5} = .6$
               \item $P@10 = \frac{7}{10} = .7$
-              \item $MA@5 = (\frac{1}{1} + \frac{2}{3} + \frac{3}{5}) / 3 = .756$
+              \item $MAP@5 = (\frac{1}{1} + \frac{2}{3} + \frac{3}{5}) / 3 = .756$
             \end{itemize}
           \item \textbf{Engine B}:
             \begin{itemize}
@@ -368,7 +368,6 @@
     \begin{itemize}
         \item \textbf{Reducing filters}: Remove restrictive criteria (e.g., date, location).
         \item \textbf{Boosting document recall}: Index more documents or reduce relevance thresholds.
-
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -415,14 +414,10 @@
 \end{exercise}
 
 \begin{exercise}{TREC}\label{ex:trec}
-  What are the TREC question types?
+  What are the 6 TREC question types?
 
   \begin{solution}
-    \begin{itemize}
-        \item \textbf{Factoid questions}: Require specific factual answers (e.g., "Who is the president of the U.S.?").
-        \item \textbf{List questions}: Require a list of items (e.g., "What countries are in the EU?").
-        \item \textbf{Definition questions}: Seek explanations or definitions (e.g., "What is AI?").
-    \end{itemize}
+    Abbreviation, Entity, Description, Human, Location, Numeric.
   \end{solution}
 \end{exercise}
 
