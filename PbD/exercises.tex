@@ -14,9 +14,9 @@
 
   \begin{solution}
     \begin{itemize}
-      \item \textbf{Confidentiality}: Encryption is used to protect the confidentiality of data.
-      \item \textbf{Availability}: Redundancy is used to ensure the availability of services.
-      \item \textbf{Integrity}: Hash functions are used to ensure the integrity of data.
+      \item \textbf{Confidentiality}: Encryption is used to protect the confidentiality of data by encoding it so that only authorized parties can access it.
+      \item \textbf{Availability}: Redundancy is used to ensure the availability of services by providing multiple instances of the same service.
+      \item \textbf{Integrity}: Hash functions are used to ensure the integrity of data by comparing the hash of the original data with the hash of the received data.
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -32,12 +32,11 @@
   \begin{solution}
     \begin{enumerate}
       \item The general purpose of pseudonyms is to protect the identity of users.
-      \item The difference between pseudonymity and anonymity is that pseudonymity uses a pseudonym to protect the identity of users, while anonymity does not require a pseudonym.
-      \item Three applications in which pseudonyms are used are:
-        \begin{itemize}
-          \item E-Mail: Pseudonyms are used to protect the identity of users.
+      \item In anonymity the identity of the user is not known, while in pseudonymity the identity of the user is known but protected.
+      \item \begin{itemize}
+          \item E-Mail: E-Mail addresses are used to send messages.
           \item Social Media: Pseudonyms are used to protect the identity of users.
-          \item Online Shopping: Pseudonyms are used to protect the identity of users.
+          \item Online Banking: IBAN is used to facilitate transactions.
         \end{itemize}
     \end{enumerate}
   \end{solution}
@@ -46,8 +45,8 @@
 \begin{exercise}{Indeterministic Encryption}
   \begin{enumerate}
     \item What does indeterministic encryption mean?
-    \item How do you implement indeterministic encryption in an asymmetric cryptosystem?
-    \item What changes compared to b) when using a symmetric cryptosystem?
+    \item\label{ex:asymmetric} How do you implement indeterministic encryption in an asymmetric cryptosystem?
+    \item What changes compared to \ref{ex:asymmetric} when using a symmetric cryptosystem?
     \item You are tasked with implementing indeterministic encryption. The algorithms RSA and ElGamal are available. How would you proceed with each algorithm?
     \item Which attack can be prevented by using indeterministic encryption?
   \end{enumerate}
@@ -56,26 +55,18 @@
     \begin{enumerate}
       \item Indeterministic encryption means that the same plaintext is encrypted to different ciphertexts each time.
       \item Indeterministic encryption in an asymmetric cryptosystem is implemented by adding randomness to the encryption process.
-      \item In a symmetric cryptosystem, indeterministic encryption is implemented by adding randomness to the encryption process.
+      \item Nothing changes when using a symmetric cryptosystem compared to an asymmetric cryptosystem.
       \item To implement indeterministic encryption with RSA, random padding is added to the plaintext before encryption. With ElGamal, a random number is used to generate the encryption key.
       \item Indeterministic encryption prevents chosen-ciphertext attacks.
     \end{enumerate}
   \end{solution}
 \end{exercise}
 
-% Aufgabe 4 Unobservable retrieval of information
-% Given is a Blind-Message-Service with three servers S1, S2, and S3. The following datasets are stored in the
-% Blind-Message-Service: D0 = 1011, D1 = 0101, D2 = 1100, D3 = 0011, D4 = 0000.
-% a) You want to retrieve dataset D2 without the servers knowing which dataset you are interested in. What
-% messages are transmitted? How do you obtain the requested dataset? Sketch the computational steps.
-% b) You want to ensure, as in task a), that during a query it remains unknown which dataset the client is
-% interested in. However, instead of the Blind-Message-Service, only a single high-bandwidth server is
-% available. The database, however, is relatively small. Which method do you apply?
 \begin{exercise}{Unobservable Retrieval of Information}
   Given is a Blind-Message-Service with three servers S1, S2, and S3. The following datasets are stored in the Blind-Message-Service: D0 = 1011, D1 = 0101, D2 = 1100, D3 = 0011, D4 = 0000.
   \begin{enumerate}
-    \item You want to retrieve dataset D2 without the servers knowing which dataset you are interested in. What messages are transmitted? How do you obtain the requested dataset? Sketch the computational steps.
-    \item You want to ensure, as in task a), that during a query it remains unknown which dataset the client is interested in. However, instead of the Blind-Message-Service, only a single high-bandwidth server is available. The database, however, is relatively small. Which method do you apply?
+    \item\label{ex:bms} You want to retrieve dataset D2 without the servers knowing which dataset you are interested in. What messages are transmitted? How do you obtain the requested dataset? Sketch the computational steps.
+    \item You want to ensure, as in task \ref{ex:bms}, that during a query it remains unknown which dataset the client is interested in. However, instead of the Blind-Message-Service, only a single high-bandwidth server is available. The database, however, is relatively small. Which method do you apply?
   \end{enumerate}
 
   \begin{solution}
@@ -86,7 +77,7 @@
           \item Receive the datasets from the servers.
           \item Filter out the requested dataset D2.
         \end{itemize}
-      \item To ensure that the client's interest remains unknown, you use the Broadcast method.
+      \item Request all datasets one after the other and discard all datasets except the requested one.
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -101,9 +92,8 @@
   \begin{solution}
     \begin{enumerate}
       \item Two security goals that are violated during tracking at the application layer are confidentiality and anonymity.
-      \item The difference between tracking at the application layer and tracking at the network layer is that tracking at the application layer uses browser data, while tracking at the network layer uses IP data.
-      \item Three fundamental mechanisms to prevent or make tracking at the application layer more difficult are:
-        \begin{itemize}
+      \item Application layer uses browser data, while network layer uses IP data.
+      \item \begin{itemize}
           \item Block cookies: Prevents tracking by websites. Against advertisers. Example: Browser settings.
           \item Use VPNs: Prevents tracking by ISPs. Against ISPs. Example: NordVPN.
           \item Use privacy plugins: Prevents tracking by websites. Against advertisers. Example: uBlock Origin.
@@ -114,8 +104,9 @@
 
 \begin{exercise}{Surveillance on the Internet}
   \begin{enumerate}
-    \item Explain a possible approach by which a powerful attacker (e.g., an intelligence agency) can determine the IP addresses of users accessing a specific website through a mix-based anonymization system (e.g., Tor).
-    \item Explain a possible approach by which a powerful attacker (e.g., an intelligence agency) can determine which websites a specific user has accessed via a mix-based anonymization system. Note: Describe a different method from the one in task a), even if your method in a) could also be applied to task b).
+    \item\label{ex:mix-based-ip} Explain a possible approach by which a powerful attacker (e.g., an intelligence agency) can determine the IP addresses of users accessing a specific website through a mix-based anonymization system (e.g., Tor).
+    \item\label{ex:mix-based-history}  Explain a possible approach by which a powerful attacker (e.g., an intelligence agency) can determine which websites a specific user has accessed via a mix-based anonymization system.
+      \par\textit{Note: Describe a different method from the one in task \ref{ex:mix-based-ip}, even if your method in \ref{ex:mix-based-ip} could also be applied to task \ref{ex:mix-based-history}.}
     \item Explain three techniques by which a web server can recognize a user during their second (subsequent) visit.
   \end{enumerate}
 
@@ -123,8 +114,7 @@
     \begin{enumerate}
       \item A powerful attacker can determine the IP addresses of users accessing a specific website through a mix-based anonymization system by using traffic analysis and traffic correlation.
       \item A powerful attacker can determine which websites a specific user has accessed via a mix-based anonymization system by using metadata analysis, such as HTTP headers or specific request characteristics.
-      \item Three techniques by which a web server can recognize a user during their second visit are:
-        \begin{itemize}
+      \item \begin{itemize}
           \item Cookies: Store user data in the browser. Against websites. Example: Google Analytics.
           \item Browser fingerprinting: Collect browser data. Against websites. Example: Panopticlick.
           \item Tracking pixels: Track user behavior. Against advertisers. Example: Facebook Pixel.
