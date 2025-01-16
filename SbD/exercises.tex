@@ -1,6 +1,6 @@
 \documentclass{article}
 
-\usepackage[]{../.template/xrcise}
+\usepackage[solutions]{../.template/xrcise}
 
 \subject{Security by Design}
 \semester{Winter 2024}
@@ -612,15 +612,22 @@
   Der verwendete Schlüssel $K$ darf hierbei nur dem Geprüften und dem prüfenden IT-System bekannt sein. Wo immer Sie im Rahmen dieser Aufgabe ein Protokoll beschreiben sollen, verwenden Sie diese formale Darstellung. Bezeichnen Sie für eine asymmetrische Verschlüsselung mit $PK$ den öffentlichen und mit $SK$ den geheimen Schlüssel, sowie mit $E_{PK}(\cdot)$ die Ver- und mit $D_{SK}(\cdot)$ die Entschlüsselung.
   \begin{enumerate}
     \item Wieso werden Zufallszahlen und nicht feste Werte verwendet?
-    \item Gegen welche Art von Angriff, bei welcher der Angreifer nur mit einer Partei kommunizieren muss, ist die klassische Challenge-Response-Authentifikation wie oben dargestellt verwundbar? Beschreiben Sie einen erfolgreichen Angriff.
-    \item Wie lässt sich der Angriff aus b) durch dauerhaftes statt vorläufiges Speichern der versandten Challenges und entsprechende Prüfungen vermeiden?
-    \item Beschreiben Sie eine überarbeitete Challenge-Response-Authentifikation mittels symmetrischer Verschlüsselung, die gegen Angriffe wie in b) geschützt ist und keine dauerhafte Speicherung von Daten erfordert.
+    \item\label{ex:challenge-response-attack} Gegen welche Art von Angriff, bei welcher der Angreifer nur mit einer Partei kommunizieren muss, ist die klassische Challenge-Response-Authentifikation wie oben dargestellt verwundbar? Beschreiben Sie einen erfolgreichen Angriff.
+    \item Wie lässt sich der Angriff aus \ref{ex:challenge-response-attack} durch dauerhaftes statt vorläufiges Speichern der versandten Challenges und entsprechende Prüfungen vermeiden?
+    \item Beschreiben Sie eine überarbeitete Challenge-Response-Authentifikation mittels symmetrischer Verschlüsselung, die gegen Angriffe wie in \ref{ex:challenge-response-attack} geschützt ist und keine dauerhafte Speicherung von Daten erfordert.
     \item Beschreiben Sie ein Protokoll zur gegenseitigen Authentifikation mit lediglich einer Anwendung eines symmetrischen Verschlüsselungsalgorithmus.
-    \item Beschreiben Sie ein Challenge-Response-Protokoll zur gegenseitigen Authentifikation mit asymmetrischer statt symmetrischer Verschlüsselung. Was muss gelten, damit das Protokoll gegen Angriffe wie in b) geschützt ist?
+    \item Beschreiben Sie ein Challenge-Response-Protokoll zur gegenseitigen Authentifikation mit asymmetrischer statt symmetrischer Verschlüsselung. Was muss gelten, damit das Protokoll gegen Angriffe wie in \ref{ex:challenge-response-attack} geschützt ist?
   \end{enumerate}
 
   \begin{solution}
-    % TODO
+    \begin{enumerate}
+      \item Zufallszahlen verhindern, dass ein Angreifer die Authentifikation durch Kenntnis fester Werte umgehen kann. Außerdem werden Replay-Angriffe verhindert.
+      \item Reflektionsangriff: Angreifer $M$ sendet irgendeine Challenge $R_M$ an $A$. $A$ sendet $C_M$ und $R_A$ an $M$ zurück. $M$ sendet neue Challenge $R_M'=R_A$ an $A$. $A$ sendet $C_M'=C_A$ an $M$ zurück. $M$ sendet für ursprüngliche Challenge $C_M'=C_A$ an $A$ zurück.
+      \item Wiederverwendung von Challenges kann verhindert werden.
+      \item $A$ wählt $R_A$, $B$ wählt $R_B$. $A$ sendet $R_A$ an $B$. $B$ berechnet $C_B=E(R_A || R_B)$ und sendet $C_B$ an $A$. $A$ prüft $C_B$ und sendet $R_B$ an $B$. $B$ prüft $R_B$.
+      \item $A$ wählt $R_A$ und $R_B$, berechnet $C=E(R_A || R_B)$ und sendet $R_A, C$ an $B$. $B$ prüft $C=E(R_A || R_B)$ und sendet $R_B$ an $A$. $A$ prüft $R_B$.
+      \item $A$ wählt $R_A$, $B$ wählt $R_B$. $A$ sendet $R_A$ an $B$. $B$ sendet $R_B$ und $E_{SK}(R_A)$ an $A$. $A$ prüft $D_{SK}(E_{SK}(R_A))=R_A$ und sendet $E_{SK}(R_B)$ an $B$. $B$ prüft $D_{SK}(E_{SK}(R_B))=R_B$.
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
@@ -638,12 +645,12 @@
     D_{SK_i}(E_{PK_i}(M)) &= M
   \end{align*}
   \begin{enumerate}
-    \item Zeigen Sie, dass folgende Verschlüsselungen kommutativ entsprechend der obigen Definition sind:
+    \item\label{ex:commutative} Zeigen Sie, dass folgende Verschlüsselungen kommutativ entsprechend der obigen Definition sind:
       \begin{enumerate}
-        \item CTR, wenn Initialisierungsvektoren mit dem geheimen Schlüssel ausgetauscht wurden und daher nicht mit dem Schlüsseltext mitgesendet werden müssen (Sie dürfen der Einfachheit halber annehmen, dass alle Parteien dieselbe Blockgröße verwenden.)
+        \item CTR, wenn Initialisierungsvektoren mit dem geheimen Schlüssel ausgetauscht wurden und daher nicht mit dem Schlüsseltext mitgesendet werden müssen (Sie dürfen der Einfachheit halber annehmen, dass alle Parteien dieselbe Blockgröße verwenden).
         \item RSA, wenn alle Parteien denselben Modulus verwenden
       \end{enumerate}
-    \item Welche weitere Kommutativitätseigenschaft weisen CTR und RSA mit den Spezifikationen aus a) auf?
+    \item Welche weitere Kommutativitätseigenschaft weisen CTR und RSA mit den Spezifikationen aus \ref{ex:commutative} auf?
     \item Beschreiben Sie eine Möglichkeit, aus ElGamal eine kommutative Verschlüsselung zu machen. Überlegen Sie dazu, wie eine Kommutativitätsdefinition für eine Verschlüsselung aussehen kann, der anzusehen ist, wie oft verschlüsselt wurde.
   \end{enumerate}
 
@@ -654,8 +661,19 @@
         \item CTR ist kommutativ, wenn Initialisierungsvektoren mit dem geheimen Schlüssel ausgetauscht wurden, da die Verschlüsselung unabhängig vom Schlüsseltext ist.
         \item RSA ist kommutativ, wenn alle Parteien denselben Modulus verwenden, da die Verschlüsselung unabhängig vom Schlüsseltext ist.
       \end{enumerate}
-      \item CTR und RSA sind zusätzlich zu den obigen Eigenschaften auch homomorph.
-      \item ElGamal kann kommutativ gemacht werden, indem der öffentliche Schlüssel $PK$ durch den geheimen Schlüssel $SK$ ersetzt wird. Eine mögliche Kommutativitätsdefinition könnte lauten: $EK_1(EK_2(M)) = EK_2(EK_1(M))$.
+      \item CTR und RSA sind zusätzlich zu den obigen Eigenschaften auch homomorph, was bedeutet, dass die Verschlüsselung von zwei Klartexten gleich der Verschlüsselung der Konkatenation der Klartexte ist.
+      \item Die Verschlüsselung müssen folgendermaßen angepasst werden:
+        \begin{align*}
+          c_{1,i}&=c_{1,i-1}\cdot g^{k_i}\pmod{p} \\
+          c_{2,i}&=c_{2,i-1}\cdot h^{k_i} \pmod{p}
+        \end{align*}
+        Und für die Entschlüsselung:
+        \begin{align*}
+          c_{1,i-1}&=c_{1,i}\cdot g^{k_i} \pmod{p} \\
+          c_{2,i-1}&=c_{2,i}\cdot h^{k_i} \pmod{p} \\
+          s_i&=c_{1,i}^{k_i} \pmod{p} \\
+          m_i&=c_{2,i}\cdot s_i^{-1} \pmod{p}
+        \end{align*}
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -693,14 +711,15 @@
 
   \begin{solution}
     \begin{enumerate}
-      \item Der Angreifer kann den Klartextblock $M2,1$ entschlüsseln, da $C2,1 = C3,1$ gilt. Der Angreifer berechnet $M2,1 = D_{SK}(C2,1 \oplus IV2) = D_{SK}(C3,1 \oplus IV3)$.
-      \item Die Wahrscheinlichkeit, dass bei $m$ Ziehungen aus einer Menge von $n$ Zahlen mindestens zweimal die gleiche Zahl gezogen wird, beträgt $1 - \frac{n!}{(n-m)!n^m}$.
-      \item Die Wahrscheinlichkeit, dass mindestens einmal Gleichheit von unterschiedlichen Schlüsseltextblöcken auftritt, beträgt $1 - \left(1 - \frac{1}{2^B}\right)^{N \cdot L}$.
-      \item Die untere Grenze für die Anzahl an abzuhörenden Schlüsseltexten beträgt $\lceil \frac{\log(1 - q)}{L \cdot \log(1 - 1/2^B)} \rceil$.
-      \item Die untere Grenze für die Anzahl an abzuhörenden Schlüsseltexten beträgt $\lceil \frac{\log(1 - q)}{2 \cdot L \cdot \log(1 - 1/2^B)} \rceil$.
-      \item Die untere Grenze beträgt $2^{10}$.
-      \item Die untere Grenze beträgt $2^{16}$.
-      \item Der Angriff benötigt $2^{16} \cdot 64$ Bit Speicherplatz und $2^{16} \cdot 64$ Bit Zeit. Der Angriff ist aufgrund des hohen Speicherplatzbedarfs nicht realistisch durchführbar.
+      \item Zunächst beobachtet der Angreifer die Schlüsseltexte und wartet auf eine Kollision $C_i=C_j$, wobei $C_i$ im vorderen $p$-Teil ist, $C_j$ im hinteren. Es folgt $C_{i-1}\oplus M_i = C_{j-1} \oplus M_j$, da die Verschlüsselung deterministisch ist. Nun kann der Angreifer $M_i=C_{i-1}\oplus M_j \oplus C_{j-1}$ berechnen.
+      \item P(Kollision)=1-P(keine Kollision)=$1-\prod_{i=0}^{m-1}{(1-\frac{i}{n})}$, was mit $1-e^{-\frac{m(m-1)}{2n}}$ approximiert werden kann für große $n$ und moderate $m$.
+      \item P(Kollision)=$1-\prod_{i=0}^{NL-1}{(1-\frac{i}{2^B})}$.
+      \item $N=\frac{1+\sqrt{2^B\ln(1-q)}}{2L}$.
+      \item $N=\sqrt{\frac{-\ln{1-q}}{\lfloor pL\rfloor\cdot \lfloor (1-p)L \rfloor\cdot \ln{1-\frac{1}{2^B}}}}$.
+      \item $N=2^{31.5}$.
+      \item $N=2^{32.5}$.
+      \item Für $q=50$: $T=2^{65}$ und $S=2^{39.5}$. Für $q=99$: $T=2^{67}$ und $S=2^{40.5}$.
+        Die Ressourcenanforderungen sind sehr hoch selbst bei $q=50$. $2^{65}$ Rechenoperationen würden bei modernen GPUs ($10^12$ ops/sec) immer noch länger als ein Jahr dauern. $2^{39.5}$ Speicherplatz, oder 97GB, ist ebenfalls recht hoch aber realistisch für einen Angreifer.
     \end{enumerate}
   \end{solution}
 \end{exercise}
