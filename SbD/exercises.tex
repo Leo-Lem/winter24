@@ -1,6 +1,6 @@
 \documentclass{article}
 
-\usepackage[solutions]{../.template/xrcise}
+\usepackage[]{../.template/xrcise}
 
 \subject{Security by Design}
 \semester{Winter 2024}
@@ -8,7 +8,7 @@
 
 \begin{document}\createtitle
 
-\section{Assignments}
+\sheet{Assignments}
 
 \setcounter{subsection}{10}
 \begin{exercise}{Skytala}
@@ -726,7 +726,7 @@
 
 
 
-\section{Catalogue}
+\sheet{Catalogue}
 
 \setcounter{subsection}{46}
 \begin{exercise}{Spoofing}
@@ -1094,16 +1094,87 @@
 
 
 
-\setcounter{section}{2023}
-\section{Mock exam}
+\sheet[2024]{Mock exam}
 
-% \begin{exercise}{}
-%  % TODO
-%
-%   \begin{solution}
-%     % TODO
-%   \end{solution}
-% \end{exercise}
+\begin{exercise}{Grundlagen der Kryptographie}
+  \begin{enumerate}
+    \item Erläutern Sie zwei Ursachen, die dafür sorgen, dass fast alle kryptographischen Algorithmen mit der Zeit durch andere ersetzt werden müssen.
+    \item Sie möchten einen Text so verschlüsseln, dass er auch in 96 Jahren nicht ohne Kenntnis des von Ihnen versteckten Schlüssels entschlüsselt werden kann. Welches Verfahren wählen Sie dazu? Begründen Sie Ihre Entscheidung. Warum wird das Verfahren heutzutage nicht überall benutzt?
+    \item In der Vorlesung wurden verschiedene klassische Chiffren behandelt, darunter Substitutionschiffren wie die Caesar-Chiffre (Verschiebechiffre), das Schema von Polybios, das Vigenère-Verfahren und die Vernam-Chiffre. Zudem wurden Transpositionschiffren wie die Skytala betrachtet. Ihnen liegt ein Geheimtext vor, der mit einer dieser Chiffren erzeugt wurde. Ihnen ist bekannt, dass es sich um die Verschlüsselung eines deutschen Textes handelt. Wie können Sie - ohne Rechnerunterstützung - vorgehen, um einzugrenzen, welche Chiffre verwendet wurde? Erläutern Sie die jeweiligen Ansätze.
+  \end{enumerate}
+  
+  \begin{solution}
+    \begin{enumerate}
+        \item \begin{itemize}
+            \item \textbf{Entwicklung von Angriffsmethoden:} Fortschritte in der Kryptoanalyse können Algorithmen angreifbar machen.
+            \item \textbf{Steigende Rechenleistung:} Mit der Zeit wird es möglich, Algorithmen durch Brute-Force-Angriffe zu brechen.
+        \end{itemize}
+        \item Ein One-Time-Pad ist sicher, da es perfekte Sicherheit bietet. Es wird jedoch nicht überall benutzt, da es sehr ineffizient ist und der Schlüsselaustausch sehr aufwendig ist.
+        \item Häufigkeitsanalyse und n-Gram-Analyse können helfen Substitutions- von Transpositionschiffren zu unterscheiden. Wenn Buchstabenhäufigkeiten mit der deutschen Sprache übereinstimmen, könnte es sich um eine Transpositionschiffre handeln. Wenn viele n-Gramme wiederholt auftreten, könnte es sich um eine Substitutionschiffre handeln.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Konzelationssystem nach ElGamal}
+  Alice möchte Bob die 6 Zeichen lange Nachricht "CYBER!" senden. Um ein Abhören durch Eve zu vermeiden, verschlüsselt sie die Nachricht mit dem Verschlüsselungsverfahren nach ElGamal. Hierzu ersetzt sie zunächst mit Hilfe der untenstehenden Tabelle jedes Zeichen durch eine Zahl, um diese dann einzeln zu verschlüsseln. Alice und Bob einigen sich auf die Primzahl $p=29$ und den Generator $a=2$ (primitive Wurzel von $p$). Bobs öffentlicher Schlüssel lautet $y_B=4$.
+  \begin{enumerate}
+    \item Verwenden Sie die folgende Tabelle, um die Zeichen der Nachricht durch Zahlen zu ersetzen:
+      \begin{table}
+        \centering
+        \begin{tabular}{cccccccc}
+          A: 1 & E: 5 & I: 9 & M: 13 & Q: 17 & U: 21 & Y: 25 \\
+          B: 2 & F: 6 & J: 10 & N: 14 & R: 18 & V: 22 & Z: 26 \\
+          C: 3 & G: 7 & K: 11 & O: 15 & S: 19 & W: 23 & !: 27 \\
+          D: 4 & H: 8 & L: 12 & P: 16 & T: 20 & X: 24 & \\
+        \end{tabular}
+      \end{table}
+    \item\label{ex:encrypt} Verschlüsseln Sie jedes einzelne ersetzte Zeichen mit Bobs öffentlichem Schlüssel. Wählen Sie die Zufallszahl $z=5$. Geben Sie den Rechenweg an.
+    \item Auf welcher Annahme basiert die Sicherheit der Verschlüsselung nach ElGamal?
+    \item Bob benötigt zum Entschlüsseln Informationen über die Zufallszahl $z$, die Alice benutzt hat. Nach welcher Formel werden diese Informationen berechnet? Wie werden diese an Bob übermittelt?
+    \item Wenn statt ElGamal ein deterministisches Verschlüsselungsverfahren genutzt würde, wäre das Vorgehen aus Teilaufgabe \ref{ex:encrypt} unsicher. Benennen und erläutern Sie den Angriff, der dann aufgrund der Kenntnis des öffentlichen Schlüssels von Bob möglich wäre.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Die Nachricht "CYBER!" wird ersetzt durch die Zahlen $3, 25, 2, 5, 18, 27$.
+        \item Die Zufallszahl $z=5$ wird gewählt. Die Verschlüsselung erfolgt durch $c_1=2^5 \mod{29}=3$, $c_2=4^5 \cdot 3 \mod{29}=23$, $c_3=4^5 \cdot 25 \mod{29}=24$, $c_4=4^5 \cdot 2 \mod{29}=4$, $c_5=4^5 \cdot 5 \mod{29}=6$, $c_6=4^5 \cdot 18 \mod{29}=5$.
+        \item Die Sicherheit basiert auf der Schwierigkeit des diskreten Logarithmusproblems.
+        \item Die Zufallszahl $z$ wird berechnet durch $z=c_1^{29-1-4} \mod{29}$ und an Bob übermittelt.
+        \item Es würde Anfälligkeit für einen Chosen-Plaintext-Angriff bestehen. Eve könnte $c_1$ berechnen und die Nachrichten entschlüsseln, die Alice an Bob sendet.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{TLS}
+  Alice möchte eine Internetseite abrufen. Durch einen Man-in-the-Middle-Angriff können Angreifende eine Verschlüsselung der Verbindung unterbinden. Dabei befindet sich die angreifende Person in der Netzkommunikation zwischen Alice und dem Server der Internetseite.
+  \begin{enumerate}
+    \item Beschreiben Sie einen Angriff, mit dem die Verschlüsselung der Verbindung unterbunden werden kann. Wie kann Alice einen solchen Angriff erkennen?
+    \item Der Angriff soll nun verbessert werden, indem die angreifende Person versucht, ein für die Internetseite gültiges Zertifikat vorzuweisen, statt die Verschlüsselung zu unterbinden. Unter welchen Voraussetzungen und wodurch wird dieser Angriff bereits verhindert?
+    \item Zu Audit-Zwecken soll in einem großen Unternehmen auch der via TLS verschlüsselte Datenverkehr zwischen Unternehmensrechnern und externen Servern überwacht werden. Die IT-Abteilung des Unternehmens besitzt die vollständige Kontrolle über die innerhalb des Unternehmens installierten Systeme (Computer, Server, Netzinfrastruktur). Beschreiben Sie eine Vorgehensweise, die es der IT-Abteilung erlaubt, den gesamten TLS-Datenverkehr einschließlich der Inhaltsdaten auf einem zentralen System innerhalb des Firmennetzes mitzuschneiden. Führen Sie dazu die Schritte auf, die erforderlich sind, um auf die Inhaltsdaten des verschlüsselten Datenverkehrs zuzugreifen. Dabei soll auch innerhalb des Firmennetzes nicht auf die TLS-Verschlüsselung verzichtet werden.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Ausgeben als Server und unverschlüsselte Verbindung anfragen. Alice kann den Angriff erkennen, wenn die Verbindung nicht verschlüsselt ist und das Zertifikat der Internetseite nicht gültig ist.
+        \item Der Angriff wird verhindert, wenn der Server der Internetseite ein gültiges Zertifikat besitzt, das von einer vertrauenswürdigen Zertifizierungsstelle ausgestellt wurde.
+        \item Die IT-Abteilung installiert ein Root-Zertifikat auf allen Geräten im Firmennetzwerk. Der Datenverkehr wird über einen Proxy-Server geleitet, der mit einem Zertifikat ausgestattet ist, das von dem installierten Root-Zertifikat signiert wurde. Der Proxy-Server entschlüsselt den Datenverkehr und verschlüsselt ihn erneut, bevor er an den Empfänger gesendet wird.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{GSM}
+  \begin{enumerate}
+    \item\label{ex:gsm-attack} Sie befinden sich in der Rolle eines Angreifers und möchten einen Anruf über das GSM-Netz auf Kosten des Mobilfunkkunden A tätigen. Obwohl Sie wissen, dass Sie sich oft in der gleichen Funkzelle wie A befinden, sind Sie A nie begegnet. Erläutern Sie, welche technischen Maßnahmen und welche Informationen erforderlich sind, um sich dem Mobilfunkprovider gegenüber als Kunde A auszugeben.
+    \item Ist es in der Situation aus Teilaufgabe \ref{ex:gsm-attack} technisch einfacher oder schwieriger, sich nicht dem Mobilfunkprovider gegenüber als anderer Benutzer, sondern gegenüber einem anderen Benutzer als Mobilfunkzelle auszugeben? Erläutern Sie das Vorgehen und begründen Sie Ihre Antwort.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Erforderliche technische Maßnahmen sind das Abfangen der IMSI von A, das Abfangen des Schlüsselmaterials von A und das Abfangen der Verbindung von A zur Mobilfunkzelle. Die Informationen, die erforderlich sind, um sich dem Mobilfunkprovider gegenüber als Kunde A auszugeben, sind die IMSI von A und das Schlüsselmaterial von A.
+        \item Es ist technisch einfacher, sich als Mobilfunkzelle auszugeben, da die IMSI von A nicht benötigt wird. Es reicht aus, die Verbindung von A zur Mobilfunkzelle zu unterbrechen und eine eigene Verbindung aufzubauen.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
 
 
 
