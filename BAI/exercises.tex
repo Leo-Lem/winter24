@@ -48,45 +48,187 @@
   \end{solution}
 \end{exercise}
 
+\begin{exercise}{Embodied Language Processing}
+  \begin{enumerate}
+    \item What models are suitable for explaining human natural language processing?
+    \item Please explain Hebbian, SOM, and statistical learning.
+    \item What is a grounded language?
+    \item How can bio-inspired grounded language processing improve classic NLP methods?
+  \end{enumerate}
 
+  \begin{solution}
+    \begin{enumerate}
+      \item Models suitable for explaining human natural language processing include sensor to actuator mapping, semantic association, and conceptual representations for stimulus prediction.
+      \item Hebbian learning is a learning rule that strengthens synaptic connections between neurons that fire together. SOM learning is a learning algorithm used in self-organizing maps to cluster similar input patterns. Statistical learning is a method of learning from data by estimating the probability distribution of the data.
+      \item A grounded language is a language that is based on the physical world and is grounded in sensory-motor experiences.
+      \item Bio-inspired grounded language processing can improve classic NLP methods by providing brain-inspired representations and mechanisms that better capture the structure and meaning of language.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Robot Sound Localization}
+  \begin{enumerate}
+    \item Explain the concepts of ITD and ILD in a hybrid acoustic system.
+    \item How can ITD and ILD be implemented in a hybrid spiking neural network?
+    \item What are the advantages of this approach?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Interaural time difference (ITD) is the difference in time it takes for a sound to reach each ear, while interaural level difference (ILD) is the difference in intensity of a sound at each ear. In a hybrid acoustic system, ITD and ILD are used to localize sound sources in space.
+      \item ITD and ILD can be implemented in a hybrid spiking neural network by using spiking neurons to model the auditory pathways and integrating ITD and ILD information to localize sound sources.
+      \item The advantages of this approach include the ability to process complex auditory information in real-time, the ability to integrate multiple sensory modalities, and the ability to adapt to changing environments.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+% Visual information processed in different brain areas
+%  Images projected from retina to striate and extrastriate cortex,
+% filtered according to different features (edges, orientation, colour,
+% motion, …)
+%  Visual Processing inspired
+% hierarchical computational models for:
+% • Object recognition (Fukushima, LeCun)
+% • Deep Learning models
+\begin{exercise}{}
+  % TODO
+
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
+
+% Models for bio-inspired sound source localization, visual
+% localization and multisensory integration
+%  Multisensory VR environment for neuro-robotic experiments
+%  Effectiveness of bio-inspired models
+%  Demonstrated behavioral, neurophysiological
+% similarity between models and biological systems
+\begin{exercise}{}
+  % TODO
+
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
+
+% Advantages:
+%  Fast Reaction – Immediate mapping of sensory information onto motor actions
+%  Robustness – If one part fails, robot may retain some behavioral competence
+%  Multiple Goals – Can follow multiple goals simultaneously by combining
+% behaviors
+%  Extensibility – Easy to add new parts on top of previous
+%  Simplicity – Complexity derives from continuous
+% interaction of simple modules with environment
+% and each other
+%  Computational tractability – Usually simple calculations
+% and easy to parallelize
+%  Development of using LLM for planning
+% Disadvantages/Limits:
+%  Limited Information – Agents without environment models must have
+% sufficient information from local environment
+%  Non-Local information – how does agent take into account non-local
+% information (e.g. memory?)
+%  Learning globally – Difficult to make reactive agents
+% that learn global behavior
+%  Complex dynamics – It is hard to engineer agents
+% with large numbers of behaviors (dynamics of
+% interactions become too complex to understand)
+\begin{exercise}{}
+  % TODO
+
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
+
+% Gestures are an integral part in communication
+% • Important in multimodal systems
+% • Research on autonomous robots and HRI
+%  Model alternatives and choice
+% • Dependent on gesture type → gesture continuum
+% • Deep networks provide partial solution for feature extraction
+% • Recurrent networks in LSTM and GammaGWR
+% • Reservoir Computing models by neurophysiological principles
+% for action selection in prefrontal cortex and striatum
+% • Tradeoff between benchmarking and developing cognitive systems
+\begin{exercise}{}
+  % TODO
+
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
+
+% Pros:
+% • General heuristic for problem search
+% • Able to find good solutions in feasible computing time
+% • Distributed execution possible
+%  Cons:
+% • Cannot guarantee optimal solutions
+% • Long runtimes, compared to search algorithms
+% • Success depends also on used parameters
+%  Many further EA approaches: NEAT, HyperNEAT…
+\begin{exercise}{}
+  % TODO
+
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
+
+%  LMM deliver pointwise understanding for frequent cases
+%  For rare cases LMM often “autocorrect reality” answering often wrong question
+%  Hybrid systems make complementary use of symbolic and connectionist AI
+%  Symbolic rules can be extracted from neural networks
+%  Different architectures for integrating symbolic and neural computing are
+% possible
+%  How images are processed by a neural network can be visualized
+%  Hybrid systems and explainable AI are in the
+% current focus of research
+%  Topics for thesis, independent studies, etc.
+\begin{exercise}{}
+  % TODO
+
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
 
 \sheet[2023]{1st exam}
 
 \begin{exercise}{Multiple Choice}
   \begin{enumerate}
-    \item How is the neighborhood in a self-organizing map (SOM) is computed.
-
+    \item The neighborhood in a self-organizing map (SOM) is computed as a 
       \begin{itemize}
-        \item The neighborhood is computed as a Gaussian function of the distance between the winning neuron and the other neurons.
-        \item The neighborhood is computed as a linear function of the distance between the winning neuron and the other neurons.
-        \item The neighborhood is computed as a step function of the distance between the winning neuron and the other neurons.
-        \item The neighborhood is computed as a constant function of the distance between the winning neuron and the other neurons.
+        \item Gaussian
+        \item linear
+        \item step
+        \item constant
+      \end{itemize}
+      function of the distance between the winning neuron and the other neurons.
+
+    \item A ground language is based on the 
+      \begin{itemize}
+        \item ground truth.
+        \item physical world.
+        \item ground state.
+        \item ground floor.
       \end{itemize}
 
-    \item What does it mean for a language to be grounded?
-
+    \item The ventriloquism effect is the illusion that a sound is coming from 
       \begin{itemize}
-        \item The language is based on the ground truth.
-        \item The language is based on the physical world.
-        \item The language is based on the ground state.
-        \item The language is based on the ground floor.
+        \item a different location
+        \item the same Location
       \end{itemize}
-
-    \item What is the ventriloquism effect?
-
-      \begin{itemize}
-        \item The ventriloquism effect is the illusion that a sound is coming from a different location than the actual source.
-        \item The ventriloquism effect is the illusion that a sound is coming from the same location as the actual source.
-        \item The ventriloquism effect is the illusion that a sound is coming from a different location than the actual source.
-        \item The ventriloquism effect is the illusion that a sound is coming from the same location as the actual source.
-      \end{itemize}
+      than the actual source.
   \end{enumerate}
 
   \begin{solution}
     \begin{enumerate}
-      \item The neighborhood is computed as a Gaussian function of the distance between the winning neuron and the other neurons.
-      \item The language is based on the physical world.
-      \item The ventriloquism effect is the illusion that a sound is coming from a different location than the actual source.
+      \item Gaussian.
+      \item Physical world.
+      \item A different location.
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -114,29 +256,25 @@
 
   \begin{solution}
     \begin{enumerate}
-      \item The leaky integrate-and-fire model is an extension of the integrate-and-fire model that includes a leaky term. This term allows the membrane potential of the neuron to decay over time, which can help to model more realistic neuron behavior.
+      \item In the integrate-and-fire model, the neuron integrates input signals over time and fires a spike when the membrane potential reaches a threshold. In the leaky integrate-and-fire model, the neuron also integrates input signals over time, but the membrane potential decays over time in the absence of input. This leads to more realistic behavior and allows the neuron to adapt to changing input conditions.
       \item The similarity angle between two vectors $\mathbf{a}$ and $\mathbf{b}$ is given by
-      \[
-        \cos(\theta) = \frac{\mathbf{a} \cdot \mathbf{b}}{\|\mathbf{a}\| \|\mathbf{b}\|}.
-      \]
-      For $\mathbf{w} = [1, 2, 3]$ and $\mathbf{x} = [4, 5, 6]$, we have
-      \[
-        \cos(\theta) = \frac{1 \cdot 4 + 2 \cdot 5 + 3 \cdot 6}{\sqrt{1^2 + 2^2 + 3^2} \sqrt{4^2 + 5^2 + 6^2}} = \frac{32}{\sqrt{14} \sqrt{77}}.
-      \]
+        \[ \cos(\theta) = \frac{\mathbf{a} \cdot \mathbf{b}}{\|\mathbf{a}\| \|\mathbf{b}\|}. \]
+        For $\mathbf{w} = [1, 2, 3]$ and $\mathbf{x} = [4, 5, 6]$, we have
+        \[ \cos(\theta) = \frac{1 \cdot 4 + 2 \cdot 5 + 3 \cdot 6}{\sqrt{1^2 + 2^2 + 3^2} \sqrt{4^2 + 5^2 + 6^2}} = \frac{32}{\sqrt{14} \sqrt{77}}. \]
       \item The output of a perceptron is given by
-      \[
-        y = \begin{cases}
-          1 & \text{if } \mathbf{w} \cdot \mathbf{x} + b > 0, \\
-          0 & \text{otherwise}.
-        \end{cases}
-      \]
-      For $\mathbf{w} = [1, 2, 3]$, $\mathbf{x} = [4, 5, 6]$, and $b = 0$, we have
-      \[
-        y = \begin{cases}
-          1 & \text{if } 1 \cdot 4 + 2 \cdot 5 + 3 \cdot 6 > 0, \\
-          0 & \text{otherwise}.
-        \end{cases}
-      \]
+        \[
+          y = \begin{cases}
+            1 & \text{if } \mathbf{w} \cdot \mathbf{x} > 0, \\
+            0 & \text{otherwise}.
+          \end{cases}
+        \]
+        For $\mathbf{w} = [1, 2, 3]$, $\mathbf{x} = [4, 5, 6]$, and $b = 0$, we have
+        \[
+          y = \begin{cases}
+            1 & \text{if } 1 \cdot 4 + 2 \cdot 5 + 3 \cdot 6 > 0, \\
+            0 & \text{otherwise}.
+          \end{cases}
+        \]
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -152,15 +290,13 @@
     \begin{enumerate}
       \item The different layers in a CNN learn different features of the input data. The first layers typically learn low-level features like edges and textures, while later layers learn higher-level features like shapes and objects.
       \item The filtering in a CNN layer with a $5 \times 5$ matrix and a $3 \times 3$ filter, stride $1$, and no padding can be computed by sliding the filter over the input matrix and computing the dot product at each position. The resulting output will be a $3 \times 3$ matrix.
-      \item The orientation and firing rate of a simple cell for a line of different orientations can be visualized in a diagram with the orientation on the $x$-axis and the firing rate on the $y$-axis.
+      \item The orientation and firing rate of a simple cell for a line of different orientations can be visualized in a diagram with the orientation on the $x$-axis and the firing rate on the $y$-axis. It usually shows a peak at the preferred orientation of the cell and decreases for other orientations.
     \end{enumerate}
   \end{solution}
 \end{exercise}
 
 \begin{exercise}{Audio Processing}
-  \begin{enumerate}
-    \item Explain interaural time difference (ITD) and interaural level difference (ILD) and which one is used for high and low frequencies.
-  \end{enumerate}
+  Explain interaural time difference (ITD) and interaural level difference (ILD) and which one is used for high and low frequencies.
 
   \begin{solution}
     \begin{enumerate}
@@ -172,23 +308,25 @@
 \begin{exercise}{Behavior}
   \begin{enumerate}
     \item Explain a Braitenberg vehicle with an example and name the behavior of your example vehicle.
-    \item Complete the flow chart of the functional decomposition of the classical approach for a robot controller: sensors
+    \item Complete the flow chart of the functional decomposition of the classical approach for a robot controller: sensors $\rightarrow$ \_ $\rightarrow$ \_ $\rightarrow$ \_ $\rightarrow$ \_ $\rightarrow$ actuators.
     \item Explain the advantage of a behavior-based approach to robotics.
   \end{enumerate}
 
   \begin{solution}
     \begin{enumerate}
       \item A Braitenberg vehicle is a simple robot that exhibits complex behavior through the direct coupling of sensors to actuators. An example of a Braitenberg vehicle is a light-seeking robot that moves towards a light source. The behavior of this example vehicle is phototaxis.
-      \item The flow chart of the functional decomposition of the classical approach for a robot controller is: sensors $\rightarrow$ perception $\rightarrow$ cognition $\rightarrow$ planning $\rightarrow$ control $\rightarrow$ actuators.
+      \item The flow chart of the functional decomposition of the classical approach for a robot controller is: sensors $\rightarrow$ perception $\rightarrow$ modelling $\rightarrow$ planning $\rightarrow$ execution $\rightarrow$ actuators.
       \item The advantage of a behavior-based approach to robotics is that it allows for the development of complex behaviors through the combination of simple behaviors. This approach is more robust and adaptable to changing environments than traditional control architectures.
     \end{enumerate}
   \end{solution}
 \end{exercise}
 
 \begin{exercise}{Evolutionary Computing}
+  \input{res/tsp.fig}
+
   \begin{enumerate}
-    \item Draw a cycle graph with arrow labels.
-    \item Given an example of finding the shortest distance between cities by only visiting each city once.
+    \item Draw a cycle graph with the nearest-neighbor heuristic for the traveling salesman problem.
+    \item Find the shortest distance between city $1$ and city $4$ in the graph.
     \item Describe a recombination and mutation algorithm for the example you provided.
     \item Explain optimization strategies for this algorithm.
   \end{enumerate}
@@ -196,8 +334,8 @@
   \begin{solution}
     \begin{enumerate}
       \item A cycle graph with arrow labels is a graph where each node is connected to the next node in a cycle, and the arrows indicate the direction of the cycle.
-      \item An example of finding the shortest distance between cities by only visiting each city once is the traveling salesman problem.
-      \item A recombination and mutation algorithm for the traveling salesman problem could involve recombining the order of cities in two different solutions and mutating the order of cities in a single solution.
+      \item The shortest distance between city $1$ and city $4$ in the graph is $1\to3\to4$.
+      \item An approach to solving the traveling salesman problem using recombination and mutation could involve combining the paths of two solutions to create a new solution and randomly swapping cities in the solution to introduce diversity.
       \item Optimization strategies for this algorithm could include using a genetic algorithm to evolve a population of solutions, using local search to improve the quality of solutions, and using elitism to preserve the best solutions.
     \end{enumerate}
   \end{solution}
