@@ -131,14 +131,8 @@
 
   \begin{solution}
     \begin{itemize}
-      \item **Angriffstypen:** Das System ist sowohl für passive Angreifer (durch Beobachtung des Lieferverkehrs) als auch für aktive Angreifer (Manipulation von Bestellungen) anfällig.
-      \item **Bedrohte Schutzziele:** Vertraulichkeit (Erkenntnisse über geplante Operationen) und Integrität (Manipulation der Bestellungen).
-      \item **Mögliche Gegenmaßnahmen:**
-        \begin{itemize}
-          \item Tarnmaßnahmen wie Bestellungen an Dritte.
-          \item Einsatz von Intermediären zur Verschleierung des Bestellvorgangs.
-          \item Reduzierung der Transparenz durch diversifizierte Bestellziele.
-        \end{itemize}
+      \item Passiver Angreifer: Bestelldatenanalyse können Hinweise auf militärische Operationn geben. Vertraulichkeit der operativen Planung wird bedroht. Traffic- oder Metadatenanalyse sind mögliche Angriffsarten. Als Gegenmaßnahmen können z.B. falsche Bestellungen oder Verschleierung der Lieferadresse genannt werden.
+      \item Aktiver Angreifer: Blockade von Lieferungen oder Einschleusung von Schadsoftware (wie QR-Codes) in Lierferungen. Integrität der Lieferungen wird bedroht. Social Engeineering, Supply Chain Attacks. Gegenmaßnahmen könnten z.B. die Überprüfung von Lieferungen oder die Verwendung von sicheren Lieferdiensten sein.
     \end{itemize}
   \end{solution}
 \end{exercise}
@@ -153,14 +147,9 @@
 
   \begin{solution}
     \begin{enumerate}
-      \item **Angriffsmöglichkeiten:** Das System ist sowohl durch passive Angreifer (Abhören von SSIDs) als auch durch aktive Angreifer (Erstellen von Rogue-APs mit gleicher SSID) verwundbar.
-      \item **Bedrohte Schutzziele:** Vertraulichkeit (Tracking von Verbindungen), Integrität (Man-in-the-Middle-Angriffe).
-      \item **Gegenmaßnahmen:**
-        \begin{itemize}
-          \item Deaktivierung der automatischen Verbindung zu bekannten Netzwerken.
-          \item Nutzung von WPA3 oder VPN.
-          \item Vermeidung öffentlicher WLANs.
-        \end{itemize}
+      \item Angriffe sind sowohl durch passive wie aktive Angreifer möglich. Passive Angreifer können durch das Abhören von SSIDs Informationen über Nutzer sammeln, während aktive Angreifer gefälschte APs mit bekannten SSIDs aufstellen können, um Nutzer zu täuschen und Daten abzugreifen.
+      \item Passiver Angreifer: Vertraulichkeit; Aktiver Angreifer zusätzlich: Integrität, Verfügbarkeit, Authentizität.
+      \item Mögliche Gegenmaßnahmen sind z.B. die Deaktivierung der automatischen WLAN-Verbindung, MAC-Adressen-Änderung um Tracking zu erschweren, die Verwendung von Zertifikaten zur Authentifizierung, oder die Verwendung von VPNs.
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -169,14 +158,14 @@
 \begin{exercise}{Verschlüsselte PIN-Übermittlung}
   Der Nutzer eines Laptops soll sich gegenüber einem Server im Heimnetz durch eine PIN authentisieren. Um die vom Nutzer am Laptop eingegebene PIN nicht mitlesen zu können, wird sie vor der Übermittlung mit dem öffentlichen RSA-Schlüssel des Servers deterministisch verschlüsselt.
   \begin{enumerate}
-    \item Analysieren Sie die (Un-)Sicherheit eines solchen Protokolls gegenüber einem Angreifer auf der Kommunikationsstrecke.
+    \item Analysieren Sie die Sicherheit eines solchen Protokolls ggü. einem Angreifer auf der Kommunikationsstrecke.
     \item Welche Schutzmaßnahmen können Nutzer und Server umsetzen, um die Sicherheit des Protokolls zu erhöhen?
   \end{enumerate}
 
   \begin{solution}
     \begin{enumerate}
-      \item **Sicherheitsanalyse:** Deterministische Verschlüsselung ermöglicht Replay-Angriffe und das Erraten von PINs durch brute force.
-      \item **Schutzmaßnahmen:** Nutzung eines hybriden Verschlüsselungsverfahrens mit zufälligen Nonces und Transport Layer Security (TLS).
+      \item Der Angreifer kann die PIN zwar nicht direkt entschlüsseln, aber Replay-, Man-in-the-Middle-, und Brute-Force-Angriffe (bei kurzer PIN) sind möglich.
+      \item Server: Challenge-Response-Verfahren, digitale Signaturen, Rate-Limiting um Brute-Force zu verhindern. Nutzer: Lange PINs, regelmäßige Änderung der PIN, TLS verwenden.
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -188,7 +177,7 @@
   Denken Sie sich eine Variante aus, bei der eine einzige Zertifizierungsstelle hierzu nicht mehr in der Lage ist, im Streitfall aber trotzdem eine Aufdeckung des Pseudonyms möglich ist.
 
   \begin{solution}
-    Eine mögliche Lösung ist die Nutzung von Threshold-Signaturen, bei denen mehrere Zertifizierungsstellen gemeinsam einen Pseudonym-Schlüssel erzeugen, ohne dass eine einzelne Stelle die Identität zurückverfolgen kann. Im Streitfall können die Stellen gemeinsam das Pseudonym aufdecken.
+    Zwei Zertifizierungsstellen $Z_1$ und $Z_2$ zertifizieren jeweils einen Teil des Public Keys. Beide Teile zusammen ergeben den vollständigen Public Key. Im Streitfall müssen beide Zertifizierungsstellen zusammenarbeiten, um das Pseudonym aufzudecken. Denkbar wäre auch, dass eine Stelle die Identität und die andere den Public Key zertifiziert.
   \end{solution}
 \end{exercise}
 
@@ -203,10 +192,10 @@
 
   \begin{solution}
     \begin{enumerate}
-      \item **Speicherung im GSM:** Ermöglicht effiziente Anrufzustellung. WLAN benötigt dies nicht, da es keine zentrale Infrastruktur nutzt.
-      \item **Datenbanken:** HLR speichert permanent, VLR nur temporär für lokale Effizienz.
-      \item **Schutz:** Insider greifen durch Zugriffsprotokolle erschwert an; Outsider durch Verschlüsselung.
-      \item **TMSI:** Maskiert IMSI, um Aufenthaltsorte besser zu schützen.
+      \item Speicherung in GSM dient der effizienten Zustellung von Anrufen und Nachrichten. Beim WLAN handelt es sich um ein lokales Netzwerk, bei dem keine Standortinformationen benötigt werden.
+      \item Home Location Register (HLR) speichert die Daten dauerhaft, Visitor Location Register (VLR) temporär. Gründe für die Trennung sind Effizienz und Datenschutz.
+      \item Insider: Strikte Zugriffskontrollen und -protokollierung für HLR und VLR, Rollentrennung, sodass kein Mitarbeiter Zugriff auf alle Daten hat, und Verschlüsselung sensibler Informationen können den Aufenthaltsort schützen. Outsider: Abfangen von Kommunikation und Abhören von Signalisierungsdaten können den Aufenthaltsort gefährden.
+      \item TMSI schützt den Aufenthaltsort, da sie nicht direkt mit dem IMSI verknüpft ist und regelmäßig geändert wird.
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -216,7 +205,7 @@
   Trotz der vorhandenen Sicherheitsfunktionen bietet GSM nur beschränkte Sicherheit hinsichtlich Vertraulichkeit. Warum?
 
   \begin{solution}
-    GSM bietet nur beschränkte Sicherheit, da die Verschlüsselung nicht Ende-zu-Ende erfolgt, schwache Verschlüsselungsalgorithmen (z.B. A5/1) verwendet werden und Signalisierungsdaten nicht immer geschützt sind.
+    Schwache bzw. veraltete Verschlüsselung, kein Schutz der Signalisierungsdaten, keine Ende-zu-Ende-Verschlüsselung, einseitige Authentifizierung (nur Nutzer zu Netz, nicht umgekehrt), …
   \end{solution}
 \end{exercise}
 
@@ -232,8 +221,8 @@
   \begin{solution}
     \begin{enumerate}
       \item Offene implizite Adressen sind für jeden sichtbar, verdeckte implizite Adressen verwenden Pseudonyme, um die Identität zu schützen.
-      \item Explizite Adressierung kann verwendet werden, um Nachrichten zu senden, ohne Teilnehmer direkt zu lokalisieren, aber dies erfordert zusätzliche Mechanismen zur Wahrung der Anonymität.
-      \item Ein Satellit kann für variable implizite Adressierung genutzt werden, jedoch sind Bandbreiten- und Latenzanforderungen zu berücksichtigen.
+      \item Grundsätzlich ja, hierbei müsste die Nachricht jedoch an alle Teilnehmer gesendet werden, was ineffizient ist und die Vertraulichkeit gefährdet.
+      \item Variable implizite Adressierung bedeutet, dass die Adresse nicht fest ist, sondern sich ändert. Ein Satellit ist grudnsätzlich geeignet, da er große geografische Bereiche gleichzeitig mit einem Broadcast ansprechen könnte. Allerdings wäre hohe Bandbreitenanforderungen notwendig, und die Skalierbarkeit des Systems ist beschränkt.
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -247,8 +236,9 @@
 
   \begin{solution}
     \begin{enumerate}
-      \item Der Kollisionsabstand beträgt im Durchschnitt $2^{32} / (100.000 \cdot 50)$ Stunden.
-      \item Um einen mittleren Kollisionsabstand von mindestens 3 Jahren zu erreichen, muss die Adresslänge auf mindestens 48 Bit erhöht werden.
+      \item Es gibt $2^{32}=4.294.967.296$ mögliche Adressen, $100.000 \cdot 50 = 5.000.000$ benötigte Adressen für die Nutzer, und $100.000 \cdot 1 = 100.000$ Nachrichten pro Stunde. Der Kollisionsabstand beträgt also
+        \[ d \approx 862h \]
+      \item Um einen mittleren Kollisionsabstand von mindestens 3 Jahren zu erreichen, muss die Adresslänge auf mindestens 41 Bit erhöht werden.
     \end{enumerate}
   \end{solution}
 \end{exercise}
