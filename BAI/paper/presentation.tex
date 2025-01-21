@@ -229,31 +229,26 @@
 % Content
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Slide 1: Introduction
 \begin{frame}{Introduction}
 	\textbf{What is Image Captioning?}
 	\begin{itemize}
 			\item Task: Generate descriptive textual captions for images.
 			\item Combines computer vision (CV) and natural language processing (NLP).
-			\item Applications: Assistive technology, automated metadata generation, and more.
+			\item Application examples: Assistive technology, automated metadata generation.
 	\end{itemize}
-	% Speaker Notes:
-	% Begin by briefly explaining the task of image captioning. Highlight its interdisciplinary nature and practical applications.
 \end{frame}
 
-% Slide 2: Problem Statement
-\begin{frame}{Problem Statement}
-	\textbf{Challenges in Image Captioning}
-	\begin{itemize}
-			\item Detecting and interpreting visual elements accurately.
-			\item Generating coherent and contextually relevant text.
-			\item Balancing computational efficiency and model performance.
-	\end{itemize}
-	% Speaker Notes:
-	% Emphasize the dual challenges of visual understanding and text generation. Mention the need for scalable solutions in real-world applications.
+\begin{frame}{Introduction}
+	\begin{figure}[H]
+		\includegraphics[width=.6\textwidth]{res/dog.jpg}
+		\caption{A dog running on a field.}\label{fig:dog}
+	\end{figure}
 \end{frame}
 
-% Slide 3: Methodology (Dataset and Features)
+\begin{frame}{Research Question}
+	How do different decoder architectures (GRU, LSTM, Transformer) perform in the context of image captioning on the Flickr8k dataset?
+\end{frame}
+
 \begin{frame}{Methodology: Dataset and Features}
 	\textbf{Dataset: Flickr8k}
 	\begin{itemize}
@@ -264,11 +259,8 @@
 			\item Pre-trained EfficientNet B0 model.
 			\item Extracts high-level features from images.
 	\end{itemize}
-	% Speaker Notes:
-	% Explain why Flickr8k was chosen and describe its characteristics. Introduce EfficientNet B0 as a state-of-the-art feature extractor.
 \end{frame}
 
-% Slide 4: Methodology (Decoder Architectures)
 \begin{frame}{Methodology: Decoder Architectures}
 	\textbf{Architectures Evaluated}
 	\begin{itemize}
@@ -281,11 +273,29 @@
 			\item Implemented in PyTorch.
 			\item Trained using image features and paired captions.
 	\end{itemize}
-	% Speaker Notes:
-	% Briefly describe each architecture and its role in the pipeline. Mention the choice of PyTorch for implementation.
 \end{frame}
 
-% Slide 5: Results (Metrics)
+\begin{frame}{Methodology: Decoder Architectures}
+	\begin{figure}[H]
+		\includegraphics[width=.9\textwidth]{res/gru.png}
+		\caption{GRU Decoder.}\label{fig:gru}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Methodology: Decoder Architectures}
+	\begin{figure}[H]
+		\includegraphics[width=.9\textwidth]{res/lstm.png}
+		\caption{LSTM Decoder.}\label{fig:lstm}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Methodology: Decoder Architectures}
+	\begin{figure}[H]
+		\includegraphics[width=.9\textwidth]{res/transformer.png}
+		\caption{Transformer Decoder.}\label{fig:transformer}
+	\end{figure}
+\end{frame}
+
 \begin{frame}{Results: Metrics}
 	\textbf{Evaluation Metrics}
 	\begin{itemize}
@@ -293,15 +303,10 @@
 			\item METEOR: Considers semantic matching.
 			\item NIST: Focuses on information content.
 	\end{itemize}
-	\textbf{Key Findings}
-	\begin{itemize}
-			\item Transformer underperforms GRU and LSTM in all metrics.
-	\end{itemize}
-	% Speaker Notes:
-	% Introduce the metrics and explain their relevance. Highlight the surprising result of Transformer underperformance.
+
+	% TODO: explain these metrics
 \end{frame}
 
-% Slide 6: Results (Comparison)
 \begin{frame}{Results: Comparison of Architectures}
 	\begin{itemize}
 			\item GRU and LSTM outperform Transformer.
@@ -309,22 +314,16 @@
 	\end{itemize}
 	\textbf{Visual Comparison}
 	\includegraphics[width=.6\textwidth]{res/metrics.png}
-	% Speaker Notes:
-	% Present the comparison visually and discuss why the Transformer might struggle with limited data.
 \end{frame}
 
-% Slide 7: Discussion
 \begin{frame}{Discussion}
 	\textbf{Insights and Implications}
 	\begin{itemize}
 			\item Traditional architectures (GRU, LSTM) remain competitive.
 			\item Transformers may require larger datasets to realize their full potential.
 	\end{itemize}
-	% Speaker Notes:
-	% Reflect on what these results mean for the field and the practical implications of using different architectures.
 \end{frame}
 
-% Slide 8: Conclusion and Future Work
 \begin{frame}{Conclusion and Future Work}
 	\textbf{Summary}
 	\begin{itemize}
@@ -334,10 +333,8 @@
 	\textbf{Future Work}
 	\begin{itemize}
 			\item Test on larger datasets (e.g., MS COCO).
-			\item Explore hybrid architectures.
+			\item Finetune pretrained models.
 	\end{itemize}
-	% Speaker Notes:
-	% Summarize the study's key points and suggest future directions for improvement and exploration.
 \end{frame}
 
 \end{document}
