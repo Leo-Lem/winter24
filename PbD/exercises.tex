@@ -254,10 +254,10 @@
 
   \begin{solution}
     \begin{enumerate}
-      \item Der Blind-Message-Service erfüllt die Schutzziele Vertraulichkeit und Anonymität.
-      \item Verschlüsselte Übertragungen verhindern, dass ein Angreifer Inhalte oder Muster erkennt.
-      \item Die Verschlüsselung der Anfragevektoren genügt, da nur der Inhalt der Anfragen sensibel ist.
-      \item Alternativen sind Onion-Routing und Broadcast-Kommunikation, die jedoch mehr Bandbreite benötigen.
+      \item Vertraulichkeit.
+      \item Verschlüsselte Übertragungen verhindern, dass der Server die Anfragevektoren und die Antworten lesen kann und somit bleibt unbekannt was der Nutzer anfragt.
+      \item Die Antworten sind so gestaltet, dass sie keine direkten Informationen über die angefragten Daten enthalten. Dadurch muss lediglich die Anfrage verschlüsselt werden.
+      \item Alternativ könnte man Broadcast-Kommunikation einsetzen, wobei alle Daten abgefragt werden. Oder man könnte über mehrere Server verteilt Anfragen stellen, und sie dann aggregieren.
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -273,20 +273,18 @@
 
   \begin{solution}
     \begin{enumerate}
-      \item Die Datenbank verhindert Replay-Angriffe, bei denen Nachrichten mehrfach gesendet werden.
-      \item Die Datenbank kann gelöscht werden, sobald alle Nachrichten erfolgreich weitergeleitet wurden.
-      \item Eine mögliche Modifikation ist die Nutzung von Hashes zur Überprüfung statt vollständiger Speicherung, wodurch der Speicherbedarf reduziert wird.
+      \item Replay-Angriffe werden verhindert. Hierbei werden alte Nachrichten erneut gesendet, und da der einfache Mix zufällig verschlüsselt, kann der Angreifer feststellen welcher Output unverändert bleibt.
+      \item Bis das Schlüsselpaar des Mixes geändert wird, kann die Datenbank nicht gelöscht werden.
+      \item Hash-basierte Speicherung. Bloom-Filter. Batch-abhängige Verarbeitung. Zeitlich begrenzte Speicherung.
     \end{enumerate}
   \end{solution}
 \end{exercise}
 
 \begin{exercise}{DC-Netz}
-  \begin{enumerate}
-    \item Der (entartete) Schlüsselgraph eines DC-Netzes für die Teilnehmer A, B, C und D sei (A-B-C-D). B greift nun A, C und D an. Beschreiben Sie den erreichbaren Schutz für A, C und D. Wie sind Sie bei Ihrer Analyse vorgegangen?
-  \end{enumerate}
+  Der (entartete) Schlüsselgraph eines DC-Netzes für die Teilnehmer A, B, C und D sei (A-B-C-D). B greift nun A, C und D an. Beschreiben Sie den erreichbaren Schutz für A, C und D. Wie sind Sie bei Ihrer Analyse vorgegangen?
 
   \begin{solution}
-    Wenn Teilnehmer B A, C und D angreift, bleibt die Anonymität für A, C und D teilweise erhalten. Die Analyse basiert auf der Struktur des Schlüsselgraphs und der Isolation kompromittierter Knoten.
+    Teilnehmer A und C sind direkt gefährdet, da B Zugriff auf ihre Schlüsselanteile hat und diese aus Gesamtsumme isolieren kann. D ist relativ sicherer, solange C nicht kompromittiert ist. Die Analyse erfolgte durch Berechnung der Nachrichten, die B senden kann.
   \end{solution}
 \end{exercise}
 
