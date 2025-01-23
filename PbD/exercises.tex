@@ -291,16 +291,17 @@
 \setcounter{subsection}{238}
 \begin{exercise}{Überwachung im Internet}
   \begin{enumerate}
-    \item Erläutern Sie eine mögliche Vorgehensweise, mit der ein starker Angreifer (z.B. ein Nachrichtendienst) die IP-Adressen der Nutzer herausfinden kann, die eine bestimmte Webseite über ein mixbasiertes Anonymisierungssystem (z.B. Tor) abrufen.
-    \item Erläutern Sie eine mögliche Vorgehensweise, mit der ein starker Angreifer (z.B. ein Nachrichtendienst) ermitteln kann, welche Webseiten ein bestimmter Nutzer über ein mixbasiertes Anonymisierungssystem abgerufen hat. Hinweis: Beschreiben Sie eine andere Vorgehensweise als in Teilaufgabe a), auch wenn Ihre für Teilaufgabe a) gewählte Vorgehensweise für Teilaufgabe b) geeignet ist.
+    \item\label{ex:break-mix} Erläutern Sie eine mögliche Vorgehensweise, mit der ein starker Angreifer (z.B. ein Nachrichtendienst) die IP-Adressen der Nutzer herausfinden kann, die eine bestimmte Webseite über ein mixbasiertes Anonymisierungssystem (z.B. Tor) abrufen.
+    \item\label{ex:break-mix-2} Erläutern Sie eine mögliche Vorgehensweise, mit der ein starker Angreifer (z.B. ein Nachrichtendienst) ermitteln kann, welche Webseiten ein bestimmter Nutzer über ein mixbasiertes Anonymisierungssystem abgerufen hat.
+      \par\textit{Hinweis: Beschreiben Sie eine andere Vorgehensweise als in Teilaufgabe \ref{ex:break-mix}, auch wenn Ihre für Teilaufgabe \ref{ex:break-mix} gewählte Vorgehensweise für Teilaufgabe \ref{ex:break-mix-2} geeignet ist.}
     \item Erläutern Sie drei Techniken, mit denen ein Webserver einen Nutzer bei seinem zweiten (späteren) Besuch wiedererkennen kann.
   \end{enumerate}
 
   \begin{solution}
     \begin{enumerate}
-      \item Ein starker Angreifer kann Timing-Analyse und Traffic-Korrelation verwenden, um IP-Adressen von Nutzern zu identifizieren.
-      \item Ein anderer Ansatz ist die Analyse von Metadaten, wie HTTP-Headern oder spezifischen Anfragecharakteristiken.
-      \item Webserver können Nutzer durch Cookies, Browser-Fingerprinting und IP-Adressen wiedererkennen.
+      \item Timing-Korrelation: Verlauf und Volumen von Anfragen bei der Eingangs-Node und Antworten bei der Exit-Node korrelieren, um Nutzer zu identifizieren.
+      \item Das Endgerät des Nutzers mit Malware infizieren, um Browserverlauf und Cookies zu stehlen.
+      \item Cookies, Browser-Fingerprinting.
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -314,8 +315,8 @@
 
   \begin{solution}
     \begin{enumerate}
-      \item Beim Tagging-Angriff fügt der Angreifer eine markante Änderung in den Datenverkehr ein, um Nutzer zu identifizieren.
-      \item Der Angriff wird durch strikte Prüfung der Datenintegrität und Verschlüsselung verhindert.
+      \item Datenpakete mit Tag versehen (zB. Größe oder Reihenfolge der Pakete), welcher auch bei Verschlüsselung bestehen bleibt. Hiermit kann das Ziel des Pakets identifiziert werden.
+      \item E2E-Verschlüsselung, Prüfsummen, Paketnormalisierung.
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -329,13 +330,12 @@
 
   \begin{solution}
     \begin{enumerate}
-      \item Bedrohte Schutzziele sind Vertraulichkeit und Anonymität.
-      \item Tracking auf Anwendungsebene nutzt Browserdaten, während Netzebenen-Tracking auf IP-Daten basiert.
-      \item Gegenmaßnahmen:
-        \begin{itemize}
-          \item Blockieren von Cookies (z.B. durch Browser-Einstellungen).
-          \item Nutzung von VPNs zur Verschleierung der IP.
-          \item Einsatz von Privacy-Plugins (z.B. uBlock Origin).
+      \item Vertraulichkeit, Anonymität.
+      \item Anwendungsebene verwendet Browserdaten, während die Netzebene IP-Daten verwendet. Tracking innerhalb eines Programms v. Tracking über Netzwerke hinweg.
+      \item \begin{itemize}
+          \item Blockierung von Tracking (zB. Adblock): Tracking-Cookies und Third-Party-Mechanismen werden blockiert. Schutz vor Werbetreibenden.
+          \item Anonymisierungsdienste (zB. Incognito-Modus): Tracking-Cookies und lokale Daten werden nach Sitzung gelöscht. Schutz vor Webseiten und Werbetreibenden.
+          \item Fingerprinting-Schutz (zB. Privacy Badger): Standardisierung von Informationen wie Schriftart, Zeitzone, Bildschirmauflösung durch Manipulation der Browser-Umgebung. Schutz vor Webseiten.
         \end{itemize}
     \end{enumerate}
   \end{solution}
@@ -347,7 +347,13 @@
   Bitte erläutern Sie Ihr Vorgehen im Detail. Unter welcher Begrifflichkeit lassen sich derartige Angriffe zusammenfassen?
 
   \begin{solution}
-    Das Vorgehen besteht in der Analyse der Zeitstempel von Access-Logs und Router-Daten, um Verbindungen herzustellen. Diese Art von Angriff wird als Timing-Korrelation bezeichnet.
+    Hierbei kann ein Timing-Angriff durchgeführt werden. Verfügbare Daten sind das Access-Log, DSL-Router-Protokoll und die Latenz zwischen Router und Server. Durch Vergleich der Zugriffszeiten im Access-Log und den Latenzen im Router-Protokoll kann die interne IP-Adresse ermittelt werden.
+    \begin{itemize}
+      \item Alle relevanten HTTP-Anfragen aus dem Access-Log identifizieren und die Zeitpunkte notieren.
+      \item Alle ausgehenden Pakete im Router-Protokoll identifizieren und die Zeitpunkte, sowie die zugehörigen IP-Adressen notieren.
+      \item Zeitstempel korrelieren unter Beachtung der Latenz (Anfragen aus Access-Log +-.5 Sekunden später als im Router-Protokoll).
+      \item IP-Adresse mit den korrelierten Zeitstempeln identifizieren.
+    \end{itemize}
   \end{solution}
 \end{exercise}
 
