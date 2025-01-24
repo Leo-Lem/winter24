@@ -8,7 +8,147 @@
 
 \begin{document}\createtitle
 
-\setcounter{section}{2022}\sheet{Exam}
+\sheet{Quizzes}
+
+% Q: The web is an application area for NLP, e.g.: [][]
+% A: Internet of Services, Community mining, Information retrieval, ...
+% Q: Web is a resource to improve the quality of NLP, e.g.: [][][]
+% A: Web as Corpus, Analyzing web-based knowledge repositories,
+% Q: Segmentation is an important analysis step in many NLP pipelines. Which types of segments do you know?
+% A: Sentence, Token.
+\begin{exercise}{Quiz I}
+
+
+  \begin{solution}
+    
+  \end{solution}
+\end{exercise}
+
+% Q: Identify all stems and affixes (prefix, suffix, infix, circumfix) in following words: index, incorrect, interesting
+% A: stem:index, prefix:in stem:correct, stem:interest suffix:ing
+% Q: In contrast to lemmatization, stemming does not necessarily return a valid word form. Why is stemming still useful?
+% A: Faster, easier, applications in IR.
+% Q: What types of syntactic ambiguity do you know? List at least two types with an example for each type.
+% A: Attachment ambiguity (e.g. "He walked around the house with the dog."), coordination ambiguity (e.g. "We serve excellent rice and fish."), garden path sentences (e.g. "The loud shot the silent.").
+\begin{exercise}{Quiz II}
+
+
+  \begin{solution}
+    
+  \end{solution}
+\end{exercise}
+
+% Q: Why are more features not always better for learning a classifier?
+% A: More training data might be needed; Dependent features might lead to deficient models; Some ML algorithms can only deal with specific data types; Slower.
+% Q: What is the typical type of input data that a sequence tagger training step requires?
+% A: Labeled training text. (e.g. POS, NER)
+\begin{exercise}{Quiz III}
+
+
+  \begin{solution}
+    
+  \end{solution}
+\end{exercise}
+
+% Q: What to do first in a web search engine? Bring these tasks into the right order: Indexing, crawling, ranking, (document) parsing, stemming:
+% A: crawling -> parsing -> stemming -> indexing -> ranking
+% Q: Name features and their feature types, which are used for WebSearch ranking.
+% A: static: : inlinks, pagerank, document length, language quality… dynamic: TF-IDF, LM scores, anchor text, user clicks… query features: length, known bigrams, number of stopwords…
+% Q: Why not just use user clicks for ranking after having a few million clicks from a previously unranked search engine?
+% A: Top-result-bias
+\begin{exercise}{Quiz IV}
+
+
+  \begin{solution}
+    
+  \end{solution}
+\end{exercise}
+
+% Q: Relate following queries to query types (informational, navigational, transactional, exploratory):
+% A: - facebook -> navigational - NSA scandal -> informational - facebook alternatives -> exploratory - facebook data migration tool -> transactional
+% Q: What is the difference between extrinsic and intrinsic evaluation?
+% A: intrinsic evaluation directly measures a processing step, e.g. measure the accuracy on POS tagging. Extrinsic evaluation measures improvements in larger tasks/system, e.g. how do POS tagging improvements influence the quality of summarization or question answering
+\begin{exercise}{Quiz V}
+
+
+  \begin{solution}
+    
+  \end{solution}
+\end{exercise}
+
+% True or false
+% ▪ The trigram language model generates the following word based on three previous words (false)
+% ▪ A 7-gram model generally performs worse than a 5-gram model because there is not enough training data to estimate its parameters well (true)
+% ▪ The trigram language model generates syntactically correct sentences (false)
+% ▪ With the trigram language model, all words are always equally probable (false)
+% ▪ A generative language model always provides the same output for the same input (false)
+% ▪ Language models can only perform tasks for which they have been trained directly with examples (false)
+% ▪ Training dialog-based language models such as chatGPT requires a lot of human feedback in addition to large amounts of text (true)
+\begin{exercise}{Quiz VI}
+
+
+  \begin{solution}
+    
+  \end{solution}
+\end{exercise}
+
+% Q: Assign the procedures for defining/teaching tasks to LLMs to the definitions:
+% 1. tasks are explained directly in the prompt
+% 2. a smaller model is trained using training data created from a larger model
+% 3. tasks are explained in the prompt using several examples
+% 4. the model is trained further with the help of manually created training data
+% a) Few-Shot
+% b) Zero-Shot
+% c) Model distillation
+% d) Fine-tuning
+% A: 1b, 2c, 3a, 4d
+\begin{exercise}{Quiz VII}
+
+
+  \begin{solution}
+    
+  \end{solution}
+\end{exercise}
+
+% Q: List three different question types with an example for each of them.
+% A:
+%   1. Feature specification. - What shape did the stone have?
+%   2. Definition. - What are prime numbers?
+%   3. Quantification. - How many Bavarians required for exchanging a light bulb?
+% Q: Give a schema on how these Question Answering System components interact: Answer, Document processing, Document collection, Answer processing, Question, Question processing.
+% A: see Figure in QA
+\begin{exercise}{Quiz VIII}
+
+
+  \begin{solution}
+    
+  \end{solution}
+\end{exercise}
+
+% Q: The Reciprocal Rank (RR) is the inverse of the rank of the first correct answer or 0 if no correct answer was given. The Mean Reciprocal Rank (MRR) is the mean of the RRs over all questions. P@1 is the precision on the firat result. Which measure is more suited for question answering, and why?
+% A: In QA, it does not make much sense to produce many answers, what is important is the retrieval of one correct answer. Therefore, P@1 is more suited. MRR is better for IR.
+\begin{exercise}{Quiz IX}
+
+
+  \begin{solution}
+    
+  \end{solution}
+\end{exercise}
+
+% Q: Sentiment Analysis can be implemented by looking for positive and negative words from a wordlist. Where are the limits of this approach?
+% A: meaning is context-dependent (‘small’ is good or bad?), sentiment is expressed implicitly, statements can be negated ‘not good’, lists are always incomplete
+% Q: What is counterspeech? Can you line out what you’d need to build a system that performs counterspeech?
+% A: Counterspeech is speaking up against abusive, harmful, hate content. For an automatic system, one needs a detector of abusove content and a generative LM to explain for the respective content what’s hateful about the statement and why this is unwanted. For this, we need training data for detection (easy) and counterspeech (hard, rare).
+\begin{exercise}{Quiz X}
+
+
+  \begin{solution}
+    
+  \end{solution}
+\end{exercise}
+
+
+\sheet[2023]{Exam}
 
 \begin{exercise}{Tokenization ambiguity}\label{ex:tokenization}
   List three types of tokenization ambiguity and explain each.
@@ -248,7 +388,7 @@
 
 
 
-\setcounter{section}{2021}\sheet{Exam}
+\sheet[2022]{Exam}
 
 \begin{exercise}{NLP and the Web}
   \begin{enumerate}
@@ -433,7 +573,7 @@
 
 
 
-\setcounter{section}{2020}\sheet{Exam}
+\sheet[2021]{Exam}
 
 \begin{exercise}{Comprehensiveness}
   What is comprehensiveness, specifically in the context of NLP?
