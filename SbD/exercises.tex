@@ -134,7 +134,7 @@
 
 \begin{exercise}{Feistel-Prinzip \ref{ex:feistel}}\end{exercise}
 
-\begin{exercise}{Meet-in-the-Middle-Angriff auf 2-DES}
+\begin{exercise}{Meet-in-the-Middle-Angriff auf 2-DES}\label{ex:2-des}
   Um der geringen Schlüssellänge von 56 Bit des DES-Algorithmus zu begegnen, wurde vorgeschlagen, den Algorithmus mehrfach hintereinander mit verschiedenen Schlüsseln anzuwenden. Eine schlechte Lösung ist jedoch die lediglich zweifache Hintereinanderanwendung 2-DES.
   \begin{enumerate}
     \item Vergleichen Sie die Schlüssellänge des 2-DES-Algorithmus mit der tatsächlich erreichten Sicherheit.
@@ -1372,6 +1372,77 @@
             \item \texttt{Kc}: Ciphering Key. Wird zur Verschlüsselung der Kommunikation zwischen Mobiltelefon und Basisstation genutzt.
           \end{itemize}
         \item Enthalten: \texttt{Ki}, \texttt{IMSI}, \texttt{RAND}, \texttt{MSISDN}. Mit anderem Namen/ähnlicher Funktion: \texttt{SRES}: \texttt{XRES}, \texttt{LAI}: \texttt{RAI}, \texttt{Kc}: \texttt{CK}.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+
+
+\sheet[2020]{First Exam}
+\begin{exercise}{2-DES \ref{ex:2-des}}\end{exercise}
+
+% One-Time-Pad
+% a) Wie funktioniert ein OTP?
+% b) Welche zwei Eigenschaften müssen erfüllt sein damit ein OTP Informationstheoretisch sicher ist.
+% c) Können Quantencomputer OTPs besser knacken? Was unterscheidet ein OTP von anderen symetrischen oder asymetrischen Verfahren (z. B. RSA)?
+% Begründung
+% d) Person verschlüsselt ihre Backups mit den n ersten Zeichen eines auf einer DIN-A4 Seite ausgedruckten zufälligen Schlüssels und dem OTP. Warum ist dies unsicher?
+% e) Gegeben Klartext m = "Sehr geherte Damen....", verschlüsslter Klartext c(m) in Binär und verschlüsselte PIN in Binär. PIN soll ermittelt werden. (ASCII-Tabelle gegeben)
+\begin{exercise}{One-Time-Pad}
+  \begin{enumerate}
+    \item Wie funktioniert ein One-Time-Pad (OTP)?
+    \item Welche zwei Eigenschaften müssen erfüllt sein, damit ein OTP informationstheoretisch sicher ist?
+    \item Können Quantencomputer OTPs besser knacken? Was unterscheidet ein OTP von anderen symmetrischen oder asymmetrischen Verfahren (z. B. RSA)? Begründen Sie Ihre Antwort.
+    \item Eine Person verschlüsselt ihre Backups mit den ersten $n$ Zeichen eines auf einer DIN-A4 Seite ausgedruckten zufälligen Schlüssels und dem OTP. Warum ist dies unsicher?
+    \item Geben seien \begin{itemize}
+        \item Klartext $m = \text{"HALLO"}$ % 7 0 11 11 14 
+        \item Schlüsseltext $c(m) = 7\ 1\ 13\ 14\ 18$
+        \item ASCII: $A=0, B=1, \ldots, Z=25$
+      \end{itemize}
+      Berechnen Sie die PIN.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Ein OTP ist ein symmetrisches Verschlüsselungsverfahren, bei dem der Klartext mit einem zufälligen Schlüssel (dem One-Time-Pad) XOR-verknüpft wird.
+        \item Ein OTP ist informationstheoretisch sicher, wenn der Schlüssel genauso lang wie der Klartext ist und der Schlüssel zufällig und geheim ist.
+        \item Quantencomputer können OTPs nicht besser knacken, da der Schlüssel zufällig und geheim ist. Ein OTP unterscheidet sich von anderen Verfahren, da es perfekte Sicherheit bietet und nicht anfällig für Kryptoanalyse ist.
+        \item Der Schlüssel ist nicht zufällig und geheim, da er auf einer DIN-A4 Seite ausgedruckt ist. Der Schlüssel ist nicht so lang wie der Klartext, was die Sicherheit des OTPs beeinträchtigt.
+        \item Die PIN kann durch XOR-Verknüpfung des Klartexts mit dem Schlüsseltext berechnet werden: $7 \oplus 7 = 0, 1 \oplus 0 = 1, 13 \oplus 11 = 2, 14 \oplus 11 = 3, 18 \oplus 14 = 4$. Die PIN lautet also ABCDE.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Public Key Infrastructure}
+  \begin{enumerate}
+    \item Erläutern Sie den Unterschied zwischen einer Signatur und einem Zertifikat.
+    \item Beschreiben Sie das Zertifikatsmodell von TLS.
+    \item Beschreiben Sie das Gültigkeitsmodell von TLS.
+    \item Wie kann man große Dateien signieren? Welche Eigenschaften sollte dieses Konstrukt besitzen?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Eine Signatur dient der Authentifizierung und Integritätsprüfung einer Nachricht. Ein Zertifikat enthält den öffentlichen Schlüssel eines Teilnehmers sowie die Signatur einer vertrauenswürdigen Zertifizierungsstelle (CA), die die Authentizität des Schlüssels bestätigt.
+        \item Das Zertifikatsmodell von TLS basiert auf einer Zertifizierungskette, in der das Endzertifikat von einer vertrauenswürdigen Zertifizierungsstelle signiert wird. Der Browser vertraut der Wurzelzertifizierungsstelle und kann die Zertifikate der Website verifizieren.
+        \item Das Gültigkeitsmodell von TLS basiert auf der Überprüfung der Zertifikate der Website durch den Browser. Der Browser vertraut der Wurzelzertifizierungsstelle und kann die Zertifikate der Website verifizieren.
+        \item Große Dateien können signiert werden, indem ein Hash der Datei berechnet und dieser Hash mit dem privaten Schlüssel des Signierenden verschlüsselt wird. Die Signatur sollte unabhängig von der Dateigröße sein und die Integrität und Authentizität der Datei gewährleisten.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Bluetooth}
+  \begin{enumerate}
+    \item Warum ist ein 4-stelliger PIN bei Bluetooth unsicher?
+    \item Ein Angreifer versucht, die PIN, die beim Bluetooth-Handshake verwendet wird, zu erraten. In welchem Schritt kann ein Angreifer die PIN verifizieren?
+    \item Wie muss ein passiver Angreifer vorgehen, um die PIN zu erraten?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Ein 4-stelliger PIN ist unsicher, da er leicht durch Brute-Force-Angriffe geknackt werden kann.
+        \item Ein Angreifer kann die PIN während des Pairing-Prozesses verifizieren, wenn die PIN eingegeben wird.
+        \item Ein passiver Angreifer kann die PIN durch Abhören des Pairing-Prozesses und der Kommunikation zwischen den Geräten erraten.
     \end{enumerate}
   \end{solution}
 \end{exercise}
