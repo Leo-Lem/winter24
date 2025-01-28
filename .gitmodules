@@ -4,3 +4,6 @@
 [submodule ".template"]
 	path = .template
 	url = ../latex-packages
+[submodule "mlab/project"]
+	path = mlab/project
+	url = https://git.informatik.uni-hamburg.de/mast/teaching/mlab/wt202425/transferagentur.git
