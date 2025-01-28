@@ -10,142 +10,181 @@
 
 \sheet{Quizzes}
 
-% Q: The web is an application area for NLP, e.g.: [][]
-% A: Internet of Services, Community mining, Information retrieval, ...
-% Q: Web is a resource to improve the quality of NLP, e.g.: [][][]
-% A: Web as Corpus, Analyzing web-based knowledge repositories,
-% Q: Segmentation is an important analysis step in many NLP pipelines. Which types of segments do you know?
-% A: Sentence, Token.
 \begin{exercise}{Quiz I}
-
+  \begin{enumerate}
+    \item What are three examples of NLP applications on the web?
+    \item How can the web improve the quality of NLP? List three examples.
+    \item What two types of segments are important in NLP pipelines?
+  \end{enumerate}
 
   \begin{solution}
-    
+    \begin{enumerate}
+      \item Internet of Services, Community mining, Information retrieval, ...
+      \item Web as Corpus, Analyzing web-based knowledge repositories, ...
+      \item Sentence, Token.
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
-% Q: Identify all stems and affixes (prefix, suffix, infix, circumfix) in following words: index, incorrect, interesting
-% A: stem:index, prefix:in stem:correct, stem:interest suffix:ing
-% Q: In contrast to lemmatization, stemming does not necessarily return a valid word form. Why is stemming still useful?
-% A: Faster, easier, applications in IR.
-% Q: What types of syntactic ambiguity do you know? List at least two types with an example for each type.
-% A: Attachment ambiguity (e.g. "He walked around the house with the dog."), coordination ambiguity (e.g. "We serve excellent rice and fish."), garden path sentences (e.g. "The loud shot the silent.").
 \begin{exercise}{Quiz II}
-
+  \begin{enumerate}
+    \item Identify all stems and affixes in the following words: "index," "incorrect," "interesting."
+    \item In contrast to lemmatization, stemming does not necessarily return a valid word form. Why is stemming still useful?
+    \item What types of syntactic ambiguity do you know? List at least two types with an example for each type.
+  \end{enumerate}
 
   \begin{solution}
-    
+    \begin{enumerate}
+      \item \begin{itemize}
+          \item \textbf{index}: stem = "index"
+          \item \textbf{incorrect}: prefix = "in," stem = "correct"
+          \item \textbf{interesting}: stem = "interest," suffix = "ing"
+        \end{itemize}
+      \item Faster, easier, applications in IR.
+      \item Attachment ambiguity (e.g. "He walked around the house with the dog."), coordination ambiguity (e.g. "We serve excellent rice and fish."), garden path sentences (e.g. "The loud shot the silent.").
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
-% Q: Why are more features not always better for learning a classifier?
-% A: More training data might be needed; Dependent features might lead to deficient models; Some ML algorithms can only deal with specific data types; Slower.
-% Q: What is the typical type of input data that a sequence tagger training step requires?
-% A: Labeled training text. (e.g. POS, NER)
 \begin{exercise}{Quiz III}
-
+  \begin{enumerate}
+    \item Why are more features not always better for learning a classifier?
+    \item What is the typical type of input data that a sequence tagger training step requires?
+  \end{enumerate}
 
   \begin{solution}
-    
+    \begin{enumerate}
+      \item More training data might be needed; Dependent features might lead to deficient models; Some ML algorithms can only deal with specific data types; Slower.
+      \item Labeled training text. (e.g. POS, NER)
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
-% Q: What to do first in a web search engine? Bring these tasks into the right order: Indexing, crawling, ranking, (document) parsing, stemming:
-% A: crawling -> parsing -> stemming -> indexing -> ranking
-% Q: Name features and their feature types, which are used for WebSearch ranking.
-% A: static: : inlinks, pagerank, document length, language quality… dynamic: TF-IDF, LM scores, anchor text, user clicks… query features: length, known bigrams, number of stopwords…
-% Q: Why not just use user clicks for ranking after having a few million clicks from a previously unranked search engine?
-% A: Top-result-bias
 \begin{exercise}{Quiz IV}
-
+  \begin{enumerate}
+    \item What is the correct order of tasks in a web search engine: crawling, parsing, stemming, indexing, ranking?
+    \item Name features and their types used for WebSearch ranking.
+    \item Why not use user clicks for ranking after having a few million clicks from a previously unranked search engine?
+  \end{enumerate}
 
   \begin{solution}
-    
+    \begin{enumerate}
+      \item Crawling, parsing, stemming, indexing, ranking.
+      \item Static features: inlinks, pagerank, document length, language quality. Dynamic features: TF-IDF, LM scores, anchor text, user clicks. Query features: length, known bigrams, number of stopwords.
+      \item Top-result-bias.
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
-% Q: Relate following queries to query types (informational, navigational, transactional, exploratory):
-% A: - facebook -> navigational - NSA scandal -> informational - facebook alternatives -> exploratory - facebook data migration tool -> transactional
-% Q: What is the difference between extrinsic and intrinsic evaluation?
-% A: intrinsic evaluation directly measures a processing step, e.g. measure the accuracy on POS tagging. Extrinsic evaluation measures improvements in larger tasks/system, e.g. how do POS tagging improvements influence the quality of summarization or question answering
 \begin{exercise}{Quiz V}
-
+  \begin{enumerate}
+    \item Relate the following queries to query types: "facebook," "NSA scandal," "facebook alternatives," "facebook data migration tool."
+    \item What is the difference between extrinsic and intrinsic evaluation?
+  \end{enumerate}
 
   \begin{solution}
-    
+    \begin{enumerate}
+      \item \begin{itemize}
+          \item \textbf{facebook}: navigational
+          \item \textbf{NSA scandal}: informational
+          \item \textbf{facebook alternatives}: exploratory
+          \item \textbf{facebook data migration tool}: transactional
+        \end{itemize}
+      \item Intrinsic evaluation measures the performance of a specific component or model, while extrinsic evaluation assesses the impact of improvements on larger tasks or systems.
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
-% True or false
-% ▪ The trigram language model generates the following word based on three previous words (false)
-% ▪ A 7-gram model generally performs worse than a 5-gram model because there is not enough training data to estimate its parameters well (true)
-% ▪ The trigram language model generates syntactically correct sentences (false)
-% ▪ With the trigram language model, all words are always equally probable (false)
-% ▪ A generative language model always provides the same output for the same input (false)
-% ▪ Language models can only perform tasks for which they have been trained directly with examples (false)
-% ▪ Training dialog-based language models such as chatGPT requires a lot of human feedback in addition to large amounts of text (true)
 \begin{exercise}{Quiz VI}
-
+  \begin{enumerate}
+    \item The trigram language model generates the following word based on three previous words.
+    \item A 7-gram model generally performs worse than a 5-gram model because there is not enough training data to estimate its parameters well.
+    \item The trigram language model generates syntactically correct sentences.
+    \item With the trigram language model, all words are always equally probable.
+    \item A generative language model always provides the same output for the same input.
+    \item Language models can only perform tasks for which they have been trained directly with examples.
+    \item Training dialog-based language models such as chatGPT requires a lot of human feedback in addition to large amounts of text.
+  \end{enumerate}
 
   \begin{solution}
-    
+    \begin{enumerate}
+      \item False
+      \item True
+      \item False
+      \item False
+      \item False
+      \item False
+      \item True
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
-% Q: Assign the procedures for defining/teaching tasks to LLMs to the definitions:
-% 1. tasks are explained directly in the prompt
-% 2. a smaller model is trained using training data created from a larger model
-% 3. tasks are explained in the prompt using several examples
-% 4. the model is trained further with the help of manually created training data
-% a) Few-Shot
-% b) Zero-Shot
-% c) Model distillation
-% d) Fine-tuning
-% A: 1b, 2c, 3a, 4d
 \begin{exercise}{Quiz VII}
-
+  Assign the procedures for defining/teaching tasks to LLMs to the definitions:
+  \begin{enumerate}
+    \item\label{ex:assign-1} tasks are explained directly in the prompt
+    \item\label{ex:assign-2}  a smaller model is trained using training data created from a larger model
+    \item\label{ex:assign-3}  tasks are explained in the prompt using several examples
+    \item\label{ex:assign-4}  the model is trained further with the help of manually created training data
+  \end{enumerate}
+  \begin{enumerate}
+    \item\label{ex:assign-a}  Few-Shot
+    \item\label{ex:assign-b}  Zero-Shot
+    \item\label{ex:assign-c}  Model distillation
+    \item\label{ex:assign-d}  Fine-tuning
+  \end{enumerate}
 
   \begin{solution}
-    
+    \begin{enumerate}
+      \item\ref{ex:assign-1} $\to$ \ref{ex:assign-b}
+      \item\ref{ex:assign-2} $\to$ \ref{ex:assign-c}
+      \item\ref{ex:assign-3} $\to$ \ref{ex:assign-a}
+      \item\ref{ex:assign-4} $\to$ \ref{ex:assign-d}
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
-% Q: List three different question types with an example for each of them.
-% A:
-%   1. Feature specification. - What shape did the stone have?
-%   2. Definition. - What are prime numbers?
-%   3. Quantification. - How many Bavarians required for exchanging a light bulb?
-% Q: Give a schema on how these Question Answering System components interact: Answer, Document processing, Document collection, Answer processing, Question, Question processing.
-% A: see Figure in QA
 \begin{exercise}{Quiz VIII}
-
+  \begin{enumerate}
+    \item List three different question types with an example for each of them.
+    \item Give a schema on how these Question Answering System components interact: Answer, Document processing, Document collection, Answer processing, Question, Question processing.
+  \end{enumerate}
 
   \begin{solution}
-    
+    \begin{enumerate}
+      \item \begin{itemize}
+          \item \textbf{Feature specification}: What shape did the stone have?
+          \item \textbf{Definition}: What are prime numbers?
+          \item \textbf{Quantification}: How many Bavarians required for exchanging a light bulb?
+        \end{itemize}
+      \item Query Formulation, Query Classificatio, Indexing, Document Retrieval, Passage Retrieval
+        \input{res/qa.fig}
+    \end{enumerate}
   \end{solution}
 \end{exercise}
 
-% Q: The Reciprocal Rank (RR) is the inverse of the rank of the first correct answer or 0 if no correct answer was given. The Mean Reciprocal Rank (MRR) is the mean of the RRs over all questions. P@1 is the precision on the firat result. Which measure is more suited for question answering, and why?
-% A: In QA, it does not make much sense to produce many answers, what is important is the retrieval of one correct answer. Therefore, P@1 is more suited. MRR is better for IR.
 \begin{exercise}{Quiz IX}
-
+  The Reciprocal Rank (RR) is the inverse of the rank of the first correct answer or 0 if no correct answer was given. The Mean Reciprocal Rank (MRR) is the mean of the RRs over all questions. P@1 is the precision on the first result. Which measure is more suited for question answering, and why?
 
   \begin{solution}
-    
+    In question answering, the goal is to retrieve the correct answer to a question. Therefore, the precision of the first result (P@1) is more suited for evaluating QA systems. MRR is better suited for information retrieval tasks where multiple relevant documents may exist.
   \end{solution}
 \end{exercise}
 
-% Q: Sentiment Analysis can be implemented by looking for positive and negative words from a wordlist. Where are the limits of this approach?
-% A: meaning is context-dependent (‘small’ is good or bad?), sentiment is expressed implicitly, statements can be negated ‘not good’, lists are always incomplete
-% Q: What is counterspeech? Can you line out what you’d need to build a system that performs counterspeech?
-% A: Counterspeech is speaking up against abusive, harmful, hate content. For an automatic system, one needs a detector of abusove content and a generative LM to explain for the respective content what’s hateful about the statement and why this is unwanted. For this, we need training data for detection (easy) and counterspeech (hard, rare).
 \begin{exercise}{Quiz X}
-
+  \begin{enumerate}
+    \item What are the limits of sentiment analysis based on word lists?
+    \item What is counterspeech, and what is needed to build a system that performs counterspeech?
+  \end{enumerate}
 
   \begin{solution}
-    
+    \begin{enumerate}
+      \item Meaning is context-dependent (e.g., "small" can be good or bad), sentiment is expressed implicitly, statements can be negated (e.g., "not good"), and word lists are always incomplete.
+      \item Counterspeech is speaking up against abusive, harmful, hate content. To build a system, one needs a detector of abusive content and a generative language model to explain why the content is hateful and why it is unwanted. This requires training data for detection (easy) and counterspeech (hard, rare).
+    \end{enumerate}
   \end{solution}
 \end{exercise}
+
 
 
 \sheet[2023]{Exam}
