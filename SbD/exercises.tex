@@ -1137,7 +1137,7 @@
   \begin{solution}
     \begin{enumerate}
         \item Die Nachricht "CYBER!" wird ersetzt durch die Zahlen $3, 25, 2, 5, 18, 27$.
-        \item Die Zufallszahl $z=5$ wird gewählt. Die Verschlüsselung erfolgt durch $c_1=2^5 \mod{29}=3$, $c_2=4^5 \cdot 3 \mod{29}=23$, $c_3=4^5 \cdot 25 \mod{29}=24$, $c_4=4^5 \cdot 2 \mod{29}=4$, $c_5=4^5 \cdot 5 \mod{29}=6$, $c_6=4^5 \cdot 18 \mod{29}=5$.
+        \item Die Zufallszahl $z=5$ wird gewählt. Die Verschlüsselung erfolgt durch $c_1=2^5 \mod{29}=3$, $c_2^0=4^5 \cdot 3 \mod{29}=27$, $c_2^1=22$, $c_2^2=18$, $c_2^3=16$, $c_2^4=17$, $c_2^5=11$.
         \item Die Sicherheit basiert auf der Schwierigkeit des diskreten Logarithmusproblems.
         \item Die Zufallszahl $z$ wird berechnet durch $z=c_1^{29-1-4} \mod{29}$ und an Bob übermittelt.
         \item Es würde Anfälligkeit für einen Chosen-Plaintext-Angriff bestehen. Eve könnte $c_1$ berechnen und die Nachrichten entschlüsseln, die Alice an Bob sendet.
