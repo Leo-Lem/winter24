@@ -1096,6 +1096,43 @@
 
 \sheet[2024]{Mock exam}
 
+\begin{exercise}{Kategorialer Vergleich von Verschlüsselungen}
+  In dieser Aufgabe vergleichen Sie das One-Time-Pad, symmetrische Verschlüsselung unter Anwendung von Blockchiffren, asymmetrische Verschlüsselung und hybride Verschlüsselung (keine Verwendung des One-Time-Pads) hinsichtlich Sicherheit und Effizienz:.
+  \begin{enumerate}
+    \item Ordnen Sie die Verfahren hinsichtlich ihrer Sicherheit. Worauf basiert jeweils ihre Sicherheit?
+    \item Ordnen Sie die Verfahren hinsichtlich ihrer Recheneffizienz. Welche Operationen werden jeweils verwendet und wie recheneffizient sind diese?
+    \item Ordnen Sie die Verfahren hinsichtlich der Anzahl zu speichernder Schlüssel. Wie viele Schlüssel müssen gespeichert werden, damit anschließend in einer Gruppe jeder mit jedem mehrfach kommunizieren kann?
+    \item Warum sind Ciphertext Only Attacks und Chosen Plaintext Attacks bei asymmetrischer Krypto praktisch dasselbe?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Sicherheit:
+          \begin{itemize}
+              \item \textbf{One-Time-Pad:} Perfekte Sicherheit durch zufälligen Schlüssel.
+              \item \textbf{Symmetrische Verschlüsselung:} Sicherheit basiert auf Geheimhaltung des Schlüssels.
+              \item \textbf{Asymmetrische Verschlüsselung:} Sicherheit basiert auf Schwierigkeit des Faktorisierungsproblems.
+              \item \textbf{Hybride Verschlüsselung:} Sicherheit basiert auf asymmetrischer Verschlüsselung und symmetrischer Schlüsselverteilung.
+          \end{itemize}
+        \item Recheneffizienz:
+          \begin{itemize}
+              \item \textbf{One-Time-Pad:} Sehr ineffizient, da Schlüssel genauso lang wie Nachricht.
+              \item \textbf{Symmetrische Verschlüsselung:} Effizient, da Blockchiffren schnelle Verschlüsselung ermöglichen.
+              \item \textbf{Asymmetrische Verschlüsselung:} Sehr ineffizient, da Berechnungen mit großen Zahlen.
+              \item \textbf{Hybride Verschlüsselung:} Effizient, da asymmetrische Verschlüsselung nur für Schlüsselaustausch.
+          \end{itemize}
+        \item Anzahl Schlüssel:
+          \begin{itemize}
+              \item \textbf{One-Time-Pad:} Jeder benötigt eigenen zufälligen Schlüssel.
+              \item \textbf{Symmetrische Verschlüsselung:} Ein gemeinsamer Schlüssel für alle.
+              \item \textbf{Asymmetrische Verschlüsselung:} Jeder benötigt eigenen privaten Schlüssel.
+              \item \textbf{Hybride Verschlüsselung:} Ein gemeinsamer Schlüssel für symmetrische Verschlüsselung.
+          \end{itemize}
+        \item Ciphertext Only Attacks und Chosen Plaintext Attacks sind bei asymmetrischer Krypto praktisch dasselbe, da der Angreifer den öffentlichen Schlüssel kennt und somit Plaintexte verschlüsseln kann.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
 \begin{exercise}{Grundlagen der Kryptographie}
   \begin{enumerate}
     \item Erläutern Sie zwei Ursachen, die dafür sorgen, dass fast alle kryptographischen Algorithmen mit der Zeit durch andere ersetzt werden müssen.
