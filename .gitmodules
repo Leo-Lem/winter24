@@ -6,4 +6,4 @@
 	url = ../latex-packages
 [submodule "mlab/project"]
 	path = MLab/project
-	url = https://git.informatik.uni-hamburg.de/mast/teaching/mlab/wt202425/transferagentur.git
+	url = https://github.com/Leo-Lem/LaunchLab.git
