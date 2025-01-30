@@ -1106,30 +1106,13 @@
   \end{enumerate}
 
   \begin{solution}
-    \begin{enumerate}
-        \item Sicherheit:
-          \begin{itemize}
-              \item \textbf{One-Time-Pad:} Perfekte Sicherheit durch zufälligen Schlüssel.
-              \item \textbf{Symmetrische Verschlüsselung:} Sicherheit basiert auf Geheimhaltung des Schlüssels.
-              \item \textbf{Asymmetrische Verschlüsselung:} Sicherheit basiert auf Schwierigkeit des Faktorisierungsproblems.
-              \item \textbf{Hybride Verschlüsselung:} Sicherheit basiert auf asymmetrischer Verschlüsselung und symmetrischer Schlüsselverteilung.
-          \end{itemize}
-        \item Recheneffizienz:
-          \begin{itemize}
-              \item \textbf{One-Time-Pad:} Sehr ineffizient, da Schlüssel genauso lang wie Nachricht.
-              \item \textbf{Symmetrische Verschlüsselung:} Effizient, da Blockchiffren schnelle Verschlüsselung ermöglichen.
-              \item \textbf{Asymmetrische Verschlüsselung:} Sehr ineffizient, da Berechnungen mit großen Zahlen.
-              \item \textbf{Hybride Verschlüsselung:} Effizient, da asymmetrische Verschlüsselung nur für Schlüsselaustausch.
-          \end{itemize}
-        \item Anzahl Schlüssel:
-          \begin{itemize}
-              \item \textbf{One-Time-Pad:} Jeder benötigt eigenen zufälligen Schlüssel.
-              \item \textbf{Symmetrische Verschlüsselung:} Ein gemeinsamer Schlüssel für alle.
-              \item \textbf{Asymmetrische Verschlüsselung:} Jeder benötigt eigenen privaten Schlüssel.
-              \item \textbf{Hybride Verschlüsselung:} Ein gemeinsamer Schlüssel für symmetrische Verschlüsselung.
-          \end{itemize}
-        \item Ciphertext Only Attacks und Chosen Plaintext Attacks sind bei asymmetrischer Krypto praktisch dasselbe, da der Angreifer den öffentlichen Schlüssel kennt und somit Plaintexte verschlüsseln kann.
-    \end{enumerate}
+    \begin{itemize}
+      \item \textbf{One-Time-Pad}: Perfekte Sicherheit durch zufälligen Schlüssel. Ineffizient, da Schlüssel genauso lang wie Nachricht. Für jede Kommunikation wird ein neuer Schlüssel benötigt. 
+      \item \textbf{Symmetrische Verschlüsselung}: Sicherheit basiert auf Geheimhaltung des Schlüssels. Effizient, da Blockchiffren schnelle Verschlüsselung ermöglichen. Ein gemeinsamer Schlüssel für alle.
+      \item \textbf{Asymmetrische Verschlüsselung}: Sicherheit basiert auf Schwierigkeit mathematischer Probleme. Ineffizient, da Berechnungen mit großen Zahlen. Jeder benötigt eigenen privaten Schlüssel.
+      \item \textbf{Hybride Verschlüsselung}: Sicherheit basiert auf Geheimhaltung des symmetrischen Schlüssels, und insbesondere beim Schlüsselaustausch durch asymmetrische Verschlüsselung auf Schwierigkeit mathematischer Probleme. Effizient, da asymmetrische Verschlüsselung nur für Schlüsselaustausch. Ein gemeinsamer Schlüssel für symmetrische Verschlüsselung, jeder benötigt eigenen privaten Schlüssel.
+    \end{itemize}
+    Ciphertext Only Attacks und Chosen Plaintext Attacks sind bei asymmetrischer Krypto praktisch dasselbe, da der Angreifer den öffentlichen Schlüssel kennt und somit Plaintexte verschlüsseln kann.
   \end{solution}
 \end{exercise}
 
