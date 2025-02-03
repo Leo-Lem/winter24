@@ -1,0 +1,1470 @@
+\documentclass{article}
+
+\usepackage[solutions]{../.template/xrcise}
+
+\subject{Security by Design}
+\semester{Winter 2024}
+\author{Leopold Lemmermann}
+
+\begin{document}\createtitle
+
+\sheet{Assignments}
+
+\setcounter{subsection}{10}
+\begin{exercise}{Skytala}
+  Bei der Skytala handelt es sich um eine Transpositionschiffre, bei der ursprünglich ein Zylinder mit einem Papierstreifen umwickelt wurde. Die Ver- und Entschlüsselung kann aber auch mithilfe einer Matrix dargestellt werden.
+  \begin{enumerate}
+    \item\label{ex:skytala} Verschlüsseln Sie den folgenden Klartext mit einer Skytala, die durch eine Matrix mit sieben Zeilen und neun Spalten beschrieben werden kann:
+      \begin{center}
+        \texttt{GLUECKLICH\_IST\_DER\_DER\_DEN\_DINGEN\_AUF\_DEN\_GRUND\_GEHEN\_KONNTE}
+      \end{center}
+    \item Was ist der geheim zu haltende symmetrische Schlüssel der Skytala aus Teilaufgabe \ref{ex:skytala} und wie hängt dieser mit der ursprünglichen Variante mit Zylinder und Papierstreifen zusammen?
+    \item Erläutern Sie kurz zwei sinnvolle Ansätze zur Kryptanalyse, d. h. Ansätze zum Brechen einer Skytala.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Teilen Sie den Klartext in eine Matrix mit 7 Zeilen und 9 Spalten:
+          \[
+            \begin{array}{ccccccccc}
+            G & L & U & E & C & K & L & I & C \\
+            H & \_ & I & S & T & \_ & D & E & R \\
+            \_ & D & E & R & \_ & D & E & N & \_ \\
+            D & I & N & G & E & N & \_ & A & U \\
+            F & D & E & N & \_ & G & R & U & N \\
+            D & G & E & H & E & N & \_ & K & O \\
+            N & T & T & E & \_ & & & & \\
+            \end{array}
+          \]
+          Der Schlüsseltext wird spaltenweise abgelesen: $\texttt{GH\_DDFNLDIRIGTNSEEECEDEINNEK\_CRNUENNUH\_U\_GNGRDKIKAUOE}$.
+        \item Der geheime Schlüssel ist die Größe der Matrix: $7\times9$ (Zeilen $\times$ Spalten). Beim ursprünglichen Zylinder entspricht dies dem Umfang des Zylinders.
+        \item Kryptanalyse der Skytala.
+          \begin{itemize}
+              \item Brute-Force: Alle möglichen Spalten- und Zeilenkombinationen ausprobieren, um den Klartext zu rekonstruieren.
+              \item N-gram-Analyse: Häufige Buchstabenkombinationen im Klartext können auf die Anzahl der Spalten hinweisen und die Wahrscheinlichkeit erhöhen, den Schlüssel zu erraten.
+          \end{itemize}
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Spalten-Transpositionen}
+  Bei der Skytala wird ein Zylinder mit einem Papierstreifen umwickelt, beschrieben und wieder abgewickelt.
+  \begin{enumerate}
+      \item Eine Verbesserung dieser Spalten-Transposition ergibt sich, wenn zusätzlich auch die Spalten in ihrer Reihenfolge vertauscht werden (was beim Papierstreifen natürlich nicht gelingt, wohl aber im Rechner). Um welchen Faktor vergrößert sich dadurch der Schlüsselraum bei $s$ Spalten?
+      \item Schreiben Sie eine Skytala mit 4 Zeilen und 3 Spalten (ohne Spaltenvertauschung) in Zyklenschreibweise.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Bei Spaltenvertauschung gibt es $s!$ mögliche Permutationen für $s$ Spalten. Der Schlüsselraum vergrößert sich somit um den Faktor $s!$ im Vergleich zur ursprünglichen Methode ohne Spaltenvertauschung.
+        \item Klartext in eine $4\times3$-Matrix:
+          \[
+            \begin{array}{ccc}
+            1 & 2 & 3 \\
+            4 & 5 & 6 \\
+            7 & 8 & 9 \\
+            10 & 11 & 12 \\
+            \end{array}
+          \]
+          Zyklisches Schreiben ergibt $\texttt{14710 25811 36912}$.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\setcounter{subsection}{20}
+\begin{exercise}{Vigenère-Chiffre \ref{ex:vigenere}}\end{exercise}
+
+\begin{exercise}{Zufallszahlen bei der Schlüsselgenerierung}
+  \begin{enumerate}
+    \item Warum sind bei der Schlüsselgenerierung (echte) Zufallszahlen nötig?
+    \item Weshalb eignet sich die XOR-Verknüpfung, wenn zur Erhöhung der Sicherheit mehrere Zufallszahlen zu einer einzelnen Zufallszahl verknüpft werden, etwa bei der Schlüsselgenerierung?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Echte Zufallszahlen sind notwendig, um sicherzustellen, dass Schlüssel nicht vorhersagbar sind. Ein nicht zufälliger Schlüssel kann durch statistische oder deterministische Methoden berechnet werden.
+        \item Länge bleibt unverändert, XOR-Operation ist invertierbar durch sich selbst, kommutativ bei der Reihenfolge der Operanden.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Falsche Verwendung des One-Time-Pads}
+  Ihnen sind eine Reihe verschlüsselter deutscher Substantive in die Hände gefallen. Sie gehen davon aus, dass fahrlässigerweise alle Wörter mit demselben One-Time-Pad verschlüsselt wurden. Versuchen Sie, den Schlüssel zu ermitteln, indem Sie einen geeigneten Angriff implementieren. Die Schlüsseltexte (der 6 Substantive) in Dezimalschreibweise lauten:
+
+  \begin{center}
+    \texttt{09 00 04 10} \\
+    \texttt{10 20 28 09} \\
+    \texttt{10 16 02 02} \\
+    \texttt{10 20 05 08} \\
+    \texttt{26 26 03 00} \\
+    \texttt{28 16 03 17}
+  \end{center}
+
+  Hinweis: Das Passwort und die Substantive sind ASCII-codiert (Alphabet = \{A, B, C, ..., Z\}).
+
+  \begin{solution}
+    ???
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Grundlagen der Kryptographie}
+  \begin{enumerate}
+      \item Erläutern Sie zwei Ursachen, die dafür sorgen, dass fast alle kryptographischen Algorithmen mit der Zeit durch andere ersetzt werden müssen.
+      \item Sie möchten einen Text so verschlüsseln, dass er auch in 99 Jahren nicht ohne Kenntnis des von Ihnen versteckten Schlüssels entschlüsselt werden kann. Welches Verfahren wählen Sie dazu? Begründen Sie Ihre Entscheidung. Warum wird das Verfahren heutzutage nicht überall benutzt?
+      \item In der Vorlesung wurden verschiedene klassische Chiffren behandelt, darunter Substitutionschiffren wie die Caesar-Chiffre (Verschiebechiffre), das Schema von Polybios, das Vigenère-Verfahren und die Vernman-Chiffre. Zudem wurden Transpositionschiffren wie die Skytala betrachtet. Ihnen liegt ein Schlüsseltext vor, der mit einer dieser Chiffren erzeugt wurde. Ihnen ist bekannt, dass es sich um die Verschlüsselung eines deutschen Textes handelt. Wie können Sie – ohne Rechnerunterstützung – vorgehen, um einzugrenzen, welche Chiffre verwendet wurde und erläutern Sie die jeweiligen Ansätze?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item \begin{itemize}
+            \item Technologischer Fortschritt: Schnellere Computer machen bestimmte Algorithmen unsicher.
+            \item Neue Angriffsmethoden: Entdeckte Schwachstellen führen zur Ablösung alter Verfahren.
+          \end{itemize}
+        \item Das One-Time-Pad bietet langfristige Sicherheit, da es informationstheoretisch sicher ist. Es wird nicht überall genutzt, da Schlüssel so lang wie der Klartext sein müssen und sicher verteilt werden müssen.
+        \item \begin{itemize}
+            \item Häufigkeitsanalyse: Substitutionschiffren wie Caesar zeigen typische Muster.
+            \item Permutationsanalyse: Transpositionen hinterlassen Permutationsmuster.
+        \end{itemize}
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\setcounter{subsection}{30}
+\begin{exercise}{Informationstheoretische Sicherheit \ref{ex:otp}}\end{exercise}
+
+\begin{exercise}{Feistel-Prinzip \ref{ex:feistel}}\end{exercise}
+
+\begin{exercise}{Meet-in-the-Middle-Angriff auf 2-DES}\label{ex:2-des}
+  Um der geringen Schlüssellänge von 56 Bit des DES-Algorithmus zu begegnen, wurde vorgeschlagen, den Algorithmus mehrfach hintereinander mit verschiedenen Schlüsseln anzuwenden. Eine schlechte Lösung ist jedoch die lediglich zweifache Hintereinanderanwendung 2-DES.
+  \begin{enumerate}
+    \item Vergleichen Sie die Schlüssellänge des 2-DES-Algorithmus mit der tatsächlich erreichten Sicherheit.
+    \item Sie haben folgendes Klartext/Schlüsseltext-Paar $ (m, c) $ einer 2-DES-Verschlüsselung $ E_{k_2}(E_{k_1}(m)) = c $ erlangt: 
+      \[ m = \texttt{c183 50b5 52b8 f8b1}, \quad c = \texttt{42e0 4462 099e e8ca}. \]
+      Ermitteln Sie $ k_1 $ und $ k_2 $, indem Sie einen Meet-in-the-Middle-Angriff durchführen. Benutzen Sie dafür die unten dargestellte Tabelle 1 ausgewählter DES-Funktionswerte. In der Tabelle können für einen gegebenen Klartext $ x $ bzw. einen Schlüsseltext $ y $ und einen Schlüssel $ k $ die Werte der Verschlüsselungsfunktion $ E $ bzw. Entschlüsselungsfunktion $ D $ des DES-Algorithmus nachgeschlagen werden. In welchen Zeilen haben Sie die DES-Funktionswerte, die zum Erfolg beim Meet-in-the-Middle Angriff führen, nachgeschlagen?
+      \par\textit{Hinweis: Beachten Sie das Beispiel zum Ablesen der Tabelle.}
+      \input{res/des.tbl}
+    \item Wie viele Einträge enthält eine vollständige Tabelle, die bei einem Meet-in-the-Middle-Angriff auf den 2-DES-Algorithmus erstellt wird, mindestens? Welche Art von Berechnungen werden dort festgehalten?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item 2-DES bietet nur $2*2^{56}$ statt $2^{112}$ effektiver Sicherheit, da ein Meet-in-the-Middle-Angriff $E_{k_1}(m) = D_{k_2}(c)$ nutzen kann. Somit ist die Sicherheit bei doppelter Schlüssellänge lediglich um den Faktor 2 erhöht.
+        \item Analyse aus Tabelle 1:
+          \[  k_1 = \texttt{e6f4 a450 4898 d7}, \quad k_2 = \texttt{97a4 3741 8086 0b} \]
+        \item Eine vollständige Tabelle umfasst $2*2^{56}$ Einträge, wobei $E_k(m)$ und $D_k(c)$ für alle $k$ berechnet werden.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Triple-DES}
+  Beim Triple-DES-Algorithmus (3-DES) handelt es sich um die dreifache Hintereinanderausführung des DES-Algorithmus. Dabei wird mit zwei 56 Bit langen Schlüsseln $k_1$ und $k_2$ gearbeitet und beim Verschlüsseln entweder $E(k_1) \to D(k_2) \to E(k_1)$ (EDE-Modus) oder $E(k_1) \to E(k_2) \to E(k_1)$ (EEE-Modus) ausgeführt.
+  \begin{enumerate}
+    \item Warum wird dem EDE-Modus meist der Vorzug vor dem EEE-Modus gegeben?
+    \item Berechnen Sie die theoretische und die effektive Schlüssellänge des Triple-DES-Algorithmus unter einem Known-Plaintext-Angriff mit drei 56 Bit langen Schlüsseln, d.h. $E(k_1) \to E(k_2) \to E(k_3)$.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Abwärtskompatibilität mit DES bei $k_1=k_2$.
+        \item Theoretisch 168 Bit (3*56 Bit), effektiv 112 Bit (2*56) aufgrund der Anfälligkeit gegenüber Meet-in-the-Middle-Angriffen.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+
+\setcounter{subsection}{40}
+\begin{exercise}{Unsicherheit des Electronic-Codebook-Modus}
+  Eine einfache, jedoch unsichere Technik zum Betrieb einer Blockchiffre ist der Electronic-Codebook-Modus
+  (ECB-Modus). Dabei wird jeder Klartextblock unabhängig von den anderen Blöcken chiffriert.
+  \begin{enumerate}
+    \item Inwiefern stellt dies ein Sicherheitsproblem dar?
+    \item Veranschaulichen Sie das Problem, indem Sie ein Programm entwickeln, welches eine einfache Bitmap-Grafik einliest, den Bildinhalt mit dem AES-Verfahren im ECB-Modus verschlüsselt und wieder als Bitmap ausgibt. Rufen Sie zum Vergleich die Verschlüsselung noch einmal im CBC-Modus auf und vergleichen Sie die erhaltenen Resultate. Informieren Sie sich dazu über das Datenformat von BMP-Dateien und die Verwendung einer geeigneten Kryptobibliothek (z. B. die Java-Cryptography-API unter \url{http://www.ibm.com/developerworks/java/tutorials/j-sec1/section4.html} oder die Python-pycrypto- API unter \url{https://www.dlitz.net/software/pycrypto/api/current/}).
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Das Hauptproblem des ECB-Modus ist, dass identische Klartextblöcke in identische Schlüsseltextblöcke umgewandelt werden. Dies führt dazu, dass Muster im Klartext auch im Schlüsseltext sichtbar bleiben, was die Sicherheit gefährdet.
+        \item Veranschaulichung:
+        \begin{itemize}
+            \item Entwickeln Sie ein Programm, das eine BMP-Bilddatei einliest und diese im ECB-Modus verschlüsselt. Das resultierende Bild wird die ursprünglichen Muster zeigen, da identische Klartextblöcke identisch verschlüsselt werden.
+            \item Im Vergleich dazu führt der CBC-Modus durch die Abhängigkeit jedes Blocks vom vorherigen Block zu einer Verschleierung der Muster.
+        \end{itemize}
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Cipher-Block-Chaining-Betriebsmodus}
+  Beim Cipher-Block-Chaining-Betriebsmodus wird ein Klartextblock $M_i$ vor der Anwendung der Verschlüsselungsfunktion mit dem unmittelbar vorher erzeugten Chiffretextblock $C_{i-1}$ durch die XOR-Operation verknüpft.
+  Die erzeugten Chiffretextblöcke hängen dadurch von ihren Vorgängern ab. Bei der Verschlüsselung des ersten Klartextblocks $M_1$ wird für $C_0$ ein zufällig gewählter Initialisierungsvektor (IV) verwendet.
+    \par\textit{Hinweis: Gehen Sie davon aus, dass eine moderne Blockchiffre eingesetzt wird, z. B. AES.}
+  \begin{enumerate}
+    \item Wie unterscheiden sich zwei Schlüsseltexte, die mit demselben Schlüssel erzeugt wurden und denselben Klartext enthalten, jedoch mit unterschiedlichen IVs erzeugt wurden?
+    \item Wie unterscheiden sich zwei Schlüsseltexte, wenn sie sich lediglich an einer Stelle im ersten Klartextblock unterscheiden (also ein Bit gekippt wird) und ansonsten völlig identisch sind (bei gleichem IV und Schlüssel)?
+    \item Welche Auswirkung hat es beim Entschlüsseln, wenn durch einen Übertragungsfehler ein Bit im zweiten Schlüsseltextblock bei der Übertragung verändert wird?
+    \item Welche Auswirkung hat es beim Entschlüsseln, wenn durch einen Übertragungsfehler ein Bit im Initialisierungsvektor verändert wird?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Bei unterschiedlichen IVs führen zwei identische Klartexte zu unterschiedlichen Schlüsseltexten, da der IV die Anfangswerte beeinflusst.
+        \item Ein Unterschied in einem Bit im ersten Klartextblock propagiert sich in allen nachfolgenden Schlüsseltextblöcken durch die XOR-Operation.
+        \item Ein Fehler im zweiten Schlüsseltextblock wirkt sich nur auf den entsprechenden Klartextblock und den nächsten aus, da der CBC-Modus Block für Block entschlüsselt.
+        \item Ein Fehler im IV beeinflusst nur den ersten Klartextblock.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Synchronisationsfehler bei Betriebsarten von Blockchiffren}
+  Neben additiven Fehlern, bei denen einzelne Bitpositionen oder Nachrichtenabschnitte zufällig oder absichtlich gekippte Bitwerte aufweisen, können auch einzelne Bits oder ganze Blöcke von Nachrichten zufällig oder absichtlich verloren gehen. Wenn etwa ganze Nachrichtenblöcke jeweils einzeln in Datenpaketen transportiert werden, könnte ein verlorenes Datenpaket einen solchen Synchronisationsfehler hervorrufen.
+  \begin{enumerate}
+    \item Bitte beschreiben Sie die Fehlerfortpflanzung eines Synchronisationsfehlers aufgrund eines verlorenen Nachrichtenblocks beim Electronic Code Book (ECB)-Modus.
+    \item Bitte beschreiben Sie die Fehlerfortpflanzung eines Synchronisationsfehlers aufgrund eines verlorenen Bits beim Electronic Code Book (ECB)-Modus.
+    \item Wie verhält sich die Fehlerfortpflanzung eines Synchronisationsfehlers beim Cipher Block Chaining (CBC)-Modus, wenn einzelne Bits des übertragenen Ciphertextes verloren gehen?
+    \item Bitte vergleichen Sie die Situation einer Fehlerfortpflanzung aufgrund eines Synchronisationsfehlers bei den stromorientierten Betriebsarten mit der bei CBC.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Im ECB-Modus führt der Verlust eines Nachrichtenblocks nicht zu einer Synchronisationsstörung der verbleibenden Blöcke, da jeder Block unabhängig verschlüsselt wird.
+        \item Ein verlorenes Bit im ECB-Modus zerstört den betroffenen Block, aber die folgenden Blöcke bleiben lesbar.
+        \item Im CBC-Modus führt der Verlust einzelner Bits dazu, dass zusätzlich zum fehlerhaften Block der nachfolgenden Block nicht mehr entschlüsselt werden kann.
+        \item Bei stromorientierten Betriebsarten (zB. CTR-Modus) ist die Fehlerfortpflanzung auf den aktuellen Block beschränkt, da kein Feedback aus vorherigen Blöcken verwendet wird. Dies ist ein Vorteil gegenüber CBC.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\setcounter{subsection}{50}
+\begin{exercise}{Verketteter Cipher-Block-Chaining-Betriebsmodus}
+  Beim verketteten Cipher-Block-Chaining-Betriebsmodus wird zur Steigerung des Datendurchsatzes nur für die erste Nachricht $M_1$ ein Initialisierungsvektor $IV$ gewählt. Das heißt für den Schlüsseltext $C_1 = C_1^0 || \ldots || C_1^{n_1}$ der ersten Nachricht $M_1 = M_1^1 || \ldots || M_1^{n_1}$ gilt wie beim normalen CBC:
+    \[ C_1^0 = IV, \quad C_1^i = E(C_1^{i-1} \oplus M_1^i, K) \quad \text{mit } i = 1, \ldots, n_1. \]
+  Für alle folgenden Nachrichten $M_2, \ldots$ wird anstelle des $IV$ der letzte Schlüsseltextblock des vorherigen Schlüsseltextes verwendet. Das heißt für den Schlüsseltext $C^j = C^j_1 || \ldots || C^j_{n_j}$ aller weiteren Nachrichten $M_j = M_j^1 || \ldots || M_j^{n_j}$ mit $j > 1$ gilt:
+    \[ C^j_1 = E(C^{j-1}_{n_{j-1}} \oplus M_j^1, K), \quad C^j_i = E(C^j_{i-1} \oplus M_j^i, K) \quad \text{mit } i = 2, \ldots, n_j. \]
+  \begin{enumerate}
+    \item Berechnen Sie unter Angabe aller Zwischenschritte die prozentuale Erhöhung des Datendurchsatzes. Führen Sie die Berechnungen sowohl für einen Block als auch für vier Blöcke pro Nachricht aus. Gehen Sie in beiden Fällen von insgesamt $2^{20}$ zu verschlüsselnden Nachrichten vor Neugenerierung eines Schlüssels und Neustart mit einem neuen $IV$ aus.
+    \item Ihnen ist ein Schlüsseltext $C^j$ in die Hände gefallen, der nur aus zwei möglichen Klartexten $M_j$ oder $\tilde{M}_j$ gebildet worden sein kann. Erläutern Sie, wie Sie ermitteln könnten, welcher der beiden Klartexte verschlüsselt wurde, wenn Sie den Klartext $M_{j+1}$ für die nächste Nachricht selbst wählen dürfen.
+    \item Beschreiben Sie ein Szenario für einen derartigen Angriff.
+    \item Bewerten Sie ausgehend von der bisherigen Diskussion die Folge selbst kleinster Änderungen für die Sicherheit kryptographischer Algorithmen.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Bei einem verketteten CBC-Modus steigt der Datendurchsatz, da kein neuer IV benötigt wird. Für einen Block pro Nachricht: $100\%$, für vier Blöcke pro Nachricht: $25\%$.
+        \item Wählen Sie $M_{j+1}^0=M_j^0 \oplus C_j^{-1}$ als Klartext für den ersten Block der nächsten Nachricht. Das ergibt $C_{j+1}^0=E(C_j^{-1} \oplus M_{j+1}^0)=E(C_j^{-1} \oplus M_j^0 \oplus C_j^{-1})=E(M_j^0)=C_j^0$, wenn $M_j$ verschlüsselt wurde.
+        \item Ein Angreifer, der Zugriff auf den Kommunikationskanal hat, modifiziert gezielt den nächsten Klartextblock, um Rückschlüsse auf vorherige Blöcke zu ziehen.
+        \item Selbst kleinste Änderungen im Verfahren können signifikante Sicherheitsrisiken schaffen. Hier: Die Wiederverwendung des letzten Blocks des vorherigen Schlüsseltextes anstelle eines neuen IVs.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Indeterministische Verschlüsselung \ref{ex:indeterministic}}\end{exercise}
+
+\begin{exercise}{Elliptische Kurven: Grundlagen}
+  Elliptic Curve Cryptography (ECC) bezeichnet asymmetrische Kryptosysteme, die auf Operationen auf elliptischen Kurven über endlichen Körpern aufbauen.
+  \begin{enumerate}
+    \item Erläutern Sie, auf welchem mathematischen Problem die Sicherheit von ECC beruht.
+    \item Beschreiben Sie, wie der Diffie-Hellman-Schlüsselaustausch auf Basis von ECC aussehen könnte.
+    \item Welche Vorteile bietet ECC gegenüber Kryptosystemen wie RSA?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Die Sicherheit von ECC beruht auf dem Problem der diskreten Logarithmen über elliptischen Kurven, das als schwer lösbar gilt.
+        \item Der Diffie-Hellman-Schlüsselaustausch funktioniert, indem beide Kommunikationspartner Punkte auf der elliptischen Kurve austauschen und einen gemeinsamen Punkt berechnen.
+        \item Vorteile von ECC:
+        \begin{itemize}
+            \item Kürzere Schlüssel bei gleicher Sicherheit (z. B. ECC-256 entspricht RSA-3072).
+            \item Geringerer Speicher- und Rechenaufwand.
+        \end{itemize}
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Elliptische Kurven: Rechenbeispiele zur Punktaddition}
+  Gegeben sei die elliptische Kurve $E(\mathbb{GF}(p))$ mit $a = 1, b = 6, p = 11$:
+    \[ E(\mathbb{GF}(11)) : y^2 \equiv x^3 + x + 6 \pmod{11} \]
+  \textit{Hinweis: Wir betrachten für diese Aufgabe die in der Kryptographie häufig genutzten elliptischen Kurven über $ \mathbb{Z}_p $ der Form $f(x, y) : y^2 \equiv x^3 + ax + b \mod p$.}
+  \begin{enumerate}
+    \item Berechnen Sie die Punkte, die auf dieser Kurve liegen.
+    \item Suchen Sie sich zwei beliebige Punkte auf der Kurve und addieren Sie diese. Wie funktioniert die Punktaddition im Allgemeinen?
+    \item Berechnen Sie die skalare Multiplikation des Punktes $(2, 4)$ mit dem Skalar $ 3 $. Was ist das allgemeine Vorgehen hier?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item $\{(2,4), (2,7), (3,9), (3,2), (5,2), (5,8), (7,5), (7,6), (8,9), (8,2), (10,1), (10,10)\}$
+        \item $P+Q=(2,4)+(5,2)=(5,2)$.
+          \[
+            m=\begin{cases}
+              \frac{3x_P^2+a}{2y_P} \quad \text{falls } P=Q \\
+              \frac{y_Q-y_P}{x_Q-x_P}
+            \end{cases} \quad
+            \begin{array}{l}
+              x_R=m^2-x_P-x_Q\\
+              y_R=m(x_R-x_{P|Q})-y_{P|Q}
+            \end{array} \pmod{p} \]
+        \item $3 \cdot (2,4)=(2,4)$. Double-and-add:
+          \[ nP=2^{k-1}P+2^{k-2}P+\ldots+2P+P \]
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+
+\setcounter{subsection}{60}
+\begin{exercise}{RSA: Eigenschaften und Sicherheit \ref{ex:rsa}}\end{exercise}
+
+\begin{exercise}{Forward Secrecy mit RSA}
+  Zur Erreichung von Forward Secrecy erzeugt Alice auf ihrem Server mit dem RSA-Verfahren einen privaten Schlüssel $d$ sowie den dazu passenden öffentlichen Schlüssel $c$, den sie persönlich an ihre Nutzerinnen und Nutzer verteilt. Zusätzlich erzeugt der Server von Alice bei jedem Verbindungsaufbau ein neues kurzlebiges (engl. ephemeral) RSA-Schlüsselpaar, das aus einem öffentlichen Schlüssel $ c_e $ und einem geheimen Schlüssel $ d_e $ besteht. Der Server signiert mit dem privaten Schlüssel $ d $ den neuen öffentlichen Schlüssel $ c_e $ und sendet diesen zusammen mit der Signatur über die aufgebaute Verbindung an die Kundin. Die Kundin prüft anschließend die Signatur mithilfe des zuvor von Alice erhaltenen öffentlichen Schlüssels $ c $.
+  \begin{enumerate}
+    \item Welche Verbindungen könnten von einem sehr starken Angreifer wie einem Nachrichtendienst noch entschlüsselt werden, wenn dieser an $d$ gelangt? Begründen Sie Ihre Antwort.
+    \item Skizzieren Sie einen Angriff, der möglich wäre, wenn die Kundin die Signatur nicht prüft.
+    \item Alice ist das Verfahren zu langsam. Sie nimmt folgende Änderung vor: Statt jedes Mal bei der Erzeugung von $c_e$ und $d_e$ neue Primzahlen $p$ und $q$ für den Modulus $N_e$ zu generieren, verwendet sie immer die gleichen Primzahlen. Nun wählt sie lediglich den öffentlichen Exponenten $ c_e $ neu und berechnet einen dazugehörigen geheimen Exponenten $ d_e $. Warum ist dies keine gute Idee? Zeigen Sie, wie sich dieses geänderte Verfahren angreifen lässt, um aufgezeichnete Verbindungen zu entschlüsseln.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Bei Kenntnis von $d$ können mittels einem Man-in-the-Middle Angriff neue Schlüssel $c_e$ abgefangen und durch eigene ersetzt werden. Dadurch kann der Angreifer alle nachfolgenden Verbindungen entschlüsseln, jedoch nicht die alten.
+      \item Es könnten gefälschte öffentliche Schlüssel $c_e$ mit falscher/ohne Signatur an die Kundin gesendet werden. Diese würde die Verbindung aufbauen und der Angreifer könnte die Kommunikation mithören.
+      \item Durch die Verwendung der gleichen Primzahlen $p$ und $q$ für $N_e$ kann eine Common Modulus Attack durchgeführt werden. Der Angreifer kann die Nachrichten entschlüsseln. EEA auf $a\cdot c_{e1}+b\cdot c_{e2} \equiv 1$ anwenden und dann $m=c_{e1}^a\cdot c_{e2}^b \pmod{N_e}$ berechnen.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Diffie-Hellman-Schlüsselaustauschprotokoll}
+  Das Diffie-Hellman-Schlüsselaustauschprotokoll (DH-Protokoll) ermöglicht es zwei Kommunikationspartnern, durch den Austausch von Nachrichten über einen unsicheren Kanal einen symmetrischen Sitzungsschlüssel zu etablieren, der von passiven Angreifern nicht ermittelt werden kann. Beim ursprünglichen DH-Protokoll, das auch als "anonymes" DH-Protokoll bezeichnet wird, wird kein Schlüsselserver verwendet. Die Kommunikationspartner tauschen dabei erst im Moment des Schlüsselaustausches sämtliche Protokollnachrichten über den unsicheren Kanal aus.
+  \begin{enumerate}
+    \item Stellen Sie den Ablauf des anonymen DH-Protokolls zwischen den beiden Teilnehmern Alice und Bob mit passend gewählten kleinen Zahlen dar.
+    \item Erläutern Sie, auf welcher mathematischen Annahme die Sicherheit des DH-Protokolls basiert. Welche weiteren Annahmen macht man über den Angreifer (Angreifermodell)?
+    \item Schutz vor aktiven Angriffen ist möglich, wenn die Kommunikationspartner einige Parameter bzw. Protokollnachrichten vorab über einen sicheren Kanal ausgetauscht haben, der vom Angreifer nicht kontrolliert werden kann. Welche Nachrichten müssen vorab ausgetauscht worden sein, damit aktive Angriffe bemerkt werden können?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item $g=5, p=11, \underbrace{a=2, b=3}_\text{geheim}$.\\
+          Öffentliche Schlüssel: $\begin{array}{l}
+              A\equiv g^a \equiv 5^2 \equiv 3\\
+              B\equiv g^b \equiv 5^3 \equiv 4
+            \end{array} \pmod{11}$\\
+          Gemeinsamer Schlüssel: $K\equiv B^a\equiv A^b\equiv 4^2\equiv 3^3\equiv 5 \pmod{11}$
+        \item Sicherheit basiert auf dem Problem des diskreten Logarithmus. Der Angreifer kann keine diskreten Logarithmen effizient berechnen. Annahmen: Passiver Angreifer, der nur den Verkehr mithören kann.
+        \item Schutz vor aktiven Angriffen: Vorab-Austausch von $g, p$ und Authentifizierung der öffentlichen Schlüssel (z. B. durch Signaturen).
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Elliptische Kurven: EC-ElGamal \ref{ex:elliptic}}\end{exercise}
+
+
+\setcounter{subsection}{70}
+\begin{exercise}{Symmetrische Schlüsselverteilung}
+  Drei Schlüsselverteilzentralen X, Y, Z sollen jeweils einen Anteil eines symmetrischen Schlüssels $k$ der Länge $\ell$ liefern.
+  \begin{enumerate}
+    \item Jede Schlüsselverteilzentrale liefert einen Teilschlüssel der Länge $\ell/3$. Die drei Teile werden zu $k$ konkateniert.
+    \item Jede Schlüsselverteilzentrale liefert einen Teilschlüssel der Länge $\ell$. Die drei Teile werden bitweise XOR-verknüpft.
+  \end{enumerate}
+  Welche Variante ist sicherer, wenn die Teilschlüssel von X und Y kompromittiert sind? Begründen Sie Ihre Antwort.
+
+  \begin{solution}
+    \begin{enumerate}
+      \item $k=k_x \Vert k_y \Vert k_z$. Wenn $k_x$ und $k_y$ kompromittiert sind, muss nur noch $k_z$ geraten werden. Die verbleibende Entropie ist stark verringert.
+      \item $k=k_x \oplus k_y \oplus k_z$. Wenn $k_x$ und $k_y$ kompromittiert sind, bleibt $k_z$ sicher. Die verbleibende Entropie ist unverändert.
+    \end{enumerate}
+    Die zweite Variante ist sicherer, aufgrund der längeren Teilschlüssel. Konkatenation ist allerdings nicht grundsätzlich unsicherer als XOR-Verknüpfung.
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Zertifizierungsmodelle}
+  Bei der Verschlüsselung und Signierung mithilfe asymmetrischer Kryptosysteme existieren zwei grundsätzliche Modelle für die Schlüsselzertifizierung: dezentral (Web of Trust) und hierarchisch-zentral.
+  \begin{enumerate}
+    \item Was ist der Zweck der Schlüsselzertifizierung?
+    \item\label{itm:zertvornach} Vergleichen Sie die Vor- und Nachteile bei der hierarchisch-zentralen Zertifizierung und der dezentralen Zertifizierung.
+    \item Beschreiben Sie das Konzept der Cross Certification. Welche Vorteile ergeben sich hieraus? Bei welchem der beiden Zertifizierungsmodelle kann es Anwendung finden?
+    \item Inwieweit schützen die beiden in Teilaufgabe \ref{itm:zertvornach} genannten Zertifizierungsmodelle jeweils vor einem Man-in-the-Middle-Angriff (auch Maskerade-Angriff genannt)?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Schlüsselzertifizierung dient der Authentifizierung von Schlüsseln und der Sicherstellung ihrer Integrität.
+      \item Skalierbarkeit und Vertrauen bei zentraler Zertifizierung, aber Single Point of Failure. Dezentrale Zertifizierung bietet mehr Flexibilität und Unabhängigkeit, aber schwierige Vertrauensbildung.
+      \item Cross Certification ermöglicht die Vertrauensbildung zwischen zwei Zertifizierungsstellen. Hierbei werden die Zertifikate der jeweils anderen Stelle gegenseitig akzeptiert. Anwendung findet es in hierarchisch-zentralen Modellen.
+      \item Hierarchisch-zentrale Modelle schützen durch ausschließliche Akzeptanz authentischer Zertifikate, solange die CA nicht kompromittiert ist. Dezentrale Modelle schützen durch die Vertrauensbildung zwischen den Nutzern solange Zertifikate überprüft werden.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Vertrauensbeziehungen in Public-Key-Infrastrukturen}
+  \begin{enumerate}
+    \item Gegeben sei folgende Zertifizierungsrelation.
+      \input{res/zertifikate-1.fig}
+      D will an A eine verschlüsselte Nachricht senden und ist sich jedoch lediglich sicher, dass der öffentliche Schlüssel von B authentisch ist. Kann D der Authentizität des öffentlichen Schlüssels von A vertrauen? Falls nein, was müsste zusätzlich gegeben sein?
+    \item Was ändert sich, wenn folgende Zertifizierungsrelation vorliegt?
+    \input{res/zertifikate-2.fig}
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item D kann A nicht vertrauen, da weder eine direkte noch eine indirekte Zertifizierung von A durch B vorliegt und D nur B vertraut.
+      \item Nun kann D A vertrauen, da B C zertifiziert und C A zertifiziert. Somit liegt eine indirekte Zertifizierung von A durch B vor.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Gültigkeitsmodelle für Zertifikate und Signaturen}
+  \begin{enumerate}
+    \item Vergleichen Sie das Schalen- und das Kettenmodell im Hinblick auf die Gültigkeit von Zertifikaten und Signaturen.
+    \item Nennen Sie einen Grund dafür, dass in der Praxis zumeist das Kettenmodell verwendet wird.
+    \item Alice erwirbt ein Zertifikat von CA2. CA2 wurde von CA1 zertifiziert. Die Gültigkeitsdauern der Wurzel- und CA-Zertifikate sowie des Zertifikats von Alice sind in der Abbildung dargestellt.
+      \input{res/zertifikate-3.fig}
+      Zeichnen Sie jeweils den Zeitraum ein, in dem Alice dieses Zertifikat für die Erzeugung gültiger Signaturen nach dem Schalen- bzw. dem Kettenmodell verwenden kann.
+    \item Alice signiert zum Zeitpunkt $t_1$ eine Nachricht und sendet diese an Bob. Dieser erhält aufgrund eines Urlaubs in einer Region ohne ausreichende Internetversorgung die Nachricht erst zum Zeitpunkt $t_2$ und überprüft nun die Gültigkeit der Signatur. Prüfen Sie jeweils die Gültigkeit der Signatur nach dem Schalen- und dem Kettenmodell.
+    \item Da Alice sich wundert, dass Bob ihr nicht antwortet, sendet sie zum Zeitpunkt $t_2$ erneut eine mit ihrem Zertifikat signierte Nachricht an Bob. Durch ein technisches Problem erhält Bob diese aber erst zum Zeitpunkt $t_3$ und versucht nun, die Gültigkeit der Signatur zu verifizieren. Prüfen Sie jeweils die Gültigkeit der Signatur nach dem Schalen- und dem Kettenmodell.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Im Schalenmodell müssen alle Zertifikate und Signaturen zum Zeitpunkt der Signatur gültig sein. Im Kettenmodell muss lediglich das signierende Zertifikat zum Zeitpunkt der Signatur gültig sein.
+      \item Das Kettenmodell wird in der Praxis bevorzugt, da weniger Zertifikate überprüft werden müssen.
+      \item Schalenmodell: Signatur bis Ablauf Wurzelzertifikat. Kettenmodell: Signatur bis Ablauf Alices Zertifikat.
+      \item In beiden Modellen gültig, da Zertifikatskette zum Zeitpunkt der Signatur gültig waren.
+      \item Nur noch im Kettenmodell gültig, da im Schalenmodell die Kette nicht mehr gültig ist.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+
+\setcounter{subsection}{80}
+\begin{exercise}{Verbindungsverschlüsselung in GSM \ref{ex:gsm}}\end{exercise}
+
+\begin{exercise}{Datenbanken in GSM}
+  \begin{enumerate}
+    \item Welche Datenbanken (Register) gibt es im GSM?
+    \item Welchen Zweck erfüllt jede einzelne Datenbank?
+    \item Von welchen Parteien werden diese Datenbanken jeweils verwaltet?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item \textbf{Home Location Register} (HLR): Speichert Daten von Teilnehmern und wird von Netzbetreibern verwaltet.
+      \item \textbf{Visitor Location Register} (VLR): Speichert Daten von aktuell eingebuchten Teilnehmern und wird von Netzbetreibern verwaltet.
+      \item \textbf{Authentication Center} (AuC): Generiert und speichert Schlüssel und wird von Netzbetreibern verwaltet.
+      \item \textbf{Equipment Identity Register} (EIR): Speichert Daten von Geräten und wird von Netzbetreibern verwaltet.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Mobilfunk: GSM}
+  \begin{enumerate}
+    \item Welche Komponenten kennen das Geheimnis $K_i$ bei GSM?
+    \item Jeder GSM-Mobilfunkteilnehmer bekommt vom Netz eine sogenannte Temporary Mobile Subscriber Identity (TMSI) zugewiesen. Stellen Sie das zugrundeliegende Angreifermodell auf.
+    \item Bei GSM werden die Verschlüsselungsalgorithmen A5/1 bzw. A5/2 verwendet, bei UMTS der Algorithmus Kasumi und bei LTE der Algorithmus AES. Warum wurden die Algorithmen im Laufe der Weiterentwicklung der Mobilfunknetze geändert?
+    \item Im Mobilfunkbereich werden ausschließlich symmetrische Verfahren für die Kryptographie verwendet. Nennen Sie zwei Gründe, warum das der Fall ist.
+    \item Der historische Angriff des SIM-Clonings dauert ca. 8 bis 10 Stunden, obwohl nur 150.000 Berechnungsschritte notwendig sind. Beschreiben Sie, was der Angreifer beim SIM-Cloning macht und skizzieren Sie, welche Schwäche er dabei ausnutzt.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Das Geheimnis $K_i$ kennen der Teilnehmer (SIM-Karte) und das Authentication Center (AuC).
+      \item Ziele des Angreifers sind IMSI-Catching (Identitätsdiebstahl) und Tracking. Möglichkeiten des Angreifers sind IMSI-Catcher (gefälschte Basisstation) und Analyse der TSMI-Vergabe.
+      \item Die Algorithmen wurden geändert, um die Sicherheit zu erhöhen. A5/1 und A5/2 sind unsicher, Kasumi (UMTS) und AES (LTE) sind sicherer.
+      \item Symmetrische Verfahren sind schneller und benötigen weniger Rechenleistung und verbrauchen somit weniger Energie.
+      \item Ziel ist die Kopie einer SIM-Karte, hierbei werden wiederholte Authentifizierungsanfragen genutzt um $K_i$ zu ermitteln. Da die Authentifizierungsanfragen relativ langsam sind, dauert der Angriff lange.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Verschlüsselung der ersten Protokollnachrichten}
+  \begin{enumerate}
+    \item Warum sind im GSM und UMTS Nachrichten wie Location Updating Request, CM Service Request, Authentication Request und Authentication Response nicht verschlüsselt?
+    \item Bitte skizzieren Sie einen Lösungsvorschlag, der die Verschlüsselung aller o. g. Nachrichten ermöglichen würde.
+  \end{enumerate}
+ 
+   \begin{solution}
+     \begin{enumerate}
+      \item Die Nachrichten sind nicht verschlüsselt, da der Schlüsselaustausch noch nicht abgeschlossen ist und die Nachrichten zur Authentifizierung dienen.
+      \item Einführung eines Pre-Shared Keys (PSK) für die Verschlüsselung der ersten Nachrichten. Der PSK wird bei der SIM-Karten-Aktivierung festgelegt und ist den Netzbetreibern bekannt.
+     \end{enumerate}
+   \end{solution}
+ \end{exercise}
+ 
+
+
+\setcounter{subsection}{90}
+\begin{exercise}{Bluetooth-Pairing}
+  Bei Bluetooth erfolgt zur sicheren Gerätekopplung zunächst ein sogenanntes Pairing, das in zwei Phasen abläuft.
+  \begin{enumerate}
+    \item Bitte beschreiben Sie jeweils die Aufgabe der beiden Phasen.
+    \item Wie lauten die jeweiligen Ein- und Ausgabewerte in beiden Phasen?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item \textbf{Phase 1 (Pairing):} Authentifizierung und Schlüsselaustausch. \textbf{Phase 2 (Bonding):} Speicherung der Schlüssel für zukünftige Verbindungen.
+      \item \textbf{Phase 1:} Eingabe: PIN, Ausgabe: Link Key. \textbf{Phase 2:} Eingabe: Link Key, Ausgabe: Keine.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{TMSI-Vergabe}
+  Bitte erläutern Sie:
+  \begin{enumerate}
+    \item das Schutzziel
+    \item das Angreifermodell und
+    \item das Verfahren zur Vergabe einer TMSI im GSM.
+    \item Existiert in Bluetooth eine vergleichbare Funktionalität wie die TMSI-Vergabe im GSM? Bitte begründen Sie Ihre Antwort kurz!
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Schutzziel: Vermeidung von IMSI-Catching und Tracking.
+      \item Angreifermodell: IMSI-Catcher und Analyse der TMSI-Vergabe.
+      \item Verfahren: Zufällige Vergabe einer TMSI durch das VLR.
+      \item Bluetooth: Nein, da Bluetooth keine IMSI verwendet.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Bruchstückhafter AES}
+  Bei AES werden rundenweise "AddRoundKey", "SubBytes", "ShiftRows" und "MixColumns" angewandt. Für diese Aufgabe können Sie eine Blocklänge von 128 Bit und eine Schlüssellänge von 256 Bit annehmen. Bitte zeigen Sie unter Angabe der hierfür notwendigen Angriffsart und unter Berechnung der effektiven Schlüssellänge im Kontext dieser Angriffsart die Unsicherheit von AES bei Verzicht pro Runde auf …
+  \begin{enumerate}
+    \item … die Anwendung der Operation "AddRoundKey".
+    \item … die Anwendung der Operation "SubBytes" bei der Schlüsselexpansion sowie der Verschlüsselung.
+    \item … die Anwendung der Operation "SubBytes" bei der Verschlüsselung, mit jedoch weiterbestehender Anwendung dieser Operation bei der Schlüsselexpansion.
+    \item … die Anwendung der Operation "ShiftRows".
+    \item … die Anwendung der Operation "MixColumns".
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Angriffsart: Known-Plaintext-Angriff. Effektive Schlüssellänge: 128 Bit.
+      \item Angriffsart: Chosen-Plaintext-Angriff. Effektive Schlüssellänge: 128 Bit.
+      \item Angriffsart: Chosen-Plaintext-Angriff. Effektive Schlüssellänge: 128 Bit.
+      \item Angriffsart: Known-Plaintext-Angriff. Effektive Schlüssellänge: 128 Bit.
+      \item Angriffsart: Known-Plaintext-Angriff. Effektive Schlüssellänge: 128 Bit.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+
+\setcounter{subsection}{100}
+\begin{exercise}{Spoofing}
+  \begin{enumerate}
+    \item Inwiefern kann ein DNS-Spoofing-Angriff für einen Distributed Denial of Service (DDoS)-Angriff genutzt werden? Erklären Sie anschaulich.
+    \item Warum funktioniert ARP-Spoofing nur in einem lokalen Netz?
+    \item Sie vermuten, Opfer eines ARP-Spoofing-Angriffs zu sein. Was können Sie an Ihrem Rechner überprüfen, um einen solchen Angriff erkennen zu können?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Ein DNS-Spoofing-Angriff kann genutzt werden, um die IP-Adressen von Opfern auf die IP-Adresse des Opfers umzuleiten. Dadurch wird der Traffic auf das Opfer umgeleitet und es kommt zu einem DDoS-Angriff.
+      \item ARP-Spoofing funktioniert nur in einem lokalen Netz, da ARP-Pakete nicht über Router weitergeleitet werden.
+      \item Überprüfen Sie die ARP-Tabelle Ihres Rechners, um verdächtige Einträge zu identifizieren.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Mehrfachnutzung des IV in einem WEP-verschlüsselten WLAN}
+  \begin{enumerate}
+    \item Der in WEP verwendete Initialisierungsvektor (IV) ist 24 Bit groß und steht in einem Paket $P$ am Paketanfang vor dem Schlüsseltext. Wie viele Pakete können maximal erzeugt werden, wenn kein IV mehrfach verwendet werden soll? Wie sind die IVs von einem Teilnehmer des WLANs zu erzeugen, sodass eine Kollision möglichst spät auftritt? Welches Problem gibt es bei diesem Verfahren, wenn mehrere Teilnehmer kommunizieren?
+    \item Nehmen Sie an, Sie haben die Pakete $P_1$ und $P_2$ empfangen:
+      \begin{align*}
+        P_1&: 00010\ 00111\ 11111\ 11110\ 11001\ 01001\ 00101\ \ldots\\
+        P_2&: 00010\ 00111\ 11111\ 11110\ 11000\ 10011\ 00010\ \ldots
+      \end{align*}
+      Die ersten 10 Klartextbits des ersten Paketes $P_1$ lauten $10010\ 01100$. Bestimmen Sie die ersten 10 Klartextbits des zweiten Paketes $P_2$.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Es können maximal $2^{24}$ Pakete erzeugt werden, wenn kein IV mehrfach verwendet werden soll. IVs sollten zufällig erzeugt werden, um Kollisionen zu vermeiden. Bei mehreren Teilnehmern kann es zu Kollisionen kommen, wenn IVs nicht synchronisiert werden.
+      \item Die ersten 10 Klartextbits des zweiten Paketes $P_2$ lauten $10010\ 01101$.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Challenge-Response-Authentifikation in GSM, Bluetooth und WEP}
+  \begin{enumerate}
+    \item Wie läuft eine einseitige Challenge-Response-Authentifikation allgemein ab?
+    \item Bitte benennen Sie Gemeinsamkeiten und Unterschiede der Challenge-Response-Authentifikation in Bluetooth, GSM und WEP. Beschränken Sie sich dabei auf den Ablauf und die wesentlichen Eigenschaften.
+    \item Die Challenge-Response-Authentifikation bei WEP weist eine Schwäche auf. Wie nutzt ein Angriff diese Schwäche aus? Machen Sie einen Vorschlag, wie man diesen Angriff verhindern könnte.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Ein Teilnehmer sendet eine Challenge an einen anderen Teilnehmer, der diese Challenge mit einer Response beantwortet.
+      \item Gemeinsamkeiten: Authentifizierung durch Challenge-Response-Verfahren. Unterschiede: Verwendung in unterschiedlichen Protokollen, z. B. GSM, Bluetooth und WEP.
+      \item Angriff: Wiederholte Authentifizierungsanfragen. Verhinderung: Begrenzung der Authentifizierungsanfragen.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Challenge-Response-Authentifikation überarbeitet}
+  In der klassischen beidseitigen Challenge-Response-Authentifikation mittels symmetrischer, deterministischer Verschlüsselung sendet ein prüfendes IT-System eine Zufallszahl als Challenge und erwartet deren Verschlüsselung mit einem gemeinsamen Schlüssel $K$. Nachfolgend findet sich eine formale Darstellung:
+  \begin{align*}
+    \text{Lokal für Kanal 1:} & A \text{ wählt und speichert vorläufig } R_A\\
+    \text{Kanal 1:} & A \xrightarrow{R_A} B\\
+    \text{Lokal für Kanal 1:} & B \text{ wählt und speichert vorläufig } R_B\\
+    \text{Lokal für Kanal 1:} & B \text{ berechnet } C_A := E_K(R_A)\\
+    \text{Kanal 1:} & A \xleftarrow{R_B, C_A} B\\
+    \text{Lokal für Kanal 1:} & A \text{ testet } C_A = E_K(R_A) \text{ und löscht } R_A\\
+    \text{Lokal für Kanal 1:} & A \text{ berechnet } C_B := E_K(R_B)\\
+    \text{Kanal 1:} & A \xrightarrow{C_B} B\\
+    \text{Lokal für Kanal 1:} & B \text{ testet } C_B = E_K(R_B) \text{ und löscht } R_B
+  \end{align*}
+  Der verwendete Schlüssel $K$ darf hierbei nur dem Geprüften und dem prüfenden IT-System bekannt sein. Wo immer Sie im Rahmen dieser Aufgabe ein Protokoll beschreiben sollen, verwenden Sie diese formale Darstellung. Bezeichnen Sie für eine asymmetrische Verschlüsselung mit $PK$ den öffentlichen und mit $SK$ den geheimen Schlüssel, sowie mit $E_{PK}(\cdot)$ die Ver- und mit $D_{SK}(\cdot)$ die Entschlüsselung.
+  \begin{enumerate}
+    \item Wieso werden Zufallszahlen und nicht feste Werte verwendet?
+    \item\label{ex:challenge-response-attack} Gegen welche Art von Angriff, bei welcher der Angreifer nur mit einer Partei kommunizieren muss, ist die klassische Challenge-Response-Authentifikation wie oben dargestellt verwundbar? Beschreiben Sie einen erfolgreichen Angriff.
+    \item Wie lässt sich der Angriff aus \ref{ex:challenge-response-attack} durch dauerhaftes statt vorläufiges Speichern der versandten Challenges und entsprechende Prüfungen vermeiden?
+    \item Beschreiben Sie eine überarbeitete Challenge-Response-Authentifikation mittels symmetrischer Verschlüsselung, die gegen Angriffe wie in \ref{ex:challenge-response-attack} geschützt ist und keine dauerhafte Speicherung von Daten erfordert.
+    \item Beschreiben Sie ein Protokoll zur gegenseitigen Authentifikation mit lediglich einer Anwendung eines symmetrischen Verschlüsselungsalgorithmus.
+    \item Beschreiben Sie ein Challenge-Response-Protokoll zur gegenseitigen Authentifikation mit asymmetrischer statt symmetrischer Verschlüsselung. Was muss gelten, damit das Protokoll gegen Angriffe wie in \ref{ex:challenge-response-attack} geschützt ist?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Zufallszahlen verhindern, dass ein Angreifer die Authentifikation durch Kenntnis fester Werte umgehen kann. Außerdem werden Replay-Angriffe verhindert.
+      \item Reflektionsangriff: Angreifer $M$ sendet irgendeine Challenge $R_M$ an $A$. $A$ sendet $C_M$ und $R_A$ an $M$ zurück. $M$ sendet neue Challenge $R_M'=R_A$ an $A$. $A$ sendet $C_M'=C_A$ an $M$ zurück. $M$ sendet für ursprüngliche Challenge $C_M'=C_A$ an $A$ zurück.
+      \item Wiederverwendung von Challenges kann verhindert werden.
+      \item $A$ wählt $R_A$, $B$ wählt $R_B$. $A$ sendet $R_A$ an $B$. $B$ berechnet $C_B=E(R_A || R_B)$ und sendet $C_B$ an $A$. $A$ prüft $C_B$ und sendet $R_B$ an $B$. $B$ prüft $R_B$.
+      \item $A$ wählt $R_A$ und $R_B$, berechnet $C=E(R_A || R_B)$ und sendet $R_A, C$ an $B$. $B$ prüft $C=E(R_A || R_B)$ und sendet $R_B$ an $A$. $A$ prüft $R_B$.
+      \item $A$ wählt $R_A$, $B$ wählt $R_B$. $A$ sendet $R_A$ an $B$. $B$ sendet $R_B$ und $E_{SK}(R_A)$ an $A$. $A$ prüft $D_{SK}(E_{SK}(R_A))=R_A$ und sendet $E_{SK}(R_B)$ an $B$. $B$ prüft $D_{SK}(E_{SK}(R_B))=R_B$.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+
+\setcounter{subsection}{110}
+\begin{exercise}{Kommutative Verschlüsselung}
+  Kommutative Verschlüsselung erlaubt das mehrfache Ver- und anschließende Entschlüsseln durch unterschiedliche Parteien in beliebiger Reihenfolge, also
+  \begin{align*}
+    D_{K_2}(D_{K_1}(E_{K_2}(E_{K_1}(M)))) &= M\\
+    D_{SK_2}(D_{SK_1}(E_{PK_2}(E_{PK_1}(M)))) &= M
+  \end{align*}
+  für Verschlüsselungen, denen man nicht ansieht, wie oft verschlüsselt wurde. Diese Eigenschaft gilt zuzüglich zur allgemein für Verschlüsselungen gültigen Eigenschaft
+  \begin{align*}
+    D_{K_i}(E_{K_i}(M)) &= M\\
+    D_{SK_i}(E_{PK_i}(M)) &= M
+  \end{align*}
+  \begin{enumerate}
+    \item\label{ex:commutative} Zeigen Sie, dass folgende Verschlüsselungen kommutativ entsprechend der obigen Definition sind:
+      \begin{enumerate}
+        \item CTR, wenn Initialisierungsvektoren mit dem geheimen Schlüssel ausgetauscht wurden und daher nicht mit dem Schlüsseltext mitgesendet werden müssen (Sie dürfen der Einfachheit halber annehmen, dass alle Parteien dieselbe Blockgröße verwenden).
+        \item RSA, wenn alle Parteien denselben Modulus verwenden
+      \end{enumerate}
+    \item Welche weitere Kommutativitätseigenschaft weisen CTR und RSA mit den Spezifikationen aus \ref{ex:commutative} auf?
+    \item Beschreiben Sie eine Möglichkeit, aus ElGamal eine kommutative Verschlüsselung zu machen. Überlegen Sie dazu, wie eine Kommutativitätsdefinition für eine Verschlüsselung aussehen kann, der anzusehen ist, wie oft verschlüsselt wurde.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item
+      \begin{enumerate}
+        \item CTR ist kommutativ, wenn Initialisierungsvektoren mit dem geheimen Schlüssel ausgetauscht wurden, da die Verschlüsselung unabhängig vom Schlüsseltext ist.
+        \item RSA ist kommutativ, wenn alle Parteien denselben Modulus verwenden, da die Verschlüsselung unabhängig vom Schlüsseltext ist.
+      \end{enumerate}
+      \item CTR und RSA sind zusätzlich zu den obigen Eigenschaften auch homomorph, was bedeutet, dass die Verschlüsselung von zwei Klartexten gleich der Verschlüsselung der Konkatenation der Klartexte ist.
+      \item Die Verschlüsselung müssen folgendermaßen angepasst werden:
+        \begin{align*}
+          c_{1,i}&=c_{1,i-1}\cdot g^{k_i}\pmod{p} \\
+          c_{2,i}&=c_{2,i-1}\cdot h^{k_i} \pmod{p}
+        \end{align*}
+        Und für die Entschlüsselung:
+        \begin{align*}
+          c_{1,i-1}&=c_{1,i}\cdot g^{k_i} \pmod{p} \\
+          c_{2,i-1}&=c_{2,i}\cdot h^{k_i} \pmod{p} \\
+          s_i&=c_{1,i}^{k_i} \pmod{p} \\
+          m_i&=c_{2,i}\cdot s_i^{-1} \pmod{p}
+        \end{align*}
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Geburtstagsangriff auf CBC}
+  In dieser Aufgabe betrachten Sie einen Geburtstagsangriff auf den Cipher-Block-Chaining-Betriebsmodus, also einen Angriff, der die hohe Wahrscheinlichkeit eines Mehrfachauftreten desselben Wertes bei stochastisch unabhängigen Ziehungen ausnutzt.
+  \par\textit{Hinweis: Bitte gehen Sie im Folgenden davon aus, dass die Blockchiffre von hoher Güte ist, also $E(\cdot, K)$ mit Schlüssel $K$ als eine zufällige Permutation modelliert werden kann. Das heißt insbesondere, Sie können annehmen, dass $E(\cdot, K)$ für unterschiedliche Klartexte stochastisch unabhängige Schlüsseltexte ausgibt.}
+  
+  \begin{enumerate}
+    \item\label{ex:attack} Bitte entwickeln und beschreiben Sie einen Angriff auf CBC, mit dem ein passiver, beobachtender Angreifer einen Schlüsseltextblock mit ihm zunächst unbekanntem Klartext entschlüsseln kann, wenn alle der folgenden Annahmen gelten:
+      \begin{itemize}
+        \item Der Angreifer kann Schlüsseltexte abhören, welche alle mit demselben Schlüssel generiert wurden.
+        \item Der Angreifer kennt für jeden abgehörten Schlüsseltext den vorderen $p$-ten Anteil des zugrunde liegenden Klartexts.
+        \item Mindestens ein Schlüsseltextblock innerhalb des vorderen $p$-ten Anteils ohne den Initialisierungsvektor gleicht einem Schlüsseltextblock innerhalb des hinteren $(1-p)$-ten Anteils ohne den Initialisierungsvektor.
+      \end{itemize}
+      Nachfolgend findet sich ein Beispiel für drei Schlüsseltexte aus je acht Blöcken ohne den Initialisierungsvektor, die die obige Bedingung mit $p=25\%$ erfüllen:
+      \begin{center}
+        \begin{tabular}{c ccccccccc}
+          $IV_1$ & $C_{1,1}$ & $C_{1,2}$ & $C_{1,3}$ & $C_{1,4}$ & $C_{1,5}$ & $C_{1,6}$ & $C_{1,7}$ & $C_{1,8}$\\
+          & $M_{1,1}$ & $M_{1,2}$ & $X$ & $X$ & $X$ & $X$ & $X$ & $X$\vspace{.5em}\\
+          $IV_2$ & $C_{2,1}$ & $C_{2,2}$ & $C_{2,3}$ & $C_{2,4}$ & $C_{2,5}$ & $C_{2,6}$ & $C_{2,7}$ & $C_{2,8}$\\
+          & $M_{2,1}$ & $M_{2,2}$ & $X$ & $X$ & $X$ & $X$ & $X$ & $X$\vspace{.5em}\\
+          $IV_3$ & $C_{3,1}$ & $C_{3,2}$ & $C_{3,3}$ & $C_{3,4}$ & $C_{3,5}$ & $C_{3,6}$ & $C_{3,7}$ & $C_{3,8}$\\
+          & $M_{3,1}$ & $M_{3,2}$ &  $X$ & $X$ & $X$ & $X$ & $X$ & $X$\\
+        \end{tabular}
+      \end{center}
+    \item Berechnen Sie unter Berücksichtigung der Reihenfolge der Ziehung die Wahrscheinlichkeit, dass bei $m$ zufälligen, stochastisch unabhängigen Ziehungen aus einer Menge $\{1, \ldots, n\}$ mindestens zweimal die gleiche Zahl gezogen wird.
+    \item Geben Sie die Wahrscheinlichkeit an, dass mindestens einmal Gleichheit von unterschiedlichen Schlüsseltextblöcken auftritt, wenn der Angreifer $N$ Schlüsseltexte mit einer Blockgröße von $B$ Bit und $L + 1$ Blöcken pro Schlüsseltext (also $L$ vielen ohne den Initialisierungsvektor) abhört.
+    \item Berechnen Sie eine untere Grenze für die Anzahl an abzuhörenden Schlüsseltexten unter demselben Schlüssel, sodass mindestens einmal Gleichheit von unterschiedlichen Schlüsseltextblöcken mindestens mit Wahrscheinlichkeit $q$ auftritt.
+    \item\label{ex:lowerbound} Berechnen Sie eine untere Grenze für die Anzahl an abzuhörenden (und mit demselben Schlüssel generierten) Schlüsseltexten, sodass mindestens einmal Gleichheit eines vorderen Schlüsseltextblocks und eines hinteren Schlüsseltextblocks (also wie in \ref{ex:attack}) mindestens mit Wahrscheinlichkeit $q$ auftritt.
+    \item Berechnen Sie die untere Grenze aus \ref{ex:lowerbound} für $B = 64$, $L = 4$, $p = 50\%$ und $q = 50\%$. Geben Sie die unteren Grenzen auch als Zweierpotenzen an.
+    \item Berechnen Sie die untere Grenze aus \ref{ex:lowerbound} für $B = 64$, $L = 4$, $p = 50\%$ und $q = 99\%$. Geben Sie die unteren Grenzen auch als Zweierpotenzen an.
+    \item Berechnen Sie jeweils, wie viel Zeit und Speicherplatz der Angriff aus \ref{ex:attack} bei Parameterwahl wie in \ref{ex:lowerbound} benötigt. Bewerten Sie darauf aufbauend die realistische Durchführbarkeit des Angriffs aus \ref{ex:attack}.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Zunächst beobachtet der Angreifer die Schlüsseltexte und wartet auf eine Kollision $C_i=C_j$, wobei $C_i$ im vorderen $p$-Teil ist, $C_j$ im hinteren. Es folgt $C_{i-1}\oplus M_i = C_{j-1} \oplus M_j$, da die Verschlüsselung deterministisch ist. Nun kann der Angreifer $M_i=C_{i-1}\oplus M_j \oplus C_{j-1}$ berechnen.
+      \item P(Kollision)=1-P(keine Kollision)=$1-\prod_{i=0}^{m-1}{(1-\frac{i}{n})}$, was mit $1-e^{-\frac{m(m-1)}{2n}}$ approximiert werden kann für große $n$ und moderate $m$.
+      \item P(Kollision)=$1-\prod_{i=0}^{NL-1}{(1-\frac{i}{2^B})}$.
+      \item $N=\frac{1+\sqrt{2^B\ln(1-q)}}{2L}$.
+      \item $N=\sqrt{\frac{-\ln{1-q}}{\lfloor pL\rfloor\cdot \lfloor (1-p)L \rfloor\cdot \ln{1-\frac{1}{2^B}}}}$.
+      \item $N=2^{31.5}$.
+      \item $N=2^{32.5}$.
+      \item Für $q=50$: $T=2^{65}$ und $S=2^{39.5}$. Für $q=99$: $T=2^{67}$ und $S=2^{40.5}$.
+        Die Ressourcenanforderungen sind sehr hoch selbst bei $q=50$. $2^{65}$ Rechenoperationen würden bei modernen GPUs ($10^12$ ops/sec) immer noch länger als ein Jahr dauern. $2^{39.5}$ Speicherplatz, oder 97GB, ist ebenfalls recht hoch aber realistisch für einen Angreifer.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+
+
+\sheet{Catalogue}
+
+\setcounter{subsection}{46}
+\begin{exercise}{Spoofing}
+  \begin{enumerate}
+    \item Inwiefern kann ein DNS-Spoofing-Angriff für einen Distributed Denial of Service (DDoS)-Angriff ausgenutzt werden? Erklären Sie anschaulich.
+    \item Welchen Angriff kann man in der nachfolgenden Ausgabe erkennen? Begründen Sie.
+      \begin{center}
+        \texttt{?(192.168.1.7) at 00:1f:88:13:fe:f1 [ether] on eth0} \\
+        \texttt{?(192.168.1.4) at 00:1f:88:13:fe:f1 [ether] on eth0} \\
+        \texttt{?(192.168.1.1) at 00:1f:88:13:fe:f1 [ether] on eth0} \\
+        \texttt{?(192.168.1.3) at 00:1f:88:13:fe:f1 [ether] on eth0} \\
+        \texttt{?(192.168.1.2) at 00:1f:88:13:fe:f1 [ether] on eth0}
+      \end{center}
+    \item Warum funktioniert ARP-Spoofing nur in einem lokalen Netz?
+    \item Sie vermuten, Opfer eines ARP-Spoofing-Angriffs zu sein. Was können Sie an Ihrem Rechner überprüfen, um einen solchen Angriff erkennen zu können?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Ein DNS-Spoofing-Angriff kann für einen Distributed Denial of Service (DDoS)-Angriff ausgenutzt werden, indem der Angreifer gefälschte DNS-Antworten an Opfer sendet, die zu einem falschen Server führen. Der Server wird durch die massiven Anfragen überlastet.
+        \item Die Ausgabe zeigt ein ARP-Spoofing-Angriff. Alle IP-Adressen im lokalen Netzwerk werden mit derselben MAC-Adresse verknüpft (\texttt{00:1f:88:13:fe:f1}). Dadurch kann der Angreifer die Kommunikation zwischen den Teilnehmern überwachen oder manipulieren.
+        \item ARP-Spoofing funktioniert nur in lokalen Netzwerken, da ARP (Address Resolution Protocol) nicht über Router hinaus funktioniert. Es ist auf das LAN beschränkt.
+        \item Um ARP-Spoofing zu erkennen, können Sie prüfen:
+        \begin{itemize}
+            \item Stimmen die MAC-Adressen in der ARP-Tabelle mit den bekannten Geräten überein?
+            \item Gibt es doppelte Einträge für unterschiedliche IP-Adressen mit derselben MAC-Adresse?
+        \end{itemize}
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Kommunikationsmanipulation}
+  Eve und Bob sind befreundet und wohnen im selben Haushalt. Ihre Computer sind an denselben Switch angeschlossen und über diesen mit dem Internet verbunden. Eve hat bald Geburtstag und vermutet, dass Bob ein Geschenk für Sie bei einem Onlineshop bestellen wird, der keine Verbindungsverschlüsselung einsetzt. Einerseits ist sie sehr neugierig und möchte gern so früh wie möglich erfahren, was sie geschenkt bekommt. Andererseits befürchtet sie, dass Bob ihr einen Stoffteddy schenken möchte, den sie nicht haben will. Sie möchte daher Bobs Kommunikation abhören und, wenn nötig, seine Bestellung manipulieren können.
+  \begin{enumerate}
+    \item\label{itm:manipulation} Nennen und erläutern Sie eine Angriffsart, mit der Eve den gesamten Netzverkehr von Bob abhören und manipulieren kann.
+    \item Wie kann Bob sich vor dem in Teilaufgabe \ref{itm:manipulation} beschriebenen Angriff schützen?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Eve kann einen \textbf{Man-in-the-Middle-Angriff (MITM)} durchführen, indem sie ARP-Spoofing einsetzt. Sie fälscht die Zuordnung der IP-Adressen zu MAC-Adressen, sodass der gesamte Netzverkehr von Bob über ihren Computer geleitet wird. Eve kann die Daten lesen und manipulieren.
+        \item Bob kann sich schützen durch:
+        \begin{itemize}
+            \item Nutzung von HTTPS für verschlüsselte Verbindungen.
+            \item Aktivieren von ARP-Schutzmechanismen (z. B. ARP-Wächter).
+            \item Überprüfung von SSL-Zertifikaten auf Authentizität.
+        \end{itemize}
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\setcounter{subsection}{104}
+\begin{exercise}{Indeterministische Verschlüsselung}\label{ex:indeterministic}
+  \begin{enumerate}
+    \item Was bedeutet indeterministische Verschlüsselung?
+    \item\label{itm:asymmetric} Wie realisieren Sie die indeterministische Verschlüsselung bei einem asymmetrischen Konzelationssystem?
+    \item Was ändert sich gegenüber \ref{itm:asymmetric} bei einem symmetrischen Konzelationssystem?
+    \item Sie sollen eine indeterministische Verschlüsselung realisieren. Zur Auswahl stehen die Algorithmen RSA und ElGamal. Wie würden Sie bei beiden Algorithmen vorgehen?
+    \item Beim Einsatz asymmetrischer Verschlüsselung sollte eine Nachricht vor der Verschlüsselung noch um (Pseudo-)Zufallszahlen ergänzt werden (indeterministische Verschlüsselung). Welcher Angriff kann dadurch verhindert werden?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Indeterministische Verschlüsselung bedeutet, dass derselbe Klartext bei wiederholter Verschlüsselung mit demselben Schlüssel unterschiedliche Schlüsseltexte erzeugt.
+        \item Bei einem asymmetrischen Verschlüsselungssystem kann indeterministische Verschlüsselung durch die Einbeziehung eines Zufallswerts (zB. Padding mit Zufallszahlen) in die Nachricht erreicht werden.
+        \item Bei einem symmetrischen Verschlüsselungssystem kann dies durch die Verwendung eines Initialisierungsvektors (IV) realisiert werden.
+        \item Verfahren:
+        \begin{itemize}
+            \item RSA: Fügen Sie der Nachricht einen zufälligen Wert hinzu (z. B. OAEP-Padding).
+            \item ElGamal: Verwenden Sie bei jeder Verschlüsselung einen neuen Zufallswert.
+        \end{itemize}
+        \item Indeterministische Verschlüsselung verhindert einen Known-Plaintext-Angriff, bei dem der Angreifer durch die Analyse von wiederholt verschlüsselten Nachrichten auf den Klartext schließen könnte.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Informationstheoretische Sicherheit}\label{ex:otp}
+  Das One-Time-Pad (Vernam-Chiffre) ist ein sehr einfaches, aber informationstheoretisch sicheres symmetrisches Verschlüsselungsverfahren: Die Klartextbits $x_i$ werden einzeln XOR-verknüpft mit einer zufälligen Schlüsselfolge $k_i$ gleicher Länge, die nur ein einziges Mal verwendet werden darf (Schlüsseltext $s_i = x_i \oplus k_i$ mit $i= 1,2,...$).
+  \begin{enumerate}
+    \item Was erfährt der Angreifer, der den Schlüsseltext abfängt, über den Klartext?
+    \item Wie würden Sie die Sicherheit des Verfahrens beweisen?
+    \item Warum darf die Schlüsselfolge nicht mehrmals verwendet werden? Überlegen Sie sich, was passieren würde, wenn der Angreifer zwei Schlüsseltexte $s_1$ und $s_2$ (oder gar noch weitere) abfangen würde, die unter dem gleichen Schlüssel $k= k_1 = k_2$ verschlüsselt wurden (Annahme: Es handelt sich um sinnvolle Klartexte).
+    \item Es existiert auch ein informationstheoretisch sicheres (symmetrisches) Verfahren zur Authentifikation. Welche Eigenschaft muss ein informationstheoretisch sicheres Authentifikationssystem besitzen?
+    \item Entwerfen Sie ein solches System und erläutern Sie dessen Funktionsweise sowie dessen Schutz vor einem Angreifer und damit dessen informationstheoretische Sicherheit. Legen Sie eine bitweise Authentisierung (ein MAC-Bit pro Klartextbit) zugrunde.
+    \item Kann es informationstheoretisch sichere asymmetrische Verfahren zur Verschlüsselung bzw. Authentifikation geben? Begründen Sie Ihre Antwort.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Lediglich die Länge des Klartexts. Der Klartext bleibt geheim.
+        \item Sicherheit des Verfahrens: $H(M|C) = H(M)$ (Entropie bleibt erhalten). Der Schlüsseltext enthält keine Informationen über den Klartext ohne den Schlüssel.
+        \item Wiederverwendung des Schlüssels: $C_1 \oplus C_2 = M_1 \oplus M_2$. Dies ermöglicht die Rekonstruktion der Klartexte $M_1, M_2$.
+        \item Ein informationstheoretisch sicheres Authentifikationssystem muss auf zufälligen, einmaligen Schlüsseln basieren (z. B. MACs mit OTPs).
+        \item Schlüssel und Hashfunktion austauschen. Sender: MAC erstellen $t_i=h(k_i, m_i)$. Empfänger: MAC überprüfen $t_i=h(k_i, m'_i)$.
+        \item Es gibt keine informationstheoretisch sicheren asymmetrischen Verfahren, da der öffentliche Schlüssel immer Angriffsvektoren bietet.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\setcounter{subsection}{112}
+\begin{exercise}{Unsicherheit der klassischen Verschiebechiffre}\label{ex:vigenere}
+  Ein klassisches Verschlüsselungsverfahren ist die Verschiebechiffre (Vigenère-Chiffre). Sie arbeitet typischerweise auf einem Alphabet aus den Großbuchstaben A-Z für den Klartext, den Schlüssel und den Schlüsseltext. Zudem kann ein Zeichen zur Worttrennung hinzugenommen werden. Für diese Aufgabe wird dazu der Unterstrich \texttt{\_} verwendet. Ein Schlüsseltextzeichen ergibt sich aus dem um das Schlüsselzeichen verschobene Klartextzeichen. Dieses sogenannte Vigenère-Tableau ist in Abbildung 1 dargestellt.
+  \input{res/vigenere.tbl.tex}
+  \begin{enumerate}
+    \item Verschlüsseln Sie den nachfolgenden Klartext mit dem Schlüsselwort PRUEFUNG unter Verwendung einer Vigenère-Chiffre:
+    \begin{center}
+        \texttt{GLUECKLICH\_IST\_DER\_DER\_DEN\_DINGEN\_AUF\_DEN\_GRUND\_GEHEN\_KONNTE}
+    \end{center}
+    \item Erläutern Sie kurz zwei sinnvolle Ansätze zur Kryptanalyse, d. h. zum Brechen einer Vigenère-Chiffre.
+    \item Eine Verbesserung der Vigenère-Chiffre ergibt sich durch die Verlängerung des Schlüsselwortes. Um welchen Faktor vergrößert sich dadurch der Schlüsselraum bei einem Alphabet mit 27 Elementen (A-Z und Unterstrich als Worttrennung) und einer Verlängerung um $s$ Zeichen?
+    \item Wie müsste die Vigenère-Chiffre verändert werden, um informationstheoretische Sicherheit im Bezug auf die Vertraulichkeit zu liefern? Begründen Sie, warum dieser Veränderung zielführend ist.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Verschlüsselung mit PRUEFUNG als Schlüssel: $C = \texttt{ILNUHAZKA\_VLA\_ANL\_KLU\_LTS\_GMMI\_VQK\_TVT\_OZUB\_DRNT\_OZXEU}$
+        \item Kryptanalyse:
+          \begin{itemize}
+              \item Häufigkeitsanalyse, um Muster aufzudecken.
+              \item Analyse von Periodizitäten, um die Schlüssellänge zu bestimmen.
+          \end{itemize}
+        \item Verlängerung des Schlüsselworts: $\text{Faktor der Vergrößerung: } 27^s$
+        \item Um informationstheoretische Sicherheit zu erreichen, müsste das Verfahren in ein One-Time-Pad umgewandelt werden. Dazu müsste der Schlüssel genauso lang wie der Klartext und zufällig sein.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Klassische Chiffren und Gütekriterien}
+  \begin{enumerate}
+    \item Verschlüsseln Sie den Klartext PRUEFUNGSSPASS\_OHNE\_KOMPROMISSE mit der Skytala und dem Schlüssel $k= 4$ (4 Zeilen, 8 Spalten). Verschlüsseln Sie den Klartext STUDIUMSFREUDE mit der Caesar-Chiffre und dem Schlüssel $k= 3$.
+    \item Die sogenannte Häufigkeitsanalyse kann als Angriff auf klassische Chiffren verwendet werden. Dabei werden die Buchstabenhäufigkeiten eines Chiffretextes gezählt und mit den normalerweise vorkommenden Buchstabenhäufigkeiten von Klartexten verglichen. Damit können Rückschlüsse von den Chiffretextbuchstaben auf die Klartextbuchstaben gezogen werden. Für welche der beiden in Teilaufgabe a) angesprochenen klassischen Chiffren ist dieser Angriff besonders schwerwiegend und kann zum direkten Brechen einer Chiffre führen? Begründen Sie Ihre Antwort.
+    \item Sie kommen auf die Idee, beide Chiffren miteinander zu kombinieren, um eine größere Sicherheit zu erreichen. Begründen Sie für die Variante, dass zuerst die Caesar-Chiffre auf den Klartext und dann die Skytala auf den resultierenden Caesar-Chiffretext angewandt wird, ob diese Überlegung tatsächlich stimmt. Ändert sich an Ihrer Überlegung etwas, wenn erst die Skytala und dann die Caesar-Chiffre angewandt wird?
+    \item Nennen und erläutern Sie die Gütekriterien, die moderne symmetrische Chiffren erfüllen müssen, um vor derartig einfachen Angriffen wie der Häufigkeitsanalyse zu schützen.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Verschlüsselung:
+        \begin{itemize}
+            \item Mit der Skytala ($k = 4$): $\texttt{PRUEFUNGSSPASS\_OHNE\_KOMPROMISSE} \rightarrow \texttt{PSHRRSNOUPEMEA\_IFSKSUSOSN\_MEGOP}$
+            \item Mit der Caesar-Chiffre ($k = 3$): $\texttt{STUDIUMSFREUDE} \rightarrow \texttt{VWXGLXPVIKUHGH}$
+        \end{itemize}
+        \item Häufigkeitsanalyse:
+          \begin{itemize}
+              \item Besonders problematisch bei der Caesar-Chiffre, da Buchstabenhäufigkeiten direkt übertragen werden.
+              \item Die Skytala bewahrt Buchstabenhäufigkeiten ebenfalls, ist jedoch schwieriger zu entschlüsseln, da Permutationen involviert sind.
+          \end{itemize}
+        \item Da beide Chiffren unabhängig voneinander angewendet werden und individuell schwach sind, ist die Sicherheit nicht stark erhöht. Reihenfolge der Anwendung ist irrelevant, da beide Operationen kommutativ sind.
+        \item Moderne Chiffren müssen folgende Gütekriterien erfüllen:
+          \begin{itemize}
+              \item \textbf{Konfusionsanforderung}: Beziehung zwischen Klartext und Schlüsseltext sollte möglichst komplex sein.
+              \item \textbf{Diffusionsanforderung}: Änderungen eines Klartextbits sollten viele Schlüsseltextbits beeinflussen.
+              \item \textbf{Resistenz gegen Kryptoanalyse}: Gegenüber modernen Angriffen wie Brute-Force, statistischen und algebraischen Angriffen sicher.
+          \end{itemize}
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\setcounter{subsection}{125}
+\begin{exercise}{Hashfunktionen und Signaturen}
+  \begin{enumerate}
+    \item Handelt es sich bei der Identitätsfunktion $H(x) = x$ um eine kryptographische Hashfunktion? Begründen Sie.
+    \item Ist die Kollisionsfreiheit eine relevante Eigenschaft kryptographischer Hashfunktionen? Begründen Sie.
+    \item In der Praxis wird die digitale Signatur einer Nachricht $m$ meist durch Signieren des (kryptographischen) Hashwertes der Nachricht $H(m)$ und nicht der Nachricht selbst gebildet: $\text{Sig}_k(H(m))$.
+      \begin{itemize}
+        \item Warum kann ein Empfänger sich in diesem Fall auf die Authentizität der Nachricht verlassen?
+        \item Welche Vorteile bringt das Signieren des Hashwertes einer Nachricht mit sich? Betrachten Sie hierfür auch den Fall, dass klassische RSA-Signaturen ohne Padding zum direkten Signieren von kurzen Nachrichten eingesetzt würden.
+      \end{itemize}
+    \item Eine Entwicklerin möchte eine von ihr entwickelte Software zur Verfügung stellen. Um den Datenverkehr auf ihrem eigenen Server zu reduzieren, stellt sie das Softwarepaket über ein kommerzielles Content Delivery Network (CDN) bereit. Sie möchte jedoch verhindern, dass ein böswilliger CDN-Betreiber die von ihr bereitgestellte Software durch eine mit einer Hintertür versehene Version ersetzt. Entwerfen Sie ein geeignetes Verfahren unter Nutzung von kryptographischen Hashfunktionen, das es Nutzenden erlaubt, die Integrität des Softwarepakets zu überprüfen. Sie können annehmen, dass der CDN-Betreiber keinen Zugriff auf den Server der Entwicklerin besitzt.
+      \begin{itemize}
+        \item Wie geht die Entwicklerin beim Veröffentlichen einer neuen Software-Version vor?
+        \item Wie können Nutzer die Integrität überprüfen?
+        \item Welche Eigenschaft einer kryptographischen Hashfunktion ist für die Sicherheit des Verfahrens entscheidend? Begründen Sie.
+      \end{itemize}
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Die Identitätsfunktion $ H(x) = x $ ist keine kryptographische Hashfunktion, da sie keine feste Ausgabelänge erzeugt, keine Einwegfunktion ist und keine Pseudozufälligkeit aufweist.
+        \item Kollisionsfreiheit ist entscheidend, da der Angreifer sonst zwei Nachrichten mit identischem Hashwert erzeugen könnte, um Signaturen zu fälschen.
+        \item Kollisionsfreiheit des Hashwerts garantiert die Authentizität der Nachricht. Vorteile des Signierens des Hashwerts sind Effizienz (kleinere Datenmenge), Sicherheit (auch ohne padding keine Längeninformation) und Flexibilität (beliebiges Nachrichtenformat möglich).
+        \item Verfahren für die Software-Integrität:
+        \begin{itemize}
+            \item Entwicklerin erzeugt den Hashwert der Software und veröffentlicht diesen zusammen mit der Software.
+            \item Nutzer prüfen den Hashwert nach dem Herunterladen.
+            \item Entscheidend ist die Kollisionsresistenz der Hashfunktion, um sicherzustellen, dass der Hash nicht gefälscht werden kann.
+        \end{itemize}
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\setcounter{subsection}{150}
+\begin{exercise}{Das Feistel-Prinzip}\label{ex:feistel}
+  Die nebenstehende Abbildung zeigt eine Runde der Feistel-Verschlüsselung. 
+  \input{res/feistel.fig.tex}
+  \begin{enumerate}
+    \item Berechnen Sie zwei Runden der Verschlüsselung und Entschlüsselung mit dem Feistel-Prinzip und den folgenden Werten:
+      \begin{itemize}
+        \item Klartext: 0011 0100
+        \item Funktion F: binäres UND
+        \item Rundenschlüssel K1: 1110
+        \item Rundenschlüssel K2: 0001
+      \end{itemize}
+    \item Welche Eigenschaften sollte die Einwegfunktion F aufweisen, um mit ihrer Hilfe eine sichere Feistel-Chiffre zu erzeugen?
+    \item Zeigen Sie, dass auch bei bei einer konstanten Einwegfunktion F sowohl die Ver- als auch die Entschlüsselung funktioniert.
+    \item Benötigen Sie die Umkehrfunktion $F^{-1}$ von $F$, damit die Entschlüsselung klappt? Begründen Sie Ihre Antwort.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item
+          \begin{itemize}
+            \item Klartext: $(L_0, R_0) = 0011 \ 0100$
+            \item Runde 1: $L_1 = R_0, \quad R_1 = L_0 \oplus R_0 \land K_1$
+            \item Runde 2: $L_2 = R_1, \quad R_2 = L_1 \oplus R_1 \land K_2$
+            \item Schlüsseltext: $(L_3, R_3) = (R_2, L_2) = 0101\ 0111$
+          \end{itemize}
+
+        \item Eigenschaften der Funktion $F$:
+        \begin{itemize}
+            \item Effizient berechenbar.
+            \item Pseudozufällig, aber deterministisch.
+            \item Nicht umkehrbar (Einhaltung der Sicherheit).
+        \end{itemize}
+        \item Eine konstante Funktion $F$ funktioniert, da die Struktur der Feistel-Chiffre die Umkehrbarkeit sicherstellt.
+        \item Die Umkehrfunktion $F^{-1}$ ist nicht notwendig, da die Entschlüsselung über die symmetrische Struktur erfolgt.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\setcounter{subsection}{162}
+\begin{exercise}{RSA: Eigenschaften und Sicherheit}\label{ex:rsa}
+  Für die Erzeugung eines RSA-Schlüsselpaares wurde von Alice der Modulus $n= p \cdot q= 7 \cdot 17= 119$ gewählt.
+  \begin{enumerate}
+    \item Was muss für den öffentlichen Verschlüsselungsexponenten $c$, der gemeinsam mit dem Modulus $n$ veröffentlicht wird, gelten, damit dieser als Teil des RSA-Schlüssels verwendet werden kann?
+    \item Warum kann eine mit RSA zu verschlüsselnde Nachricht $m$ nicht gleichzeitig einen Faktor $p$ und $q$ enthalten?
+    \item Alice wählt den öffentlichen Verschlüsselungsexponenten $c= 5$. Berechnen Sie den zugehörigen geheimen Entschlüsselungsexponenten $d$ mithilfe des erweiterten euklidischen Algorithmus.
+    \item Bei naiver Anwendung des RSA-Verfahrens wird eine Nachricht $m$, für die $1 < m < n$ gelten muss, ohne Veränderung mit dem öffentlichen Verschlüsselungsexponenten $c$ potenziert und modulo $n$ reduziert. Problematisch ist hierbei der multiplikative Homomorphismus des RSA-Verfahrens. Erläutern Sie kurz diese Eigenschaft anhand zweier Nachrichten $m_1$ und $m_2$.
+    \item Wie könnte die Angreiferin Eve die Eigenschaft des multiplikativen Homomorphismus ausnutzen, um an die Klartextnachricht einer abgefangenen verschlüsselten Nachricht $s$, die an Alice adressiert war, zu gelangen? Zeigen Sie das Vorgehen anhand der abgefangenen verschlüsselten Nachricht $s= 101$, der eigens von Eve gewählten Zufallszahl $r= 22$ sowie dem multiplikativen Inversen der Zufallszahl $r^{-1} = 92 \mod 119$. Verwenden Sie auf Empfängerseite (Alice) den gegebenen RSA-Modulus, den öffentlichen Verschlüsselungsexponenten $c=11$ und den geheimen Entschlüsselungsexponenten $d=35$, der nur Alice, aber nicht Eve bekannt ist.
+    \item Nennen Sie ein Anwendungsbeispiel, bei dem der multiplikative Homomorphismus des RSA-Verfahrens "ausgenutzt" bzw. gewollt angewendet wird.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Der öffentliche Exponent $c$ muss teilerfremd zu $\varphi(n)$ sein, damit ein inverser Schlüssel existiert. Und zwischen 2 und $\varphi(n)$ liegen, um sicherzustellen, dass die Nachricht nicht trivial verschlüsselt wird.
+        \item Da die Nachricht dann trivial verschlüsselt wäre mit $c = 0$, was auf $m=n$ schließen lässt.
+        \item Berechnung des privaten Exponenten $d$ (mit $c = 5, n = 7 \cdot 17 = 119, \varphi(n) = 96$): $c \cdot d \equiv 1 \pmod{\varphi(n)}$
+          \[ d = c^{-1} \mod \varphi(n) \implies d = 77 \]
+        \item Angreifer können Produkte von Nachrichten entschlüsseln.
+          \[ m_1 \cdot m_2 \mod n \implies c(m_1 \cdot m_2) = c(m_1) \cdot c(m_2) \]
+        \item Eve berechnet $s'=s \cdot r^c \mod{n}$ und sendet $s'$ an Alice. Alice entschlüsselt $s'$ mit $s''=s'^d \mod{n}$ und erhält $s''=s \cdot r \mod{n}$. Durch Multiplikation mit $r^{-1}$ erhält Eve $s$.
+        \item Ein Anwendungsbeispiel sind Berechnungen auf verschlüsselten Daten.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\setcounter{subsection}{1609}
+\begin{exercise}{Würfeln mit RSA}
+  Bob möchte Alice über das Internet das Ergebnis eines Würfelwurfs senden. Bob verschlüsselt das Ergebnis vor der Übertragung mit dem deterministischen RSA-Verfahren. Alice hat bereits ein RSA-Schlüsselpaar erzeugt und dabei die folgenden Parameter verwendet: $p_A = 5$, $q_A = 11$, $e_A = 3$, $d_A = 27$. Bob hat ebenfalls ein RSA-Schlüsselpaar erzeugt und dabei folgende Parameter verwendet: $p_B = 17$, $q_B = 5$, $e_B = 3$, $d_B = 43$. Die öffentlichen Schlüssel haben die beiden bereits über einen sicheren Kanal ausgetauscht.
+  \begin{enumerate}
+    \item Bob hat gewürfelt und möchte das Ergebnis nun an Alice senden. Er überträgt dazu $c_B = 9$. Zeigen Sie, dass eine passive Angreiferin (Eve), die lediglich die öffentlichen Schlüssel und $c_B$ kennt, mittels eines Chosen-Plaintext-Angriffs Bobs Wurfergebnis $m_B$ ermitteln kann. Welche Zahl hat Bob gewürfelt?
+    \item Wie kann sich Bob vor diesem Angriff schützen?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Da $m\in{1...6}$, probiert Eve alle möglichen Werte aus und verschlüsselt sie mit Bobs öffentlichem Schlüssel. Sie erhält $c_B = 9$ für $m_B = 4$. Bob hat also eine 4 gewürfelt.
+        \item Bob kann sich schützen, indem er Zufallswerte oder Padding einfügt, um die deterministische Eigenschaft des RSA-Verfahrens zu verhindern.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Forward Secrecy mit RSA}
+  Zur Erreichung von Forward Secrecy wird häufig die Verwendung von symmetrischen Schlüsseln empfohlen, die regelmäßig gewechselt werden. Ein solcher Schlüsselaustausch kann beispielsweise mithilfe des Diffie-Hellman-Schlüsselaustauschs realisiert werden. Ein anderer Ansatz ist die Verwendung von asymmetrischen Schlüsseln, bei denen der private Schlüssel regelmäßig gewechselt wird. In dieser Aufgabe betrachten wir die Verwendung von RSA-Schlüsseln.
+  \begin{enumerate}
+    \item Erläutern Sie, wie Forward Secrecy mit RSA erreicht werden kann.
+    \item Warum ist es problematisch, wenn ein Angreifer den privaten Entschlüsselungsexponenten eines RSA-Schlüssels erlangt?
+    \item Wie kann ein Angreifer, der den privaten Entschlüsselungsexponenten eines RSA-Schlüssels erlangt hat, die Kommunikation zwischen zwei Parteien entschlüsseln, die Nachrichten mit diesem Schlüssel verschlüsselt haben?
+    \item Wie kann Forward Secrecy mit RSA erreicht werden, wenn die Schlüssel regelmäßig gewechselt werden?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Garnicht, RSA bietet keine Forward Secrecy.
+        \item Da alle Nachrichten dann vom Angreifer entschlüsselt werden können.
+        \item Angreifer entschlüsselt mittels Exponent
+          \[ m=c^d \mod{n} \]
+        \item Wenn die Schlüssel regelmäßig gewechselt werden, können bei Kompromittierung nur die Nachrichten entschlüsselt werden, die mit dem aktuellen Schlüssel verschlüsselt wurden.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\setcounter{subsection}{1615}
+\begin{exercise}{Elliptische Kurven: EC-ElGamal}\label{ex:elliptic}
+  Das ElGamal-Kryptosystem lässt sich auch auf elliptische Kurven übertragen. Dabei werden die Rechenoperationen mittels Punkten auf einer elliptischen Kurve vorgenommen. Betrachten Sie für die folgenden Teilaufgaben die elliptische Kurve $E(\text{GF}(p))$ mit der Form $y^2 \equiv x^3 + x + 6 \mod 11$.
+  \begin{enumerate}
+    \item Passen Sie die Operationen des ElGamal-Kryptosystems zur Schlüsselgenerierung, zur Entschlüsselung sowie zur Verschlüsselung an, sodass diese auf der Basis elliptischer Kurven operieren.
+    \item Generieren Sie mithilfe Ihres Verfahrens aus Teilaufgabe a) ein geeignetes Schlüsselpaar auf der oben angegebenen elliptischen Kurve. Berechnen Sie dann die Verschlüsselung der Nachricht $m = (5, 2)$.
+    \item Berechnen Sie die Entschlüsselung des Schlüsseltextes aus der vorherigen Teilaufgabe mit dem dort generierten geheimen Schlüssel.
+    \item Zeigen Sie anschaulich, auf welcher Annahme die Sicherheit des Verfahrens beruht. Welcher Ausdruck müsste berechnet werden, damit Angreifende Schlüsseltexte ohne Kenntnis des geheimen Schlüssels leicht entschlüsseln könnten?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item 
+          \begin{itemize}
+            \item \textbf{Schlüsselgenerierung} mit Generaturpunkt $P$, privatem Schlüssel $d$ und öffentlichem Schlüssel $Q = d \cdot P$.
+            \item \textbf{Verschlüsselung} von Nachricht $m$ mit Zufallswert $k$ und Schlüsseltext $(C_1, C_2) = (kP, m + kQ)$.
+            \item \textbf{Entschlüsselung} des Schlüsseltextes $(C_1, C_2)$ mit privatem Schlüssel $d$ als $m = C_2 - d \cdot C_1$.
+          \end{itemize}
+        \item % TODO
+        \item % TODO
+        \item Die Sicherheit beruht darauf, dass es schwierig ist die Operation $Q=nP$ umzukehren.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\setcounter{subsection}{228}
+\begin{exercise}{Verbindungsverschlüsselung in GSM}\label{ex:gsm}
+  Welche Kommunikationsabschnitte sind in GSM verschlüsselt? Welche Kommunikationsabschnitte sind unverschlüsselt?
+
+  \begin{solution}
+    \begin{itemize}
+        \item \textbf{Verschlüsselte Abschnitte}: Abschnitt zwischen Mobiltelefon und Basisstation.
+        \item \textbf{Unverschlüsselte Abschnitte}: Basisstation $\to$ zentrale Netzwerkkomponenten (zB. MSC).
+    \end{itemize}
+  \end{solution}
+\end{exercise}
+
+\setcounter{subsection}{2226}
+\begin{exercise}{Bluetooth-Authentifikation}
+  Bei Bluetooth wird auf Basis der Funktion E22 die Authentifikation durchgeführt. Was sind die In- und Outputs der Authentifikation?
+
+  \begin{solution}
+    \begin{itemize}
+        \item \textbf{Input:} Der Eingabewert der Funktion $ E22 $ ist ein gemeinsames Schlüsselpaar (Link Key), das während der Kopplung zwischen zwei Bluetooth-Geräten ausgetauscht wird.
+        \item \textbf{Output:} Die Funktion erzeugt einen Authentication Code, der verwendet wird, um die Identität der Geräte gegenseitig zu authentifizieren.
+    \end{itemize}
+  \end{solution}
+\end{exercise}
+
+\setcounter{subsection}{2228}
+\begin{exercise}{Mehrfachnutzung des IV in einem WEP-verschlüsselten WLAN}
+  \begin{enumerate}
+    \item Der in WEP verwendete Initialisierungsvektor (IV) ist 24 Bit groß und steht in einem Paket $P$ am Paketanfang vor dem Schlüsseltext. Wie viele Pakete können maximal erzeugt werden, wenn kein IV mehrfach verwendet werden soll? Wie sind die IVs von einem Teilnehmer des WLANs zu erzeugen, sodass eine Kollision möglichst spät auftritt? Welches Problem gibt es bei diesem Verfahren, wenn mehrere Teilnehmer kommunizieren?
+    \item Nehmen Sie an, Sie haben die Pakete $P_1$ und $P_2$ empfangen:
+    \begin{itemize}
+      \item $P_1$: 00010 00111 11111 11110 11001 01001 00101 ...
+      \item $P_2$: 00010 00111 11111 11110 11000 10011 00010 ...
+    \end{itemize}
+    Die ersten 10 Klartextbits des ersten Paketes $P_1$ lauten 10010 01100. Bestimmen Sie die ersten 10 Klartextbits des zweiten Paketes $P_2$.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Maximal $ 2^{24} $ Pakete können erzeugt werden, da der IV 24 Bit groß ist. Um Kollisionen zu vermeiden, sollte der IV systematisch inkrementiert werden. Problematisch ist jedoch, dass bei mehreren Teilnehmern des WLANs die Wahrscheinlichkeit von IV-Kollisionen schnell steigt.
+        \item Die ersten 10 Klartextbits des zweiten Pakets $ P_2 $ werden durch Vergleich mit $ P_1 $ berechnet:
+        \[
+        \texttt{Klartext}(P_2) = \texttt{Verschlüsselter\_Text}(P_2) \oplus \texttt{Schlüssel}(P_1).
+        \]
+        Nach Durchführung der XOR-Berechnung ergibt sich der Klartext.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+
+
+\sheet[2024]{Mock exam}
+
+\begin{exercise}{Kategorialer Vergleich von Verschlüsselungen}
+  In dieser Aufgabe vergleichen Sie das One-Time-Pad, symmetrische Verschlüsselung unter Anwendung von Blockchiffren, asymmetrische Verschlüsselung und hybride Verschlüsselung (keine Verwendung des One-Time-Pads) hinsichtlich Sicherheit und Effizienz:.
+  \begin{enumerate}
+    \item Ordnen Sie die Verfahren hinsichtlich ihrer Sicherheit. Worauf basiert jeweils ihre Sicherheit?
+    \item Ordnen Sie die Verfahren hinsichtlich ihrer Recheneffizienz. Welche Operationen werden jeweils verwendet und wie recheneffizient sind diese?
+    \item Ordnen Sie die Verfahren hinsichtlich der Anzahl zu speichernder Schlüssel. Wie viele Schlüssel müssen gespeichert werden, damit anschließend in einer Gruppe jeder mit jedem mehrfach kommunizieren kann?
+    \item Warum sind Ciphertext Only Attacks und Chosen Plaintext Attacks bei asymmetrischer Krypto praktisch dasselbe?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{itemize}
+      \item \textbf{One-Time-Pad}: Perfekte Sicherheit durch zufälligen Schlüssel. Ineffizient, da Schlüssel genauso lang wie Nachricht. Für jede Kommunikation wird ein neuer Schlüssel benötigt. 
+      \item \textbf{Symmetrische Verschlüsselung}: Sicherheit basiert auf Geheimhaltung des Schlüssels. Effizient, da Blockchiffren schnelle Verschlüsselung ermöglichen. Ein gemeinsamer Schlüssel für alle.
+      \item \textbf{Asymmetrische Verschlüsselung}: Sicherheit basiert auf Schwierigkeit mathematischer Probleme. Ineffizient, da Berechnungen mit großen Zahlen. Jeder benötigt eigenen privaten Schlüssel.
+      \item \textbf{Hybride Verschlüsselung}: Sicherheit basiert auf Geheimhaltung des symmetrischen Schlüssels, und insbesondere beim Schlüsselaustausch durch asymmetrische Verschlüsselung auf Schwierigkeit mathematischer Probleme. Effizient, da asymmetrische Verschlüsselung nur für Schlüsselaustausch. Ein gemeinsamer Schlüssel für symmetrische Verschlüsselung, jeder benötigt eigenen privaten Schlüssel.
+    \end{itemize}
+    Ciphertext Only Attacks und Chosen Plaintext Attacks sind bei asymmetrischer Krypto praktisch dasselbe, da der Angreifer den öffentlichen Schlüssel kennt und somit Plaintexte verschlüsseln kann.
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Grundlagen der Kryptographie}
+  \begin{enumerate}
+    \item Erläutern Sie zwei Ursachen, die dafür sorgen, dass fast alle kryptographischen Algorithmen mit der Zeit durch andere ersetzt werden müssen.
+    \item Sie möchten einen Text so verschlüsseln, dass er auch in 96 Jahren nicht ohne Kenntnis des von Ihnen versteckten Schlüssels entschlüsselt werden kann. Welches Verfahren wählen Sie dazu? Begründen Sie Ihre Entscheidung. Warum wird das Verfahren heutzutage nicht überall benutzt?
+    \item In der Vorlesung wurden verschiedene klassische Chiffren behandelt, darunter Substitutionschiffren wie die Caesar-Chiffre (Verschiebechiffre), das Schema von Polybios, das Vigenère-Verfahren und die Vernam-Chiffre. Zudem wurden Transpositionschiffren wie die Skytala betrachtet. Ihnen liegt ein Geheimtext vor, der mit einer dieser Chiffren erzeugt wurde. Ihnen ist bekannt, dass es sich um die Verschlüsselung eines deutschen Textes handelt. Wie können Sie - ohne Rechnerunterstützung - vorgehen, um einzugrenzen, welche Chiffre verwendet wurde? Erläutern Sie die jeweiligen Ansätze.
+  \end{enumerate}
+  
+  \begin{solution}
+    \begin{enumerate}
+        \item \begin{itemize}
+            \item \textbf{Entwicklung von Angriffsmethoden:} Fortschritte in der Kryptoanalyse können Algorithmen angreifbar machen.
+            \item \textbf{Steigende Rechenleistung:} Mit der Zeit wird es möglich, Algorithmen durch Brute-Force-Angriffe zu brechen.
+        \end{itemize}
+        \item Ein One-Time-Pad ist sicher, da es perfekte Sicherheit bietet. Es wird jedoch nicht überall benutzt, da es sehr ineffizient ist und der Schlüsselaustausch sehr aufwendig ist.
+        \item Häufigkeitsanalyse und n-Gram-Analyse können helfen Substitutions- von Transpositionschiffren zu unterscheiden. Wenn Buchstabenhäufigkeiten mit der deutschen Sprache übereinstimmen, könnte es sich um eine Transpositionschiffre handeln. Wenn viele n-Gramme wiederholt auftreten, könnte es sich um eine Substitutionschiffre handeln.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Konzelationssystem nach ElGamal}
+  Alice möchte Bob die 6 Zeichen lange Nachricht "CYBER!" senden. Um ein Abhören durch Eve zu vermeiden, verschlüsselt sie die Nachricht mit dem Verschlüsselungsverfahren nach ElGamal. Hierzu ersetzt sie zunächst mit Hilfe der untenstehenden Tabelle jedes Zeichen durch eine Zahl, um diese dann einzeln zu verschlüsseln. Alice und Bob einigen sich auf die Primzahl $p=29$ und den Generator $a=2$ (primitive Wurzel von $p$). Bobs öffentlicher Schlüssel lautet $y_B=4$.
+  \begin{enumerate}
+    \item Verwenden Sie die folgende Tabelle, um die Zeichen der Nachricht durch Zahlen zu ersetzen:
+      \begin{table}
+        \centering
+        \begin{tabular}{cccccccc}
+          A: 1 & E: 5 & I: 9 & M: 13 & Q: 17 & U: 21 & Y: 25 \\
+          B: 2 & F: 6 & J: 10 & N: 14 & R: 18 & V: 22 & Z: 26 \\
+          C: 3 & G: 7 & K: 11 & O: 15 & S: 19 & W: 23 & !: 27 \\
+          D: 4 & H: 8 & L: 12 & P: 16 & T: 20 & X: 24 & \\
+        \end{tabular}
+      \end{table}
+    \item\label{ex:encrypt} Verschlüsseln Sie jedes einzelne ersetzte Zeichen mit Bobs öffentlichem Schlüssel. Wählen Sie die Zufallszahl $z=5$. Geben Sie den Rechenweg an.
+    \item Auf welcher Annahme basiert die Sicherheit der Verschlüsselung nach ElGamal?
+    \item Bob benötigt zum Entschlüsseln Informationen über die Zufallszahl $z$, die Alice benutzt hat. Nach welcher Formel werden diese Informationen berechnet? Wie werden diese an Bob übermittelt?
+    \item Wenn statt ElGamal ein deterministisches Verschlüsselungsverfahren genutzt würde, wäre das Vorgehen aus Teilaufgabe \ref{ex:encrypt} unsicher. Benennen und erläutern Sie den Angriff, der dann aufgrund der Kenntnis des öffentlichen Schlüssels von Bob möglich wäre.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Die Nachricht "CYBER!" wird ersetzt durch die Zahlen $3, 25, 2, 5, 18, 27$.
+        \item Die Zufallszahl $z=5$ wird gewählt. Die Verschlüsselung erfolgt durch $c_1=2^5 \mod{29}=3$, $c_2^0=4^5 \cdot 3 \mod{29}=27$, $c_2^1=22$, $c_2^2=18$, $c_2^3=16$, $c_2^4=17$, $c_2^5=11$.
+        \item Die Sicherheit basiert auf der Schwierigkeit des diskreten Logarithmusproblems.
+        \item Die Zufallszahl $z$ wird berechnet durch $z=c_1^{29-1-4} \mod{29}$ und an Bob übermittelt.
+        \item Es würde Anfälligkeit für einen Chosen-Plaintext-Angriff bestehen. Eve könnte $c_1$ berechnen und die Nachrichten entschlüsseln, die Alice an Bob sendet.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{TLS}
+  Alice möchte eine Internetseite abrufen. Durch einen Man-in-the-Middle-Angriff können Angreifende eine Verschlüsselung der Verbindung unterbinden. Dabei befindet sich die angreifende Person in der Netzkommunikation zwischen Alice und dem Server der Internetseite.
+  \begin{enumerate}
+    \item Beschreiben Sie einen Angriff, mit dem die Verschlüsselung der Verbindung unterbunden werden kann. Wie kann Alice einen solchen Angriff erkennen?
+    \item Der Angriff soll nun verbessert werden, indem die angreifende Person versucht, ein für die Internetseite gültiges Zertifikat vorzuweisen, statt die Verschlüsselung zu unterbinden. Unter welchen Voraussetzungen und wodurch wird dieser Angriff bereits verhindert?
+    \item Zu Audit-Zwecken soll in einem großen Unternehmen auch der via TLS verschlüsselte Datenverkehr zwischen Unternehmensrechnern und externen Servern überwacht werden. Die IT-Abteilung des Unternehmens besitzt die vollständige Kontrolle über die innerhalb des Unternehmens installierten Systeme (Computer, Server, Netzinfrastruktur). Beschreiben Sie eine Vorgehensweise, die es der IT-Abteilung erlaubt, den gesamten TLS-Datenverkehr einschließlich der Inhaltsdaten auf einem zentralen System innerhalb des Firmennetzes mitzuschneiden. Führen Sie dazu die Schritte auf, die erforderlich sind, um auf die Inhaltsdaten des verschlüsselten Datenverkehrs zuzugreifen. Dabei soll auch innerhalb des Firmennetzes nicht auf die TLS-Verschlüsselung verzichtet werden.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Ausgeben als Server und unverschlüsselte Verbindung anfragen. Alice kann den Angriff erkennen, wenn die Verbindung nicht verschlüsselt ist und das Zertifikat der Internetseite nicht gültig ist.
+        \item Der Angriff wird verhindert, wenn der Server der Internetseite ein gültiges Zertifikat besitzt, das von einer vertrauenswürdigen Zertifizierungsstelle ausgestellt wurde.
+        \item Die IT-Abteilung installiert ein Root-Zertifikat auf allen Geräten im Firmennetzwerk. Der Datenverkehr wird über einen Proxy-Server geleitet, der mit einem Zertifikat ausgestattet ist, das von dem installierten Root-Zertifikat signiert wurde. Der Proxy-Server entschlüsselt den Datenverkehr und verschlüsselt ihn erneut, bevor er an den Empfänger gesendet wird.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{GSM}
+  \begin{enumerate}
+    \item\label{ex:gsm-attack} Sie befinden sich in der Rolle eines Angreifers und möchten einen Anruf über das GSM-Netz auf Kosten des Mobilfunkkunden A tätigen. Obwohl Sie wissen, dass Sie sich oft in der gleichen Funkzelle wie A befinden, sind Sie A nie begegnet. Erläutern Sie, welche technischen Maßnahmen und welche Informationen erforderlich sind, um sich dem Mobilfunkprovider gegenüber als Kunde A auszugeben.
+    \item Ist es in der Situation aus Teilaufgabe \ref{ex:gsm-attack} technisch einfacher oder schwieriger, sich nicht dem Mobilfunkprovider gegenüber als anderer Benutzer, sondern gegenüber einem anderen Benutzer als Mobilfunkzelle auszugeben? Erläutern Sie das Vorgehen und begründen Sie Ihre Antwort.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Erforderliche technische Maßnahmen sind das Abfangen der IMSI von A, das Abfangen des Schlüsselmaterials von A und das Abfangen der Verbindung von A zur Mobilfunkzelle. Die Informationen, die erforderlich sind, um sich dem Mobilfunkprovider gegenüber als Kunde A auszugeben, sind die IMSI von A und das Schlüsselmaterial von A.
+        \item Es ist technisch einfacher, sich als Mobilfunkzelle auszugeben, da die IMSI von A nicht benötigt wird. Es reicht aus, die Verbindung von A zur Mobilfunkzelle zu unterbrechen und eine eigene Verbindung aufzubauen.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+
+
+\setcounter{section}{2022}
+\section{2nd exam}
+
+\begin{exercise}{Betriebsarten}
+  Betrachten Sie die Betriebsarten für Blockchiffren ECB, CBC und CTR.
+
+  \begin{enumerate}
+    \item Bei welchen Arten braucht man eine invertierbare Verschlüsselungsfunktion, bei welchen nicht? Begründen Sie.
+    \item Bei welchen Arten lässt sich die Verschlüsselung parallelisieren?
+    \item Im zweiten Block gibt es ein Bit mit einem additiven Fehler. Was kann noch entschlüsselt werden?
+    \item Ein Bit fehlt im zweiten Block (nicht bekannt, wo das Bit fehlt). Was kann noch entschlüsselt werden?
+    \item Ein ganzer Block fehlt. Was kann noch entschlüsselt werden?
+    \item Zwei verschiedene Klartexte wurden mit CTR mit dem gleichen IV verschlüsselt. Zeigen Sie, dass ein Angreifer den zweiten Klartext entschlüsseln kann, wenn dieser den ersten Klartext und die beiden Schlüsseltexte hat.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item ECB und CBC benötigen invertierbare Verschlüsselungsfunktionen, da die Entschlüsselung der Chiffre notwendig ist. Der CTR beruht auf XOR-Verknüpfung der Klar- und Schlüsseltexte und Berechnung und Verschlüsselung der Zählerwerte sowohl beim Sender als auch beim Empfänger. Daher ist keine invertierbare Verschlüsselungsfunktion notwendig.
+        \item Im ECB und CTR-Modus können die Blöcke parallel verschlüsselt werden, da sie unabhängig voneinander sind. Im CBC-Modus hängt die Verschlüsselung eines Blocks von der Verschlüsselung des vorherigen Blocks ab, daher ist keine Parallelisierung möglich.
+        \item Bei allen Modi führt ein Bitfehler im zweiten Block dazu, dass dieser Block nicht entschlüsselt werden kann. Im CBC-Modus wird zusätzlich das relevante Bit im Block 3 verändert, da die XOR-Verknüpfung mit dem vorherigen Block nicht mehr korrekt ist.
+        \item Wenn Blockgrenzen bekannt sind, wie in 3., aber bei CBC wird der dritte Block völlig unbrauchbar. Wenn nicht, sind Block 2 und alle nachfolgenden Blöcke nicht entschlüsselbar aufgrund des Synchronisationsverlusts.
+        \item Bei ECB und CTR können alle anderen Blöcke korrekt entschlüsselt werden, da sie unabhängig voneinander sind. Im CBC-Modus kann kein nachfolgender Block entschlüsselt werden, da die XOR-Verknüpfung mit dem vorherigen Block nicht mehr korrekt ist.
+        \item Da $m_1$ und $c_1$ kann daraus der Pseudozufallszahlenstrom $s=c_1\oplus m_1$ berechnet werden. Hiermit lässt sich dann $m_2=c_2\oplus s$ berechnen.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Elliptische Kurven}
+  \begin{enumerate}
+    \item Auf welcher mathematischen Schwierigkeit basiert der ECC?
+    \item Berechnen Sie die Punkte auf der folgenden elliptischen Kurve: $a = 6$, $b = 1$, $p = 11$.
+    \item Nennen Sie zwei Vorteile, die ECC gegenüber sicherheitsmäßig vergleichbaren Verfahren hat.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item ECDLP (Elliptic Curve Discrete Logarithm Problem): Das Problem besteht darin, die Operation $Q=nP$, welche mathematisch einfach zu berechnen ist, umzukehren.
+        \item Punkte auf der elliptischen Kurve $y^2 = x^3 + 6x + 1 \pmod{11}$:
+          \[ \{(2,4), (4,5), (4,6), (6,3), (6,8), (7,5), (7,6), (8,2), (8,9), (9,4), (9,7), (10,1), (10,10)\} \]
+        \item Vorteile von ECC:
+          \begin{itemize}
+              \item Kürzere Schlüssel bei gleicher Sicherheit (z. B. ECC-256 entspricht RSA-3072).
+              \item Geringere Speicher- und Rechenanforderungen.
+          \end{itemize}
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Zertifikate}
+  Das Zertifizierungsmodell ist transitiv anzunehmen.
+
+  \input{res/2023-1.fig}
+
+  \begin{enumerate}
+    \item Erklären und grenzen Sie die Begriffe Signatur und Zertifikat voneinander ab.
+    \item N7 möchte N3 eine Nachricht schicken. Welchen CAs muss N7 vertrauen?
+    \item N7 möchte zusätzlich N5 eine Nachricht schicken. Welchen CAs muss N7 vertrauen, so dass die Anzahl an CAs minimal ist?
+    \item CA2 fällt aus. Wie können wir die Kommunikation aus b) trotzdem realisieren (Was \& Wie)? Was können wir für N1 tun?
+    \item Trust on First Use: Keine CAs, Schlüssel wird bei erster Kommunikation an Kommunikationspartner geschickt, sobald und bei späteren Kommunikationen überprüft. Wenn Kommunikation und es gibt schon anderen Schlüssel, deny. Nennen und erklären Sie zwei Vorteile und zwei Nachteile.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Eine Signatur dient der Authentifizierung und Integritätsprüfung einer Nachricht. Ein Zertifikat enthält den öffentlichen Schlüssel eines Teilnehmers sowie die Signatur einer vertrauenswürdigen Zertifizierungsstelle (CA), die die Authentizität des Schlüssels bestätigt.
+        \item N7 muss den CAs vertrauen, die die Zertifikate von N3 und allen relevanten Zwischenstellen signiert haben.
+        \item N7 muss nur den CAs vertrauen, die sowohl N3 als auch N5 direkt oder indirekt zertifizieren. Dies minimiert die Anzahl der erforderlichen CAs.
+        \item Wenn CA2 ausfällt, können alternative Zertifikate verwendet werden, die von anderen vertrauenswürdigen CAs ausgestellt wurden. Ein neuer Vertrauenspfad kann erstellt werden.
+        \item Vorteile von Trust on First Use (TOFU):
+          \begin{itemize}
+              \item[+] Kein zentraler CA-Betrieb notwendig.
+              \item[+] Schlüssel können einfach ausgetauscht werden.
+              \item[-] Unsicherheit beim ersten Austausch.
+              \item[-] Bei Schlüsseländerungen kann es zu Problemen kommen.
+          \end{itemize}
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Forward Secrecy mit RSA}
+  Zur Erreichung von Forward Secrecy erzeugt Alice auf ihrem Server mit dem RSA-Verfahren einen privaten Schlüssel $d$ sowie den dazu passenden öffentlichen Schlüssel $c$, den sie persönlich an ihre Nutzerinnen und Nutzer verteilt. Zusätzlich erzeugt der Server von Alice bei jedem Verbindungsaufbau ein neues kurzlebiges (engl. ephemeral) RSA-Schlüsselpaar, das aus einem öffentlichen Schlüssel $c_e$ und einem geheimen Schlüssel $d_e$ besteht. Der Server signiert mit dem privaten Schlüssel $d$ den neuen öffentlichen Schlüssel $c_e$ und sendet diesen zusammen mit der Signatur über die aufgebaute Verbindung an die Kundin. Die Kundin prüft anschließend die Signatur mithilfe des zuvor von Alice erhaltenen öffentlichen Schlüssels $c$. Ist die Signatur korrekt, nutzt die Kundin $c_e$, um einen neuen, zufällig generierten symmetrischen AES-Schlüssel $k$ zu verschlüsseln. Die weitere Kommunikation in dieser Verbindung wird symmetrisch mit $k$ verschlüsselt. Nach Verbindungsende löscht Alices Server $d_e$, $c_e$ und $k$.
+
+  \begin{enumerate}
+    \item Welche Verbindungen könnten von einem sehr starken Angreifer wie einem Nachrichtendienst noch entschlüsselt werden, wenn dieser Zugriff auf den Server bekommt? Begründen Sie Ihre Antwort.
+    \item Skizzieren Sie einen Angriff, der möglich wäre, wenn die Kundin die Signatur nicht prüft. Erläutern Sie die einzelnen nötigen Schritte.
+    \item Alice ist das Verfahren zu langsam. Sie nimmt nun folgende Änderung vor: Statt jedes Mal bei der Erzeugung von $c_e$ und $d_e$ neue Primzahlen $p$ und $q$ für den Modulus $N_e$ zu generieren, verwendet sie immer die gleichen Primzahlen. Nun wählt sie lediglich den öffentlichen Exponenten $c_e$ neu und berechnet einen dazugehörigen geheimen Exponenten $d_e$. Warum ist dies keine gute Idee? Zeigen Sie, wie sich dieses geänderte Verfahren angreifen lässt, um aufgezeichnete Verbindungen zu entschlüsseln.
+  \end{enumerate}
+
+  \begin{solution}
+    % TODO
+  \end{solution}
+\end{exercise}
+
+
+
+\setcounter{section}{2021}
+\section{1st exam}
+
+\begin{exercise}{Kryptographie}
+ \begin{enumerate}
+    \item Erläutern Sie zwei Ursachen, die dafür sorgen, dass fast alle kryptographischen Algorithmen mit der Zeit nicht mehr Standard sind.
+    \item Sie möchten einen Text so verschlüsseln, dass er auch in 98 Jahren nicht ohne Kenntnis des von Ihnen versteckten Schlüssels entschlüsselt werden kann. Welches Verfahren wählen Sie dazu? Begründen Sie Ihre Entscheidung. Warum wird das Verfahren heutzutage nicht überall benutzt?
+    \item Gegeben eine Chiffre, welche Buchstaben A-N mit Buchstaben N-Z vertauscht. Und gleichzeitig muss die Länge der Nachricht immer gleich sein. Bewerten Sie die Sicherheit der Chiffre und die beiden Eigenschaften (Polyalphabetische Verschlüsselung nur mit Vertauschen und die gleiche Länge der Nachricht).
+ \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Gründe für den Wechsel kryptographischer Algorithmen:
+          \begin{itemize}
+              \item \textbf{Technologischer Fortschritt}: Schnellere Computer ermöglichen effizientere Brute-Force-Angriffe.
+              \item \textbf{Neue Angriffe}: Fortschritte in der Kryptanalyse decken Schwachstellen auf, wie z. B. Differential- oder lineare Kryptanalyse.
+          \end{itemize}
+        \item Das One-Time-Pad bietet absolute Sicherheit und bleibt auch nach 98 Jahren sicher. Es wird nicht flächendeckend eingesetzt, da der Schlüssel so lang wie der Klartext sein muss und der sichere Schlüsselaustausch sowie die Speicherung unpraktisch sind.
+        \item Die Chiffre ist nicht sicher. Muster bleiben im Schlüsseltext erhalten und können durch Häufigkeitsanalyse gebrochen werden. Die gleiche Länge der Nachrichten erleichtert die Kryptanalyse, da die Länge der Schlüsseltexte Rückschlüsse auf die Länge der Klartexte zulässt.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Elliptische Kurven}
+  \begin{enumerate}
+    \item Berechnen Sie für die folgenden Parameter alle Punkte auf der Kurve: $a = 2$, $b = 3$, $p = 7$.
+    \item ElGamal mit elliptischen Kurven wurde vorgestellt. Zeigen Sie, warum dieses Verfahren mit beliebigen Parametern funktioniert.
+    \item Vergleichen Sie den Elgamal aus der Vorlesung mit dem gegebenen. Auf welchem Prinzip beruht die Sicherheit? Denken Sie, dass er sicherer ist? Warum?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Punkte auf der elliptischen Kurve $y^2\equiv x^3+2x+3 \pmod{7}$:
+          \[ \{(6,1), (6,6)\} \]
+        \item Das ElGamal-Verfahren mit elliptischen Kurven funktioniert, weil die Addition von Punkten und die Multiplikation mit einem Skalar die Gruppenstruktur der Kurve erhalten. Dadurch bleibt das diskrete Logarithmusproblem schwer lösbar.
+        \item EC-ElGamal ist nicht unbedingt sicherer, da sowohl das DLP als auch das ECDLP schwer lösbar sind. Der Vorteil von EC-ElGamal ist die kürzere Schlüssellänge sowie effizientere Verarbeitung/Speicherung bei gleicher Sicherheit.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Zertifikate}
+  \begin{enumerate}
+    \item Gegeben seien drei Möglichkeiten einen Schlüssel von verschiedenen Schlüsselpartnern $(S,V,C,T)$ zu kombinieren. Bewerten Sie die Sicherheit der Verfahren.
+      \begin{itemize}
+        \item Alle Teilschlüssel (l/4) werden aneinandergehängt.
+        \item Drei der Teilschlüssel werden aneinandergehängt und der letzte Teilnehmer bestimmt die Reihenfolge.
+        \item Alle Schlüssel werden XOR-verknüpft.
+      \end{itemize}
+    \item\label{itm:zertifizierungsstellen} Gegeben ist ein Zertifikatsbaum mit 5 Teilnehmern. Betrachten Sie die Zertifizierungsrelation.\\
+      \begin{tikzpicture}[->,  >=stealth]
+        \node (E) at (0, 0) {$E$};
+        \node (A) [below left of=E] {$A$};
+        \draw (E) -- (A);
+        \node (B) [below right of=A] {$B$};
+        \draw (E) -- (B);
+        \draw (A) -- (B);
+        \node (C) [below right of=E] {$C$};
+        \draw (E) -- (C);
+        \draw (C) -- (B);
+        \node (D) [right of=C] {$D$};
+        \draw (E) -- (D);
+        \node (G) [right of=D] {$G$};
+      \end{tikzpicture}\\
+      $G$ möchte jetzt zusätzlich eine verschlüsselte Nachricht an $B$ senden. Welcher Zertifizierungsstelle bzw. welchen Zertifizierungsstellen muss $G$ mindestens vertrauen, um das Zertifikat von $B$ prüfen zu können? Wählen Sie Ihre Lösung so, dass die Anzahl an Zertifizierungsstellen, denen $G$ (explizit) vertrauen muss, minimal ist.
+    \item In der Zertifizierungsrelation aus \ref{itm:zertifizierungsstellen} wird die Zertifizierungsstelle $C$ kompromittiert und fällt deshalb aus. $G$ möchte eine verschlüsselte Nachricht an $B$ senden. Welche Maßnahme ermöglicht es $G$, das Zertifikat von $B$ trotz des Ausfalls von $C$ zu überprüfen?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item
+        \begin{itemize}
+          \item Geringe Sicherheit, da die Sicherheit vollständig von den Teilschlüsseln abhängt.
+          \item Höhere Sicherheit, da die zufällige Reihenfolge Angriffe schwieriger macht.
+          \item Höchste Sicherheit, solange die Teilschlüssel unabhängig, gleichmäßig verteilt und zufällig sind.
+        \end{itemize}
+      \item $G$ muss nur der Zertifizierungsstellen $E$ vertrauen, um das Zertifikat von $B$ zu prüfen, da $E$ die Wurzel des Zertifikatsbaums ist und alle anderen Zertifikate signiert.
+      \item $G$ kann das Zertifikat von $B$ trotz des Ausfalls von $C$ prüfen, indem $G$ das Zertifikat von $B$ über $A$ und $E$ prüft.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{GSM}
+  \begin{enumerate}
+    \item Welche Funktionen bezeichnen diese Abkürzungen in GSM: \texttt{Ki}, \texttt{IMSI}, \texttt{RAND}, \texttt{SRES}, \texttt{LAI}, \texttt{MSISDN}, \texttt{Kc}.
+    \item Welche dieser Abkürzungen ist auch noch im UMTS enthalten bzw. mit ähnlicher Funktion aber anderen Namen?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Abkürzungen im GSM und ihre Funktion:
+          \begin{itemize}
+            \item \texttt{Ki}: Key Identifier. Geheimer Schlüssel zur Authentifizierung, gespeichert in SIM-Karte und HLR/AuC. Zur Authentifizierung des Mobiltelefons genutzt.
+            \item \texttt{IMSI}: International Mobile Subscriber Identity. Eindeutige Kennung des Mobilfunkteilnehmers. Identifizierung des Benutzers im Netzwerk
+            \item \texttt{RAND}: Random Number. Dient als Herausforderung (Challenge) für die Authentifizierung.
+            \item \texttt{SRES}: Signed Response. Antwort auf die Herausforderung, die vom Mobiltelefon berechnet wird. Wird zur Authentifizierung genutzt.
+            \item \texttt{LAI}: Location Area Identity. Identifiziert die Location Area, in der sich das Mobiltelefon befindet.
+            \item \texttt{MSISDN}: Mobile Station International Subscriber Directory Number. Telefonnummer des Mobiltelefons.
+            \item \texttt{Kc}: Ciphering Key. Wird zur Verschlüsselung der Kommunikation zwischen Mobiltelefon und Basisstation genutzt.
+          \end{itemize}
+        \item Enthalten: \texttt{Ki}, \texttt{IMSI}, \texttt{RAND}, \texttt{MSISDN}. Mit anderem Namen/ähnlicher Funktion: \texttt{SRES}: \texttt{XRES}, \texttt{LAI}: \texttt{RAI}, \texttt{Kc}: \texttt{CK}.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+
+
+\sheet[2020]{1st Exam}
+\begin{exercise}{2-DES \ref{ex:2-des}}\end{exercise}
+
+% One-Time-Pad
+% a) Wie funktioniert ein OTP?
+% b) Welche zwei Eigenschaften müssen erfüllt sein damit ein OTP Informationstheoretisch sicher ist.
+% c) Können Quantencomputer OTPs besser knacken? Was unterscheidet ein OTP von anderen symetrischen oder asymetrischen Verfahren (z. B. RSA)?
+% Begründung
+% d) Person verschlüsselt ihre Backups mit den n ersten Zeichen eines auf einer DIN-A4 Seite ausgedruckten zufälligen Schlüssels und dem OTP. Warum ist dies unsicher?
+% e) Gegeben Klartext m = "Sehr geherte Damen....", verschlüsslter Klartext c(m) in Binär und verschlüsselte PIN in Binär. PIN soll ermittelt werden. (ASCII-Tabelle gegeben)
+\begin{exercise}{One-Time-Pad}
+  \begin{enumerate}
+    \item Wie funktioniert ein One-Time-Pad (OTP)?
+    \item Welche zwei Eigenschaften müssen erfüllt sein, damit ein OTP informationstheoretisch sicher ist?
+    \item Können Quantencomputer OTPs besser knacken? Was unterscheidet ein OTP von anderen symmetrischen oder asymmetrischen Verfahren (z. B. RSA)? Begründen Sie Ihre Antwort.
+    \item Eine Person verschlüsselt ihre Backups mit den ersten $n$ Zeichen eines auf einer DIN-A4 Seite ausgedruckten zufälligen Schlüssels und dem OTP. Warum ist dies unsicher?
+    \item Geben seien \begin{itemize}
+        \item Klartext $m = \text{"HALLO"}$ % 7 0 11 11 14 
+        \item Schlüsseltext $c(m) = 7\ 1\ 13\ 14\ 18$
+        \item ASCII: $A=0, B=1, \ldots, Z=25$
+      \end{itemize}
+      Berechnen Sie die PIN.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Ein OTP ist ein symmetrisches Verschlüsselungsverfahren, bei dem der Klartext mit einem zufälligen Schlüssel (dem One-Time-Pad) XOR-verknüpft wird.
+        \item Ein OTP ist informationstheoretisch sicher, wenn der Schlüssel genauso lang wie der Klartext ist und der Schlüssel zufällig und geheim ist.
+        \item Quantencomputer können OTPs nicht besser knacken, da der Schlüssel zufällig und geheim ist. Ein OTP unterscheidet sich von anderen Verfahren, da es perfekte Sicherheit bietet und nicht anfällig für Kryptoanalyse ist.
+        \item Der Schlüssel ist nicht zufällig und geheim, da er auf einer DIN-A4 Seite ausgedruckt ist. Der Schlüssel ist nicht so lang wie der Klartext, was die Sicherheit des OTPs beeinträchtigt.
+        \item Die PIN kann durch XOR-Verknüpfung des Klartexts mit dem Schlüsseltext berechnet werden: $7 \oplus 7 = 0, 1 \oplus 0 = 1, 13 \oplus 11 = 2, 14 \oplus 11 = 3, 18 \oplus 14 = 4$. Die PIN lautet also ABCDE.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Public Key Infrastructure}
+  \begin{enumerate}
+    \item Erläutern Sie den Unterschied zwischen einer Signatur und einem Zertifikat.
+    \item Beschreiben Sie das Zertifikatsmodell von TLS.
+    \item Beschreiben Sie das Gültigkeitsmodell von TLS.
+    \item Wie kann man große Dateien signieren? Welche Eigenschaften sollte dieses Konstrukt besitzen?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Eine Signatur dient der Authentifizierung und Integritätsprüfung einer Nachricht. Ein Zertifikat enthält den öffentlichen Schlüssel eines Teilnehmers sowie die Signatur einer vertrauenswürdigen Zertifizierungsstelle (CA), die die Authentizität des Schlüssels bestätigt.
+        \item Das Zertifikatsmodell von TLS basiert auf einer Zertifizierungskette, in der das Endzertifikat von einer vertrauenswürdigen Zertifizierungsstelle signiert wird. Der Browser vertraut der Wurzelzertifizierungsstelle und kann die Zertifikate der Website verifizieren.
+        \item Das Gültigkeitsmodell von TLS basiert auf der Überprüfung der Zertifikate der Website durch den Browser. Der Browser vertraut der Wurzelzertifizierungsstelle und kann die Zertifikate der Website verifizieren.
+        \item Große Dateien können signiert werden, indem ein Hash der Datei berechnet und dieser Hash mit dem privaten Schlüssel des Signierenden verschlüsselt wird. Die Signatur sollte unabhängig von der Dateigröße sein und die Integrität und Authentizität der Datei gewährleisten.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Bluetooth}
+  \begin{enumerate}
+    \item Warum ist ein 4-stelliger PIN bei Bluetooth unsicher?
+    \item Ein Angreifer versucht, die PIN, die beim Bluetooth-Handshake verwendet wird, zu erraten. In welchem Schritt kann ein Angreifer die PIN verifizieren?
+    \item Wie muss ein passiver Angreifer vorgehen, um die PIN zu erraten?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+        \item Ein 4-stelliger PIN ist unsicher, da er leicht durch Brute-Force-Angriffe geknackt werden kann.
+        \item Ein Angreifer kann die PIN während des Pairing-Prozesses verifizieren, wenn die PIN eingegeben wird.
+        \item Ein passiver Angreifer kann die PIN durch Abhören des Pairing-Prozesses und der Kommunikation zwischen den Geräten erraten.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\end{document}
