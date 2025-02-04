@@ -4,3 +4,6 @@
 [submodule ".template"]
 	path = .template
 	url = ../latex-packages
+[submodule "mlab/project"]
+	path = MLab/project
+	url = https://github.com/Leo-Lem/LaunchLab.git
