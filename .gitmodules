@@ -7,3 +7,9 @@
 [submodule "mlab/project"]
 	path = MLab/project
 	url = https://github.com/Leo-Lem/LaunchLab.git
+[submodule "NLP/ml project"]
+	path = NLP/ml project
+	url = https://github.com/Leo-Lem/named-entity-recognition.git
+[submodule "NLP/project"]
+	path = NLP/project
+	url = https://github.com/Leo-Lem/climate-opinions.git
