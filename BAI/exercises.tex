@@ -15,7 +15,7 @@
     \item Explain the concept of spiking neural networks and how they resemble biological information transmission.
     \item What is the difference between temporal coding and static learning?
     \item How is learning in spiking neural networks based on synaptic correlations?
-    \item What is Spike-Timing Dependent Plasticity?
+    \item What is Spike-Timing-Dependent-Plasticity?
     \item Differentiate rate-coded, integrate-and-fire, and spike-response models.
   \end{enumerate}
 
@@ -23,9 +23,10 @@
     \begin{enumerate}
       \item Spiking neural networks are a type of artificial neural network that model the behavior of biological neurons. They use spikes, or action potentials, to transmit information between neurons, similar to how biological neurons communicate.
       \item Temporal coding is a method of encoding information in the timing of spikes, while static learning is a method of encoding information in the strength of synaptic connections.
-      \item Learning in spiking neural networks is based on synaptic correlations, which are the correlations between the timing of pre- and post-synaptic spikes.
-      \item Spike-Timing Dependent Plasticity is a learning rule that strengthens or weakens synaptic connections based on the timing of pre- and post-synaptic spikes.
-      \item Rate-coded models use firing rates to encode information, integrate-and-fire models use membrane potentials to encode information, and spike-response models use spike times to encode information.
+      \item Synaptic correlation describes the relationship between pre- and post-synaptic activity. This correlation is modeled using the weights of neural connections in spiking neural networks.
+      \item Spike-Timing-Dependent-Plasticity (STDP) is a learning rule that strengthens or weakens synaptic connections based on the synaptic correlation.
+      \item Rate-coded models use firing rates to encode information, only the frequency of spikes matters. Integrate-and-fire models integrate input signals over time and fire a spike when a threshold is reached, where leaky would describe the potential decay over time. Spike-response models model the response of a neuron to an input spike directly using a response function.
+          \par Rate-coding is the simplest approach, integrate-and-fire provides a good trade-off between biological plausibility and computational efficiency, and spike-response models are more complex and biologically realistic.
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -33,15 +34,16 @@
 \begin{exercise}{Computational Neural Networks}
   \begin{enumerate}
     \item Map these biological neural structures to artificial neural networks: neurons/synapses, action potentials, plasticity, and dopamine.
-    \item Explain the concept of backpropagation and how it resembles biological plasticity.
     \item Describe two different ANN architectures and their applications.
     \item What are some examples of useful applications of artificial neural networks?
   \end{enumerate}
 
   \begin{solution}
     \begin{enumerate}
-      \item Neurons and synapses in biological neural structures correspond to nodes and weighted connections in artificial neural networks. Action potentials in biological neurons correspond to activation values in artificial neural networks. Plasticity in biological synapses corresponds to backpropagation in artificial neural networks. Dopamine in biological reward systems corresponds to reward signals in artificial neural networks.
-      \item Backpropagation is a learning algorithm used in artificial neural networks to adjust the weights of connections between neurons based on the error in the output. This process resembles biological plasticity, where synaptic connections are strengthened or weakened based on the correlation between pre- and post-synaptic activity.
+      \item Neurons and synapses in biological neural structures correspond to nodes and weighted connections in artificial neural networks.
+        \par Action potentials in biological neurons correspond to activation values in artificial neural networks.
+        \par Plasticity in biological synapses describes the potential to change and corresponds to weight updates in backpropagation in artificial neural networks.
+        \par Dopamine in biological reward systems corresponds to reward signals in artificial neural networks, like in reinforcement learning.
       \item Two different ANN architectures are convolutional networks, which are used for image processing tasks, and recurrent networks, which are used for sequential data processing tasks.
       \item Some examples of useful applications of artificial neural networks include speech and language processing, image recognition, and natural language understanding.
     \end{enumerate}
@@ -58,8 +60,8 @@
 
   \begin{solution}
     \begin{enumerate}
-      \item Models suitable for explaining human natural language processing include sensor to actuator mapping, semantic association, and conceptual representations for stimulus prediction.
-      \item Hebbian learning is a learning rule that strengthens synaptic connections between neurons that fire together. SOM learning is a learning algorithm used in self-organizing maps to cluster similar input patterns. Statistical learning is a method of learning from data by estimating the probability distribution of the data.
+      \item Models suitable for explaining human NLP include the Wernicke-Geschwind and the dual-stream model. The Wernicke-Geschwind model describes the language processing areas in the brain, while the dual-stream model describes the dorsal and ventral streams for speech perception and production.
+      \item Hebbian learning is an unsupervised learning rule that strengthens synaptic connections between neurons that fire together. SOM learning is an unsupervised learning algorithm used in self-organizing maps to cluster similar input patterns into a topology map. Statistical learning is a method of learning from data by estimating the probability distribution of the data, and can be supervised or unsupervised.
       \item A grounded language is a language that is based on the physical world and is grounded in sensory-motor experiences.
       \item Bio-inspired grounded language processing can improve classic NLP methods by providing brain-inspired representations and mechanisms that better capture the structure and meaning of language.
     \end{enumerate}
