@@ -72,32 +72,30 @@
   \begin{enumerate}
     \item Explain the concepts of ITD and ILD in a hybrid acoustic system.
     \item How can ITD and ILD be implemented in a hybrid spiking neural network?
-    \item What are the advantages of this approach?
   \end{enumerate}
 
   \begin{solution}
     \begin{enumerate}
       \item Interaural time difference (ITD) is the difference in time it takes for a sound to reach each ear, while interaural level difference (ILD) is the difference in intensity of a sound at each ear. In a hybrid acoustic system, ITD and ILD are used to localize sound sources in space.
-      \item ITD and ILD can be implemented in a hybrid spiking neural network by using spiking neurons to model the auditory pathways and integrating ITD and ILD information to localize sound sources.
-      \item The advantages of this approach include the ability to process complex auditory information in real-time, the ability to integrate multiple sensory modalities, and the ability to adapt to changing environments.
+      \item ITD is modeled by temporal delays in the input signals, and ILD is modeled by differences in the input amplitudes in a hybrid spiking neural network. These cues are combined to estimate the location of a sound source.
     \end{enumerate}
   \end{solution}
 \end{exercise}
 
 \begin{exercise}{Hierarchical Vision}
   \begin{enumerate}
-    \item Which visual information is processed in which brain areas?
-    \item What are the features filtered in the visual processing of the brain?
+    \item Which visual information is processed in which brain areas? % TODO: learn this
+    \item What are the features filtered in the visual processing of the brain? % TODO: learn this
     \item Explain a hierarchical computational model for object recognition.
     \item How can deep learning be utilized for visual processing?
   \end{enumerate}
 
   \begin{solution}
     \begin{enumerate}
-      \item Low-level visual information is processed in the primary visual cortex, while high-level visual information is processed in the ventral and dorsal streams of the brain.
+      \item V1 (Striate Cortex) for edge detection. V2 for texture. V3 for color and motion. V5 for motion and eye movements. (V2-5 Extrastriate Cortex). Ventral and dorsal streams for higher-level processing.
       \item The features filtered in the visual processing of the brain include edges, textures, shapes, and objects.
       \item A hierarchical computational model for object recognition involves multiple layers of processing, where each layer extracts increasingly complex features from the input data to recognize objects.
-      \item Deep learning can be utilized for visual processing by using deep neural networks to learn hierarchical representations of visual data and perform tasks like image recognition and object detection.
+      \item Deep learning can be utilized for visual processing by using deep neural networks to learn hierarchical representations of visual data. These networks can automatically learn features from the data and perform tasks like object recognition and image classification.
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -120,14 +118,14 @@
 
 \begin{exercise}{Behavior-based Robotics}
   \begin{enumerate}
-    \item Explain the advantages and disadvantages of behavior-based robotics.
+    \item Explain the advantages of behavior-based robotics.
     \item How can behavior-based robotics be used for planning?
     \item What are the limits of behavior-based robotics?
   \end{enumerate}
 
   \begin{solution}
     \begin{enumerate}
-      \item The advantages of behavior-based robotics include fast reaction times, robustness, the ability to follow multiple goals simultaneously, extensibility, simplicity, and computational tractability. The disadvantages of behavior-based robotics include limited information, non-local information, learning globally, and complex dynamics.
+      \item The advantages of behavior-based robotics include fast reaction times, robustness, the ability to follow multiple goals simultaneously, extensibility, simplicity, and computational tractability.
       \item Behavior-based robotics can be used for planning by combining simple behaviors to achieve complex goals. This approach allows robots to react to their environment in real-time and adapt to changing conditions.
       \item The limits of behavior-based robotics include the need for sufficient information from the local environment, the challenge of incorporating non-local information, the difficulty of learning global behavior, and the complexity of interactions in large-scale systems.
     \end{enumerate}
@@ -152,16 +150,16 @@
 
 \begin{exercise}{Evolutionary Computing}
   \begin{enumerate}
-    \item Explain the advantages and disadvantages of evolutionary algorithms.
+    \item Explain the advantages of evolutionary algorithms.
     \item What are the limits of evolutionary algorithms?
     \item Name and describe two evolutionary algorithms.
   \end{enumerate}
 
   \begin{solution}
     \begin{enumerate}
-      \item The advantages of evolutionary algorithms include being a general heuristic for problem search, the ability to find good solutions in feasible computing time, and the possibility of distributed execution. The disadvantages of evolutionary algorithms include not guaranteeing optimal solutions, long runtimes compared to search algorithms, and the success depending on the parameters used.
+      \item The advantages of evolutionary algorithms include being a general heuristic for problem search, the ability to find good solutions in feasible computing time, and the possibility of distributed execution.
       \item The limits of evolutionary algorithms include the need for a large number of evaluations, the difficulty of tuning parameters, the risk of premature convergence, and the challenge of scaling to large problems.
-      \item Two evolutionary algorithms are the genetic algorithm, which uses selection, crossover, and mutation operators to evolve a population of solutions, and the genetic programming algorithm, which evolves programs or models to solve a problem.
+      \item Two evolutionary algorithms are the genetic algorithm, which uses selection, crossover, and mutation operators to evolve a population of solutions, and ant colony optimization, which models the foraging behavior of ants to find optimal solutions to optimization problems.
     \end{enumerate}
   \end{solution}
 \end{exercise}
