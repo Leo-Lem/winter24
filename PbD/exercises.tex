@@ -382,8 +382,8 @@
 \begin{exercise}{IPv6 prefixes}
   \begin{enumerate}
     \item Why is it not sufficient to use different addresses under one prefix?
-    \item What are the weaknesses of prefix sharing with a constant prefix and a small user group?
-    \item What are the weaknesses of prefix bouquets if different prefixes are used for different goals but not per connection?
+    \item What are weaknesses of prefix sharing with a constant prefix and a small user group?
+    \item What are weaknesses of prefix bouquets if different prefixes are used for different goals but not per connection?
     \item What is the problem with prefix hopping if the IP address changes during an existing connection?
     \item How can this problem be solved with prefix hopping?
     \item How can users be tracked apart from addressing? Name 3 examples.
@@ -391,11 +391,11 @@
 
   \begin{solution}
     \begin{enumerate}
-      \item It is not sufficient to use different addresses under one prefix because the addresses could be linked to the same user.
-      \item The weaknesses of prefix sharing with a constant prefix and a small user group are that the users can be identified by the prefix and that the users can be tracked by the prefix.
-      \item The weaknesses of prefix bouquets are that the users can be identified by the prefix and that the users can be tracked by the prefix.
-      \item The problem with prefix hopping is that the connection is interrupted when the IP address changes.
-      \item This problem can be solved by using a VPN connection that keeps the IP address constant.
+      \item Because the prefix can be used to identify the user.
+      \item As the anonymity group is small, the users using the same prefix could be identified using other information (e.g. timing). Also, group targeting is possible.
+      \item If prefixes are used for similar purposes (e.g. all for social media), the user can be identified by the prefix. Also, this might leak the user's goal to the attacker.
+      \item The connection is interrupted.
+      \item Session token (other than IP) can be used to identify the connection. 
       \item Users can be tracked apart from addressing by using cookies, browser fingerprinting, and tracking pixels.
     \end{enumerate}
   \end{solution}
@@ -410,26 +410,51 @@
 
   \begin{solution}
     \begin{enumerate}
-      \item The attacker model is a strong attacker (e.g. intelligence service).
-      \item A mix-net can be attacked by a strong attacker by using traffic analysis and by using a Sybil attack.
-      \item The security of the presented product is low because the operator can see all the traffic and the participants can be identified by the operator.
+      \item We assume a strong attacker, that can read and send messages, flood or block messages, and operate anonymity services (all but one) and webservers. The attacker cannot break cryptographic systems or attack user's personal machine and has limited resources.
+      \item Traffic analysis (observe all incoming and outgoing messages) and tagging (add a tag to the message that is not removed by the mix).
+      \item  The security is low. Single point of failure: if the operator is compromised the whole system is compromised. Low anonymity set: only 10 participants per mix. No diversity: all mixes are operated by the same operator.
     \end{enumerate}
   \end{solution}
 \end{exercise}
 
 \begin{exercise}{DC networks}
-  Given were 4 local sums (A, B, C, D), a key graph kAB, kBC, kCD, and the key kBC. We are participant B and have sent an empty message.
+  We are participant B in a DC network. The following local sums, keys and messages are known:
+
+  \begin{align*}
+    s_A &= 00010110 \\
+    s_B &= 01000100 \\
+    s_C &= 01011001 \\
+    s_D &= 10001000 \\
+    m_B &= 00000000 \\
+    k_{BC} &= 01101111 \\
+  \end{align*}
+
+  \begin{figure}
+    \center
+    \begin{tikzpicture}[>=stealth, node distance=2cm]
+      \node (A) {A};
+      \node[right of=A] (B) {B};
+      \node[right of=B] (C) {C};
+      \node[right of=C] (D) {D};
+
+      \draw (A) -- (B);
+      \draw (B) -- (C);
+      \draw (C) -- (D);
+    \end{tikzpicture}
+    \caption{Key graph}
+  \end{figure}
+
   \begin{enumerate}
-    \item Calculate the sent message N. Sketch your calculation.
-    \item Limit who can have sent the message. Sketch your calculation.
-    \item What needs to happen for B to make fewer statements?
+    \item Calculate the sent message N. Include your calculation.
+    \item Limit who can have sent the message. Include your calculation.
+    \item How can we make it harder for $B$ to guess the sender?
   \end{enumerate}
 
   \begin{solution}
     \begin{enumerate}
-      \item The sent message N is the sum of the local sums A, B, C, and D. Sketch your calculation.
-      \item The message can only be sent by participants A and C. Sketch your calculation.
-      \item For B to make fewer statements, the key kBC must be changed.
+      \item Sum of the local sums is the message: $N = 00010110 \oplus 01000100 \oplus 01011001 \oplus 10001000 = 10000011$
+      \item A and C cause 3 and four bits to be flipped when excluded from the sum, respectively. B causes 2 bits to be flipped. D causes 1 bit to be flipped. Thus, A and C are likely candidates.
+      \item Increase the anonymity set. Introduce dummy traffic, or randomize the message timing.
     \end{enumerate}
   \end{solution}
 \end{exercise}
