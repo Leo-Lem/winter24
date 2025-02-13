@@ -1,6 +1,6 @@
 \documentclass{article}
 
-\usepackage[]{../.template/xrcise}
+\usepackage[solutions]{../.template/xrcise}
 
 \subject{Bio-inspired Artificial Intelligence}
 \semester{Winter 2024}
@@ -255,7 +255,7 @@
 
   \begin{solution}
     \begin{enumerate}
-      \item Multisensory integration is the process by which information from different sensory modalities is combined to form a unified percept. This process can enhance the detection and discrimination of stimuli and improve the accuracy and reliability of sensory processing.
+      \item Multisensory integration is the process by which information from different sensory modalities is combined to form a unified perception. This process can enhance the detection and discrimination of stimuli and improve the accuracy and reliability of sensory processing.
       \item The cocktail party effect is the ability to focus on a single conversation in a noisy environment. This phenomenon allows individuals to selectively attend to one speaker while ignoring other competing sounds.
     \end{enumerate}
   \end{solution}
@@ -272,7 +272,7 @@
     \begin{enumerate}
       \item In the integrate-and-fire model, the neuron integrates input signals over time and fires a spike when the membrane potential reaches a threshold. In the leaky integrate-and-fire model, the neuron also integrates input signals over time, but the membrane potential decays over time in the absence of input. This leads to more realistic behavior and allows the neuron to adapt to changing input conditions.
       \item The similarity angle between two vectors $\mathbf{a}$ and $\mathbf{b}$ is given by
-        \[ \cos(\theta) = \frac{\mathbf{a} \cdot \mathbf{b}}{\|\mathbf{a}\| \|\mathbf{b}\|}. \]
+        \[ \theta = \arccos(\frac{\mathbf{a} \cdot \mathbf{b}}{\|\mathbf{a}\| \|\mathbf{b}\|}). \]
         For $\mathbf{w} = [1, 2, 3]$ and $\mathbf{x} = [4, 5, 6]$, we have
         \[ \cos(\theta) = \frac{1 \cdot 4 + 2 \cdot 5 + 3 \cdot 6}{\sqrt{1^2 + 2^2 + 3^2} \sqrt{4^2 + 5^2 + 6^2}} = \frac{32}{\sqrt{14} \sqrt{77}}. \]
       \item The output of a perceptron is given by
@@ -304,7 +304,7 @@
     \begin{enumerate}
       \item The different layers in a CNN learn different features of the input data. The first layers typically learn low-level features like edges and textures, while later layers learn higher-level features like shapes and objects.
       \item The filtering in a CNN layer with a $5 \times 5$ matrix and a $3 \times 3$ filter, stride $1$, and no padding can be computed by sliding the filter over the input matrix and computing the dot product at each position. The resulting output will be a $3 \times 3$ matrix.
-      \item The orientation and firing rate of a simple cell for a line of different orientations can be visualized in a diagram with the orientation on the $x$-axis and the firing rate on the $y$-axis. It usually shows a peak at the preferred orientation of the cell and decreases for other orientations.
+      \item The orientation and firing rate of a simple cell for a line of different orientations can be visualized in a diagram with the orientation on the $x$-axis and the firing rate on the $y$-axis. It's a normal distribution from -90° to +90° with the peak firing rate at 0°.
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -313,23 +313,22 @@
   Explain interaural time difference (ITD) and interaural level difference (ILD) and which one is used for high and low frequencies.
 
   \begin{solution}
-    \begin{enumerate}
-      \item Interaural time difference (ITD) is the difference in time it takes for a sound to reach each ear, while interaural level difference (ILD) is the difference in intensity of a sound at each ear. ITD is used for low frequencies, while ILD is used for high frequencies.
-    \end{enumerate}
+    Interaural time difference (ITD) is the difference in time it takes for a sound to reach each ear, while interaural level difference (ILD) is the difference in intensity of a sound at each ear. ITD is used for low frequencies, while ILD is used for high frequencies.
   \end{solution}
 \end{exercise}
 
 \begin{exercise}{Behavior}
   \begin{enumerate}
     \item Explain a Braitenberg vehicle with an example and name the behavior of your example vehicle.
-    \item Complete the flow chart of the functional decomposition of the classical approach for a robot controller: sensors $\rightarrow$ \_ $\rightarrow$ \_ $\rightarrow$ \_ $\rightarrow$ \_ $\rightarrow$ actuators.
+    \item Complete the flow chart of the functional decomposition of the classical approach for a robot controller:
+    \begin{center}sensors $\rightarrow$ \_ $\rightarrow$ \_ $\rightarrow$ \_ $\rightarrow$ \_ $\rightarrow$ actuators.\end{center}
     \item Explain the advantage of a behavior-based approach to robotics.
   \end{enumerate}
 
   \begin{solution}
     \begin{enumerate}
       \item A Braitenberg vehicle is a simple robot that exhibits complex behavior through the direct coupling of sensors to actuators. An example of a Braitenberg vehicle is a light-seeking robot that moves towards a light source. The behavior of this example vehicle is phototaxis.
-      \item The flow chart of the functional decomposition of the classical approach for a robot controller is: sensors $\rightarrow$ perception $\rightarrow$ modelling $\rightarrow$ planning $\rightarrow$ execution $\rightarrow$ actuators.
+      \item The flow chart of the functional decomposition of the classical approach for a robot controller is: sensors $\rightarrow$ perception $\rightarrow$ modeling $\rightarrow$ planning $\rightarrow$ execution $\rightarrow$ actuators.
       \item The advantage of a behavior-based approach to robotics is that it allows for the development of complex behaviors through the combination of simple behaviors. This approach is more robust and adaptable to changing environments than traditional control architectures.
     \end{enumerate}
   \end{solution}
