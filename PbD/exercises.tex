@@ -56,7 +56,7 @@
       \item Indeterministic encryption means that the same plaintext is encrypted to different ciphertexts each time.
       \item Indeterministic encryption in an asymmetric cryptosystem is implemented by adding randomness to the encryption process.
       \item Nothing changes when using a symmetric cryptosystem compared to an asymmetric cryptosystem.
-      \item To implement indeterministic encryption with RSA, random padding is added to the plaintext before encryption. With ElGamal, a random number is used to generate the encryption key.
+      \item To implement indeterministic encryption with RSA, random padding is added to the plaintext before encryption. With ElGamal, nothing needs to be done as it is already indeterministic.
       \item Indeterministic encryption prevents chosen-ciphertext attacks.
     \end{enumerate}
   \end{solution}
@@ -112,8 +112,8 @@
 
   \begin{solution}
     \begin{enumerate}
-      \item A powerful attacker can determine the IP addresses of users accessing a specific website through a mix-based anonymization system by using traffic analysis and traffic correlation.
-      \item A powerful attacker can determine which websites a specific user has accessed via a mix-based anonymization system by using metadata analysis, such as HTTP headers or specific request characteristics.
+      \item Message tagging: Add a tag to the website response that is not removed by the mix.
+      \item Traffic analysis and correlation: By observing the incoming and outgoing messages, the attacker can correlate the messages to determine which websites the user accessed.
       \item \begin{itemize}
           \item Cookies: Store user data in the browser. Against websites. Example: Google Analytics.
           \item Browser fingerprinting: Collect browser data. Against websites. Example: Panopticlick.
