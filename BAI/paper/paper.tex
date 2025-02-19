@@ -209,8 +209,8 @@ To encode the captions, a vocabulary of words is created from the captions and e
 
 \begin{table}[H]
     \begin{tabular}{c|cccccccc}
-        \textbf{Word} & $<$pad$>$ & $<$unknown$>$ & $<$start$>$ & $<$end$>$ & is & and & dog & with \\
-        \textbf{Index} & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7
+        \textbf{Word}  & $<$pad$>$ & $<$unknown$>$ & $<$start$>$ & $<$end$>$ & is & and & dog & with \\
+        \textbf{Index} & 0         & 1             & 2           & 3         & 4  & 5   & 6   & 7
     \end{tabular}
     \caption{Example vocabulary with special tokens. \label{tab:vocabulary}}
 \end{table}
@@ -289,16 +289,16 @@ Our experiments use the hyperparameters shown in Table \ref{tab:hyperparameters}
     \center
     \fontsize{8}{10}\selectfont
     \begin{tabular}{r|l}
-        \texttt{CAPTION\_LEN} & 20 \\
-        \texttt{SIZE} & 8000 \\
-        \texttt{THRESHOLD} & 2 \\
-        \texttt{HIDDEN\_DIM} & 512 \\
-        \texttt{EMBEDDING\_DIM} & 256 \\
-        \texttt{NUM\_LAYERS} & 2 \\
-        \texttt{DROPOUT} & .1 \\
-        \texttt{EPOCHS} & 100 \\
-        \texttt{PATIENCE} & None \\
-        \texttt{BATCH\_SIZE} & 64 \\
+        \texttt{CAPTION\_LEN}   & 20   \\
+        \texttt{SIZE}           & 8000 \\
+        \texttt{THRESHOLD}      & 2    \\
+        \texttt{HIDDEN\_DIM}    & 512  \\
+        \texttt{EMBEDDING\_DIM} & 256  \\
+        \texttt{NUM\_LAYERS}    & 2    \\
+        \texttt{DROPOUT}        & .1   \\
+        \texttt{EPOCHS}         & 100  \\
+        \texttt{PATIENCE}       & None \\
+        \texttt{BATCH\_SIZE}    & 64   \\
         \texttt{LEARNING\_RATE} & 1e-3
     \end{tabular}
     \caption{Hyperparameters used in the experiments.}\label{tab:hyperparameters}
@@ -322,10 +322,10 @@ The results of the evaluation metrics are shown in Table \ref{tab:results} and F
             \centering
             \fontsize{8}{10}\selectfont
             \begin{tabular}{c|c|c|c}
-                & \textbf{BLEU-4} & \textbf{METEOR} & \textbf{NIST-4} \\
-                GRU & .0511 & .1551 & 1.0202 \\
-                LSTM & .0541 & .1537 & .9137 \\
-                Transformer & .0183 & .0956 & .6013
+                            & \textbf{BLEU-4} & \textbf{METEOR} & \textbf{NIST-4} \\
+                GRU         & .0511           & .1551           & 1.0202          \\
+                LSTM        & .0541           & .1537           & .9137           \\
+                Transformer & .0183           & .0956           & .6013
             \end{tabular}
             \caption{Evaluation metrics.}\label{tab:results}
         \end{table}

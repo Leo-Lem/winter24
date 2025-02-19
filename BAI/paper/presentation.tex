@@ -222,7 +222,7 @@
 \renewcommand{\arraystretch}{1.2}
 
 \begin{frame}[plain]
-  \titlepage
+	\titlepage
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -232,9 +232,9 @@
 \begin{frame}{Introduction}
 	\textbf{What is Image Captioning?}
 	\begin{itemize}
-			\item Task: Generate descriptive textual captions for images.
-			\item Combines computer vision (CV) and natural language processing (NLP).
-			\item Application examples: Assistive technology, automated metadata generation.
+		\item Task: Generate descriptive textual captions for images.
+		\item Combines computer vision (CV) and natural language processing (NLP).
+		\item Application examples: Assistive technology, automated metadata generation.
 	\end{itemize}
 \end{frame}
 
@@ -252,26 +252,26 @@
 \begin{frame}{Methodology: Dataset and Features}
 	\textbf{Dataset: Flickr8k}
 	\begin{itemize}
-			\item Contains 8,000 images with five captions per image.
+		\item Contains 8,000 images with five captions per image.
 	\end{itemize}
 	\textbf{Feature Extraction}
 	\begin{itemize}
-			\item Pre-trained EfficientNet B0 model.
-			\item Extracts high-level features from images.
+		\item Pre-trained EfficientNet B0 model.
+		\item Extracts high-level features from images.
 	\end{itemize}
 \end{frame}
 
 \begin{frame}{Methodology: Decoder Architectures}
 	\textbf{Architectures Evaluated}
 	\begin{itemize}
-			\item GRU (Gated Recurrent Units)
-			\item LSTM (Long Short-Term Memory Networks)
-			\item Transformer
+		\item GRU (Gated Recurrent Units)
+		\item LSTM (Long Short-Term Memory Networks)
+		\item Transformer
 	\end{itemize}
 	\textbf{Implementation}
 	\begin{itemize}
-			\item Implemented in PyTorch.
-			\item Trained using image features and paired captions.
+		\item Implemented in PyTorch.
+		\item Trained using image features and paired captions.
 	\end{itemize}
 \end{frame}
 
@@ -299,16 +299,16 @@
 \begin{frame}{Results: Metrics}
 	\textbf{Evaluation Metrics}
 	\begin{itemize}
-			\item BLEU: Measures n-gram overlap.
-			\item METEOR: Considers semantic matching (synonyms and stemmed).
-			\item NIST: Focuses on information content (rarer n-grams are weighted higher).
+		\item BLEU: Measures n-gram overlap.
+		\item METEOR: Considers semantic matching (synonyms and stemmed).
+		\item NIST: Focuses on information content (rarer n-grams are weighted higher).
 	\end{itemize}
 \end{frame}
 
 \begin{frame}{Results: Comparison of Architectures}
 	\begin{itemize}
-			\item GRU and LSTM outperform Transformer.
-			\item Transformer struggles with smaller datasets like Flickr8k.
+		\item GRU and LSTM outperform Transformer.
+		\item Transformer struggles with smaller datasets like Flickr8k.
 	\end{itemize}
 	\textbf{Visual Comparison}
 	\includegraphics[width=.6\textwidth]{res/metrics.png}
@@ -317,21 +317,21 @@
 \begin{frame}{Discussion}
 	\textbf{Insights and Implications}
 	\begin{itemize}
-			\item Traditional architectures (GRU, LSTM) remain competitive.
-			\item Transformers may require larger datasets to realize their full potential.
+		\item Traditional architectures (GRU, LSTM) remain competitive.
+		\item Transformers may require larger datasets to realize their full potential.
 	\end{itemize}
 \end{frame}
 
 \begin{frame}{Conclusion and Future Work}
 	\textbf{Summary}
 	\begin{itemize}
-			\item Evaluated GRU, LSTM, and Transformer for image captioning.
-			\item GRU and LSTM outperform Transformer on Flickr8k.
+		\item Evaluated GRU, LSTM, and Transformer for image captioning.
+		\item GRU and LSTM outperform Transformer on Flickr8k.
 	\end{itemize}
 	\textbf{Future Work}
 	\begin{itemize}
-			\item Test on larger datasets (e.g., MS COCO).
-			\item Finetune pretrained models.
+		\item Test on larger datasets (e.g., MS COCO).
+		\item Finetune pretrained models.
 	\end{itemize}
 \end{frame}
 

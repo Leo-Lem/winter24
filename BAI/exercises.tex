@@ -26,7 +26,7 @@
       \item Synaptic correlation describes the relationship between pre- and post-synaptic activity. This correlation is modeled using the weights of neural connections in spiking neural networks.
       \item Spike-Timing-Dependent-Plasticity (STDP) is a learning rule that strengthens or weakens synaptic connections based on the synaptic correlation.
       \item Rate-coded models use firing rates to encode information, only the frequency of spikes matters. Integrate-and-fire models integrate input signals over time and fire a spike when a threshold is reached, where leaky would describe the potential decay over time. Spike-response models model the response of a neuron to an input spike directly using a response function.
-          \par Rate-coding is the simplest approach, integrate-and-fire provides a good trade-off between biological plausibility and computational efficiency, and spike-response models are more complex and biologically realistic.
+            \par Rate-coding is the simplest approach, integrate-and-fire provides a good trade-off between biological plausibility and computational efficiency, and spike-response models are more complex and biologically realistic.
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -41,9 +41,9 @@
   \begin{solution}
     \begin{enumerate}
       \item Neurons and synapses in biological neural structures correspond to nodes and weighted connections in artificial neural networks.
-        \par Action potentials in biological neurons correspond to activation values in artificial neural networks.
-        \par Plasticity in biological synapses describes the potential to change and corresponds to weight updates in backpropagation in artificial neural networks.
-        \par Dopamine in biological reward systems corresponds to reward signals in artificial neural networks, like in reinforcement learning.
+            \par Action potentials in biological neurons correspond to activation values in artificial neural networks.
+            \par Plasticity in biological synapses describes the potential to change and corresponds to weight updates in backpropagation in artificial neural networks.
+            \par Dopamine in biological reward systems corresponds to reward signals in artificial neural networks, like in reinforcement learning.
       \item Two different ANN architectures are convolutional networks, which are used for image processing tasks, and recurrent networks, which are used for sequential data processing tasks.
       \item Some examples of useful applications of artificial neural networks include speech and language processing, image recognition, and natural language understanding.
     \end{enumerate}
@@ -213,29 +213,29 @@
 
 \begin{exercise}{Multiple Choice}
   \begin{enumerate}
-    \item The neighborhood in a self-organizing map (SOM) is computed as a 
-      \begin{itemize}
-        \item Gaussian
-        \item linear
-        \item step
-        \item constant
-      \end{itemize}
-      function of the distance between the winning neuron and the other neurons.
+    \item The neighborhood in a self-organizing map (SOM) is computed as a
+          \begin{itemize}
+            \item Gaussian
+            \item linear
+            \item step
+            \item constant
+          \end{itemize}
+          function of the distance between the winning neuron and the other neurons.
 
-    \item A ground language is based on the 
-      \begin{itemize}
-        \item ground truth.
-        \item physical world.
-        \item ground state.
-        \item ground floor.
-      \end{itemize}
+    \item A ground language is based on the
+          \begin{itemize}
+            \item ground truth.
+            \item physical world.
+            \item ground state.
+            \item ground floor.
+          \end{itemize}
 
-    \item The ventriloquism effect is the illusion that a sound is coming from 
-      \begin{itemize}
-        \item a different location
-        \item the same Location
-      \end{itemize}
-      than the actual source.
+    \item The ventriloquism effect is the illusion that a sound is coming from
+          \begin{itemize}
+            \item a different location
+            \item the same Location
+          \end{itemize}
+          than the actual source.
   \end{enumerate}
 
   \begin{solution}
@@ -272,23 +272,23 @@
     \begin{enumerate}
       \item In the integrate-and-fire model, the neuron integrates input signals over time and fires a spike when the membrane potential reaches a threshold. In the leaky integrate-and-fire model, the neuron also integrates input signals over time, but the membrane potential decays over time in the absence of input. This leads to more realistic behavior and allows the neuron to adapt to changing input conditions.
       \item The similarity angle between two vectors $\mathbf{a}$ and $\mathbf{b}$ is given by
-        \[ \theta = \arccos(\frac{\mathbf{a} \cdot \mathbf{b}}{\|\mathbf{a}\| \|\mathbf{b}\|}). \]
-        For $\mathbf{w} = [1, 2, 3]$ and $\mathbf{x} = [4, 5, 6]$, we have
-        \[ \cos(\theta) = \frac{1 \cdot 4 + 2 \cdot 5 + 3 \cdot 6}{\sqrt{1^2 + 2^2 + 3^2} \sqrt{4^2 + 5^2 + 6^2}} = \frac{32}{\sqrt{14} \sqrt{77}}. \]
+            \[ \theta = \arccos(\frac{\mathbf{a} \cdot \mathbf{b}}{\|\mathbf{a}\| \|\mathbf{b}\|}). \]
+            For $\mathbf{w} = [1, 2, 3]$ and $\mathbf{x} = [4, 5, 6]$, we have
+            \[ \cos(\theta) = \frac{1 \cdot 4 + 2 \cdot 5 + 3 \cdot 6}{\sqrt{1^2 + 2^2 + 3^2} \sqrt{4^2 + 5^2 + 6^2}} = \frac{32}{\sqrt{14} \sqrt{77}}. \]
       \item The output of a perceptron is given by
-        \[
-          y = \begin{cases}
-            1 & \text{if } \mathbf{w} \cdot \mathbf{x} > 0, \\
-            0 & \text{otherwise}.
-          \end{cases}
-        \]
-        For $\mathbf{w} = [1, 2, 3]$, $\mathbf{x} = [4, 5, 6]$, and $b = 0$, we have
-        \[
-          y = \begin{cases}
-            1 & \text{if } 1 \cdot 4 + 2 \cdot 5 + 3 \cdot 6 > 0, \\
-            0 & \text{otherwise}.
-          \end{cases}
-        \]
+            \[
+              y = \begin{cases}
+                1 & \text{if } \mathbf{w} \cdot \mathbf{x} > 0, \\
+                0 & \text{otherwise}.
+              \end{cases}
+            \]
+            For $\mathbf{w} = [1, 2, 3]$, $\mathbf{x} = [4, 5, 6]$, and $b = 0$, we have
+            \[
+              y = \begin{cases}
+                1 & \text{if } 1 \cdot 4 + 2 \cdot 5 + 3 \cdot 6 > 0, \\
+                0 & \text{otherwise}.
+              \end{cases}
+            \]
     \end{enumerate}
   \end{solution}
 \end{exercise}
@@ -321,7 +321,7 @@
   \begin{enumerate}
     \item Explain a Braitenberg vehicle with an example and name the behavior of your example vehicle.
     \item Complete the flow chart of the functional decomposition of the classical approach for a robot controller:
-    \begin{center}sensors $\rightarrow$ \_ $\rightarrow$ \_ $\rightarrow$ \_ $\rightarrow$ \_ $\rightarrow$ actuators.\end{center}
+          \begin{center}sensors $\rightarrow$ \_ $\rightarrow$ \_ $\rightarrow$ \_ $\rightarrow$ \_ $\rightarrow$ actuators.\end{center}
     \item Explain the advantage of a behavior-based approach to robotics.
   \end{enumerate}
 
@@ -360,28 +360,28 @@
 
 \begin{exercise}{Multiple Choice}
   \begin{enumerate}
-    \item In 
-      \begin{itemize}
-        \item Multilayer perceptrons (MLP)
-        \item Convolutional neural networks (CNN)
-        \item Self-organizing maps (SOM)
-        \item none of the above
-      \end{itemize}
-        is backpropagation used for learning.
+    \item In
+          \begin{itemize}
+            \item Multilayer perceptrons (MLP)
+            \item Convolutional neural networks (CNN)
+            \item Self-organizing maps (SOM)
+            \item none of the above
+          \end{itemize}
+          is backpropagation used for learning.
 
     \item An embodied language is based on
-      \begin{itemize}
-        \item the physical world.
-        \item ground truth.
-        \item ground state.
-        \item ground floor.
-      \end{itemize}
+          \begin{itemize}
+            \item the physical world.
+            \item ground truth.
+            \item ground state.
+            \item ground floor.
+          \end{itemize}
 
     \item What are the two streams and their tasks in human vision?
-      \begin{itemize}
-        \item Dorsal stream for spatial vision and ventral stream for object recognition
-        \item Ventral stream for spatial vision and dorsal stream for object recognition
-      \end{itemize}
+          \begin{itemize}
+            \item Dorsal stream for spatial vision and ventral stream for object recognition
+            \item Ventral stream for spatial vision and dorsal stream for object recognition
+          \end{itemize}
   \end{enumerate}
 
   \begin{solution}
