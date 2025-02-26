@@ -13,3 +13,6 @@
 [submodule "NLP/project"]
 	path = NLP/project
 	url = https://github.com/Leo-Lem/climate-opinions.git
+[submodule "BAI/code"]
+	path = BAI/code
+	url = https://github.com/Leo-Lem/image-captioning.git
