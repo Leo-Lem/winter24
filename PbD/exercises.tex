@@ -1,0 +1,462 @@
+\documentclass{article}
+
+\usepackage[]{../.template/xrcise}
+
+\subject{Privacy by Design}
+\semester{Winter 2024}
+\author{Leopold Lemmermann}
+
+\begin{document}\createtitle
+
+\section{Assignments}
+\begin{exercise}{Protection Goals}
+  In IT security, the protection goals of confidentiality, availability, and integrity are defined to describe what objectives an attacker aims for or what a technology is designed to protect. Provide an appropriate technique for each of these protection goals that can be used to implement or address the respective goal.
+
+  \begin{solution}
+    \begin{itemize}
+      \item \textbf{Confidentiality}: Encryption is used to protect the confidentiality of data by encoding it so that only authorized parties can access it.
+      \item \textbf{Availability}: Redundancy is used to ensure the availability of services by providing multiple instances of the same service.
+      \item \textbf{Integrity}: Hash functions are used to ensure the integrity of data by comparing the hash of the original data with the hash of the received data.
+    \end{itemize}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Pseudonyms}
+  Pseudonyms are fundamental building blocks of secure and privacy-friendly systems.
+  \begin{enumerate}
+    \item Briefly describe the general purpose of pseudonyms.
+    \item What is the difference between pseudonymity and anonymity?
+    \item Name three applications in which pseudonyms are used. Specify the type of pseudonym used in each case. Explain how pseudonyms are employed in each application.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item The general purpose of pseudonyms is to protect the identity of users.
+      \item In anonymity the identity of the user is not known, while in pseudonymity the identity of the user is known but protected.
+      \item \begin{itemize}
+              \item E-Mail: E-Mail addresses are used to send messages.
+              \item Social Media: Pseudonyms are used to protect the identity of users.
+              \item Online Banking: IBAN is used to facilitate transactions.
+            \end{itemize}
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Indeterministic Encryption}
+  \begin{enumerate}
+    \item What does indeterministic encryption mean?
+    \item\label{ex:asymmetric} How do you implement indeterministic encryption in an asymmetric cryptosystem?
+    \item What changes compared to \ref{ex:asymmetric} when using a symmetric cryptosystem?
+    \item You are tasked with implementing indeterministic encryption. The algorithms RSA and ElGamal are available. How would you proceed with each algorithm?
+    \item Which attack can be prevented by using indeterministic encryption?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Indeterministic encryption means that the same plaintext is encrypted to different ciphertexts each time.
+      \item Indeterministic encryption in an asymmetric cryptosystem is implemented by adding randomness to the encryption process.
+      \item Nothing changes when using a symmetric cryptosystem compared to an asymmetric cryptosystem.
+      \item To implement indeterministic encryption with RSA, random padding is added to the plaintext before encryption. With ElGamal, nothing needs to be done as it is already indeterministic.
+      \item Indeterministic encryption prevents chosen-ciphertext attacks.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Unobservable Retrieval of Information}
+  Given is a Blind-Message-Service with three servers S1, S2, and S3. The following datasets are stored in the Blind-Message-Service: D0 = 1011, D1 = 0101, D2 = 1100, D3 = 0011, D4 = 0000.
+  \begin{enumerate}
+    \item\label{ex:bms} You want to retrieve dataset D2 without the servers knowing which dataset you are interested in. What messages are transmitted? How do you obtain the requested dataset? Sketch the computational steps.
+    \item You want to ensure, as in task \ref{ex:bms}, that during a query it remains unknown which dataset the client is interested in. However, instead of the Blind-Message-Service, only a single high-bandwidth server is available. The database, however, is relatively small. Which method do you apply?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item To retrieve dataset D2 without the servers knowing which dataset you are interested in, you send a request for all datasets and then filter out the requested dataset. The computational steps are as follows:
+            \begin{itemize}
+              \item Send a request for all datasets.
+              \item Receive the datasets from the servers.
+              \item Filter out the requested dataset D2.
+            \end{itemize}
+      \item Request all datasets one after the other and discard all datasets except the requested one.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Tracking on the Application Layer}
+  \begin{enumerate}
+    \item Name two security goals that are violated during tracking at the application layer.
+    \item What is the difference between tracking at the application layer and tracking at the network layer?
+    \item Name three fundamental mechanisms to prevent or make tracking at the application layer more difficult. Explain for each mechanism how it hinders tracking, against which type of attacker, and provide a specific example where the mechanism is implemented.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Two security goals that are violated during tracking at the application layer are confidentiality and anonymity.
+      \item Application layer uses browser data, while network layer uses IP data.
+      \item \begin{itemize}
+              \item Block cookies: Prevents tracking by websites. Against advertisers. Example: Browser settings.
+              \item Use VPNs: Prevents tracking by ISPs. Against ISPs. Example: NordVPN.
+              \item Use privacy plugins: Prevents tracking by websites. Against advertisers. Example: uBlock Origin.
+            \end{itemize}
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Surveillance on the Internet}
+  \begin{enumerate}
+    \item\label{ex:mix-based-ip} Explain a possible approach by which a powerful attacker (e.g., an intelligence agency) can determine the IP addresses of users accessing a specific website through a mix-based anonymization system (e.g., Tor).
+    \item\label{ex:mix-based-history}  Explain a possible approach by which a powerful attacker (e.g., an intelligence agency) can determine which websites a specific user has accessed via a mix-based anonymization system.
+          \par\textit{Note: Describe a different method from the one in task \ref{ex:mix-based-ip}, even if your method in \ref{ex:mix-based-ip} could also be applied to task \ref{ex:mix-based-history}.}
+    \item Explain three techniques by which a web server can recognize a user during their second (subsequent) visit.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Message tagging: Add a tag to the website response that is not removed by the mix.
+      \item Traffic analysis and correlation: By observing the incoming and outgoing messages, the attacker can correlate the messages to determine which websites the user accessed.
+      \item \begin{itemize}
+              \item Cookies: Store user data in the browser. Against websites. Example: Google Analytics.
+              \item Browser fingerprinting: Collect browser data. Against websites. Example: Panopticlick.
+              \item Tracking pixels: Track user behavior. Against advertisers. Example: Facebook Pixel.
+            \end{itemize}
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\section{Catalogue}
+
+\setcounter{subsection}{34}
+\begin{exercise}{Informationsgewinn aufgrund von Kontextinformationen}
+  Unmittelbar vor der Durchführung eines militärischen Kampfeinsatzes steigt die Anzahl der Essenslieferungen (Pizza, Burger, Croques, Sushi etc.), die an die Adresse des Verteidigungsministeriums geliefert werden, massiv an. Diskutieren Sie, ob das System durch einen passiven oder einen aktiven Angreifer verwundbar ist und welche Schutzziele dadurch bedroht werden. Für welche Angriffsart bzw. Angriffsarten ist das System anfällig? Was wären mögliche Gegenmaßnahmen?
+
+  \begin{solution}
+    \begin{itemize}
+      \item Passiver Angreifer: Bestelldatenanalyse können Hinweise auf militärische Operationn geben. Vertraulichkeit der operativen Planung wird bedroht. Traffic- oder Metadatenanalyse sind mögliche Angriffsarten. Als Gegenmaßnahmen können z.B. falsche Bestellungen oder Verschleierung der Lieferadresse genannt werden.
+      \item Aktiver Angreifer: Blockade von Lieferungen oder Einschleusung von Schadsoftware (wie QR-Codes) in Lierferungen. Integrität der Lieferungen wird bedroht. Social Engeineering, Supply Chain Attacks. Gegenmaßnahmen könnten z.B. die Überprüfung von Lieferungen oder die Verwendung von sicheren Lieferdiensten sein.
+    \end{itemize}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Angriff über WLAN-Namen}
+  Viele öffentliche WLAN-Access-Points (APs) teilen allen Stationen (Clients) in Reichweite ihren WLAN-Namen (SSID) mit. Der Nutzer einer Station wählt aus der Liste aller Stationen anhand der SSID das Netz, mit dem er sich verbinden will. Damit der Nutzer diese Auswahl nicht jedes Mal wieder treffen muss, verbinden sich die Stationen automatisch mit Access Points, mit denen sie bereits verbunden waren. Hierzu wird eine Liste der bereits bekannten SSIDs auf der Station aufbewahrt. Stehen an einem Ort mehrere APs mit derselben SSID zur Auswahl, verbindet sich eine Station i. d. R. mit dem AP mit der größten Signalstärke.
+  \begin{enumerate}
+    \item Diskutieren Sie, ob das System durch einen passiven oder einen aktiven Angreifer verwundbar ist.
+    \item Welche Schutzziele werden dadurch bedroht?
+    \item Was wären mögliche Gegenmaßnahmen?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Passiv: MAC-Addressen tracken. Aktiv: Rogue-AP mit einer bekannten SSID aufstellen, um sich mit den Clients zu verbinden.
+      \item Anonymität, Integrität, Verfügbarkeit, Nicht-Beobachtbarkeit.
+      \item Verwendung von Authentifizierungszertifikaten, Verwendung von VPNs, Deaktivierung von automatischen Verbindungen.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\setcounter{subsection}{167}
+\begin{exercise}{Verschlüsselte PIN-Übermittlung}
+  Der Nutzer eines Laptops soll sich gegenüber einem Server im Heimnetz durch eine PIN authentisieren. Um die vom Nutzer am Laptop eingegebene PIN nicht mitlesen zu können, wird sie vor der Übermittlung mit dem öffentlichen RSA-Schlüssel des Servers deterministisch verschlüsselt.
+  \begin{enumerate}
+    \item Analysieren Sie die Sicherheit eines solchen Protokolls ggü. einem Angreifer auf der Kommunikationsstrecke.
+    \item Welche Schutzmaßnahmen können Nutzer und Server umsetzen, um die Sicherheit des Protokolls zu erhöhen?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Der Angreifer kann die PIN zwar nicht direkt entschlüsseln, aber Replay-, Man-in-the-Middle-, und Brute-Force-Angriffe (bei kurzer PIN) sind möglich.
+      \item Server: Challenge-Response-Verfahren, digitale Signaturen, Rate-Limiting um Brute-Force zu verhindern. Nutzer: Lange PINs, regelmäßige Änderung der PIN, TLS verwenden.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\setcounter{subsection}{188}
+\begin{exercise}{Datenschutzgerechte Pseudonyme}
+  Es ist denkbar, dass eine Zertifizierungsstelle Z den Public Key als Pseudonym einer ihr bekannten Person P zertifiziert. Allerdings kann die Zertifizierungsstelle dann nicht nur im Streitfall das Pseudonym aufdecken, sondern auch vollständig nachvollziehen, welche Geschäfte P gemacht hat (bzw. welche Signaturen P geleistet hat), da sie den Public Key mit der Identität von P verketten kann.
+
+  Denken Sie sich eine Variante aus, bei der eine einzige Zertifizierungsstelle hierzu nicht mehr in der Lage ist, im Streitfall aber trotzdem eine Aufdeckung des Pseudonyms möglich ist.
+
+  \begin{solution}
+    Zwei Zertifizierungsstellen $Z_1$ und $Z_2$ zertifizieren jeweils einen Teil des Public Keys. Beide Teile zusammen ergeben den vollständigen Public Key. Im Streitfall müssen beide Zertifizierungsstellen zusammenarbeiten, um das Pseudonym aufzudecken. Denkbar wäre auch, dass eine Stelle die Identität und die andere den Public Key zertifiziert.
+  \end{solution}
+\end{exercise}
+
+\setcounter{subsection}{2220}
+\begin{exercise}{Speicherung des Aufenthaltsortes}
+  \begin{enumerate}
+    \item Welchen Zweck erfüllt die Speicherung des Aufenthaltsortes im GSM? Warum werden beim WLAN keine Aufenthaltsorte gespeichert?
+    \item Warum werden im GSM zur Speicherung des Aufenthaltsortes zwei getrennte Datenbanken (HLR, VLR) verwendet?
+    \item Bitte diskutieren Sie den erreichbaren Schutz des Aufenthaltsortes gegenüber Insider-Angriffen (z.B. durch Mitarbeiter des Netzbetreibers) und Outsidern.
+    \item Inwieweit trägt die TMSI zum Schutz des Aufenthaltsortes bei?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Speicherung in GSM dient der effizienten Zustellung von Anrufen und Nachrichten. Beim WLAN handelt es sich um ein lokales Netzwerk, bei dem keine Standortinformationen benötigt werden.
+      \item Home Location Register (HLR) speichert die Daten dauerhaft, Visitor Location Register (VLR) temporär. Gründe für die Trennung sind Effizienz und Datenschutz.
+      \item Insider: Strikte Zugriffskontrollen und -protokollierung für HLR und VLR, Rollentrennung, sodass kein Mitarbeiter Zugriff auf alle Daten hat, und Verschlüsselung sensibler Informationen können den Aufenthaltsort schützen. Outsider: Abfangen von Kommunikation und Abhören von Signalisierungsdaten können den Aufenthaltsort gefährden.
+      \item TMSI schützt den Aufenthaltsort, da sie nicht direkt mit dem IMSI verknüpft ist und regelmäßig geändert wird.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\setcounter{subsection}{2223}
+\begin{exercise}{Kritik an GSM}
+  Trotz der vorhandenen Sicherheitsfunktionen bietet GSM nur beschränkte Sicherheit hinsichtlich Vertraulichkeit. Warum?
+
+  \begin{solution}
+    Schwache bzw. veraltete Verschlüsselung, kein Schutz der Signalisierungsdaten, keine Ende-zu-Ende-Verschlüsselung, einseitige Authentifizierung (nur Nutzer zu Netz, nicht umgekehrt), …
+  \end{solution}
+\end{exercise}
+
+\setcounter{subsection}{2229}
+\begin{exercise}{Broadcast}
+  Durch Verteilung (Broadcast) von Verbindungswünschen im gesamten Versorgungsgebiet eines Kommunikationsnetzes (z.B. Mobilfunknetzes) kann auf das Speichern von Aufenthaltsdaten sowie Routinginformation verzichtet werden.
+  \begin{enumerate}
+    \item Erläutern Sie den Unterschied von offenen impliziten und verdeckten impliziten Adressen.
+    \item Könnte man auch die explizite Adressierung verwenden, um einem mobilen Teilnehmer eine nicht notwendigerweise vertrauliche Nachricht (z.B. eine SMS) zu senden, ohne ihn lokalisieren zu können? Begründen Sie Ihre Antwort.
+    \item Ist bei der variablen impliziten Adressierung ein Satellit zur Verteilung einsetzbar? Begründung!
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Offene implizite Adressen sind für jeden sichtbar, verdeckte implizite Adressen verwenden Pseudonyme, um die Identität zu schützen.
+      \item Grundsätzlich ja, hierbei müsste die Nachricht jedoch an alle Teilnehmer gesendet werden, was ineffizient ist und die Vertraulichkeit gefährdet.
+      \item Variable implizite Adressierung bedeutet, dass die Adresse nicht fest ist, sondern sich ändert. Ein Satellit ist grudnsätzlich geeignet, da er große geografische Bereiche gleichzeitig mit einem Broadcast ansprechen könnte. Allerdings wäre hohe Bandbreitenanforderungen notwendig, und die Skalierbarkeit des Systems ist beschränkt.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Kollisionsabstand offener impliziter Adressen}
+  Die Länge einer impliziten Adresse sei 32 Bit. Es sollen 100.000 Teilnehmer versorgt werden. Jedem Teilnehmer sind zu jedem Zeitpunkt 50 Adressen zugeordnet. Angenommen, jeder Teilnehmer erhält im Durchschnitt 1 Nachricht pro Stunde.
+  \begin{enumerate}
+    \item Wie groß ist der Kollisionsabstand, d.h. wie lange dauert es im Mittel, bis ein ganz bestimmter Teilnehmer einen Fehlalarm (Nachricht eigentlich für einen anderen Teilnehmer bestimmt) erhält?
+    \item Der mittlere Kollisionsabstand soll mindestens 3 Jahre betragen. Wie lang muss die offene implizite Adresse mindestens sein?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Es gibt $2^{32}=4.294.967.296$ mögliche Adressen, $100.000 \cdot 50 = 5.000.000$ benötigte Adressen für die Nutzer, und $100.000 \cdot 1 = 100.000$ Nachrichten pro Stunde. Der Kollisionsabstand beträgt also
+            \[ d \approx 862h \]
+      \item Um einen mittleren Kollisionsabstand von mindestens 3 Jahren zu erreichen, muss die Adresslänge auf mindestens 41 Bit erhöht werden.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\setcounter{subsection}{231}
+\begin{exercise}{Blind-Messsage-Service}
+  \begin{enumerate}
+    \item Welche Schutzziele erfüllt der Blind-Message-Service?
+    \item Warum müssen beim Blind-Message-Service die Anfragevektoren und die Server-Antworten verschlüsselt übertragen werden?
+    \item Warum genügt beim modifizierten Blind-Message-Service die Verschlüsselung der Anfragevektoren?
+    \item Welche Verfahren können Sie alternativ zum Blind-Message-Service einsetzen, wenn Bandbreite keine Rolle spielt?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Vertraulichkeit.
+      \item Verschlüsselte Übertragungen verhindern, dass der Server die Anfragevektoren und die Antworten lesen kann und somit bleibt unbekannt was der Nutzer anfragt.
+      \item Die Antworten sind so gestaltet, dass sie keine direkten Informationen über die angefragten Daten enthalten. Dadurch muss lediglich die Anfrage verschlüsselt werden.
+      \item Alternativ könnte man Broadcast-Kommunikation einsetzen, wobei alle Daten abgefragt werden. Oder man könnte über mehrere Server verteilt Anfragen stellen, und sie dann aggregieren.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\setcounter{subsection}{235}
+\begin{exercise}{Modifikation von Chaum'schen Mixen}
+  Chaum'sche Mixe nutzen eine Datenbank, in der alle eingehenden Nachrichten gespeichert werden.
+  \begin{enumerate}
+    \item Bitte erläutern Sie den Angriff, der durch die Datenbank verhindert wird.
+    \item Unter welcher Bedingung kann die Datenbank gelöscht werden?
+    \item Wie lässt sich das Verfahren umbauen, sodass Sie unter Beibehaltung des Angreifermodells die Speichereffizienz steigern können?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Replay-Angriffe werden verhindert. Hierbei werden alte Nachrichten erneut gesendet, und da der einfache Mix zufällig verschlüsselt, kann der Angreifer feststellen welcher Output unverändert bleibt.
+      \item Bis das Schlüsselpaar des Mixes geändert wird, kann die Datenbank nicht gelöscht werden.
+      \item Hash-basierte Speicherung. Bloom-Filter. Batch-abhängige Verarbeitung. Zeitlich begrenzte Speicherung.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{DC-Netz}
+  Der (entartete) Schlüsselgraph eines DC-Netzes für die Teilnehmer A, B, C und D sei (A-B-C-D). B greift nun A, C und D an. Beschreiben Sie den erreichbaren Schutz für A, C und D. Wie sind Sie bei Ihrer Analyse vorgegangen?
+
+  \begin{solution}
+    Teilnehmer A und C sind direkt gefährdet, da B Zugriff auf ihre Schlüsselanteile hat und diese aus Gesamtsumme isolieren kann. D ist relativ sicherer, solange C nicht kompromittiert ist. Die Analyse erfolgte durch Berechnung der Nachrichten, die B senden kann.
+  \end{solution}
+\end{exercise}
+
+\setcounter{subsection}{238}
+\begin{exercise}{Überwachung im Internet}
+  \begin{enumerate}
+    \item\label{ex:break-mix} Erläutern Sie eine mögliche Vorgehensweise, mit der ein starker Angreifer (z.B. ein Nachrichtendienst) die IP-Adressen der Nutzer herausfinden kann, die eine bestimmte Webseite über ein mixbasiertes Anonymisierungssystem (z.B. Tor) abrufen.
+    \item\label{ex:break-mix-2} Erläutern Sie eine mögliche Vorgehensweise, mit der ein starker Angreifer (z.B. ein Nachrichtendienst) ermitteln kann, welche Webseiten ein bestimmter Nutzer über ein mixbasiertes Anonymisierungssystem abgerufen hat.
+          \par\textit{Hinweis: Beschreiben Sie eine andere Vorgehensweise als in Teilaufgabe \ref{ex:break-mix}, auch wenn Ihre für Teilaufgabe \ref{ex:break-mix} gewählte Vorgehensweise für Teilaufgabe \ref{ex:break-mix-2} geeignet ist.}
+    \item Erläutern Sie drei Techniken, mit denen ein Webserver einen Nutzer bei seinem zweiten (späteren) Besuch wiedererkennen kann.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Timing-Korrelation: Verlauf und Volumen von Anfragen bei der Eingangs-Node und Antworten bei der Exit-Node korrelieren, um Nutzer zu identifizieren.
+      \item Das Endgerät des Nutzers mit Malware infizieren, um Browserverlauf und Cookies zu stehlen.
+      \item Cookies, Browser-Fingerprinting.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\setcounter{subsection}{2310}
+\begin{exercise}{Tagging-Angriff auf anonyme Mixe und Kanäle}
+  \begin{enumerate}
+    \item Was ist ein Tagging-Angriff auf anonyme Kanäle?
+    \item Wie verhindert man den Tagging-Angriff auf anonyme Kanäle?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Datenpakete mit Tag versehen (zB. Größe oder Reihenfolge der Pakete), welcher auch bei Verschlüsselung bestehen bleibt. Hiermit kann das Ziel des Pakets identifiziert werden.
+      \item E2E-Verschlüsselung, Prüfsummen, Paketnormalisierung.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Tracking auf der Anwendungsschicht}
+  \begin{enumerate}
+    \item Nennen Sie zwei Schutzziele, die beim Tracking auf der Anwendungsebene gebrochen werden.
+    \item Was unterscheidet Tracking auf der Anwendungsebene von Tracking auf der Netzebene?
+    \item Nennen Sie drei grundsätzliche Mechanismen, mit denen man Tracking auf der Anwendungsebene verhindern bzw. erschweren kann. Erläutern Sie für jeden Mechanismus, wie das Tracking erschwert wird und vor welchem Angreifer, und nennen Sie jeweils ein konkretes Beispiel, bei dem der Mechanismus umgesetzt wird.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Vertraulichkeit, Anonymität.
+      \item Anwendungsebene verwendet Browserdaten, während die Netzebene IP-Daten verwendet. Tracking innerhalb eines Programms v. Tracking über Netzwerke hinweg.
+      \item \begin{itemize}
+              \item Blockierung von Tracking (zB. Adblock): Tracking-Cookies und Third-Party-Mechanismen werden blockiert. Schutz vor Werbetreibenden.
+              \item Anonymisierungsdienste (zB. Incognito-Modus): Tracking-Cookies und lokale Daten werden nach Sitzung gelöscht. Schutz vor Webseiten und Werbetreibenden.
+              \item Fingerprinting-Schutz (zB. Privacy Badger): Standardisierung von Informationen wie Schriftart, Zeitzone, Bildschirmauflösung durch Manipulation der Browser-Umgebung. Schutz vor Webseiten.
+            \end{itemize}
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Strafverfolgung}
+  Die Polizei hat sich Zugriff auf einen Webserver verschafft, der zur unbefugten Verbreitung von urheberrechtlich geschütztem Material verwendet wird. Anhand des dort aufgezeichneten Access-Log sollen nun die Nutzer des Servers ausfindig gemacht werden. Bei der Ermittlung von Tatverdächtigen stößt man schnell auf Probleme: Die Zugriffe, die von der IP-Adresse A ausgingen, stammen von einem Kleinbetrieb, in dem es fünf Nutzer gibt. Der Inhaber des Anschlusses stellt der Polizei ein Protokoll des DSL-Routers zur Verfügung, in dem die Aktivitäten der einzelnen internen Nutzer anhand ihrer IP-Adressen aufgezeichnet wurden. Messungen ergeben, dass die Latenz des Kommunikationsnetzes zwischen DSL-Router und Server maximal 0,5 Sekunden beträgt. Auf Basis der verfügbaren Daten (Access-Log, IP-Adresse A, Protokoll des DSL-Routers und Latenz) soll nun die interne IP-Adresse ermittelt werden, von der die Zugriffe ausgingen.
+
+  Bitte erläutern Sie Ihr Vorgehen im Detail. Unter welcher Begrifflichkeit lassen sich derartige Angriffe zusammenfassen?
+
+  \begin{solution}
+    Hierbei kann ein Timing-Angriff durchgeführt werden. Verfügbare Daten sind das Access-Log, DSL-Router-Protokoll und die Latenz zwischen Router und Server. Durch Vergleich der Zugriffszeiten im Access-Log und den Latenzen im Router-Protokoll kann die interne IP-Adresse ermittelt werden.
+    \begin{itemize}
+      \item Alle relevanten HTTP-Anfragen aus dem Access-Log identifizieren und die Zeitpunkte notieren.
+      \item Alle ausgehenden Pakete im Router-Protokoll identifizieren und die Zeitpunkte, sowie die zugehörigen IP-Adressen notieren.
+      \item Zeitstempel korrelieren unter Beachtung der Latenz (Anfragen aus Access-Log +-.5 Sekunden später als im Router-Protokoll).
+      \item IP-Adresse mit den korrelierten Zeitstempeln identifizieren.
+    \end{itemize}
+  \end{solution}
+\end{exercise}
+
+
+
+\sheet[2020]{1st exam}
+\begin{exercise}{Broadcast}
+  A professor wants to receive feedback from students via a magazine and protect their identity. In addition to the feedback, a random number between 0 and 100 should be given. Answers are given in relation to this pseudonym.
+  \begin{enumerate}
+    \item In broadcasting, who is protected and what is the protection goal?
+    \item Name two examples of applications (apart from newspaper/TV/radio).
+    \item Which of the two types of implicit addressing was used here? What are possible problems with regard to this selection of pseudonyms?
+    \item The professor does not like that the answers to the feedback can be read by everyone (and not only by the corresponding person). How could the problem be solved? Write a text with instructions to the students and justify the necessity of the individual components.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item The recipients are protected. The protection goal is anonymity.
+      \item Two examples of broadcasts are the use of a VPN and the use of a mix-net.
+      \item The professor used the implicit addressing by pseudonyms. Possible problems with this selection of pseudonyms are that the pseudonyms are not unique and that the students could be identified by the professor.
+      \item The problem could be solved by encrypting the feedback and only allowing the professor to decrypt it. The students should also use a secure connection to send the feedback.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{IPv6 prefixes}
+  \begin{enumerate}
+    \item Why is it not sufficient to use different addresses under one prefix?
+    \item What are weaknesses of prefix sharing with a constant prefix and a small user group?
+    \item What are weaknesses of prefix bouquets if different prefixes are used for different goals but not per connection?
+    \item What is the problem with prefix hopping if the IP address changes during an existing connection?
+    \item How can this problem be solved with prefix hopping?
+    \item How can users be tracked apart from addressing? Name 3 examples.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Because the prefix can be used to identify the user.
+      \item As the anonymity group is small, the users using the same prefix could be identified using other information (e.g. timing). Also, group targeting is possible.
+      \item If prefixes are used for similar purposes (e.g. all for social media), the user can be identified by the prefix. Also, this might leak the user's goal to the attacker.
+      \item The connection is interrupted.
+      \item Session token (other than IP) can be used to identify the connection.
+      \item Users can be tracked apart from addressing by using cookies, browser fingerprinting, and tracking pixels.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{Mixes}
+  \begin{enumerate}
+    \item Specify the attacker model.
+    \item How can a mix-net be attacked by a strong attacker (e.g. intelligence service)? Name 2 examples.
+    \item A mix-net is offered by only one operator, who advertises that 20 mixes are used in a row and only 10 participants per mix are assigned for higher performance. Evaluate the security of the presented product with justification.
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item We assume a strong attacker, that can read and send messages, flood or block messages, and operate anonymity services (all but one) and webservers. The attacker cannot break cryptographic systems or attack user's personal machine and has limited resources.
+      \item Traffic analysis (observe all incoming and outgoing messages) and tagging (add a tag to the message that is not removed by the mix).
+      \item  The security is low. Single point of failure: if the operator is compromised the whole system is compromised. Low anonymity set: only 10 participants per mix. No diversity: all mixes are operated by the same operator.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\begin{exercise}{DC networks}
+  We are participant B in a DC network. The following local sums, keys and messages are known:
+
+  \begin{align*}
+    s_A    & = 00010110 \\
+    s_B    & = 01000100 \\
+    s_C    & = 01011001 \\
+    s_D    & = 10001000 \\
+    m_B    & = 00000000 \\
+    k_{BC} & = 01101111 \\
+  \end{align*}
+
+  \begin{figure}
+    \center
+    \begin{tikzpicture}[>=stealth, node distance=2cm]
+      \node (A) {A};
+      \node[right of=A] (B) {B};
+      \node[right of=B] (C) {C};
+      \node[right of=C] (D) {D};
+
+      \draw (A) -- (B);
+      \draw (B) -- (C);
+      \draw (C) -- (D);
+    \end{tikzpicture}
+    \caption{Key graph}
+  \end{figure}
+
+  \begin{enumerate}
+    \item Calculate the sent message N. Include your calculation.
+    \item Limit who can have sent the message. Include your calculation.
+    \item How can we make it harder for $B$ to guess the sender?
+  \end{enumerate}
+
+  \begin{solution}
+    \begin{enumerate}
+      \item Sum of the local sums is the message: $N = 00010110 \oplus 01000100 \oplus 01011001 \oplus 10001000 = 10000011$
+      \item A and C cause 3 and four bits to be flipped when excluded from the sum, respectively. B causes 2 bits to be flipped. D causes 1 bit to be flipped. Thus, A and C are likely candidates.
+      \item Increase the anonymity set. Introduce dummy traffic, or randomize the message timing.
+    \end{enumerate}
+  \end{solution}
+\end{exercise}
+
+\end{document}
